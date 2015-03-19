@@ -8,7 +8,7 @@ using NHibernate.Cfg;
 using NHibernate.Context;
 using MCT.DB.Entities;
 
-namespace MCT.DB.Services
+namespace MCT.DB.NH
 {
     /*<?xml version="1.0" encoding="utf-8"?>  
         <hibernate-configuration  xmlns="urn:nhibernate-configuration-2.2" >  
@@ -19,8 +19,10 @@ namespace MCT.DB.Services
                     Server=localhost;initial catalog=nhibernate;User ID=nhibernate;Password=********;  
                 </property>  
                 <property name="dialect">NHibernate.Dialect.PostgreSQLDialect</property>  
+                <property name="show_sql">false</property> 
             </session-factory>  
         </hibernate-configuration>  
+      </xml>
      */
     public static class NHibernateSessionHelper
     {
@@ -33,11 +35,9 @@ namespace MCT.DB.Services
                 config.Driver<NHibernate.Driver.NpgsqlDriver>();
                 config.ConnectionStringName = "ApplicationServices";
                 config.ConnectionProvider<NHibernate.Connection.DriverConnectionProvider>();
-            
             });
 
             configuration.CurrentSessionContext<WebSessionContext>();
-
 
             configuration.AddAssembly(typeof(Subject).Assembly);
 
