@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{DFACEB61-C3BD-41F7-81A6-DD228A2431CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{8941F66F-8C56-4C78-A00B-E6EDB8FBD0F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{8EBCC7CE-C1FD-4137-88FE-79955F85D8FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCT.DB.Entities", "Component\DB\MCT.DB.Entities\MCT.DB.Entities.csproj", "{2126FE68-38A1-4542-8AC0-C5636287AF40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCT.DB.NH", "Component\DB\MCT.DB.NH\MCT.DB.NH.csproj", "{D4D45413-AC51-4780-8C76-12AD7BABE57A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCT.DB.Services", "Component\DB\MCT.DB.Services\MCT.DB.Services.csproj", "{49EDAFC3-123B-4BEB-8533-473D167242C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCT.Web", "Console\MCT.Web\MCT.Web.csproj", "{84D89CBB-379F-4E59-9EA3-15658D61BE9D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2126FE68-38A1-4542-8AC0-C5636287AF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2126FE68-38A1-4542-8AC0-C5636287AF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2126FE68-38A1-4542-8AC0-C5636287AF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2126FE68-38A1-4542-8AC0-C5636287AF40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4D45413-AC51-4780-8C76-12AD7BABE57A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4D45413-AC51-4780-8C76-12AD7BABE57A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4D45413-AC51-4780-8C76-12AD7BABE57A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4D45413-AC51-4780-8C76-12AD7BABE57A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EDAFC3-123B-4BEB-8533-473D167242C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EDAFC3-123B-4BEB-8533-473D167242C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EDAFC3-123B-4BEB-8533-473D167242C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EDAFC3-123B-4BEB-8533-473D167242C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84D89CBB-379F-4E59-9EA3-15658D61BE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84D89CBB-379F-4E59-9EA3-15658D61BE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84D89CBB-379F-4E59-9EA3-15658D61BE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84D89CBB-379F-4E59-9EA3-15658D61BE9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8EBCC7CE-C1FD-4137-88FE-79955F85D8FF} = {8941F66F-8C56-4C78-A00B-E6EDB8FBD0F2}
+		{2126FE68-38A1-4542-8AC0-C5636287AF40} = {8EBCC7CE-C1FD-4137-88FE-79955F85D8FF}
+		{D4D45413-AC51-4780-8C76-12AD7BABE57A} = {8EBCC7CE-C1FD-4137-88FE-79955F85D8FF}
+		{49EDAFC3-123B-4BEB-8533-473D167242C6} = {8EBCC7CE-C1FD-4137-88FE-79955F85D8FF}
+		{84D89CBB-379F-4E59-9EA3-15658D61BE9D} = {DFACEB61-C3BD-41F7-81A6-DD228A2431CC}
+	EndGlobalSection
+EndGlobal

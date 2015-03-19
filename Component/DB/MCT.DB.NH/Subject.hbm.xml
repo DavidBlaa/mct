@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true">
+  <class name="MCT.DB.Entities.Subject, MCT.DB.Entities" lazy="true">
+    <id name="Id" type="Int64" unsaved-value="0">
+      <column name="Id" slq-type="BIGINT"/>
+      <generator class="native" />
+    </id>
+    <property name="Name" type="String"> 
+      <column name="Name" slq-type="VARCHAR(255)" not-null="false"/>
+    </property>
+    <property name="Description" type="String">
+      <column name="Description" slq-type="VARCHAR(255)" not-null="false"/>
+    </property>
+    <property name="MediaId" type="Int64">
+      <column name="MediaId" slq-type="BIGINT" not-null="false"/>
+    </property>
+  </class>
+</hibernate-mapping>
