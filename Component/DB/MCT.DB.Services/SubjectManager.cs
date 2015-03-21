@@ -1,4 +1,5 @@
 ﻿using MCT.DB.Entities;
+using MCT.Helpers;
 using NHibernate;
 using NHibernate.Criterion;
 using System;
@@ -12,9 +13,10 @@ namespace MCT.DB.Services
     public class SubjectManager:ManagerBase<Subject, long>
     {
 
-        public SubjectManager(ISession session)
+        public SubjectManager()
         {
-            base.CurrentNHibernateSession = session;
+            
+            base.CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
         }
 
         //Example zum get einträge von aus einer spalte als liste

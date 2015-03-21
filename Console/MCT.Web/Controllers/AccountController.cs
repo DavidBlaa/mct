@@ -26,6 +26,7 @@ namespace MCT.Web.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
+           
         }
 
         public ApplicationSignInManager SignInManager
