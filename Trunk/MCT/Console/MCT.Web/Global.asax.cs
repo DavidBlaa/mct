@@ -1,5 +1,4 @@
-﻿using MCT.DB.NH;
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Context;
 using System;
 using System.Collections.Generic;
@@ -16,17 +15,19 @@ namespace MCT.Web
         public static ISessionFactory NHibernateSessionFactory;
         public override void Init()
         {
-            this.BeginRequest += (sender, e) => {
+            //this.BeginRequest += (sender, e) =>
+            //{
 
-                var session = NHibernateSessionFactory.OpenSession();
-                CurrentSessionContext.Bind(session);
-            };
+            //    var session = NHibernateSessionFactory.OpenSession();
+            //    CurrentSessionContext.Bind(session);
+            //};
 
-            this.EndRequest += (sender, e) => {
+            //this.EndRequest += (sender, e) =>
+            //{
 
-                var session = CurrentSessionContext.Unbind(NHibernateSessionFactory);
-                session.Dispose();
-            };
+            //    var session = CurrentSessionContext.Unbind(NHibernateSessionFactory);
+            //    session.Dispose();
+            //};
 
  	        base.Init();
         }
@@ -37,8 +38,6 @@ namespace MCT.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            NHibernateSessionFactory = NHibernateSessionHelper.GetNHibernateSessionFactory();
         }
     }
 }
