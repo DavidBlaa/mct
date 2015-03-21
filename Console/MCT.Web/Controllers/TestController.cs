@@ -15,15 +15,15 @@ namespace MCT.Web.Controllers
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            Subject subject = new Subject();
+            //Subject subject = new Subject();
 
-            subject.Name = "ALTER FETTE SCHEIßE 3";
-            subject.Description = "ES FUNKT 3";
+            //subject.Name = "ALTER FETTE SCHEIßE 3";
+            //subject.Description = "ES FUNKT 3";
 
-            subjectManager.Create(subject);
+            //subjectManager.Create(subject);
 
-            subject.Name ="Upadte";
-            subjectManager.Update(subject);
+            //subject.Name ="Upadte";
+            //subjectManager.Update(subject);
 
             var x = subjectManager.GetAll<Subject>();
 
