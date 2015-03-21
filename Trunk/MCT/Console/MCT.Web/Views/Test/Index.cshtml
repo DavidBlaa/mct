@@ -5,3 +5,58 @@
 
 <h2>Test Page</h2>
 
+<label onclick="onClick('A')">A</label>
+<label onclick="onClick('B')">B</label>
+<label onclick="onClick('C')">C</label>
+<label onclick="onClick('D')">D</label>
+
+<div id="container">
+    <div class="item A">A</div>
+    <div class="item B w3">B</div>
+    <div class="item G w3">G</div>
+    <div class="item C w2">C</div>
+    <div class="item B w3">B</div>
+    <div class="item D">D</div>
+    <div class="item E w2">E</div>
+    <div class="item A">A</div>
+    <div class="item F">F</div>
+    <div class="item G w3">G</div>
+
+</div>
+
+<style type="text/css">
+    .item {
+        
+         border-top-style:solid;
+         width: 200px;
+         height: 200px;
+         background-color:greenyellow;
+    }
+    .item.w2 {background-color:lightskyblue;}
+    .item.w3 {background-color:darkorange;}
+</style>
+
+<script type="text/javascript">
+
+    var $container = $('#container');
+    // init
+    $container.isotope({
+        // options
+        itemSelector: '.item',
+        //layoutMode: 'fitRows'
+        layoutMode: 'masonry',
+    });
+
+    function onClick(character)
+    {
+        $container.isotope({
+            // options
+            itemSelector: '.item',
+            //layoutMode: 'fitRows'
+            layoutMode: 'masonry',
+            filter: "."+character
+        });
+    }
+
+
+</script>
