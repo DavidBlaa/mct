@@ -32,5 +32,22 @@ namespace MCT.Web.Controllers
 
             return View();
         }
+
+        public ActionResult Create(Subject subject)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+            subjectManager.Create(subject);
+
+            if (subject == null) 
+                return View(new Subject());
+            else
+                return View(subject);
+        }
+
+        public ActionResult Show()
+        { 
+            SubjectManager subjectManager = new SubjectManager();
+            return View(subjectManager.GetAll<Subject>());
+        }
     }
 }
