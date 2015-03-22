@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using NHibernate.Cfg;
 using NHibernate.Context;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,8 @@ namespace MCT.Web
             //    var session = CurrentSessionContext.Unbind(NHibernateSessionFactory);
             //    session.Dispose();
             //};
+
+            NHibernateSessionFactory = new Configuration().Configure().BuildSessionFactory();
 
  	        base.Init();
         }

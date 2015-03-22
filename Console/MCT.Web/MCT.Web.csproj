@@ -247,8 +247,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
     <Content Include="Views\Test\Show.cshtml" />
+    <Content Include="Views\Test\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -273,6 +273,10 @@
     <ProjectReference Include="..\..\Component\DB\MCT.DB.Services\MCT.DB.Services.csproj">
       <Project>{49edafc3-123b-4beb-8533-473d167242c6}</Project>
       <Name>MCT.DB.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\MCT.Helpers\MCT.Helpers.csproj">
+      <Project>{0624e933-e3fd-4d21-a5e4-4ed52ee85016}</Project>
+      <Name>MCT.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
