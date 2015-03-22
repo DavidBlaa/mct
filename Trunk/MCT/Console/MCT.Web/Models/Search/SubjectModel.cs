@@ -8,9 +8,11 @@ namespace MCT.Web.Models.Search
 {
     public class SubjectModel
     {
-        public virtual long Id { get; set; }
-        public virtual String Name { get; set; }
-        public virtual String Description { get; set; }
+        public long Id { get; set; }
+        public String Name { get; set; }
+        public String Description { get; set; }
+
+        public SubjectType Type { get; set; }
 
         public static SubjectModel Convert(Subject subject)
         {
@@ -25,7 +27,28 @@ namespace MCT.Web.Models.Search
             if (!String.IsNullOrEmpty(subject.Description))
                 model.Description = subject.Description;
 
+            model.Type = GetType(subject);
+
+
             return model;
         }
+
+        private static SubjectType GetType(Subject subject)
+        {
+            if (subject is Animal) return SubjectType.Animal;
+            if (subject is Effect) return SubjectType.Effect;
+            if(subject is Plant) return SubjectType.Plant;
+
+            return SubjectType.Unknow;
+
+        }
+    }
+
+    public enum SubjectType
+    { 
+        Animal,
+        Effect,
+        Plant,
+        Unknow
     }
 }

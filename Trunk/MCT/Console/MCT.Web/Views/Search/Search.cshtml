@@ -5,21 +5,57 @@
 
 <h2>Search</h2>
 
-<table class="table">
-    @foreach (var item in Model.Subjects)
+
+<div class="button-group js-radio-button-group">
+    <button class="button" onclick="OnClick(this)">Animal</button>
+    <button class="button" onclick="OnClick(this)">Effect</button>
+    <button class="button" onclick="OnClick(this)">Plant</button>
+    <button class="button" onclick="OnClick(this)">All</button>
+</div>
+<br />
+
+<div id="SearchContent">
+
+    @foreach (var subject in Model.Subjects)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+        @Html.Partial("_subjectPartialView", subject);
     }
-</table>
+
+</div>
+
+<script type="text/javascript">
+
+        var $container = $('#SearchContent');
+        // init
+        $container.isotope({
+            // options
+            itemSelector: '.item',
+            //layoutMode: 'fitRows'
+            layoutMode: 'masonry',
+        });
+
+        function OnClick(e)
+        {
+  
+            var selectedType = e.innerText;
+
+            $container.isotope({
+                // filter element with numbers greater than 50
+                filter: function () {
+                    // `this` is the item element. Get text of element's .number
+                    var type = $(this).find('.type').text();
+
+                    // return true or false
+                    if (selectedType == "All")
+                        return true;
+
+                    if (type == selectedType)
+                        return true;
+                    else
+                        return false;
+
+                }
+            })
+        }
+
+</script>
