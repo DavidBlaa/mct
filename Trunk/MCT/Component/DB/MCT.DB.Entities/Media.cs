@@ -12,5 +12,11 @@ namespace MCT.DB.Entities
         public virtual long SubjectId { get; set; }
         public virtual String ImagePath { get; set; }
         public virtual String MIMEType { get; set; }
+
+        public Media()
+        {
+            ImagePath = "";
+            MIMEType = "";
+        }
     }
 }

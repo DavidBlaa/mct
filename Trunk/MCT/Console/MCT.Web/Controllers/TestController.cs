@@ -39,13 +39,14 @@ namespace MCT.Web.Controllers
 
         public ActionResult Create(Subject subject)
         {
-            SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Create(subject);
-
-            if (subject == null) 
+            if (Subject.IsEmtpy(subject))
                 return View(new Subject());
             else
+            {
+                SubjectManager subjectManager = new SubjectManager();
+                subjectManager.Create(subject);
                 return View(subject);
+            }
         }
 
         public ActionResult Show()
@@ -54,37 +55,47 @@ namespace MCT.Web.Controllers
             return View(subjectManager.GetAll<Subject>());
         }
 
+        [HttpGet]
+        public ActionResult CreatePlant()
+        {
+            return View(new Plant());
+        }
+
+        [HttpPost]
         public ActionResult CreatePlant(Plant plant)
         {
             SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Create<Plant>(plant);
+            subjectManager.Create(plant);
 
-            if (plant == null)
-                return View(new Plant());
-            else
-                return View(plant);
+            return View(plant);
         }
 
+        [HttpGet]
+        public ActionResult CreateAnimal()
+        {
+            return View(new Animal());
+        }
+
+        [HttpPost]
         public ActionResult CreateAnimal(Animal animal)
         {
             SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Create<Animal>(animal);
-
-            if (animal == null)
-                return View(new Animal());
-            else
-                return View(animal);
+            subjectManager.Create(animal);
+            return View(animal);
         }
 
+        [HttpGet]
+        public ActionResult CreateEffect()
+        {
+            return View(new Effect());
+        }
+
+        [HttpPost]
         public ActionResult CreateEffect(Effect effect)
         {
             SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Create<Effect>(effect);
-
-            if (effect == null)
-                return View(new Animal());
-            else
-                return View(effect);
+            subjectManager.Create(effect);
+            return View(effect);
         }
     }
 }
