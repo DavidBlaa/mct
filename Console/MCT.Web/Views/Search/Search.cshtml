@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+@model MCT.Web.Models.Search.SearchModel
+
+<h2>Search</h2>
+
+<table class="table">
+    @foreach (var item in Model.Subjects)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>

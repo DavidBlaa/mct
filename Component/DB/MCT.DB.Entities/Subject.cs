@@ -26,6 +26,16 @@ namespace MCT.DB.Entities
         public Subject()
         {
             Medias = new List<Media>();
+            Name = "";
+            Description = "";
+        }
+
+        public static bool IsEmtpy(Subject subject)
+        {
+            if(subject.Id == 0)
+                return true;
+            else
+                return false;
         }
     }
 }
