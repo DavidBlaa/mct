@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<MCT.DB.Entities.Subject>
 
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Show</h2>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -11,9 +17,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaId)
-        </th>
         <th></th>
     </tr>
 
@@ -24,9 +27,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MediaId)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

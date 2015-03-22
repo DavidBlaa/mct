@@ -53,5 +53,38 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
             return View(subjectManager.GetAll<Subject>());
         }
+
+        public ActionResult CreatePlant(Plant plant)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+            subjectManager.Create<Plant>(plant);
+
+            if (plant == null)
+                return View(new Plant());
+            else
+                return View(plant);
+        }
+
+        public ActionResult CreateAnimal(Animal animal)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+            subjectManager.Create<Animal>(animal);
+
+            if (animal == null)
+                return View(new Animal());
+            else
+                return View(animal);
+        }
+
+        public ActionResult CreateEffect(Effect effect)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+            subjectManager.Create<Effect>(effect);
+
+            if (effect == null)
+                return View(new Animal());
+            else
+                return View(effect);
+        }
     }
 }
