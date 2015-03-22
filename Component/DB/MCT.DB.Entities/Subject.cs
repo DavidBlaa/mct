@@ -10,15 +10,15 @@ namespace MCT.DB.Entities
     {
         #region Attributes
 
-            public virtual long Id { get; set; }
-            public virtual String Name { get; set; }
-            public virtual String Description { get; set; }
+        public virtual long Id { get; set; }
+        public virtual String Name { get; set; }
+        public virtual String Description { get; set; }
 
         #endregion
 
         #region Associations
 
-            public virtual ICollection<Media> Medias { get; set; }
+        public virtual ICollection<Media> Medias { get; set; }
 
         #endregion 
 
