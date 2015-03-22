@@ -1,0 +1,33 @@
+﻿@{
+    
+    
+}
+@model MCT.Web.Models.Search.SubjectModel
+@using MCT.Web.Models;
+
+<div class="item @Model.Type.ToString().ToLower()">
+    <h3 class="name">@Model.Name</h3>
+    <p class="description">@Model.Description</p>
+    <p class="type" hidden="hidden">@Model.Type.ToString()</p>
+</div>
+
+
+<style type="text/css">
+    .item {
+        border-top-style: solid;
+        width: 200px;
+        height: 200px;
+    }
+
+        .item.effect {
+            background-color: greenyellow;
+        }
+
+        .item.plant {
+            background-color: lightskyblue;
+        }
+
+        .item.animal {
+            background-color: darkorange;
+        }
+</style>
