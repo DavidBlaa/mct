@@ -16,8 +16,6 @@ namespace MCT.Helpers
 
         static NHibernateHelper()
         {
-            
-            
             sessionFactory = new Configuration().Configure().BuildSessionFactory();
         }
 

@@ -8,9 +8,24 @@ namespace MCT.DB.Entities
 {
     public class Subject
     {
-        public virtual long Id { get; set; }
-        public virtual String Name { get; set; }
-        public virtual String Description { get; set; }
-        public virtual long MediaId { get; set; }
+        #region Attributes
+
+            public virtual long Id { get; set; }
+            public virtual String Name { get; set; }
+            public virtual String Description { get; set; }
+
+        #endregion
+
+        #region Associations
+
+            public virtual ICollection<Media> Medias { get; set; }
+
+        #endregion 
+
+
+        public Subject()
+        {
+            Medias = new List<Media>();
+        }
     }
 }

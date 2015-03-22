@@ -1,5 +1,6 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,10 @@ namespace MCT.Web.Controllers
             //subject.Name ="Upadte";
             //subjectManager.Update(subject);
 
-            var x = subjectManager.GetAll<Subject>();
+            //var x = subjectManager.GetAll<Subject>();
+
+            string root = AppConfigHelper.GetRoot();
+            string ws = AppConfigHelper.GetWorkspace();
 
             
 
