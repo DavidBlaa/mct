@@ -16,7 +16,7 @@ namespace MCT.Helpers
 
         public static string GetWorkspace()
         {
-            return HttpContext.Current.Server.MapPath("~/Workspace");
+            return "..\\..\\Workspace";
         }
 
     }

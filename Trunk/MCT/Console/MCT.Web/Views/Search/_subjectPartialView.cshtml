@@ -6,10 +6,12 @@
 @using MCT.Web.Models;
 
 <div class="item @Model.Type.ToString().ToLower()">
-    
-    <h3 class="name">@Model.Name</h3>
-    <p class="description" hidden="hidden" >@Model.Description</p>
-    <p class="type" hidden="hidden">@Model.Type.ToString()</p>
+    <b class="name">@Model.Name</b>
+    <img src="~/Images/Empty.png" width="100" height="100"/>
+    <div class="details" hidden="hidden">
+        <p class="description">@Model.Description</p>
+        <p class="type">@Model.Type.ToString()</p>
+    </div>
 </div>
 
 
@@ -17,20 +19,20 @@
     .item {
         border-top-style: solid;
         width: 100px;
-        height: 100px;
+        height: 120px;
     }
 
-        .item.effect {
-            background-color: greenyellow;
-        }
+    .item.effect {
+        background-color: greenyellow;
+    }
 
-        .item.plant {
-            background-color: lightskyblue;
-        }
+    .item.plant {
+        background-color: lightskyblue;
+    }
 
-        .item.animal {
-            background-color: darkorange;
-        }
+    .item.animal {
+        background-color: darkorange;
+    }
 
         .item.gigante {
           width: 200px;
