@@ -1,6 +1,8 @@
 ﻿using MCT.DB.Entities;
+using MCT.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +13,7 @@ namespace MCT.Web.Models.Search
         public long Id { get; set; }
         public String Name { get; set; }
         public String Description { get; set; }
+        public String ImagePath { get; set; }
 
         public SubjectType Type { get; set; }
 
@@ -28,6 +31,13 @@ namespace MCT.Web.Models.Search
                 model.Description = subject.Description;
 
             model.Type = GetType(subject);
+
+            if (subject.Medias.Count() == 0)
+            {
+                model.ImagePath = Path.Combine(AppConfigHelper.GetWorkspace(), "Images", "Empty.png");
+            }
+
+
 
 
             return model;
