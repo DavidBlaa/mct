@@ -58,4 +58,14 @@
             })
         }
 
+        $(function () {
+
+            $container.on('click', '.item', function () {
+                // change size of item by toggling gigante class
+                $(this).toggleClass('gigante');
+                $container.isotope('layout');
+            });
+
+        });
+
 </script>
