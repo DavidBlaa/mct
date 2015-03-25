@@ -6,8 +6,10 @@
 @using MCT.Web.Models;
 
 <div class="item @Model.Type.ToString().ToLower()">
-    <b class="name">@Model.Name</b>
-    <img src="~/Images/Empty.png" width="100" height="100"/>
+    <b class="name" style="margin-left:5px">@Model.Name</b>
+    <div style="text-align:center">
+        <img  src="~/Images/Empty.png" width="140" height="140"/>
+    </div>
     <div class="details" hidden="hidden">
         <p class="description">@Model.Description</p>
         <p class="type">@Model.Type.ToString()</p>
@@ -18,8 +20,8 @@
 <style type="text/css">
     .item {
         border-top-style: solid;
-        width: 100px;
-        height: 120px;
+        width: 150px;
+        height: 170px;
     }
 
     .item.effect {
@@ -35,8 +37,8 @@
     }
 
         .item.gigante {
-          width: 200px;
-          height: 300px;
+          width: 250px;
+          height: 400px;
           background: #F80;
         }
 

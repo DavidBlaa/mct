@@ -49,10 +49,19 @@
                     if (selectedType == "All")
                         return true;
 
-                    if (type == selectedType)
+                    if (type == selectedType) {
+
+                        //$(this).find('.details').removeAttr( "hidden" )
                         return true;
-                    else
+                    } 
+                    
+                    else {
+
+                        //$(this).attr("hidden", "hidden");
                         return false;
+                    }
+
+
 
                 }
             })
@@ -64,6 +73,7 @@
                 // change size of item by toggling gigante class
                 $(this).toggleClass('gigante');
                 $container.isotope('layout');
+
             });
 
         });
