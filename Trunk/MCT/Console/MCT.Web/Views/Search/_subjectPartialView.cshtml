@@ -6,8 +6,9 @@
 @using MCT.Web.Models;
 
 <div class="item @Model.Type.ToString().ToLower()">
+    
     <h3 class="name">@Model.Name</h3>
-    <p class="description">@Model.Description</p>
+    <p class="description" hidden="hidden" >@Model.Description</p>
     <p class="type" hidden="hidden">@Model.Type.ToString()</p>
 </div>
 
