@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MCT.DB.Entities
 {
-    public class Effect:Subject
+    public class Effect:Node
     {
     }
 }

@@ -47,15 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalName.cs" />
     <Compile Include="Animal.cs" />
+    <Compile Include="Cultivation.cs" />
+    <Compile Include="Day.cs" />
     <Compile Include="Effect.cs" />
     <Compile Include="Media.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Plant.cs" />
+    <Compile Include="Predicate.cs" />
+    <Compile Include="Species.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Taxon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="MCT.DB.Entities" namespace="MCT.DB.Entities">
+  <class name="Day" table="Days">
+    
+    <id name="Id" type="Int64" unsaved-value="0">
+      <column name="Id" />
+      <generator class="native" />
+    </id>
+
+    <!--//Name und Hierarchie-->
+    <property name="DayInYear" type="Int32"/>
+    <property name="WeekPerYear" type="Int32"/>
+    
+  </class>
+</hibernate-mapping>

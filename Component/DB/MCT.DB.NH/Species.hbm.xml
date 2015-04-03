@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="MCT.DB.Entities" namespace="MCT.DB.Entities">
-  <joined-subclass xmlns="urn:nhibernate-mapping-2.2" name="Animal" table="Animals" extends="Subject" dynamic-update="true">
-    
+  <joined-subclass xmlns="urn:nhibernate-mapping-2.2" name="Species" table="Species" extends="Node" dynamic-update="true">
+
     <key column="Id" />
 
   </joined-subclass>

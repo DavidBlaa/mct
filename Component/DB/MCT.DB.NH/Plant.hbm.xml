@@ -1,15 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="MCT.DB.Entities" namespace="MCT.DB.Entities">
-  <joined-subclass xmlns="urn:nhibernate-mapping-2.2" name="Plant" table="Plants" extends="Subject" dynamic-update="true">
+  <joined-subclass xmlns="urn:nhibernate-mapping-2.2" name="Plant" table="Plants" extends="Species" dynamic-update="true">
     
     <key column="Id" />
-    <!--//Name und Hierarchie-->
-    <property name="ScientificName" type="String"/>
-    <property name="ClassName" type="String"/>
-    <property name="OrderName" type="String"/>
-    <property name="FamilyName" type="String"/>
-    <property name="GenusName" type="String"/>
-    
+
     <!--//Eigenschaften-->
     <property name="Width" type="Double"/>
     <property name="Height" type="Double"/>
@@ -21,14 +15,14 @@
     <property name="Cultivation" type="Int64"/>
     
     <!--//Dates-->
-    <property name="SowingStart" type="DateTime"/>
-    <property name="SowingEnd" type="DateTime"/>
-    <property name="BloomStart" type="DateTime"/>
-    <property name="BloomEnd" type="DateTime"/>
-    <property name="HarvestStart" type="DateTime"/>
-    <property name="HarvestEnd" type="DateTime"/>
-    <property name="SeedMaturityStart" type="DateTime"/>
-    <property name="SeedMaturityEnd" type="DateTime"/>
+    <property name="SowingStart" type="Int32"/>
+    <property name="SowingEnd" type="Int32"/>
+    <property name="BloomStart" type="Int32"/>
+    <property name="BloomEnd" type="Int32"/>
+    <property name="HarvestStart" type="Int32"/>
+    <property name="HarvestEnd" type="Int32"/>
+    <property name="SeedMaturityStart" type="Int32"/>
+    <property name="SeedMaturityEnd" type="Int32"/>
 
   </joined-subclass>
 </hibernate-mapping>
