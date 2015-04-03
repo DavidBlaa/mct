@@ -13,5 +13,6 @@
       <key column="Media" />
       <one-to-many class="MCT.DB.Entities.Media, MCT.DB.Entities" />
     </set>
+    
   </class>
 </hibernate-mapping>

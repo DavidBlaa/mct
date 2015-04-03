@@ -8,8 +8,8 @@
     </id>
     
     <!--foreign-key-->
-    <property name="NodeId" type="Int64"/>
-    
+    <many-to-one name="NodeId" class="MCT.DB.Entities.Node, MCT.DB.Entities" column="Node" cascade="all" not-null="true" />
+
     <!--//Name und Hierarchie-->
     <property name="Name" type="String"/>
     <property name="Language" type="String"/>
