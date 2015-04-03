@@ -52,6 +52,7 @@
     <Compile Include="Cultivation.cs" />
     <Compile Include="Day.cs" />
     <Compile Include="Effect.cs" />
+    <Compile Include="Interaction.cs" />
     <Compile Include="Media.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Plant.cs" />

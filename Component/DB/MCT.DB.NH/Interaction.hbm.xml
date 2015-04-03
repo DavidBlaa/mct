@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="MCT.DB.Entities" namespace="MCT.DB.Entities">
+  <class name="Interaction" table="Interactions">
+    
+    <id name="Id" type="Int64" unsaved-value="0">
+      <column name="Id" />
+      <generator class="native" />
+    </id>
+
+    <many-to-one name="Subject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="Subject" cascade="all" not-null="true" />
+    <many-to-one name="Predicate" class="MCT.DB.Entities.Predicate, MCT.DB.Entities" column="Predicate" cascade="all" not-null="true" />
+    <many-to-one name="Object" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="Object" cascade="all" not-null="true" />
+    <many-to-one name="ImpactSubject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="ImpactSubject" cascade="all" not-null="true" />
+
+    <property name="Indicator" type="Int32"/>
+    
+  </class>
+
+</hibernate-mapping>
