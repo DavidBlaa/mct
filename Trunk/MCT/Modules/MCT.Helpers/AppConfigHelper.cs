@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,14 @@ namespace MCT.Helpers
             return HttpContext.Current.Server.MapPath("~");
         }
 
-        public static string GetWorkspace()
+        public static string GetWorkspaceForClient()
         {
             return "..\\..\\Workspace";
+        }
+
+        public static string GetWorkspace()
+        {
+            return Path.Combine(HttpContext.Current.Server.MapPath("~"),"Workspace");
         }
 
     }

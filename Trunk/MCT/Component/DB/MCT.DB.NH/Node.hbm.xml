@@ -5,12 +5,9 @@
     <key column="Id" />
     <!--//Name und Hierarchie-->
     <property name="ScientificName" type="String"/>
-    <property name="Type" type="String"/>
+    <property name="Type" type="TaxonType"/>
     
-    <set name="Parent" cascade="all-delete-orphan">
-      <key column="Parent" />
-      <one-to-many class="MCT.DB.Entities.Node, MCT.DB.Entities" />
-    </set>
-
+    <many-to-one name="Parent" class="MCT.DB.Entities.Node, MCT.DB.Entities" column="Parent" cascade="all" not-null="false" />
+    
   </joined-subclass>
 </hibernate-mapping>

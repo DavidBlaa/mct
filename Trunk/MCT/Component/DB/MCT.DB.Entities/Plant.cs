@@ -18,7 +18,7 @@ namespace MCT.DB.Entities
         public virtual string SowingDepth { get; set; }
      
         //Vorzucht
-        public virtual long Cultivation { get; set; }
+        public virtual Cultivation Cultivation { get; set; }
 
         //Dates
         public virtual int SowingStart { get; set; }

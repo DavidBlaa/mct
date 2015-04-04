@@ -17,7 +17,7 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
 
             //Get all subjects
-            var subjects = subjectManager.GetAll<Subject>();
+            var subjects = subjectManager.GetAll<Node>();
 
             SearchModel Model = new SearchModel();
 
