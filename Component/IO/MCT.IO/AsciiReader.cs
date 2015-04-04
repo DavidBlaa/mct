@@ -56,7 +56,7 @@ namespace MCT.IO
                         while ((line = streamReader.ReadLine()) != null)
                         {
                             position++;
-                            if(position>StartPosition)
+                            if(position>=StartPosition)
                                 nodes.Add(RowToPlant(line));
                         }
 
