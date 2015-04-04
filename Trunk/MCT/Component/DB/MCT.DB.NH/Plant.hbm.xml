@@ -7,9 +7,9 @@
     <!--//Eigenschaften-->
     <property name="Width" type="Double"/>
     <property name="Height" type="Double"/>
-    <property name="RootDetph" type="String"/>
-    <property name="NutrientClaim" type="String"/>
-    <property name="SowingDepth" type="String"/>
+    <property name="RootDepth" type="RootDepth"/>
+    <property name="NutrientClaim" type="NutrientClaim"/>
+    <property name="SowingDepth" type="Int32"/>
 
     <!--//Vorzucht-->
     <many-to-one name="Cultivation" class="MCT.DB.Entities.Cultivation, MCT.DB.Entities" column="Cultivation" cascade="all" not-null="false" />

@@ -1,4 +1,4 @@
 Name	Species	Class	Order	Family	Genus	Description	Width	Height	RootDepth	SowingDepth	NutrientClaim	SowingStart	SowingEnd	BloomStart	BloomEnd	HarvestStart	HarvestEnd	SeedMaturityStart	SeedMaturityEnd	CultivationDateStart	CultivationDateEnd	GerminationTemperature	GerminationPeriodDays
-Pflanze 1	Species Name 1	Class 1	Order 1	Family 1	Genus 1	Description	25	20	Flach	2	Stark	5	20	30	50	70	100	90	100				
-Pflanze 2	Species Name 2	Class 2	Order 2	Family 2	Genus 2	Description	5	10	Mittel		Mittel	5	20	30	50	70	100	90	100	10	20	10	10
-Pflanze 3	Species Name 3	Class 3	Order 3	Family 3	Genus 3	Description	10	40	Tief		Schwach	5	20	30	50	70	100	90	100				
+Pflanze 1	Species Name 1	Class 1	Order 1	Family 1	Genus 1	Description	25	20	Flat	2	Strong	5	20	30	50	70	100	90	100				
+Pflanze 2	Species Name 2	Class 2	Order 2	Family 2	Genus 2	Description	5	10	Medium	5	Medium	5	20	30	50	70	100	90	100	10	20	10	10
+Pflanze 3	Species Name 3	Class 3	Order 3	Family 3	Genus 3	Description	10	40	Deep	3	Weak	5	20	30	50	70	100	90	100				

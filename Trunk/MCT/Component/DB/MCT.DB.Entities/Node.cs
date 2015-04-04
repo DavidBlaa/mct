@@ -14,13 +14,25 @@ namespace MCT.DB.Entities
 
     }
 
+
+    //Reich         	Regnum          	Vielzellige Tiere
+    //Abteilung/Stamm	Divisio/Phylum	    Chordatiere
+    //Unterstamm	    Subphylum	        Wirbeltiere
+    //Klasse	        Classis	            Säugetiere
+    //Ordnung	        Ordo	            Raubtiere
+    //Überfamilie	    Superfamilia	    Katzenartige
+    //Familie	        Familia	            Katzen
+    //Unterfamilie	    Subfamilia	        Kleinkatzen
+    //Gattung	        Genus	            Altwelt-Wildkatzen
+    //Art	            Species	            Wildkatze
+    //Unterart	        Subspecies	        Hauskatze
     public enum TaxonType
     { 
-        Class,
-        Family,
+        SubSpecies,
+        Species,
         Genus,
-        Kingdom,
+        Family,
         Order,
-        Trunk
+        Class
     }
 }
