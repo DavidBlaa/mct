@@ -34,7 +34,7 @@ namespace MCT.Web.Models.Search
 
             if (subject.Medias.Count() == 0)
             {
-                model.ImagePath = Path.Combine(AppConfigHelper.GetWorkspace(), "Images", "Empty.png");
+                model.ImagePath = Path.Combine(AppConfigHelper.GetWorkspaceForClient(), "Images", "Empty.png");
             }
 
 

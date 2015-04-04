@@ -1,8 +1,10 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Helpers;
+using MCT.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,20 +18,34 @@ namespace MCT.Web.Controllers
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            //Subject subject = new Subject();
 
-            //subject.Name = "ALTER FETTE SCHEIßE 3";
-            //subject.Description = "ES FUNKT 3";
+            Subject subject = new Subject();
 
-            //subjectManager.Create(subject);
+            subject.Name = "ALTER FETTE SCHEIßE 3";
+            subject.Description = "ES FUNKT 3";
 
-            //subject.Name ="Upadte";
-            //subjectManager.Update(subject);
+            subjectManager.Create(subject);
 
-            //var x = subjectManager.GetAll<Subject>();
+            subject.Name = "Upadte";
+            subjectManager.Update(subject);
+
+            Node pnode = new Node();
+            pnode.Name = "ParentNodetest";
+
+            subjectManager.Create(pnode);
+
+            Node node = new Node();
+            node.Name = "Nodetest";
+            node.Parent = pnode;
+
+            subjectManager.Create(node);
+
+            node.Type = TaxonType.Order;
+
+            var x = subjectManager.GetAll<Subject>();
 
             string root = AppConfigHelper.GetRoot();
-            string ws = AppConfigHelper.GetWorkspace();
+            string ws = AppConfigHelper.GetWorkspaceForClient();
 
             
 
@@ -96,6 +112,30 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
             subjectManager.Create(effect);
             return View(effect);
+        }
+
+
+        public ActionResult LoadData()
+        {
+            AsciiReader reader = new AsciiReader();
+
+            string path = Path.Combine(AppConfigHelper.GetWorkspace(), "SeedData.txt");
+
+            if (DataReader.FileExist(path))
+            {
+                Stream fileStream = reader.Open(path);
+
+                List<Node> nodes = reader.ReadFile(fileStream, "SeedData.txt", "Plant");
+
+                SubjectManager manager = new SubjectManager();
+
+                foreach (var node in nodes)
+                {
+                    manager.Create<Plant>((Plant)node);
+                }
+            }
+
+            return View("Index");
         }
     }
 }

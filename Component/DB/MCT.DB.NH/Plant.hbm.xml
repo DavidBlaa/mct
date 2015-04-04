@@ -12,8 +12,9 @@
     <property name="SowingDepth" type="String"/>
 
     <!--//Vorzucht-->
-    <property name="Cultivation" type="Int64"/>
-    
+    <many-to-one name="Cultivation" class="MCT.DB.Entities.Cultivation, MCT.DB.Entities" column="Cultivation" cascade="all" not-null="false" />
+    <!--<property name="Cultivation" type="Int64"/>-->
+
     <!--//Dates-->
     <property name="SowingStart" type="Int32"/>
     <property name="SowingEnd" type="Int32"/>
