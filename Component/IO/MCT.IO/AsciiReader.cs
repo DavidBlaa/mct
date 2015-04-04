@@ -70,34 +70,33 @@ namespace MCT.IO
         }
 
         /// <summary>
-        /// Name	
-        /// Species	
-        /// Class	
-        /// Order	
-        /// Family	
-        /// Genus	
-        /// Description	
-        /// Width	
-        /// Height	
-        /// RootDepth	
-        /// SowingDepth	
-        /// NutrientClaim	
-        /// SowingStart	
-        /// SowingEnd	
-        /// BloomStart	
-        /// BloomEnd	
-        /// HarvestStart	
-        /// HarvestEnd	
-        /// SeedMaturityStart	
-        /// SeedMaturityEnd	
-        /// CultivationDateStart	
-        /// CultivationDateEnd	
-        /// GerminationTemperature	
-        /// GerminationPeriodDays
+        /// Name                0	
+        /// Species	            1
+        /// Class	            2
+        /// Order	            3
+        /// Family	            4
+        /// Genus	            5
+        /// Description	        6
+        /// Width	            7
+        /// Height	            8
+        /// RootDepth	        9
+        /// SowingDepth	        10
+        /// NutrientClaim       11	
+        /// SowingStart	        12
+        /// SowingEnd	        13
+        /// BloomStart	        14
+        /// BloomEnd	        15
+        /// HarvestStart	    16
+        /// HarvestEnd	        17
+        /// SeedMaturityStart	18
+        /// SeedMaturityEnd	    19
+        /// CultivationDateStart	20
+        /// CultivationDateEnd	    21
+        /// GerminationTemperature	22
+        /// GerminationPeriodDays   23
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-
         private Node RowToPlant(string line)
         { 
             string[] values = line.Split(IOHelper.GetSeperator(Seperator));
@@ -110,6 +109,8 @@ namespace MCT.IO
                 plant.Name = values[0];
                 plant.ScientificName = values[1];
 
+                // Entities müssen geprüft werden
+                // wenn vorhanden dann auswählen, ansonsten erstellen
                 // Class    2	
                 // Order	3
                 // Family	4
@@ -118,9 +119,15 @@ namespace MCT.IO
                 plant.Description = values[6];
                 plant.Width = Convert.ToInt32(values[7]);
                 plant.Height = Convert.ToInt32(values[8]);
-                plant.RootDetph = values[9];
-                plant.SowingDepth = values[10];
-                plant.NutrientClaim = values[11];
+
+                // get enum from RootDepth
+                plant.RootDepth = PlantHelper.GetRootDepth(values[9]);
+
+                plant.SowingDepth = Convert.ToInt32(values[10]);
+
+                // get enum from NutrientClaim
+                plant.NutrientClaim = PlantHelper.GetNutrientClaimDepth(values[11]);
+
                 plant.SowingStart = Convert.ToInt32(values[12]);
                 plant.SowingEnd = Convert.ToInt32(values[13]);
                 plant.BloomStart = Convert.ToInt32(values[14]);
@@ -130,10 +137,31 @@ namespace MCT.IO
                 plant.SeedMaturityStart = Convert.ToInt32(values[18]);
                 plant.SeedMaturityEnd = Convert.ToInt32(values[19]);
 
+                #region cultivation
+
+                // Entity Cultivation erstellen
                 // CultivationDateStart	    20
                 // CultivationDateEnd	    21
                 // GerminationTemperature	22
                 // GerminationPeriodDays    23
+
+                if(!String.IsNullOrEmpty(values[20])&&
+                   !String.IsNullOrEmpty(values[21])&&
+                   !String.IsNullOrEmpty(values[22])&&
+                   !String.IsNullOrEmpty(values[23]))
+                {
+                    Cultivation cultivation = new Cultivation();
+                    cultivation.CultivationDateStart = Convert.ToInt32(values[20]);
+                    cultivation.CultivationDateEnd = Convert.ToInt32(values[21]);
+                    cultivation.GerminationTemperature = Convert.ToDouble(values[22]);
+                    cultivation.GerminationPeriodDays = Convert.ToInt32(values[23]);
+
+                    plant.Cultivation = cultivation;
+                }
+
+                plant.Type = TaxonType.SubSpecies;
+
+                #endregion
 
 
             }
@@ -145,5 +173,6 @@ namespace MCT.IO
             return plant;
 
         }
+
     }
 }

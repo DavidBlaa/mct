@@ -13,9 +13,9 @@ namespace MCT.DB.Entities
         //Eigeschaften 
         public virtual double Width { get; set; }
         public virtual double Height { get; set; }
-        public virtual string RootDetph { get; set; }
-        public virtual string NutrientClaim { get; set; }
-        public virtual string SowingDepth { get; set; }
+        public virtual RootDepth RootDepth { get; set; }
+        public virtual NutrientClaim NutrientClaim { get; set; }
+        public virtual int SowingDepth { get; set; }
      
         //Vorzucht
         public virtual Cultivation Cultivation { get; set; }
@@ -37,5 +37,45 @@ namespace MCT.DB.Entities
 
         #endregion
 
+    }
+
+    public enum RootDepth
+    { 
+        Flat,
+        Medium,
+        Deep
+    }
+
+    public enum NutrientClaim
+    {
+        Strong,
+        Medium,
+        Weak
+    }
+
+    public class PlantHelper
+    {
+
+        public static RootDepth GetRootDepth(string value)
+        {
+            RootDepth result;
+            if (Enum.TryParse<RootDepth>(value, out result))
+            {
+                return result;
+            }
+
+            return RootDepth.Flat;
+        }
+
+        public static NutrientClaim GetNutrientClaimDepth(string value)
+        {
+            NutrientClaim result;
+            if (Enum.TryParse<NutrientClaim>(value, out result))
+            {
+                return result;
+            }
+
+            return NutrientClaim.Weak;
+        }
     }
 }

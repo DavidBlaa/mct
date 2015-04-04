@@ -2,6 +2,7 @@
 using MCT.DB.Services;
 using MCT.Helpers;
 using MCT.IO;
+using MCT.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,70 +54,15 @@ namespace MCT.Web.Controllers
             return View();
         }
 
-        public ActionResult Create(Subject subject)
-        {
-            if (Subject.IsEmtpy(subject))
-                return View(new Subject());
-            else
-            {
-                SubjectManager subjectManager = new SubjectManager();
-                subjectManager.Create(subject);
-                return View(subject);
-            }
-        }
-
-        public ActionResult Show()
-        { 
-            SubjectManager subjectManager = new SubjectManager();
-            return View(subjectManager.GetAll<Subject>());
-        }
-
-        [HttpGet]
-        public ActionResult CreatePlant()
-        {
-            return View(new Plant());
-        }
-
-        [HttpPost]
-        public ActionResult CreatePlant(Plant plant)
-        {
-            SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Create(plant);
-
-            return View(plant);
-        }
-
-        [HttpGet]
-        public ActionResult CreateAnimal()
-        {
-            return View(new Animal());
-        }
-
-        [HttpPost]
-        public ActionResult CreateAnimal(Animal animal)
-        {
-            SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Create(animal);
-            return View(animal);
-        }
-
-        [HttpGet]
-        public ActionResult CreateEffect()
-        {
-            return View(new Effect());
-        }
-
-        [HttpPost]
-        public ActionResult CreateEffect(Effect effect)
-        {
-            SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Create(effect);
-            return View(effect);
-        }
-
-
         public ActionResult LoadData()
         {
+            // test create seeddata
+
+            SeedDataGenerator.GenerateDays();
+
+
+            // test create plants from file
+
             AsciiReader reader = new AsciiReader();
 
             string path = Path.Combine(AppConfigHelper.GetWorkspace(), "SeedData.txt");
@@ -131,7 +77,13 @@ namespace MCT.Web.Controllers
 
                 foreach (var node in nodes)
                 {
-                    manager.Create<Plant>((Plant)node);
+                    Plant plant = (Plant)node;
+                    if (plant.Cultivation != null)
+                    {
+                        manager.Create<Cultivation>(plant.Cultivation);
+                    }
+
+                    manager.Create<Plant>(plant);
                 }
             }
 

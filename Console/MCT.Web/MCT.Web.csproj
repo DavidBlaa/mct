@@ -195,6 +195,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SeedDataGenerator.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ExtNetModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -223,6 +224,7 @@
     <Content Include="Workspace\SeedData.txt" />
     <EmbeddedResource Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Images\Empty.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -278,18 +280,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Test\CreateEffect.cshtml" />
     <Content Include="Views\Test\Show.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
     <Content Include="Views\Search\_subjectPartialView.cshtml" />
     <Content Include="Views\ExtNet\Index.cshtml" />
-    <Content Include="Views\Test\CreatePlant.cshtml" />
-    <Content Include="Views\Test\CreateAnimal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

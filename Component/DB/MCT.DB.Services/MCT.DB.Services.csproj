@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateManager.cs" />
     <Compile Include="ManagerBase.cs" />
     <Compile Include="IManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
