@@ -56,9 +56,9 @@ namespace MCT.Web.Controllers
 
             TimePeriod tp = new TimePeriod();
 
-            tp.StartArea = TimePeriodArea.Start;
+            tp.StartArea = TimePeriodArea.Anfang;
             tp.StartMonth = TimePeriodMonth.Januar;
-            tp.EndArea = TimePeriodArea.Full;
+            tp.EndArea = TimePeriodArea.Voll;
             tp.EndMonth = TimePeriodMonth.Dezember;
 
             dm.Create<TimePeriod>(tp);
