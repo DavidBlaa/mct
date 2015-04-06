@@ -34,11 +34,12 @@ namespace MCT.Web.Models.Search
 
             if (subject.Medias.Count() == 0)
             {
-                model.ImagePath = Path.Combine(AppConfigHelper.GetWorkspaceForClient(), "Images", "Empty.png");
+                model.ImagePath = "/Images/Empty.png";
             }
-
-
-
+            else
+            {
+                model.ImagePath =  subject.Medias.First().ImagePath;
+            }
 
             return model;
         }

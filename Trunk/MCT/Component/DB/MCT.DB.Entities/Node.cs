@@ -9,7 +9,7 @@ namespace MCT.DB.Entities
     public class Node:Subject
     {
         public virtual String ScientificName { get; set; }
-        public virtual TaxonType Type { get; set; }
+        public virtual TaxonRank Rank { get; set; }
         public virtual Node Parent { get; set; }
 
     }
@@ -26,7 +26,7 @@ namespace MCT.DB.Entities
     //Gattung	        Genus	            Altwelt-Wildkatzen
     //Art	            Species	            Wildkatze
     //Unterart	        Subspecies	        Hauskatze
-    public enum TaxonType
+    public enum TaxonRank
     { 
         SubSpecies,
         Species,

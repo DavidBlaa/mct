@@ -8,7 +8,7 @@
 <div class="item @Model.Type.ToString().ToLower()">
     <b class="name" style="margin-left:5px">@Model.Name</b>
     <div style="text-align:center">
-        <img  src="~/Images/Empty.png" width="140" height="140"/>
+        <img  src="@Model.ImagePath" width="140" height="140"/>
     </div>
     <div class="details" hidden="hidden">
         <p class="description">@Model.Description</p>

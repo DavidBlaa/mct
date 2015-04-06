@@ -6,7 +6,7 @@
       <generator class="native" />
     </id>
     
-    <many-to-one name="SubjectId" column="Subject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" />
+    <many-to-one name="Subject" column="Subject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" />
     
     <property name="ImagePath" type="String"/>
     <property name="MIMEType" type="String"/>
