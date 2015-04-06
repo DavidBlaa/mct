@@ -20,36 +20,56 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
 
 
-            Subject subject = new Subject();
+            //Subject subject = new Subject();
 
-            subject.Name = "ALTER FETTE SCHEIßE 3";
-            subject.Description = "ES FUNKT 3";
+            //subject.Name = "ALTER FETTE SCHEIßE 3";
+            //subject.Description = "ES FUNKT 3";
 
-            subjectManager.Create(subject);
+            //subjectManager.Create(subject);
 
-            subject.Name = "Upadte";
-            subjectManager.Update(subject);
+            //subject.Name = "Upadte";
+            //subjectManager.Update(subject);
 
-            Node pnode = new Node();
-            pnode.Name = "ParentNodetest";
 
-            subjectManager.Create(pnode);
+            //Node pnode = new Node();
+            //pnode.Name = "ParentNodetest";
 
-            Node node = new Node();
-            node.Name = "Nodetest";
-            node.Parent = pnode;
+            //subjectManager.Create(pnode);
 
-            subjectManager.Create(node);
+            //Node node = new Node();
+            //node.Name = "Nodetest";
+            //node.Parent = pnode;
 
-            node.Type = TaxonType.Order;
+            //subjectManager.Create(node);
 
-            var x = subjectManager.GetAll<Subject>();
+            //node.Rank = TaxonRank.Order;
 
-            string root = AppConfigHelper.GetRoot();
-            string ws = AppConfigHelper.GetWorkspaceForClient();
+            //var x = subjectManager.GetAll<Subject>();
 
-            
+            //string root = AppConfigHelper.GetRoot();
+            //string ws = AppConfigHelper.GetWorkspaceForClient();
 
+            Media media = new Media();
+            media.ImagePath="Images/Empty.png";
+
+            DateManager dm = new DateManager();
+
+            TimePeriod tp = new TimePeriod();
+
+            tp.StartArea = TimePeriodArea.Start;
+            tp.StartMonth = TimePeriodMonth.Januar;
+            tp.EndArea = TimePeriodArea.Full;
+            tp.EndMonth = TimePeriodMonth.Dezember;
+
+            dm.Create<TimePeriod>(tp);
+
+            Plant p = new Plant();
+            p.Name = "plant mit Blühezeit";
+            p.Bloom.Add(tp);
+
+            subjectManager.Create<Plant>(p);
+
+            var x = subjectManager.Get(1);
 
             return View();
         }
