@@ -88,7 +88,7 @@ namespace MCT.DB.Entities
                 return result;
             }
 
-            return TimePeriodArea.Full;
+            return TimePeriodArea.Voll;
         }
 
         public static TimePeriodMonth GetMonth(string value)
@@ -105,7 +105,7 @@ namespace MCT.DB.Entities
 
     public enum TimePeriodArea
     { 
-        Ganzer,
+        Voll,
         Anfang,
         Mitte,
         Ende
