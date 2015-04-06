@@ -10,9 +10,8 @@
     <property name="Description" type="String"/>
 
     <set name="Medias" cascade="all-delete-orphan">
-      <key column="Media" />
+      <key column="Subject" />
       <one-to-many class="MCT.DB.Entities.Media, MCT.DB.Entities" />
     </set>
-    
   </class>
 </hibernate-mapping>

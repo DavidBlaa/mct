@@ -49,27 +49,43 @@ namespace MCT.Web.Controllers
             //string root = AppConfigHelper.GetRoot();
             //string ws = AppConfigHelper.GetWorkspaceForClient();
 
-            Media media = new Media();
-            media.ImagePath="Images/Empty.png";
+            //Media media = new Media();
+            //media.ImagePath="Images/Empty.png";
 
-            DateManager dm = new DateManager();
+            //DateManager dm = new DateManager();
+
+            //TimePeriod tp = new TimePeriod();
+
+            //tp.StartArea = TimePeriodArea.Anfang;
+            //tp.StartMonth = TimePeriodMonth.Januar;
+            //tp.EndArea = TimePeriodArea.Voll;
+            //tp.EndMonth = TimePeriodMonth.Dezember;
+
+            //dm.Create<TimePeriod>(tp);
+
+            //Plant p = new Plant();
+            //p.Name = "plant mit Blühezeit";
+            //p.Bloom.Add(tp);
+
+            //subjectManager.Create<Plant>(p);
+
+            var x = subjectManager.GetAll<Plant>();
+
+            Plant X = new Plant();
+            X.Name = "test";
 
             TimePeriod tp = new TimePeriod();
-
             tp.StartArea = TimePeriodArea.Anfang;
-            tp.StartMonth = TimePeriodMonth.Januar;
-            tp.EndArea = TimePeriodArea.Voll;
-            tp.EndMonth = TimePeriodMonth.Dezember;
+            tp.StartMonth = TimePeriodMonth.Februar;
+            tp.EndArea = TimePeriodArea.Anfang;
+            tp.EndMonth = TimePeriodMonth.Februar;
+            tp.Type = TimePeriodType.Harvest;
 
-            dm.Create<TimePeriod>(tp);
+            X.Harvest.Add(tp);
+            subjectManager.Create<Plant>(X);
+            var y = subjectManager.GetAll<Plant>().Where(p=>p.Name.Equals("test")).FirstOrDefault();
 
-            Plant p = new Plant();
-            p.Name = "plant mit Blühezeit";
-            p.Bloom.Add(tp);
-
-            subjectManager.Create<Plant>(p);
-
-            var x = subjectManager.Get(1);
+            var z = subjectManager.GetAll<Plant>();
 
             return View();
         }

@@ -21,10 +21,39 @@
     <many-to-one name="Harvest" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" column="Harvest" cascade="all" not-null="false" />
     <many-to-one name="SeedMaturity" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" column="SeedMaturity" cascade="all" not-null="false" />-->
 
+    <!--<list name="Sowing" cascade="all">
+      <key column="Subject"/>
+      <key column="Type"/>
+      <one-to-many
+         class="MCT.DB.Entities.TimePeriod"/>
+    </list>
+
+    <list name="Bloom" cascade="all">
+      <key column="Subject"/>
+      <key column="Type"/>
+      <one-to-many
+         class="MCT.DB.Entities.TimePeriod"/>
+    </list>
+
+    <list name="Harvest" cascade="all">
+      <key column="Subject"/>
+      <key column="Type"/>
+      <one-to-many
+         class="MCT.DB.Entities.TimePeriod"/>
+    </list>
+
+    <list name="SeedMaturity" cascade="all">
+      <key column="Subject"/>
+      <key column="Type"/>
+      <one-to-many
+         class="MCT.DB.Entities.TimePeriod"/>
+    </list>-->
+
     <set name="Sowing" lazy="true" cascade="all">
       <key column="SowingRef" not-null="false" />
       <one-to-many class="MCT.DB.Entities.TimePeriod" />
     </set>
+    
     <set name="Bloom" lazy="true" cascade="all">
       <key column="BloomRef" not-null="false" />
       <one-to-many class="MCT.DB.Entities.TimePeriod" />

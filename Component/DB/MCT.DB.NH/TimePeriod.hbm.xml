@@ -12,6 +12,8 @@
     <property name="StartMonth" type="TimePeriodMonth"/>
     <property name="EndArea" type="TimePeriodArea"/>
     <property name="EndMonth" type="TimePeriodMonth"/>
+    <property name="Type" type="TimePeriodType"/>
+    
 
     <!--<many-to-one name="Start" class="MCT.DB.Entities.Day, MCT.DB.Entities" column="Start" cascade="all" not-null="true" />-->
     <!--<many-to-one name="Ende" class="MCT.DB.Entities.Day, MCT.DB.Entities" column="Ende" cascade="all" not-null="true" />-->

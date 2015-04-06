@@ -137,10 +137,10 @@ namespace MCT.IO
                         case "RootDepth":{ plant.RootDepth = PlantHelper.GetRootDepth(values[9]); break;}
                         case "SowingDepth":{ plant.SowingDepth = Convert.ToInt32(values[i]); break;}
                         case "NutrientClaim":{ plant.NutrientClaim = PlantHelper.GetNutrientClaimDepth(values[i]); break;}
-                        case "Sowing": { plant.Sowing = createTimePeriods(values[i]); break;}
-                        case "Bloom": { plant.Bloom = createTimePeriods(values[i]); break;}
-                        case "Harvest": { plant.Harvest = createTimePeriods(values[i]); break; }
-                        case "SeedMaturity": { plant.SeedMaturity = createTimePeriods(values[i]); break; }
+                        case "Sowing": { plant.Sowing = createTimePeriods(values[i], TimePeriodType.Sowing); break;}
+                        case "Bloom": { plant.Bloom = createTimePeriods(values[i], TimePeriodType.Bloom); break; }
+                        case "Harvest": { plant.Harvest = createTimePeriods(values[i], TimePeriodType.Harvest); break; }
+                        case "SeedMaturity": { plant.SeedMaturity = createTimePeriods(values[i], TimePeriodType.SeedMaturity); break; }
                     }
                 }
 
@@ -214,7 +214,7 @@ namespace MCT.IO
         /// </summary>
         /// <param name="value">string pattern vom File</param>
         /// <returns></returns>
-        private ICollection<TimePeriod> createTimePeriods(string value)
+        private ICollection<TimePeriod> createTimePeriods(string value, TimePeriodType type)
         {
             List<TimePeriod> temp = new List<TimePeriod>();
             if (!string.IsNullOrEmpty(value))
@@ -230,10 +230,10 @@ namespace MCT.IO
                     TimePeriod tp = new TimePeriod();
 
                     if(tpss.Count()==1)
-                        tp = new TimePeriod(tpss[0].Trim(), tpss[0].Trim());
+                        tp = new TimePeriod(tpss[0].Trim(), tpss[0].Trim(), type);
 
                     if(tpss.Count()==2)
-                        tp = new TimePeriod(tpss[0].Trim(), tpss[1].Trim());
+                        tp = new TimePeriod(tpss[0].Trim(), tpss[1].Trim(), type);
 
                     if(!TimePeriod.IsEmpty(tp))
                         temp.Add(tp);

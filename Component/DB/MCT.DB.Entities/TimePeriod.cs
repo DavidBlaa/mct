@@ -9,23 +9,27 @@ namespace MCT.DB.Entities
     public class TimePeriod
     {
         public virtual long Id { get; set; }
+        public virtual long Subject { get; set; }
         public virtual TimePeriodArea StartArea { get; set; }
         public virtual TimePeriodMonth StartMonth { get; set; }
         public virtual TimePeriodArea EndArea { get; set; }
         public virtual TimePeriodMonth EndMonth { get; set; }
+        public virtual TimePeriodType Type { get; set; }
 
         public TimePeriod()
         {
 
         }
 
-        public TimePeriod(string startDateText, string endDateText)
+        public TimePeriod(string startDateText, string endDateText, TimePeriodType type )
         {
-            setParameters(startDateText, endDateText);
+            setParameters(startDateText, endDateText, type);
         }
 
-        private void setParameters(string startDateText, string endDateText)
+        private void setParameters(string startDateText, string endDateText, TimePeriodType type)
         {
+             Type = type;
+
              string[] start = startDateText.Split(' ');
 
              if (start.Count() == 0)
@@ -58,8 +62,9 @@ namespace MCT.DB.Entities
                  this.EndMonth = TimePeriodHelper.GetMonth(end[1]);
              }
 
-        }
 
+
+        }
 
         public static bool IsEmpty(TimePeriod tp)
         {
@@ -125,5 +130,13 @@ namespace MCT.DB.Entities
         Oktober = 10,
         November= 11,
         Dezember=12,
+    }
+
+    public enum TimePeriodType
+    { 
+        Bloom,
+        Harvest,
+        Sowing,
+        SeedMaturity
     }
 }
