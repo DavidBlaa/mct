@@ -44,7 +44,7 @@ namespace MCT.Web.Models.Search
             return model;
         }
 
-        private static SubjectType GetType(Subject subject)
+        protected static SubjectType GetType(Subject subject)
         {
             if (subject is Animal) return SubjectType.Animal;
             if (subject is Effect) return SubjectType.Effect;

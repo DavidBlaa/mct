@@ -1,0 +1,82 @@
+﻿@model MCT.Web.Models.Search.PlantModel
+
+@{
+    ViewBag.Title = "PlantDetails";
+}
+
+<h2>PlantDetails</h2>
+
+<div>
+    <h4>PlantModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Width)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Width)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Height)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RootDepth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RootDepth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NutrientClaim)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NutrientClaim)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SowingDepth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SowingDepth)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>

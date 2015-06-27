@@ -5,14 +5,15 @@
 @model MCT.Web.Models.Search.SubjectModel
 @using MCT.Web.Models;
 
-<div class="item @Model.Type.ToString().ToLower()">
+<div id="@Model.Id" class="item @Model.Type.ToString().ToLower()" onclick="OnClickSubject(@Model.Id)">
     <b class="name" style="margin-left:5px">@Model.Name</b>
     <div style="text-align:center">
-        <img  src="@Model.ImagePath" width="140" height="140"/>
+        <img src="@Model.ImagePath" width="140" height="140" />
     </div>
     <div class="details" hidden="hidden">
         <p class="description">@Model.Description</p>
         <p class="type">@Model.Type.ToString()</p>
+        @Html.ActionLink("Details", "Details", new { id = Model.Id })
     </div>
 </div>
 
@@ -47,3 +48,12 @@
           cursor: pointer;
         }
 </style>
+
+<script type="text/javascript">
+
+    function OnClickSubject(e) {
+        $("#"+e).find('.details').toggle();
+    }
+
+
+</script>

@@ -152,42 +152,6 @@ namespace MCT.IO
                 media.ImagePath = "/Images/" + plant.Name + ".jpg";
                 plant.Medias.Add(media);
 
-
-                //plant.SowingStart = Convert.ToInt32(values[12]);
-                //plant.SowingEnd = Convert.ToInt32(values[13]);
-                //plant.BloomStart = Convert.ToInt32(values[14]);
-                //plant.BloomEnd = Convert.ToInt32(values[15]);
-                //plant.HarvestStart = Convert.ToInt32(values[16]);
-                //plant.HarvestEnd = Convert.ToInt32(values[17]);
-                //plant.SeedMaturityStart = Convert.ToInt32(values[18]);
-                //plant.SeedMaturityEnd = Convert.ToInt32(values[19]);
-
-                #region cultivation
-
-                // Entity Cultivation erstellen
-                // CultivationDateStart	    20
-                // CultivationDateEnd	    21
-                // GerminationTemperature	22
-                // GerminationPeriodDays    23
-
-                //if(!String.IsNullOrEmpty(values[20])&&
-                //   !String.IsNullOrEmpty(values[21])&&
-                //   !String.IsNullOrEmpty(values[22])&&
-                //   !String.IsNullOrEmpty(values[23]))
-                //{
-                //    Cultivation cultivation = new Cultivation();
-                //    cultivation.CultivationDateStart = Convert.ToInt32(values[20]);
-                //    cultivation.CultivationDateEnd = Convert.ToInt32(values[21]);
-                //    cultivation.GerminationTemperature = Convert.ToDouble(values[22]);
-                //    cultivation.GerminationPeriodDays = Convert.ToInt32(values[23]);
-
-                //    plant.Cultivation = cultivation;
-                //}
-
-
-                #endregion
-
-
             }
             catch (Exception ex)
             {
