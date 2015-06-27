@@ -26,5 +26,14 @@ namespace MCT.Web.Controllers
 
             return View(Model);
         }
+
+        public ActionResult Details(long id)
+        {
+            SubjectManager sm = new SubjectManager();
+            Plant plant =  sm.GetAll<Plant>().Where(p=>p.Id.Equals(id)).FirstOrDefault();
+
+
+            return View("PlantDetails", PlantModel.Convert(plant));
+        }
     }
 }
