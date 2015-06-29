@@ -1,2 +1,0 @@
-Name	Subspecies	Species	Class	Order	Family	Genus	Description
-Groﬂe Kohlweiﬂling	Pieris brassicae	Pieris brassicae	Insecta	Lepidoptera	Pieridae	Pieris	Der Groﬂe Kohlweiﬂling (Pieris brassicae) ist ein Schmetterling (Tagfalter) aus der Familie der Weiﬂlinge.

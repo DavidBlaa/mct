@@ -101,13 +101,13 @@ namespace MCT.Web.Controllers
             #region Plant
 
 
-                string path = Path.Combine(AppConfigHelper.GetWorkspace(), "SeedData.txt");
+                string path = Path.Combine(AppConfigHelper.GetWorkspace(), "PlantSeedData.txt");
 
                 if (DataReader.FileExist(path))
                 {
                     Stream fileStream = reader.Open(path);
 
-                    List<Node> nodes = reader.ReadFile(fileStream, "SeedData.txt", "Plant");
+                    List<Node> nodes = reader.ReadFile(fileStream, "PlantSeedData.txt", "Plant");
 
                     SubjectManager manager = new SubjectManager();
 
@@ -129,13 +129,13 @@ namespace MCT.Web.Controllers
             #region Animal
 
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "AnimalData.txt");
+            path = Path.Combine(AppConfigHelper.GetWorkspace(), "AnimalSeedData.txt");
 
             if (DataReader.FileExist(path))
             {
                 Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile(fileStream, "AnimalData.txt", "Animal");
+                List<Node> nodes = reader.ReadFile(fileStream, "AnimalSeedData.txt", "Animal");
 
                 SubjectManager manager = new SubjectManager();
 

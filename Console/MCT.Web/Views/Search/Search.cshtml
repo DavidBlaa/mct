@@ -5,12 +5,14 @@
 
 <h2>Search</h2>
 
-
+<input type="search" id="searchInput" class=" form-control" placeholder="search...">
+<br />
 <div class="button-group js-radio-button-group">
-    <button class="button" onclick="OnClick(this)">Animal</button>
-    <button class="button" onclick="OnClick(this)">Effect</button>
-    <button class="button" onclick="OnClick(this)">Plant</button>
-    <button class="button" onclick="OnClick(this)">All</button>
+    <button class="btn btn-primary" onclick="OnClick(this)">Animal</button>
+    <button class="btn btn-primary" onclick="OnClick(this)">Effect</button>
+    <button class="btn btn-primary" onclick="OnClick(this)">Plant</button>
+    <button class="btn btn-primary" onclick="OnClick(this)">All</button>
+    
 </div>
 <br />
 
@@ -66,6 +68,25 @@
                 }
             })
         }
+
+        $("#searchInput").change(function search(e) {
+
+            var searchInput = e.currentTarget.value;
+
+            $container.isotope({
+                // filter element with numbers greater than 50
+                filter: function () {
+                    // `this` is the item element. Get text of element's .number
+                    var name = $(this).find('.name').text();
+
+                    if (name.toLowerCase().indexOf(searchInput.toLowerCase()) >= 0)
+                        return true;
+                    else
+                        return false;
+                }
+            })
+        });
+
 
         $(function () {
 

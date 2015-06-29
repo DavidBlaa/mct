@@ -116,6 +116,7 @@ namespace MCT.IO
         /// 17CultivationDate	
         /// 18GerminationTemperature	
         /// 19GerminationPeriodDays
+        /// 20 Image
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
@@ -159,16 +160,21 @@ namespace MCT.IO
                         case "Harvest": { 
                             plant.Harvest = createTimePeriods(values[i], TimePeriodType.Harvest); break; }
                         case "SeedMaturity": { plant.SeedMaturity = createTimePeriods(values[i], TimePeriodType.SeedMaturity); break; }
+                        case "Image": {
+                            if (!String.IsNullOrEmpty(values[i]))
+                            {
+                                Media media = new Media();
+                                media.ImagePath = "/Images/" + values[i];
+                                plant.Medias.Add(media);
+                            }
+                            break;
+                        }
                     }
                 }
 
                 //set rank
                 plant.Rank = TaxonRank.SubSpecies;
 
-                //set Image
-                Media media = new Media();
-                media.ImagePath = "/Images/" + plant.Name + ".jpg";
-                plant.Medias.Add(media);
 
             }
             catch (Exception ex)
@@ -189,6 +195,7 @@ namespace MCT.IO
         ///     5 Family	
         ///     6 Genus	
         /// 7 Description
+        /// 8 Image
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
@@ -223,6 +230,17 @@ namespace MCT.IO
                             break;
 
                         }
+
+                        case "Image":
+                        {
+                            if (!String.IsNullOrEmpty(values[i]))
+                            {
+                                Media media = new Media();
+                                media.ImagePath = "/Images/" + values[i];
+                                subject.Medias.Add(media);
+                            }
+                            break;
+                        }
                     }
                 }
 
@@ -230,9 +248,9 @@ namespace MCT.IO
                 subject.Rank = TaxonRank.SubSpecies;
 
                 //set Image
-                Media media = new Media();
-                media.ImagePath = "/Images/" + subject.Name + ".jpg";
-                subject.Medias.Add(media);
+                //Media media = new Media();
+                //media.ImagePath = "/Images/" + subject.Name + ".jpg";
+                //subject.Medias.Add(media);
 
             }
             catch (Exception ex)
