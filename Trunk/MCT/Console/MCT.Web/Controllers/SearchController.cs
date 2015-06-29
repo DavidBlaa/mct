@@ -27,32 +27,32 @@ namespace MCT.Web.Controllers
             return View(Model);
         }
 
-        public ActionResult Details(long id)
+        public ActionResult Details(long id, string type)
         {
             SubjectManager sm = new SubjectManager();
 
             Subject s = sm.Get(id);
 
-            if (s is Plant)
+            switch (type)
             {
-                Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
-                return View("PlantDetails", PlantModel.Convert(plant));
-            }
+                case "Plant": {
 
-            if (s is Animal)
-            {
-                Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
-                return View("AnimalDetails", AnimalModel.Convert(animal));
-            }
+                    Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
+                    return View("PlantDetails", PlantModel.Convert(plant));
+                }
+                case "Animal": {
+                    Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+                    return View("AnimalDetails", AnimalModel.Convert(animal));
+                }
+                case "Effect": {
+                    Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
+                    return View("EffectDetails");
+                }
 
-            if (s is Effect)
-            {
-                Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
-                return View("EffectDetails");
+                default: { break; }
             }
 
             return View("Search");
-
         }
     }
 }

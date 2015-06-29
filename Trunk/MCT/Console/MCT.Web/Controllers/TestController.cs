@@ -96,32 +96,59 @@ namespace MCT.Web.Controllers
 
             SeedDataGenerator.GenerateDays();
 
-
-            // test create plants from file
-
             AsciiReader reader = new AsciiReader();
 
-            string path = Path.Combine(AppConfigHelper.GetWorkspace(), "SeedData.txt");
+            #region Plant
+
+
+                string path = Path.Combine(AppConfigHelper.GetWorkspace(), "SeedData.txt");
+
+                if (DataReader.FileExist(path))
+                {
+                    Stream fileStream = reader.Open(path);
+
+                    List<Node> nodes = reader.ReadFile(fileStream, "SeedData.txt", "Plant");
+
+                    SubjectManager manager = new SubjectManager();
+
+                    foreach (var node in nodes)
+                    {
+                        Plant plant = (Plant)node;
+                        if (plant.Cultivation != null)
+                        {
+                            manager.Create<Cultivation>(plant.Cultivation);
+                        }
+
+                        manager.Create<Plant>(plant);
+                    }
+                }
+
+
+            #endregion
+
+            #region Animal
+
+
+            path = Path.Combine(AppConfigHelper.GetWorkspace(), "AnimalData.txt");
 
             if (DataReader.FileExist(path))
             {
                 Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile(fileStream, "SeedData.txt", "Plant");
+                List<Node> nodes = reader.ReadFile(fileStream, "AnimalData.txt", "Animal");
 
                 SubjectManager manager = new SubjectManager();
 
                 foreach (var node in nodes)
                 {
-                    Plant plant = (Plant)node;
-                    if (plant.Cultivation != null)
-                    {
-                        manager.Create<Cultivation>(plant.Cultivation);
-                    }
-
-                    manager.Create<Plant>(plant);
+                    Animal animal = (Animal)node;
+                    manager.Create<Animal>(animal);
                 }
             }
+
+
+            #endregion
+
 
             return View("Index");
         }

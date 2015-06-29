@@ -13,7 +13,7 @@
     <div class="details" hidden="hidden">
         <p class="description">@Model.Description</p>
         <p class="type">@Model.Type.ToString()</p>
-        @Html.ActionLink("Details", "Details", new { id = Model.Id })
+        @Html.ActionLink("Details", "Details", new { id = Model.Id, type = @Model.Type.ToString() })
     </div>
 </div>
 
