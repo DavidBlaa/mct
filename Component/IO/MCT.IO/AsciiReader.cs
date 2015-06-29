@@ -134,12 +134,13 @@ namespace MCT.IO
                         }
                         case "Width":{  plant.Width = Convert.ToInt32(values[i]); break;}
                         case "Height":{ plant.Height = Convert.ToInt32(values[i]); break;}
-                        case "RootDepth":{ plant.RootDepth = PlantHelper.GetRootDepth(values[9]); break;}
+                        case "RootDepth":{ plant.RootDepth = PlantHelper.GetRootDepth(values[i]); break;}
                         case "SowingDepth":{ plant.SowingDepth = Convert.ToInt32(values[i]); break;}
                         case "NutrientClaim":{ plant.NutrientClaim = PlantHelper.GetNutrientClaimDepth(values[i]); break;}
                         case "Sowing": { plant.Sowing = createTimePeriods(values[i], TimePeriodType.Sowing); break;}
                         case "Bloom": { plant.Bloom = createTimePeriods(values[i], TimePeriodType.Bloom); break; }
-                        case "Harvest": { plant.Harvest = createTimePeriods(values[i], TimePeriodType.Harvest); break; }
+                        case "Harvest": { 
+                            plant.Harvest = createTimePeriods(values[i], TimePeriodType.Harvest); break; }
                         case "SeedMaturity": { plant.SeedMaturity = createTimePeriods(values[i], TimePeriodType.SeedMaturity); break; }
                     }
                 }
