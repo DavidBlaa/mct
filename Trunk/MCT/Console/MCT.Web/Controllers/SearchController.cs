@@ -30,10 +30,29 @@ namespace MCT.Web.Controllers
         public ActionResult Details(long id)
         {
             SubjectManager sm = new SubjectManager();
-            Plant plant =  sm.GetAll<Plant>().Where(p=>p.Id.Equals(id)).FirstOrDefault();
 
+            Subject s = sm.Get(id);
 
-            return View("PlantDetails", PlantModel.Convert(plant));
+            if (s is Plant)
+            {
+                Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
+                return View("PlantDetails", PlantModel.Convert(plant));
+            }
+
+            if (s is Animal)
+            {
+                Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+                return View("AnimalDetails", AnimalModel.Convert(animal));
+            }
+
+            if (s is Effect)
+            {
+                Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
+                return View("EffectDetails");
+            }
+
+            return View("Search");
+
         }
     }
 }

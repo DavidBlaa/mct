@@ -78,6 +78,26 @@ namespace MCT.DB.Entities
 
         }
 
+        public virtual string GetTimePeriodAsString()
+        {
+            string tpString = "";
+
+            if (StartArea != TimePeriodArea.Voll)
+                tpString += StartArea +" ";
+
+                tpString += StartMonth;
+
+            if (EndArea != TimePeriodArea.Voll)
+                tpString += "-" + EndArea + " ";
+
+            if (EndArea == TimePeriodArea.Voll)
+                tpString += "-" + EndMonth;
+            else
+                tpString += EndMonth;
+  
+            return tpString;
+        }
+
     }
 
 

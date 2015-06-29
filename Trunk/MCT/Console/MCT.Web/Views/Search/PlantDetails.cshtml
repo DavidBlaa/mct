@@ -3,9 +3,6 @@
 @{
     ViewBag.Title = "PlantDetails";
 }
-
-<h2>PlantDetails</h2>
-
 <div>
     <h4>PlantModel</h4>
     <hr />
@@ -16,6 +13,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScientificName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScientificName)
         </dd>
 
         <dt>
@@ -73,6 +78,39 @@
         <dd>
             @Html.DisplayFor(model => model.SowingDepth)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bloom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bloom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sowing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sowing)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Harvest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Harvest)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeedMaturity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeedMaturity)
+        </dd>
+
 
     </dl>
 </div>
