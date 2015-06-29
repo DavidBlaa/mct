@@ -1,14 +1,9 @@
 ﻿@model MCT.Web.Models.Search.AnimalModel
 
 @{
-    ViewBag.Title = "AnimalDetails";
+    ViewBag.Title = "Animal";
 }
-
-<h2>AnimalDetails</h2>
-
 <div>
-    <h4>AnimalModel</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -48,5 +43,5 @@
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Search")
 </p>

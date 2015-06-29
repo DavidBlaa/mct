@@ -227,8 +227,8 @@
     <Content Include="Images\Blumenkohl.jpg" />
     <Content Include="Images\GrosserKohlweissling.jpg" />
     <Content Include="Images\SpinatButterflay.jpg" />
-    <Content Include="Workspace\AnimalData.txt" />
-    <Content Include="Workspace\SeedData.txt" />
+    <Content Include="Workspace\AnimalSeedData.txt" />
+    <Content Include="Workspace\PlantSeedData.txt" />
     <EmbeddedResource Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
