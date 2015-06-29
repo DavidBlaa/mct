@@ -225,6 +225,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Blumenkohl Erfurter Zwerg.jpg" />
     <Content Include="Images\Blumenkohl.jpg" />
+    <Content Include="Images\Großer Kohlweißling.jpg" />
     <Content Include="Images\Spinat Butterflay.jpg" />
     <Content Include="Workspace\SeedData.txt" />
     <EmbeddedResource Include="hibernate.cfg.xml">
