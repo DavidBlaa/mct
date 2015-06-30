@@ -100,7 +100,6 @@ namespace MCT.Web.Controllers
 
             #region Plant
 
-
                 string path = Path.Combine(AppConfigHelper.GetWorkspace(), "PlantSeedData.txt");
 
                 if (DataReader.FileExist(path))
@@ -123,34 +122,65 @@ namespace MCT.Web.Controllers
                     }
                 }
 
-
+                loadTestPlantData();
+                
             #endregion
 
             #region Animal
 
+                path = Path.Combine(AppConfigHelper.GetWorkspace(), "AnimalSeedData.txt");
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "AnimalSeedData.txt");
-
-            if (DataReader.FileExist(path))
-            {
-                Stream fileStream = reader.Open(path);
-
-                List<Node> nodes = reader.ReadFile(fileStream, "AnimalSeedData.txt", "Animal");
-
-                SubjectManager manager = new SubjectManager();
-
-                foreach (var node in nodes)
+                if (DataReader.FileExist(path))
                 {
-                    Animal animal = (Animal)node;
-                    manager.Create<Animal>(animal);
-                }
-            }
+                    Stream fileStream = reader.Open(path);
 
+                    List<Node> nodes = reader.ReadFile(fileStream, "AnimalSeedData.txt", "Animal");
+
+                    SubjectManager manager = new SubjectManager();
+
+                    foreach (var node in nodes)
+                    {
+                        Animal animal = (Animal)node;
+                        manager.Create<Animal>(animal);
+                    }
+                }
+
+                loadTestAnimalData();
 
             #endregion
 
 
             return View("Index");
+        }
+
+        private void loadTestPlantData()
+        {
+            SubjectManager manager = new SubjectManager();
+            Plant tempPlant = new Plant();  
+            // create some big test data for plant
+            for(int i = 0; i < 1000; i++)
+            {
+                tempPlant = new Plant();
+                tempPlant.Name = "Plant Name" + i;
+                tempPlant.Description = "Description Description Description Description Description Description" + i;
+                tempPlant.ScientificName = "ScientificName" + i;
+                manager.Create<Plant>(tempPlant);
+            }
+        }
+
+        private void loadTestAnimalData()
+        {
+            SubjectManager manager = new SubjectManager();
+            Animal tempAnimal = new Animal();
+            // create some big test data for plant
+            for (int i = 0; i < 1000; i++)
+            {
+                tempAnimal = new Animal();
+                tempAnimal.Name = "Animal Name" + i;
+                tempAnimal.Description = "Description Description Description Description Description Description" + i;
+                tempAnimal.ScientificName = "ScientificName" + i;
+                manager.Create<Animal>(tempAnimal);
+            }
         }
     }
 }
