@@ -158,7 +158,7 @@ namespace MCT.Web.Controllers
             SubjectManager manager = new SubjectManager();
             Plant tempPlant = new Plant();  
             // create some big test data for plant
-            for(int i = 0; i < 1000; i++)
+            for(int i = 0; i < 100; i++)
             {
                 tempPlant = new Plant();
                 tempPlant.Name = "Plant Name" + i;
@@ -173,7 +173,7 @@ namespace MCT.Web.Controllers
             SubjectManager manager = new SubjectManager();
             Animal tempAnimal = new Animal();
             // create some big test data for plant
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 tempAnimal = new Animal();
                 tempAnimal.Name = "Animal Name" + i;
