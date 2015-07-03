@@ -1,11 +1,10 @@
-﻿using MCT.DB.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using MCT.DB.Entities;
 
 namespace MCT.IO
 {
@@ -47,7 +46,7 @@ namespace MCT.IO
             }
 
 
-            using (StreamReader streamReader = new StreamReader(file, System.Text.Encoding.Default))
+            using (StreamReader streamReader = new StreamReader(file, Encoding.Default))
             {
                 string line;
 
@@ -155,11 +154,11 @@ namespace MCT.IO
                         case "RootDepth":{ plant.RootDepth = PlantHelper.GetRootDepth(values[i]); break;}
                         case "SowingDepth":{ plant.SowingDepth = Convert.ToInt32(values[i]); break;}
                         case "NutrientClaim":{ plant.NutrientClaim = PlantHelper.GetNutrientClaimDepth(values[i]); break;}
-                        case "Sowing": { plant.Sowing = createTimePeriods(values[i], TimePeriodType.Sowing); break;}
-                        case "Bloom": { plant.Bloom = createTimePeriods(values[i], TimePeriodType.Bloom); break; }
+                        case "Sowing": { plant.Sowing = createTimePeriods<Sowing>(values[i], TimePeriodType.Sowing); break;}
+                        case "Bloom": { plant.Bloom = createTimePeriods<Bloom>(values[i], TimePeriodType.Bloom); break; }
                         case "Harvest": { 
-                            plant.Harvest = createTimePeriods(values[i], TimePeriodType.Harvest); break; }
-                        case "SeedMaturity": { plant.SeedMaturity = createTimePeriods(values[i], TimePeriodType.SeedMaturity); break; }
+                            plant.Harvest = createTimePeriods<Harvest>(values[i], TimePeriodType.Harvest); break; }
+                        case "SeedMaturity": { plant.SeedMaturity = createTimePeriods<SeedMaturity>(values[i], TimePeriodType.SeedMaturity); break; }
                         case "Image": {
                             if (!String.IsNullOrEmpty(values[i]))
                             {
@@ -278,29 +277,69 @@ namespace MCT.IO
         /// </summary>
         /// <param name="value">string pattern vom File</param>
         /// <returns></returns>
-        private ICollection<TimePeriod> createTimePeriods(string value, TimePeriodType type)
+        private ICollection<T> createTimePeriods<T>(string value, TimePeriodType type) where T : TimePeriod
         {
-            List<TimePeriod> temp = new List<TimePeriod>();
+            List<T> temp = new List<T>();
             if (!string.IsNullOrEmpty(value))
             {
-
-
                 string[] timePeriodStrings = value.Split('#');
+
+                T tp;
 
                 foreach (string tps in timePeriodStrings)
                 {
                     string[] tpss = tps.Split('-');
 
-                    TimePeriod tp = new TimePeriod();
+                    if (type.Equals(TimePeriodType.Bloom))
+                    {
+                        tp = new Bloom() as T;
 
-                    if(tpss.Count()==1)
-                        tp = new TimePeriod(tpss[0].Trim(), tpss[0].Trim(), type);
+                        if(tpss.Count()==1)
+                            tp = new Bloom(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                    if(tpss.Count()==2)
-                        tp = new TimePeriod(tpss[0].Trim(), tpss[1].Trim(), type);
+                        if(tpss.Count()==2)
+                            tp = new Bloom(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
-                    if(!TimePeriod.IsEmpty(tp))
-                        temp.Add(tp);
+                        if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
+                    }
+                    
+                    if (type.Equals(TimePeriodType.Harvest))
+                    {
+                        tp = new Harvest() as T;
+                        if(tpss.Count()==1)
+                            tp = new Harvest(tpss[0].Trim(), tpss[0].Trim(), type) as T;
+
+                        if(tpss.Count()==2)
+                            tp = new Harvest(tpss[0].Trim(), tpss[1].Trim(), type) as T;
+
+                        if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
+                    }
+
+                    if (type.Equals(TimePeriodType.Sowing))
+                    {
+                         tp = new Sowing() as T;
+
+                        if (tpss.Count() == 1)
+                            tp = new Sowing(tpss[0].Trim(), tpss[0].Trim(), type) as T;
+
+                        if (tpss.Count() == 2)
+                            tp = new Sowing(tpss[0].Trim(), tpss[1].Trim(), type) as T;
+
+                        if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
+                    }
+
+                    if (type.Equals(TimePeriodType.SeedMaturity))
+                    {
+                         tp = new SeedMaturity() as T;
+
+                        if (tpss.Count() == 1)
+                            tp = new SeedMaturity(tpss[0].Trim(), tpss[0].Trim(), type) as T;
+
+                        if (tpss.Count() == 2)
+                            tp = new SeedMaturity(tpss[0].Trim(), tpss[1].Trim(), type) as T;
+
+                        if (!TimePeriod.IsEmpty((tp)))temp.Add(tp);
+                    }
 
                 }
             }

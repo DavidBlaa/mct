@@ -15,57 +15,32 @@
     <many-to-one name="Cultivation" class="MCT.DB.Entities.Cultivation, MCT.DB.Entities" column="Cultivation" cascade="all" not-null="false" />
     <!--<property name="Cultivation" type="Int64"/>-->
 
-    <!--//Dates-->
-    <!--<many-to-one name="Sowing" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" column="Sowing" cascade="all" not-null="false" />
-    <many-to-one name="Bloom" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" column="Bloom" cascade="all" not-null="false" />
-    <many-to-one name="Harvest" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" column="Harvest" cascade="all" not-null="false" />
-    <many-to-one name="SeedMaturity" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" column="SeedMaturity" cascade="all" not-null="false" />-->
+    <set cascade="all-delete-orphan" name="Bloom" >
+      <key>
+        <column name="SubjectRef" />
+      </key>
+      <one-to-many class="Bloom" />
+    </set>
 
-    <!--<list name="Sowing" cascade="all">
-      <key column="Subject"/>
-      <key column="Type"/>
-      <one-to-many
-         class="MCT.DB.Entities.TimePeriod"/>
-    </list>
-
-    <list name="Bloom" cascade="all">
-      <key column="Subject"/>
-      <key column="Type"/>
-      <one-to-many
-         class="MCT.DB.Entities.TimePeriod"/>
-    </list>
-
-    <list name="Harvest" cascade="all">
-      <key column="Subject"/>
-      <key column="Type"/>
-      <one-to-many
-         class="MCT.DB.Entities.TimePeriod"/>
-    </list>
-
-    <list name="SeedMaturity" cascade="all">
-      <key column="Subject"/>
-      <key column="Type"/>
-      <one-to-many
-         class="MCT.DB.Entities.TimePeriod"/>
-    </list>-->
-
-    <set name="Sowing" lazy="true" cascade="all">
-      <key column="SowingRef" not-null="false" />
-      <one-to-many class="MCT.DB.Entities.TimePeriod" />
+    <set cascade="all-delete-orphan" name="Sowing" >
+      <key>
+        <column name="SubjectRef" />
+      </key>
+      <one-to-many class="Sowing" />
     </set>
     
-    <set name="Bloom" lazy="true" cascade="all">
-      <key column="BloomRef" not-null="false" />
-      <one-to-many class="MCT.DB.Entities.TimePeriod" />
-    </set>
-    <set name="Harvest" inverse="true" lazy="true" cascade="all">
-      <key column="HarvestRef" not-null="false" />
-      <one-to-many class="MCT.DB.Entities.TimePeriod" />
-    </set>
-    <set name="SeedMaturity" inverse="true" lazy="true" cascade="all">
-      <key column="SeedMaturityRef" not-null="false" />
-      <one-to-many class="MCT.DB.Entities.TimePeriod" />
+    <set cascade="all-delete-orphan" name="Harvest">
+      <key>
+        <column name="SubjectRef" />
+      </key>
+      <one-to-many class="Harvest" />
     </set>
     
+    <set cascade="all-delete-orphan" name="SeedMaturity" >
+      <key>
+        <column name="SubjectRef" />
+      </key>
+      <one-to-many class="SeedMaturity" />
+    </set>
   </joined-subclass>
 </hibernate-mapping>

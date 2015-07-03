@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MCT.DB.Entities
 {
-    public class TimePeriod
+    public abstract class TimePeriod
     {
         public virtual long Id { get; set; }
         public virtual long Subject { get; set; }
@@ -16,17 +13,11 @@ namespace MCT.DB.Entities
         public virtual TimePeriodMonth EndMonth { get; set; }
         public virtual TimePeriodType Type { get; set; }
 
-        public TimePeriod()
-        {
+        public virtual Subject AssignedTo { get; set; }
+            
 
-        }
 
-        public TimePeriod(string startDateText, string endDateText, TimePeriodType type )
-        {
-            setParameters(startDateText, endDateText, type);
-        }
-
-        private void setParameters(string startDateText, string endDateText, TimePeriodType type)
+        protected void setParameters(string startDateText, string endDateText, TimePeriodType type)
         {
              Type = type;
 
