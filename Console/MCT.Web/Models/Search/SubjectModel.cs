@@ -1,10 +1,6 @@
-﻿using MCT.DB.Entities;
-using MCT.Helpers;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.Linq;
-using System.Web;
+using MCT.DB.Entities;
 
 namespace MCT.Web.Models.Search
 {

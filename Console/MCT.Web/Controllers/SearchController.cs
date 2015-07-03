@@ -1,11 +1,8 @@
-﻿using MCT.DB.Entities;
+﻿using System.Linq;
+using System.Web.Mvc;
+using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Web.Models.Search;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace MCT.Web.Controllers
 {

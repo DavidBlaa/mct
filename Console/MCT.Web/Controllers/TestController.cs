@@ -1,14 +1,12 @@
-﻿using MCT.DB.Entities;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Helpers;
 using MCT.IO;
 using MCT.Web.Helpers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace MCT.Web.Controllers
 {
@@ -69,23 +67,23 @@ namespace MCT.Web.Controllers
 
             //subjectManager.Create<Plant>(p);
 
-            var x = subjectManager.GetAll<Plant>();
+            //var x = subjectManager.GetAll<Plant>();
 
-            Plant X = new Plant();
-            X.Name = "test";
+            //Plant X = new Plant();
+            //X.Name = "test";
 
-            TimePeriod tp = new TimePeriod();
-            tp.StartArea = TimePeriodArea.Anfang;
-            tp.StartMonth = TimePeriodMonth.Februar;
-            tp.EndArea = TimePeriodArea.Anfang;
-            tp.EndMonth = TimePeriodMonth.Februar;
-            tp.Type = TimePeriodType.Harvest;
+            //TimePeriod tp = new TimePeriod();
+            //tp.StartArea = TimePeriodArea.Anfang;
+            //tp.StartMonth = TimePeriodMonth.Februar;
+            //tp.EndArea = TimePeriodArea.Anfang;
+            //tp.EndMonth = TimePeriodMonth.Februar;
+            //tp.Type = TimePeriodType.Harvest;
 
-            X.Harvest.Add(tp);
-            subjectManager.Create<Plant>(X);
-            var y = subjectManager.GetAll<Plant>().Where(p=>p.Name.Equals("test")).FirstOrDefault();
+            //X.Harvest.Add(tp);
+            //subjectManager.Create<Plant>(X);
+            //var y = subjectManager.GetAll<Plant>().Where(p=>p.Name.Equals("test")).FirstOrDefault();
 
-            var z = subjectManager.GetAll<Plant>();
+            //var z = subjectManager.GetAll<Plant>();
 
             return View();
         }
@@ -158,7 +156,7 @@ namespace MCT.Web.Controllers
             SubjectManager manager = new SubjectManager();
             Plant tempPlant = new Plant();  
             // create some big test data for plant
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < 10; i++)
             {
                 tempPlant = new Plant();
                 tempPlant.Name = "Plant Name" + i;
@@ -173,7 +171,7 @@ namespace MCT.Web.Controllers
             SubjectManager manager = new SubjectManager();
             Animal tempAnimal = new Animal();
             // create some big test data for plant
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 tempAnimal = new Animal();
                 tempAnimal.Name = "Animal Name" + i;

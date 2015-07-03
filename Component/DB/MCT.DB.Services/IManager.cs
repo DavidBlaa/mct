@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MCT.DB.Services
+﻿namespace MCT.DB.Services
 {
     public interface IManager<T,V>  where T: new()
                                         where V: struct

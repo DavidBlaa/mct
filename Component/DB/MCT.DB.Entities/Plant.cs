@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MCT.DB.Entities
 {
@@ -25,19 +22,19 @@ namespace MCT.DB.Entities
         public virtual Cultivation Cultivation { get; set; }
 
         //Dates
-        public virtual ICollection<TimePeriod> Sowing { get; set; }
-        public virtual ICollection<TimePeriod> Bloom { get; set; }
-        public virtual ICollection<TimePeriod> Harvest { get; set; }
-        public virtual ICollection<TimePeriod> SeedMaturity { get; set; }
+        public virtual ICollection<Sowing> Sowing { get; set; }
+        public virtual ICollection<Bloom> Bloom { get; set; }
+        public virtual ICollection<Harvest> Harvest { get; set; }
+        public virtual ICollection<SeedMaturity> SeedMaturity { get; set; }
 
         #endregion
 
         public Plant()
         {
-            Sowing = new List<TimePeriod>();
-            Bloom = new List<TimePeriod>();
-            Harvest = new List<TimePeriod>();
-            SeedMaturity = new List<TimePeriod>();
+            Sowing = new List<Sowing>();
+            Bloom = new List<Bloom>();
+            Harvest = new List<Harvest>();
+            SeedMaturity = new List<SeedMaturity>();
         }
 
 

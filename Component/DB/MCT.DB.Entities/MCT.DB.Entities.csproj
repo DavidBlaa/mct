@@ -49,14 +49,18 @@
   <ItemGroup>
     <Compile Include="AdditionalName.cs" />
     <Compile Include="Animal.cs" />
+    <Compile Include="Bloom.cs" />
     <Compile Include="Cultivation.cs" />
     <Compile Include="Day.cs" />
     <Compile Include="Effect.cs" />
+    <Compile Include="Harvest.cs" />
     <Compile Include="Interaction.cs" />
     <Compile Include="Media.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="Predicate.cs" />
+    <Compile Include="SeedMaturity.cs" />
+    <Compile Include="Sowing.cs" />
     <Compile Include="Species.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

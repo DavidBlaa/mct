@@ -1,8 +1,7 @@
-﻿using MCT.DB.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using MCT.DB.Entities;
 
 namespace MCT.Web.Models.Search
 {
@@ -51,10 +50,10 @@ namespace MCT.Web.Models.Search
 
             #region Dates
 
-            model.Sowing = GetTimePeriodsAsStringList(plant.Sowing);
-            model.Harvest = GetTimePeriodsAsStringList(plant.Harvest);
-            model.Bloom = GetTimePeriodsAsStringList(plant.Bloom);
-            model.SeedMaturity = GetTimePeriodsAsStringList(plant.SeedMaturity);
+            if (plant.Sowing!=null) model.Sowing = GetTimePeriodsAsStringList<Sowing>(plant.Sowing);
+            if (plant.Harvest != null) model.Harvest = GetTimePeriodsAsStringList<Harvest>(plant.Harvest);
+            if (plant.Bloom != null) model.Bloom = GetTimePeriodsAsStringList<Bloom>(plant.Bloom);
+            if (plant.SeedMaturity != null) model.SeedMaturity = GetTimePeriodsAsStringList<SeedMaturity>(plant.SeedMaturity);
 
 
             #endregion
@@ -62,13 +61,13 @@ namespace MCT.Web.Models.Search
             return model;
         }
 
-        private static List<string> GetTimePeriodsAsStringList(ICollection<TimePeriod> timeperiods)
+        private static List<string> GetTimePeriodsAsStringList<T>(ICollection<T> timeperiods) where T : TimePeriod
         {
             List<string> temp = new List<string>();
 
             if (timeperiods != null && timeperiods.Count > 0)
             {
-                foreach (TimePeriod tp in timeperiods)
+                foreach (T tp in timeperiods)
                 {
                     temp.Add(tp.GetTimePeriodAsString());
                 }
@@ -76,5 +75,8 @@ namespace MCT.Web.Models.Search
 
             return temp;
         }
+
+
+
     }
 }
