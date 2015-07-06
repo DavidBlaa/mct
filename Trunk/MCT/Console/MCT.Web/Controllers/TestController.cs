@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web.Mvc;
 using MCT.DB.Entities;
 using MCT.DB.Services;
@@ -113,10 +112,10 @@ namespace MCT.Web.Controllers
                         Plant plant = (Plant)node;
                         if (plant.Cultivation != null)
                         {
-                            manager.Create<Cultivation>(plant.Cultivation);
+                            manager.Create(plant.Cultivation);
                         }
 
-                        manager.Create<Plant>(plant);
+                        manager.Create(plant);
                     }
                 }
 
@@ -139,7 +138,7 @@ namespace MCT.Web.Controllers
                     foreach (var node in nodes)
                     {
                         Animal animal = (Animal)node;
-                        manager.Create<Animal>(animal);
+                        manager.Create(animal);
                     }
                 }
 
@@ -162,7 +161,7 @@ namespace MCT.Web.Controllers
                 tempPlant.Name = "Plant Name" + i;
                 tempPlant.Description = "Description Description Description Description Description Description" + i;
                 tempPlant.ScientificName = "ScientificName" + i;
-                manager.Create<Plant>(tempPlant);
+                manager.Create(tempPlant);
             }
         }
 
@@ -177,7 +176,7 @@ namespace MCT.Web.Controllers
                 tempAnimal.Name = "Animal Name" + i;
                 tempAnimal.Description = "Description Description Description Description Description Description" + i;
                 tempAnimal.ScientificName = "ScientificName" + i;
-                manager.Create<Animal>(tempAnimal);
+                manager.Create(tempAnimal);
             }
         }
     }

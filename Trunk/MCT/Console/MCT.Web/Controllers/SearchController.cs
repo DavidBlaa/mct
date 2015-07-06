@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Web.Models.Search;
-using MCT.Search;
 
 namespace MCT.Web.Controllers
 {

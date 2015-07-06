@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NHibernate;
-using NHibernate.Search;
-
 
 namespace MCT.DB.Entities
 {
@@ -35,8 +32,7 @@ namespace MCT.DB.Entities
         {
             if(subject.Id == 0)
                 return true;
-            else
-                return false;
+            return false;
         }
     }
 }

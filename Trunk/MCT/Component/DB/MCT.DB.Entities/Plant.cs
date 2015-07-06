@@ -60,7 +60,7 @@ namespace MCT.DB.Entities
         public static RootDepth GetRootDepth(string value)
         {
             RootDepth result;
-            if (Enum.TryParse<RootDepth>(value, out result))
+            if (Enum.TryParse(value, out result))
             {
                 return result;
             }
@@ -71,7 +71,7 @@ namespace MCT.DB.Entities
         public static NutrientClaim GetNutrientClaimDepth(string value)
         {
             NutrientClaim result;
-            if (Enum.TryParse<NutrientClaim>(value, out result))
+            if (Enum.TryParse(value, out result))
             {
                 return result;
             }

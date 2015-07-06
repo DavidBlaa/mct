@@ -1,10 +1,7 @@
-﻿using MCT.DB.Entities;
-using MCT.DB.Services;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MCT.DB.Entities;
+using MCT.DB.Services;
 
 namespace MCT.Search
 {

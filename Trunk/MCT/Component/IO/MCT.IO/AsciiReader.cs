@@ -31,16 +31,16 @@ namespace MCT.IO
         {
             List<Node> nodes = new List<Node>();
 
-            this.FileStream = file;
-            this.FileName = fileName;
+            FileStream = file;
+            FileName = fileName;
 
             // Check params
-            if (this.FileStream == null)
+            if (FileStream == null)
             {
                 throw new Exception("File not exist");
             }
 
-            if (!this.FileStream.CanRead)
+            if (!FileStream.CanRead)
             {
                 throw new Exception("File is not readable");
             }

@@ -18,7 +18,7 @@ namespace MCT.Web.Helpers
                     day.DayInYear = i * j;
                     day.WeekPerYear = i;
 
-                    dateManager.Create<Day>(day);
+                    dateManager.Create(day);
                 }
             }
 
