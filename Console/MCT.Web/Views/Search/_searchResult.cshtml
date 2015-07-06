@@ -1,0 +1,9 @@
+﻿@model List<MCT.Web.Models.Search.SubjectModel>
+
+
+<div id="searchResultContent" class="row">
+    @foreach (var subject in Model)
+    {
+        @Html.Partial("_subjectPartialView", subject);
+    }
+</div>

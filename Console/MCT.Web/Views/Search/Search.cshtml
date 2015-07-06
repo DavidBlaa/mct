@@ -24,16 +24,18 @@
 
 <script type="text/javascript">
 
-    $("#searchInput").keydown(function (e) {
+    $("#searchInput").keyup(function (e) {
 
-        alert("s:" + $("#searchInput").val() +" "+String.fromCharCode(e.keyCode) );
+        //alert("s:" + $("#searchInput").val() +" "+String.fromCharCode(e.keyCode) );
         
-        var searchValue = $("#searchInput").val() + String.fromCharCode(e.keyCode);
-
+        var searchValue = $("#searchInput").val();
+        $("#searchInput").attr("disabled");
+        //alert(searchValue)
         if (searchValue.length >= 0) {
             $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function (response) {
                
-                $("#searchContent").replaceWith(response);
+                $("#searchResultContent").replaceWith(response);
+                $("#searchInput").removeAttr("disabled");
             });
 
         }
