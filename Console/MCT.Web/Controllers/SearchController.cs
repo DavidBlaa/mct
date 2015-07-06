@@ -26,18 +26,18 @@ namespace MCT.Web.Controllers
         }
 
         // GET: Search
-        public ActionResult Search(string searchValue)
-        {
-            SearchModel Model = new SearchModel();
+        //public ActionResult Search(string searchValue)
+        //{
+        //    SearchModel Model = new SearchModel();
 
-            //Get filtered subjects
-            var subjects = SearchProvider.Search(searchValue);
+        //    //Get filtered subjects
+        //    var subjects = SearchProvider.Search(searchValue);
 
-            //convert all subjects to subjectModels
-            subjects.ToList().ForEach(s => Model.Subjects.Add(SubjectModel.Convert(s)));
+        //    //convert all subjects to subjectModels
+        //    subjects.ToList().ForEach(s => Model.Subjects.Add(SubjectModel.Convert(s)));
 
-            return View(Model);
-        }
+        //    return View(Model);
+        //}
 
         public ActionResult Details(long id, string type)
         {
