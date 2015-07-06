@@ -11,7 +11,9 @@ namespace MCT.Helpers
 
         static NHibernateHelper()
         {
+
             sessionFactory = new Configuration().Configure().BuildSessionFactory();
+            
         }
 
         public static ISession GetCurrentSession()

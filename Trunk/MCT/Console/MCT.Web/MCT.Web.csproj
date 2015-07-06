@@ -64,6 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\..\packages\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -81,6 +84,9 @@
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Search">
+      <HintPath>..\..\packages\NHibernate.Search.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql">
       <HintPath>..\..\packages\Npgsql.2.2.5\lib\net45\Npgsql.dll</HintPath>
@@ -259,6 +265,10 @@
     <ProjectReference Include="..\..\Modules\MCT.Helpers\MCT.Helpers.csproj">
       <Project>{0624e933-e3fd-4d21-a5e4-4ed52ee85016}</Project>
       <Name>MCT.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\MCT.Search\MCT.Search.csproj">
+      <Project>{f726fcbf-6ae5-49c5-a9de-4054bf90681b}</Project>
+      <Name>MCT.Search</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
