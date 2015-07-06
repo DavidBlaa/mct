@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Web.Models.Search;
+using MCT.Search;
 
 namespace MCT.Web.Controllers
 {
@@ -17,6 +18,20 @@ namespace MCT.Web.Controllers
             var subjects = subjectManager.GetAll<Node>();
 
             SearchModel Model = new SearchModel();
+
+            //convert all subjects to subjectModels
+            subjects.ToList().ForEach(s => Model.Subjects.Add(SubjectModel.Convert(s)));
+
+            return View(Model);
+        }
+
+        // GET: Search
+        public ActionResult Search(string searchValue)
+        {
+            SearchModel Model = new SearchModel();
+
+            //Get filtered subjects
+            var subjects = SearchProvider.Search(searchValue);
 
             //convert all subjects to subjectModels
             subjects.ToList().ForEach(s => Model.Subjects.Add(SubjectModel.Convert(s)));

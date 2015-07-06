@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate;
+using NHibernate.Search;
+
 
 namespace MCT.DB.Entities
 {
+   
     public class Subject
     {
         #region Attributes
