@@ -38,7 +38,7 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
 
             //Get filtered subjects
-            var subjects = string.IsNullOrEmpty(searchValue) ? subjectManager.GetAll<Subject>() : SearchProvider.Search(searchValue);
+            var subjects = string.IsNullOrEmpty(searchValue) ? SearchProvider.Search(searchValue) : SearchProvider.Search(searchValue);
 
             //convert all subjects to subjectModels
             subjects.ToList().ForEach(s => Model.Add(SubjectModel.Convert(s)));
