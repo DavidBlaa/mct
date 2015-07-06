@@ -21,8 +21,7 @@ namespace MCT.IO
             if (File.Exists(fileName))
                 return File.Open(fileName, FileMode.Open, FileAccess.Read);
 
-            else
-                return null;
+            return null;
         }
 
         /// <summary>
@@ -35,8 +34,7 @@ namespace MCT.IO
         {
             if (File.Exists(path))
                 return true;
-            else
-                return false;
+            return false;
         }
     }
 }

@@ -11,9 +11,9 @@ namespace MCT.DB.Services
 
         public T Create<T>(T t)
         {
-            using (ITransaction transaction = this.CurrentNHibernateSession.BeginTransaction())
+            using (ITransaction transaction = CurrentNHibernateSession.BeginTransaction())
             {
-                this.CurrentNHibernateSession.Save(t);
+                CurrentNHibernateSession.Save(t);
                 transaction.Commit();
             }
 
@@ -22,20 +22,20 @@ namespace MCT.DB.Services
 
         public T[] GetAll<T>()
         {
-            var icriteria = this.CurrentNHibernateSession.CreateCriteria(typeof(T));
+            var icriteria = CurrentNHibernateSession.CreateCriteria(typeof(T));
             return icriteria.List<T>().ToArray();
         }
 
         public T Get(V v)
         {
-            return (T) this.CurrentNHibernateSession.Load(typeof(T), v);
+            return (T) CurrentNHibernateSession.Load(typeof(T), v);
         }
 
         public void Update(T t)
         {
-            using (ITransaction transaction = this.CurrentNHibernateSession.BeginTransaction())
+            using (ITransaction transaction = CurrentNHibernateSession.BeginTransaction())
             {
-                this.CurrentNHibernateSession.SaveOrUpdate(t);
+                CurrentNHibernateSession.SaveOrUpdate(t);
                 transaction.Commit();
             }
         }

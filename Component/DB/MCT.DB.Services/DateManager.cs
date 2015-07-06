@@ -9,7 +9,7 @@ namespace MCT.DB.Services
         public DateManager()
         {
 
-            base.CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
+            CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
         }
     }
 }

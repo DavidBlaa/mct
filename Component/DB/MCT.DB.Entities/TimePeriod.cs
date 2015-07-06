@@ -28,13 +28,13 @@ namespace MCT.DB.Entities
 
              if (start.Count() == 1)
              {
-                 this.StartMonth = TimePeriodHelper.GetMonth(start[0]);
+                 StartMonth = TimePeriodHelper.GetMonth(start[0]);
              }
 
              if (start.Count() == 2)
              {
-                 this.StartArea = TimePeriodHelper.GetTimeArea(start[0]);
-                 this.StartMonth = TimePeriodHelper.GetMonth(start[1]);
+                 StartArea = TimePeriodHelper.GetTimeArea(start[0]);
+                 StartMonth = TimePeriodHelper.GetMonth(start[1]);
              }
 
              string[] end = endDateText.Split(' ');
@@ -44,13 +44,13 @@ namespace MCT.DB.Entities
 
              if (end.Count() == 1)
              {
-                 this.EndMonth = TimePeriodHelper.GetMonth(end[0]);
+                 EndMonth = TimePeriodHelper.GetMonth(end[0]);
              }
 
              if (end.Count() == 2)
              {
-                 this.EndArea = TimePeriodHelper.GetTimeArea(end[0]);
-                 this.EndMonth = TimePeriodHelper.GetMonth(end[1]);
+                 EndArea = TimePeriodHelper.GetTimeArea(end[0]);
+                 EndMonth = TimePeriodHelper.GetMonth(end[1]);
              }
 
 
@@ -99,7 +99,7 @@ namespace MCT.DB.Entities
         public static TimePeriodArea GetTimeArea(string value)
         {
             TimePeriodArea result;
-            if (Enum.TryParse<TimePeriodArea>(value, out result))
+            if (Enum.TryParse(value, out result))
             {
                 return result;
             }
@@ -110,7 +110,7 @@ namespace MCT.DB.Entities
         public static TimePeriodMonth GetMonth(string value)
         {
             TimePeriodMonth result;
-            if (Enum.TryParse<TimePeriodMonth>(value, out result))
+            if (Enum.TryParse(value, out result))
             {
                 return result;
             }
@@ -140,7 +140,7 @@ namespace MCT.DB.Entities
         September = 9,
         Oktober = 10,
         November= 11,
-        Dezember=12,
+        Dezember=12
     }
 
     public enum TimePeriodType

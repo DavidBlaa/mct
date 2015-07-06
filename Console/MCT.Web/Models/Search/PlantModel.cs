@@ -50,10 +50,10 @@ namespace MCT.Web.Models.Search
 
             #region Dates
 
-            if (plant.Sowing!=null) model.Sowing = GetTimePeriodsAsStringList<Sowing>(plant.Sowing);
-            if (plant.Harvest != null) model.Harvest = GetTimePeriodsAsStringList<Harvest>(plant.Harvest);
-            if (plant.Bloom != null) model.Bloom = GetTimePeriodsAsStringList<Bloom>(plant.Bloom);
-            if (plant.SeedMaturity != null) model.SeedMaturity = GetTimePeriodsAsStringList<SeedMaturity>(plant.SeedMaturity);
+            if (plant.Sowing!=null) model.Sowing = GetTimePeriodsAsStringList(plant.Sowing);
+            if (plant.Harvest != null) model.Harvest = GetTimePeriodsAsStringList(plant.Harvest);
+            if (plant.Bloom != null) model.Bloom = GetTimePeriodsAsStringList(plant.Bloom);
+            if (plant.SeedMaturity != null) model.SeedMaturity = GetTimePeriodsAsStringList(plant.SeedMaturity);
 
 
             #endregion
