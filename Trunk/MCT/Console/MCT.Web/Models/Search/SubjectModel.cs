@@ -28,7 +28,7 @@ namespace MCT.Web.Models.Search
 
             model.Type = GetType(subject);
 
-            if (subject.Medias.Count() == 0)
+            if (!subject.Medias.Any())
             {
                 model.ImagePath = "/Images/Empty.png";
             }

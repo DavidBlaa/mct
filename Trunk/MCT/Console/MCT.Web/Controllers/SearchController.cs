@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.Search;
 using MCT.Web.Models.Search;
 
 namespace MCT.Web.Controllers
@@ -9,34 +12,40 @@ namespace MCT.Web.Controllers
     public class SearchController : Controller
     {
         // GET: Search
+        [HttpGet]
         public ActionResult Search()
         {
             SubjectManager subjectManager = new SubjectManager();
 
             //Get all subjects
-            var subjects = subjectManager.GetAll<Node>();
+            var subjects = subjectManager.GetAll<Subject>();
 
             SearchModel Model = new SearchModel();
 
             //convert all subjects to subjectModels
             subjects.ToList().ForEach(s => Model.Subjects.Add(SubjectModel.Convert(s)));
 
-            return View(Model);
+            return View("Search",Model);
         }
 
         // GET: Search
-        //public ActionResult Search(string searchValue)
-        //{
-        //    SearchModel Model = new SearchModel();
+        [HttpPost]
+        public ActionResult Search(string searchValue)
+        {
+            Debug.WriteLine("SEARCH : "+searchValue);
 
-        //    //Get filtered subjects
-        //    var subjects = SearchProvider.Search(searchValue);
+            List<SubjectModel> Model = new List<SubjectModel>();
+            SubjectManager subjectManager = new SubjectManager();
 
-        //    //convert all subjects to subjectModels
-        //    subjects.ToList().ForEach(s => Model.Subjects.Add(SubjectModel.Convert(s)));
+            //Get filtered subjects
+            var subjects = string.IsNullOrEmpty(searchValue) ? subjectManager.GetAll<Subject>() : SearchProvider.Search(searchValue);
 
-        //    return View(Model);
-        //}
+            //convert all subjects to subjectModels
+            subjects.ToList().ForEach(s => Model.Add(SubjectModel.Convert(s)));
+
+            return PartialView("_searchResult", Model);
+        
+        }
 
         public ActionResult Details(long id, string type)
         {

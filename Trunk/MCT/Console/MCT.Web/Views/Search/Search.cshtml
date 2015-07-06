@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Search";
 }
+
 @model MCT.Web.Models.Search.SearchModel
 
 <h2>Search</h2>
@@ -16,27 +17,27 @@
     <button class="btn btn-primary" onclick="OnClick(this)">All</button>
     
 </div>*@
-<br />
-
-<div class="row">
-    @foreach (var subject in Model.Subjects)
-    {
-        @Html.Partial("_subjectPartialView", subject);
-    }
+<br/>
+<div id="searchResult">
+    @Html.Partial("_searchResult", Model.Subjects.ToList())
 </div>
 
 <script type="text/javascript">
 
+    $("#searchInput").keydown(function (e) {
 
-        function OnClick(e)
-        {
+        alert("s:" + $("#searchInput").val() +" "+String.fromCharCode(e.keyCode) );
+        
+        var searchValue = $("#searchInput").val() + String.fromCharCode(e.keyCode);
+
+        if (searchValue.length >= 0) {
+            $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function (response) {
+               
+                $("#searchContent").replaceWith(response);
+            });
 
         }
 
-        $("#searchInput").change(function search(e) {
-
-            var searchInput = e.currentTarget.value;
-
-        });
+    });
 
 </script>
