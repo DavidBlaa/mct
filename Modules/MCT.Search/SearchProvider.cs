@@ -15,7 +15,7 @@ namespace MCT.Search
         public static IEnumerable<Subject> Search(string searchValue)
         {
             SubjectManager subjectManager = new SubjectManager();
-            return subjectManager.GetAll<Subject>().Where(s => s.Name.Equals(searchValue) || s.Description.Contains(searchValue));
+            return subjectManager.GetAll<Subject>().Where(s => s.Name.ToLower().Contains(searchValue.ToLower()) || s.Description.ToLower().Contains(searchValue.ToLower()));
         }
     }
 }

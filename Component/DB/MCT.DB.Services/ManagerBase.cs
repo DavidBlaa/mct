@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using NHibernate;
+using NHibernate.Linq;
 
 namespace MCT.DB.Services
 {
@@ -22,8 +23,8 @@ namespace MCT.DB.Services
 
         public T[] GetAll<T>()
         {
-            var icriteria = CurrentNHibernateSession.CreateCriteria(typeof(T));
-            return icriteria.List<T>().ToArray();
+            var icriteria = CurrentNHibernateSession.Query<T>().ToList();
+            return icriteria.ToArray();
         }
 
         public T Get(V v)
