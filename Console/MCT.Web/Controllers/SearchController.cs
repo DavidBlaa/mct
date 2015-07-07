@@ -18,12 +18,12 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
 
             //Get all subjects
-            var subjects = subjectManager.GetAll<Subject>();
+            var species = subjectManager.GetAll<Species>();
 
             SearchModel Model = new SearchModel();
 
             //convert all subjects to subjectModels
-            subjects.ToList().ForEach(s => Model.Subjects.Add(SubjectModel.Convert(s)));
+            species.ToList().ForEach(s => Model.Species.Add(SpeciesModel.Convert(s)));
 
             return View("Search",Model);
         }
@@ -34,14 +34,14 @@ namespace MCT.Web.Controllers
         {
             Debug.WriteLine("SEARCH : "+searchValue);
 
-            List<SubjectModel> Model = new List<SubjectModel>();
+            List<SpeciesModel> Model = new List<SpeciesModel>();
             SubjectManager subjectManager = new SubjectManager();
 
             //Get filtered subjects
-            var subjects = string.IsNullOrEmpty(searchValue) ? SearchProvider.Search(searchValue) : SearchProvider.Search(searchValue);
+            var species = string.IsNullOrEmpty(searchValue) ? SearchProvider.Search(searchValue) : SearchProvider.Search(searchValue);
 
             //convert all subjects to subjectModels
-            subjects.ToList().ForEach(s => Model.Add(SubjectModel.Convert(s)));
+            species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
 
             return PartialView("_searchResult", Model);
         

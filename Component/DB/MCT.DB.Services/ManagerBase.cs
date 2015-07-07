@@ -27,6 +27,11 @@ namespace MCT.DB.Services
             return icriteria.ToArray();
         }
 
+        public IQueryable<T> GetAllAsQueryable<T>()
+        {
+            return CurrentNHibernateSession.Query<T>();
+        }
+
         public T Get(V v)
         {
             return (T) CurrentNHibernateSession.Load(typeof(T), v);
