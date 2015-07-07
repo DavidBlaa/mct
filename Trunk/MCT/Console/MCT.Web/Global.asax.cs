@@ -10,29 +10,32 @@ namespace MCT.Web
     public class MvcApplication : HttpApplication
     {
         public static ISessionFactory NHibernateSessionFactory;
-        public override void Init()
-        {
-            //this.BeginRequest += (sender, e) =>
-            //{
 
-            //    var session = NHibernateSessionFactory.OpenSession();
-            //    CurrentSessionContext.Bind(session);
-            //};
+        //public override void Init()
+        //{
+        //    //this.BeginRequest += (sender, e) =>
+        //    //{
 
-            //this.EndRequest += (sender, e) =>
-            //{
+        //    //    var session = NHibernateSessionFactory.OpenSession();
+        //    //    CurrentSessionContext.Bind(session);
+        //    //};
 
-            //    var session = CurrentSessionContext.Unbind(NHibernateSessionFactory);
-            //    session.Dispose();
-            //};
+        //    //this.EndRequest += (sender, e) =>
+        //    //{
 
-            NHibernateSessionFactory = new Configuration().Configure().BuildSessionFactory();
+        //    //    var session = CurrentSessionContext.Unbind(NHibernateSessionFactory);
+        //    //    session.Dispose();
+        //    //};
 
- 	        base.Init();
-        }
+        //    //if (NHibernateSessionFactory != null) NHibernateSessionFactory = new Configuration().Configure().BuildSessionFactory();
+
+        //    base.Init();
+        //}
 
         protected void Application_Start()
         {
+            NHibernateSessionFactory = new Configuration().Configure().BuildSessionFactory();
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="Helpers\SeedDataGenerator.cs" />
     <Compile Include="Models\Search\AnimalModel.cs" />
+    <Compile Include="Models\Search\SpeciesModel.cs" />
     <Compile Include="Models\Search\PlantModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Models\Search\SubjectModel.cs" />
@@ -226,7 +227,7 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\Show.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
-    <Content Include="Views\Search\_subjectPartialView.cshtml" />
+    <Content Include="Views\Search\_speciesPartialView.cshtml" />
     <Content Include="Views\Search\PlantDetails.cshtml" />
     <Content Include="Views\Search\AnimalDetails.cshtml" />
     <Content Include="Views\Search\_searchResult.cshtml" />

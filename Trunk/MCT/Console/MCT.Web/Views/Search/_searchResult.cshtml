@@ -1,9 +1,7 @@
-﻿@model List<MCT.Web.Models.Search.SubjectModel>
-
-
+﻿@model List<MCT.Web.Models.Search.SpeciesModel>
 <div id="searchResultContent" class="row">
-    @foreach (var subject in Model)
+    @foreach (var species in Model)
     {
-        @Html.Partial("_subjectPartialView", subject);
+        @Html.Partial("_speciesPartialView", species);
     }
 </div>
