@@ -15,7 +15,7 @@ namespace MCT.Search
         public static IEnumerable<Species> Search(string searchValue)
         {
             SubjectManager subjectManager = new SubjectManager();
-            return subjectManager.GetAll<Species>().Where(s => s.Name.ToLower().Contains(searchValue.ToLower()) 
+            return subjectManager.GetAllAsQueryable<Species>().Where(s => s.Name.ToLower().Contains(searchValue.ToLower()) 
                                                             || s.Description.ToLower().Contains(searchValue.ToLower())
                                                             || s.ScientificName.ToLower().Contains(searchValue.ToLower()));
         }
