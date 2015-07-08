@@ -16,12 +16,10 @@ namespace MCT.Web.Models.Search
 
         public static SpeciesModel Convert(Species species)
         {
-
             SpeciesModel model = new SpeciesModel();
 
-            //SubjectLevel
-
             model.Id = species.Id;
+            model.ScientificName = species.ScientificName;
 
             if (!String.IsNullOrEmpty(species.Name))
                 model.Name = species.Name;
@@ -31,18 +29,14 @@ namespace MCT.Web.Models.Search
 
             model.Type = GetType(species);
 
-            if (!species.Medias.Any())
+            if(!species.Medias.Any())
             {
                 model.ImagePath = "/Images/Empty.png";
             }
             else
             {
-                model.ImagePath =  species.Medias.First().ImagePath;
+                model.ImagePath = species.Medias.First().ImagePath;
             }
-
-            // Species Level
-            model.ScientificName = species.ScientificName;
-
 
             return model;
         }
@@ -50,7 +44,7 @@ namespace MCT.Web.Models.Search
         protected static SpeciesType GetType(Species species)
         {
             if (species is Animal) return SpeciesType.Animal;
-            if(species is Plant) return SpeciesType.Plant;
+            if (species is Plant) return SpeciesType.Plant;
 
             return SpeciesType.Unknow;
 

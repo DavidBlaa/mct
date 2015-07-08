@@ -1,28 +1,92 @@
 ﻿@{
 
+    string headerClassName = "header";
+    string btnClass = "detailsBtn";
+
+    if (Model.Type == SpeciesType.Plant)
+    {
+        headerClassName += "plant";
+        btnClass += "plant"; 
+    }
+
+    if (Model.Type == SpeciesType.Animal)
+    {
+        headerClassName += "animal";
+        btnClass += "animal"; 
+    }
 
 }
+@using MCT.Web.Models.Search
 @model MCT.Web.Models.Search.SpeciesModel
 
-<div id="@Model.Id" class="@Model.Type.ToString().ToLower() col-lg-3 col-xs-4 col-md-3" >
-    <div class="header" >
+<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-4 col-md-3" >
+    <div class="@headerClassName" >
         <h3 class="name">@Model.Name</h3>
     </div>
     <h5 class="name">@Model.Type</h5>
-    <h5 class="name">@Model.ScientificName</h5>
-    <img src="@Model.ImagePath" class="img-rounded" width="180" height="180" style="text-align:center" />
+    <h4 class="name">@Model.ScientificName</h4>
+    <img class="speciesImage" src="@Model.ImagePath" />
     <div class="details">
         <p class="description">@Model.Description</p>
-        @*<p class="type" hidden="hidden">@Model.Type.ToString()</p>*@
-        @Html.ActionLink("Details", "Details", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "btn btn-info btn-lg btn-block" })
+        @Html.ActionLink("Details", "Details", new {id = Model.Id, type = @Model.Type.ToString()}, new {@class = "btn btn-lg btn-block @btnClass"})
     </div>
 </div>
 
-
 <style type="text/css">
-    .header {
-        border-top:solid 1px;
-        margin-top:20px;
-    }
-</style>
 
+.name {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header {
+    margin-top: 20px;
+    height: 70px;
+}
+
+.headerplant {
+    border-top: solid 2px yellowgreen;
+    margin-top: 20px;
+    height: 70px;
+} 
+
+.headeranimal {
+    border-top: solid 2px darkorange;
+    margin-top: 20px;
+    height: 70px;
+}
+
+.detailsBtnplant {
+    background-color: greenyellow;
+    color: white;
+}
+
+.detailsBtnplant:hover {
+    background-color: white;  
+    color: greenyellow;
+}  
+   
+.detailsBtnanimal {
+    background-color: darkorange;
+    color: white;
+}
+
+.detailsBtnanimal:hover {
+    background-color: white;  
+    color: darkorange;
+}  
+
+.speciesImage {
+        
+    width:  260px;
+    height: 260px;
+    text-align: center;
+}
+
+.details {
+    text-align: justify;
+    height: 200px;
+    margin: 3px;
+}
+
+</style>
