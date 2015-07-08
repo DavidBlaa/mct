@@ -1,7 +1,7 @@
 ﻿@{
 
     string headerClassName = "header";
-    string btnClass = "detailsBtn";
+    string btnClass = "btn btn-lg btn-block detailsBtn";
 
     if (Model.Type == SpeciesType.Plant)
     {
@@ -19,17 +19,17 @@
 @using MCT.Web.Models.Search
 @model MCT.Web.Models.Search.SpeciesModel
 
-<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-4 col-md-3" >
+<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3" >
     <div class="@headerClassName" >
         <h3 class="name">@Model.Name</h3>
     </div>
-    <h5 class="name">@Model.Type</h5>
-    <h4 class="name">@Model.ScientificName</h4>
-    <img class="speciesImage" src="@Model.ImagePath" />
+    <h5 class="type">@Model.Type</h5>
+    <h4 class="scientificName">@Model.ScientificName</h4>
+    <img class="speciesImage" src="@Model.ImagePath" class=" img-responsive " />
     <div class="details">
         <p class="description">@Model.Description</p>
-        @Html.ActionLink("Details", "Details", new {id = Model.Id, type = @Model.Type.ToString()}, new {@class = "btn btn-lg btn-block @btnClass"})
     </div>
+        @Html.ActionLink("Details", "Details", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = @btnClass })
 </div>
 
 <style type="text/css">
@@ -57,13 +57,13 @@
 }
 
 .detailsBtnplant {
-    background-color: greenyellow;
+    background-color: yellowgreen;
     color: white;
 }
 
 .detailsBtnplant:hover {
     background-color: white;  
-    color: greenyellow;
+    color: yellowgreen;
 }  
    
 .detailsBtnanimal {

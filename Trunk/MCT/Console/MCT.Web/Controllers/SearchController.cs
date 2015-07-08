@@ -25,6 +25,8 @@ namespace MCT.Web.Controllers
             //convert all subjects to subjectModels
             species.ToList().ForEach(s => Model.Species.Add(SpeciesModel.Convert(s)));
 
+            Model.Species = Model.Species.OrderBy(p => p.Name).ToList();
+
             return View("Search",Model);
         }
 
@@ -41,6 +43,7 @@ namespace MCT.Web.Controllers
             var species = string.IsNullOrEmpty(searchValue) ? SearchProvider.Search(searchValue) : SearchProvider.Search(searchValue);
 
             //convert all subjects to subjectModels
+            species = species.OrderBy(p => p.Name);
             species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
 
             return PartialView("_searchResult", Model);
