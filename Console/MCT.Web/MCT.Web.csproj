@@ -47,11 +47,9 @@
     </Reference>
     <Reference Include="Ext.Net">
       <HintPath>..\..\packages\Ext.NET.MVC.3.1.0\lib\net451\Ext.Net.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Ext.Net.Utilities">
       <HintPath>..\..\packages\Ext.NET.Utilities.2.5.0\lib\Ext.Net.Utilities.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -227,10 +225,10 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\Show.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
-    <Content Include="Views\Search\_speciesPartialView.cshtml" />
     <Content Include="Views\Search\PlantDetails.cshtml" />
     <Content Include="Views\Search\AnimalDetails.cshtml" />
     <Content Include="Views\Search\_searchResult.cshtml" />
+    <Content Include="Views\Search\_speciesPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
