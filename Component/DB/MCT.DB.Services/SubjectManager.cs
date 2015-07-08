@@ -26,5 +26,15 @@ namespace MCT.DB.Services
 
             return list.Cast<string>().ToList();
         }
+
+        public List<string> GetAllScientificNames()
+        {
+            ICriteria stateSearchCriteria = CurrentNHibernateSession.CreateCriteria(typeof(Species));
+            stateSearchCriteria.SetProjection(Projections.Distinct(Projections.Property("ScientificName")));
+
+            var list = stateSearchCriteria.List();
+
+            return list.Cast<string>().ToList();
+        }
     }
 }
