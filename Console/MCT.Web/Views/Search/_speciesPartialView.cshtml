@@ -4,7 +4,7 @@
 }
 @model MCT.Web.Models.Search.SpeciesModel
 
-<div id="@Model.Id" class="@Model.Type.ToString().ToLower() col-lg-3 col-xs-4 col-md-3" style="border-top:solid ">
+<div id="@Model.Id" class="@Model.Type.ToString().ToLower() col-lg-3 col-xs-4 col-md-3" >
     <div class="header" >
         <h3 class="name">@Model.Name</h3>
     </div>
@@ -20,6 +20,9 @@
 
 
 <style type="text/css">
-  
+    .header {
+        border-top:solid 1px;
+        margin-top:20px;
+    }
 </style>
 
