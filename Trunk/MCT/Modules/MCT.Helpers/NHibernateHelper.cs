@@ -1,6 +1,9 @@
 ﻿using System.Web;
+using MCT.DB.Entities;
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Search;
+using NHibernate.Search.Impl;
 
 namespace MCT.Helpers
 {
@@ -51,6 +54,25 @@ namespace MCT.Helpers
             {
                 sessionFactory.Close();
             }
+        }
+
+        public static void ReIndex()
+        {
+            IFullTextSession session = new FullTextSessionImpl(GetCurrentSession());
+            ITransaction tx = session.BeginTransaction();
+            session.PurgeAll(typeof(Species));
+            tx.Commit();
+
+            tx = session.BeginTransaction();
+
+            foreach (object entity in session.CreateCriteria(typeof(Species)).List())
+            {
+                session.Index(entity);
+            }
+
+            tx.Commit();
+            session.Close();
+
         }
     }
 }
