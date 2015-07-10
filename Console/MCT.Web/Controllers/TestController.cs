@@ -84,6 +84,8 @@ namespace MCT.Web.Controllers
 
             //var z = subjectManager.GetAll<Plant>();
 
+            NHibernateHelper.ReIndex();
+
             return View();
         }
 
