@@ -5,7 +5,15 @@ using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Helpers;
 using MCT.IO;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
+using NHibernate.Search;
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
 using MCT.Web.Helpers;
+using NHibernate;
+
+
 
 namespace MCT.Web.Controllers
 {
@@ -85,6 +93,8 @@ namespace MCT.Web.Controllers
             //var z = subjectManager.GetAll<Plant>();
 
             NHibernateHelper.ReIndex();
+            NHibernateHelper.Search();
+            
 
             return View();
         }
