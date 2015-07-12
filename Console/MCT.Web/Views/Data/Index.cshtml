@@ -1,0 +1,21 @@
+﻿<div class="jumbotron">
+    <h2>Data Managment Area</h2>
+    <p class="lead">Verwaltungsbereich für Daten.</p>
+
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        @*<h2>Reindex Search</h2>*@
+        <p>
+            @Html.ActionLink("Reindex Search", "ReIndex", "Data", new { @class = "btn btn-lg btn-info" })
+        </p>
+    </div>
+    <div class="col-md-4">
+        @*<h2>Load Data</h2>*@
+        <p>
+           @Html.ActionLink("Load Data", "LoadData", "Data", new { @class = "btn btn-lg btn-info" })
+        </p>
+    </div>
+
+</div>

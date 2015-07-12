@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.Search.Attributes;
 
 namespace MCT.DB.Entities
 {
+
     public class Plant:Species
     {
 
