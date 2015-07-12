@@ -29,7 +29,7 @@ namespace MCT.Helpers
             HttpContext context = HttpContext.Current;
             ISession currentSession = context.Items[CurrentSessionKey] as ISession;
 
-            if (currentSession == null)
+            if (currentSession == null || !currentSession.IsOpen)
             {
                 currentSession = sessionFactory.OpenSession();
                 context.Items[CurrentSessionKey] = currentSession;
