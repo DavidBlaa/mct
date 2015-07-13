@@ -77,6 +77,9 @@ namespace MCT.Helpers
                 session.Index(entity);
             }
 
+
+
+
             tx.Commit();
             session.Close();
 
