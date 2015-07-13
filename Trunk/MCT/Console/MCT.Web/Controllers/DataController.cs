@@ -47,7 +47,7 @@ namespace MCT.Web.Controllers
             {
                 Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile(fileStream, "PlantSeedData.txt", "Plant");
+                List<Node> nodes = reader.ReadFile<Node>(fileStream, "PlantSeedData.txt", "Plant");
 
                 SubjectManager manager = new SubjectManager();
 
@@ -75,7 +75,7 @@ namespace MCT.Web.Controllers
             {
                 Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile(fileStream, "AnimalSeedData.txt", "Animal");
+                List<Node> nodes = reader.ReadFile<Node>(fileStream, "AnimalSeedData.txt", "Animal");
 
                 SubjectManager manager = new SubjectManager();
 
@@ -87,6 +87,48 @@ namespace MCT.Web.Controllers
             }
 
             loadTestAnimalData();
+
+            #endregion
+
+            #region Predicate
+
+            path = Path.Combine(AppConfigHelper.GetWorkspace(), "PredicateSeedData.txt");
+
+            if (DataReader.FileExist(path))
+            {
+                Stream fileStream = reader.Open(path);
+
+                List<Predicate> predicates = reader.ReadFile<Predicate>(fileStream, "PredicateSeedData.txt", "Predicate");
+
+                SubjectManager manager = new SubjectManager();
+
+                foreach (var node in predicates)
+                {
+                    Predicate predicate = (Predicate)node;
+                    manager.Create(predicate);
+                }
+            }
+
+            #endregion
+
+            #region Interaction
+
+            path = Path.Combine(AppConfigHelper.GetWorkspace(), "InteractionSeedData.txt");
+            if (DataReader.FileExist(path))
+            {
+                SubjectManager manager = new SubjectManager();
+
+                Stream fileStream = reader.Open(path);
+                List<string> interactionsAsStringList = reader.ReadFile(fileStream, "InteractionSeedData.txt");
+
+                List<Interaction> interactions = reader.ConvertToInteractions(interactionsAsStringList,
+                    manager.GetAll<Subject>().ToList(), manager.GetAll<Predicate>().ToList());
+                
+                foreach (var node in interactions)
+                {
+                    manager.Create(node);
+                }
+            }
 
             #endregion
 

@@ -11,10 +11,8 @@
     <property name="Name" type="String"/>
     <property name="Description" type="String"/>
     
-    <set name="Parent" cascade="all-delete-orphan">
-      <key column="Parent" />
-      <one-to-many class="MCT.DB.Entities.Predicate, MCT.DB.Entities" />
-    </set>
-
+    <!-- Mapping Predicate Associations -->
+    <many-to-one name="Parent" column="ParentRef" class="MCT.DB.Entities.Predicate, MCT.DB.Entities" />
+ 
   </class>
 </hibernate-mapping>
