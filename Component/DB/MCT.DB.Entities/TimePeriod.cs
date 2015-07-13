@@ -1,16 +1,30 @@
 ﻿using System;
 using System.Linq;
+using NHibernate.Search.Attributes;
 
 namespace MCT.DB.Entities
 {
+    [Indexed]
     public abstract class TimePeriod
     {
+        [DocumentId]
         public virtual long Id { get; set; }
+
+        [Field(Index.Tokenized, Store = Store.Yes)]
         public virtual long Subject { get; set; }
+
+        [Field(Index.Tokenized, Store = Store.Yes)]
         public virtual TimePeriodArea StartArea { get; set; }
+
+        [Field(Index.Tokenized, Store = Store.Yes)]
         public virtual TimePeriodMonth StartMonth { get; set; }
+
+        [Field(Index.Tokenized, Store = Store.Yes)]
         public virtual TimePeriodArea EndArea { get; set; }
+
+        [Field(Index.Tokenized, Store = Store.Yes)]
         public virtual TimePeriodMonth EndMonth { get; set; }
+
         public virtual TimePeriodType Type { get; set; }
 
         public virtual Subject AssignedTo { get; set; }

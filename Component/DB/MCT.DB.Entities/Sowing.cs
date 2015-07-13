@@ -1,7 +1,11 @@
-﻿namespace MCT.DB.Entities
+﻿using NHibernate.Search.Attributes;
+
+namespace MCT.DB.Entities
 {
+    [Indexed]
     public class Sowing:TimePeriod
     {
+        
         public Sowing()
         {
 

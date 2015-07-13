@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.Mapping;
 using NHibernate.Search.Attributes;
+using NHibernate.Type;
 
 namespace MCT.DB.Entities
 {
@@ -25,6 +27,7 @@ namespace MCT.DB.Entities
 
         //Dates
         public virtual ICollection<Sowing> Sowing { get; set; }
+
         public virtual ICollection<Bloom> Bloom { get; set; }
         public virtual ICollection<Harvest> Harvest { get; set; }
         public virtual ICollection<SeedMaturity> SeedMaturity { get; set; }
