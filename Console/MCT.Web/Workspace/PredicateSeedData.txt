@@ -1,0 +1,10 @@
+Name	Description	Parent
+positiv	root - gut	
+negativ	root - schlecht	
+schützt		positiv
+begünstigt		positiv
+unbegünstigt		negativ
+fördert		positiv
+erhöht		positiv
+schädigt		negativ
+hemmend		negativ

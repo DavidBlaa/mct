@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,9 +28,9 @@ namespace MCT.IO
             Structure = new List<string>();
         }
 
-        public List<Node> ReadFile(Stream file, string fileName, string entityName)
+        public List<T> ReadFile<T>(Stream file, string fileName, string entityName) where T : class
         {
-            List<Node> nodes = new List<Node>();
+            List<T> nodes = new List<T>();
 
             FileStream = file;
             FileName = fileName;
@@ -65,7 +66,7 @@ namespace MCT.IO
                             }
 
                             if(position>=StartPosition)
-                                nodes.Add(rowToPlant(line));
+                                nodes.Add(rowToPlant(line) as T);
                         }
 
                         break;
@@ -82,7 +83,24 @@ namespace MCT.IO
                             }
 
                             if (position >= StartPosition)
-                                nodes.Add(rowToAnimal(line));
+                                nodes.Add(rowToAnimal(line) as T);
+                        }
+
+                        break;
+                    }
+
+                    case "Predicate":
+                    {
+                        while ((line = streamReader.ReadLine()) != null)
+                        {
+                            position++;
+                            if (position == 1)
+                            {
+                                setStructure(line);
+                            }
+
+                            if (position >= StartPosition)
+                                nodes.Add(rowToPredicate(line, nodes as List<Predicate>) as T);
                         }
 
                         break;
@@ -92,6 +110,49 @@ namespace MCT.IO
 
 
             return nodes;
+        }
+
+        public List<String> ReadFile(Stream file, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            FileStream = file;
+            FileName = fileName;
+
+            // Check params
+            if (FileStream == null)
+            {
+                throw new Exception("File not exist");
+            }
+
+            if (!FileStream.CanRead)
+            {
+                throw new Exception("File is not readable");
+            }
+
+
+            using (StreamReader streamReader = new StreamReader(file, Encoding.Default))
+            {
+                string line;
+
+                int position = 0;
+
+
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    position++;
+                    if (position == 1)
+                    {
+                        setStructure(line);
+                    }
+
+                    if (position >= StartPosition)
+                        lines.Add(line);
+                }
+
+            }
+
+            return lines;
         }
 
         /// <summary>
@@ -261,12 +322,131 @@ namespace MCT.IO
 
         }
 
+        /// <summary>
+        /// 1. Name
+        /// 2. Description
+        /// 3. ParentName
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private Predicate rowToPredicate(string line, List<Predicate> predicates )
+        {
+            string[] values = line.Split(IOHelper.GetSeperator(Seperator));
+
+            Debug.WriteLine("values count : " + values.Count());
+            Debug.WriteLine("datastructure count : " + Structure.Count());
+
+            Predicate predicate = new Predicate();
+
+            try
+            {
+                for (int i = 0; i < Structure.Count(); i++)
+                {
+                    string variable = Structure.ElementAt(i);
+
+                    switch (variable)
+                    {
+                        case "Name": { predicate.Name = values[i]; break; }
+                        case "Description": { predicate.Description = values[i]; break; }
+                        case "Parent":
+                        {
+                            if (!string.IsNullOrEmpty(values[i]))
+                            {
+                                if (predicates.Select(p=>p.Name.Equals(values[i])).Any())
+                                    predicate.Parent = predicates.FirstOrDefault(p => p.Name.Equals(values[i]));
+                            }
+
+                            break;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return predicate;
+        }
+
         private void setStructure(string line)
         {
             string[] values = line.Split(IOHelper.GetSeperator(Seperator));
             Structure = values.ToList();
         }
 
+
+        public List<Interaction> ConvertToInteractions(List<string> sources, IEnumerable<Subject> subjects, IEnumerable<Predicate> predicates)
+        {
+            List<Interaction> interactions = new List<Interaction>();
+
+            foreach (var line in sources)
+            {
+                /*
+                 * 1. Subject	
+                 * 2. Predicate	
+                 * 3. Object	
+                 * 4. Indicator	
+                 * 5. ImpactSubject
+                 * 
+                 * */
+                string[] values = line.Split(IOHelper.GetSeperator(Seperator));
+                string subjectName = values[0];
+                string predicateName = values[1];
+                string objectName = values[2];
+                string indicator = values[3];
+                string impactSubjectName = values[4];
+
+                if (!string.IsNullOrEmpty((subjectName)) && subjects.Select(s => s.Name.Equals(subjectName)).Any() &&
+                    !string.IsNullOrEmpty((predicateName)) && predicates.Select(p => p.Name.Equals(predicateName)).Any() &&
+                    !string.IsNullOrEmpty((objectName)) && subjects.Select(s => s.Name.Equals(objectName)).Any() &&
+                    (string.IsNullOrEmpty(impactSubjectName) ||
+                     !string.IsNullOrEmpty((impactSubjectName)) && subjects.Select(s => s.Name.Equals(impactSubjectName)).Any()))
+                {
+                    Subject impactSubject = string.IsNullOrEmpty(impactSubjectName)
+                        ? null
+                        : subjects.FirstOrDefault(s => s.Name.Equals(impactSubjectName));
+
+                    //string.IsNullOrEmpty(searchValue) ? SearchProvider.Search(searchValue) : SearchProvider.Search(searchValue);
+                    interactions.Add(createInterAction(
+                        subjects.FirstOrDefault(s => s.Name.Equals(subjectName)),
+                        predicates.FirstOrDefault(p => p.Name.Equals(predicateName)),
+                        subjects.FirstOrDefault(s => s.Name.Equals(objectName)),
+                        Convert.ToInt32(indicator), impactSubject
+                        ));
+
+                }
+
+            }
+
+            return interactions;
+
+        }
+
+        #region Create Helper
+
+        private Interaction createInterAction(Subject subject, Predicate predicate, Subject _object, int Indicator,
+            Subject impactSubject)
+        {
+            try
+            {
+                return new Interaction()
+                {
+                    Subject = subject,
+                    Predicate = predicate,
+                    Object = _object,
+                    Indicator = Indicator,
+                    ImpactSubject = impactSubject
+
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
 
         /// <summary>
         /// Erzeugt eine Timerperiod aus dem pattern
@@ -294,22 +474,22 @@ namespace MCT.IO
                     {
                         tp = new Bloom() as T;
 
-                        if(tpss.Count()==1)
+                        if (tpss.Count() == 1)
                             tp = new Bloom(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                        if(tpss.Count()==2)
+                        if (tpss.Count() == 2)
                             tp = new Bloom(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
                         if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
                     }
-                    
+
                     if (type.Equals(TimePeriodType.Harvest))
                     {
                         tp = new Harvest() as T;
-                        if(tpss.Count()==1)
+                        if (tpss.Count() == 1)
                             tp = new Harvest(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                        if(tpss.Count()==2)
+                        if (tpss.Count() == 2)
                             tp = new Harvest(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
                         if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
@@ -317,7 +497,7 @@ namespace MCT.IO
 
                     if (type.Equals(TimePeriodType.Sowing))
                     {
-                         tp = new Sowing() as T;
+                        tp = new Sowing() as T;
 
                         if (tpss.Count() == 1)
                             tp = new Sowing(tpss[0].Trim(), tpss[0].Trim(), type) as T;
@@ -330,7 +510,7 @@ namespace MCT.IO
 
                     if (type.Equals(TimePeriodType.SeedMaturity))
                     {
-                         tp = new SeedMaturity() as T;
+                        tp = new SeedMaturity() as T;
 
                         if (tpss.Count() == 1)
                             tp = new SeedMaturity(tpss[0].Trim(), tpss[0].Trim(), type) as T;
@@ -338,12 +518,17 @@ namespace MCT.IO
                         if (tpss.Count() == 2)
                             tp = new SeedMaturity(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
-                        if (!TimePeriod.IsEmpty((tp)))temp.Add(tp);
+                        if (!TimePeriod.IsEmpty((tp))) temp.Add(tp);
                     }
 
                 }
             }
             return temp;
         }
+
+
+        #endregion
+
+        
     }
 }
