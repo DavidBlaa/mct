@@ -50,6 +50,7 @@ namespace MCT.Web.Controllers
         
         }
 
+
         public ActionResult Details(long id, string type)
         {
             SubjectManager sm = new SubjectManager();
@@ -58,19 +59,32 @@ namespace MCT.Web.Controllers
 
             switch (type)
             {
-                case "Plant": {
+                case "Plant":
+                    {
 
-                    Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
-                    return View("PlantDetails", PlantModel.Convert(plant));
-                }
-                case "Animal": {
-                    Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
-                    return View("AnimalDetails", AnimalModel.Convert(animal));
-                }
-                case "Effect": {
-                    Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
-                    return View("EffectDetails");
-                }
+                        Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
+
+                        PlantModel Model = PlantModel.Convert(plant);
+                        //load interactions
+                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
+
+                        return View("PlantDetails", Model);
+                    }
+                case "Animal":
+                    {
+                        Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+
+                        AnimalModel Model = AnimalModel.Convert(animal);
+                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal).ToList());
+
+                        return View("AnimalDetails", Model);
+                    }
+                case "Effect":
+                    {
+                        Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
+
+                        return View("EffectDetails");
+                    }
 
                 default: { break; }
             }

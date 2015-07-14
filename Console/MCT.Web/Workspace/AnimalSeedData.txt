@@ -1,2 +1,5 @@
 Name	Subspecies	Species	Class	Order	Family	Genus	Description	Image
 Große Kohlweißling	Pieris brassicae	Pieris brassicae	Insecta	Lepidoptera	Pieridae	Pieris	Der Große Kohlweißling (Pieris brassicae) ist ein Schmetterling (Tagfalter) aus der Familie der Weißlinge.	GrosserKohlweissling.jpg
+Erdfloh			Insecta	Coleoptera	Chrysomelidae	Psylliodes	Diese treten besonders bei trockenem Boden auf. Sie fressen Löcher in die Blätter und beeinträchtigen damit das Wachstum der Pflanze. Im Frühjahr schädigen sie bisweilen auch die Saat und die Keimblätter. Es hilft, den Boden feucht zu halten und zu mulchen. Durch Mischkultur werden die Erdflöhe abgelenkt.	
+Kleine Kohlfliege	Pieris rapae	Pieris brassicae	Insecta	Lepidoptera	Pieridae	Pieris	Diese treten in drei Generationen zwischen Mai bis September auf. Die Maden fressen kleine braune Fraßgänge in die Radies. Pflanzen, die bis Mitte Mai geerntet werden, bleiben davon verschont. Vorbeugend hilft Gemüseschutznetz.	
+Blattlaus			Insecta	Hemiptera				

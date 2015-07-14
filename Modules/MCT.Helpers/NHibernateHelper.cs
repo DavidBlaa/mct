@@ -85,6 +85,14 @@ namespace MCT.Helpers
 
         }
 
+        public static T UnProxyObjectAs<T>(object obj) where T : class
+        {
+            HttpContext context = HttpContext.Current;
+            ISession currentSession = context.Items[CurrentSessionKey] as ISession;
+
+            return currentSession.GetSessionImplementation().PersistenceContext.Unproxy(obj) as T;
+        }
+
         public static void Search()
         {
                 HttpContext context = HttpContext.Current;

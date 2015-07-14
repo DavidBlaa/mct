@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Lucene.Net.Search;
 using MCT.DB.Entities;
+using MCT.DB.Services;
+using MCT.Helpers;
+using NHibernate.Proxy;
 
 namespace MCT.Web.Models.Search
 {
@@ -12,6 +17,8 @@ namespace MCT.Web.Models.Search
         public String ImagePath { get; set; }
 
         public SubjectType Type { get; set; }
+
+        public List<InteractionModel> Interactions { get; set; }
 
         public static SubjectModel Convert(Subject subject)
         {
@@ -28,26 +35,41 @@ namespace MCT.Web.Models.Search
 
             model.Type = GetType(subject);
 
-            if (!subject.Medias.Any())
-            {
-                model.ImagePath = "/Images/Empty.png";
-            }
-            else
-            {
-                model.ImagePath =  subject.Medias.First().ImagePath;
-            }
+            model.ImagePath = !subject.Medias.Any() ? "/Images/Empty.png" : subject.Medias.First().ImagePath;
+
+            model.Interactions = new List<InteractionModel>();
 
             return model;
         }
 
-        protected static SubjectType GetType(Subject subject)
+        public static SubjectType GetType(Subject subject)
         {
-            if (subject is Animal) return SubjectType.Animal;
-            if (subject is Effect) return SubjectType.Effect;
-            if(subject is Plant) return SubjectType.Plant;
+            Type test ;
+
+            if (subject.IsProxy())
+            {
+                subject = NHibernateHelper.UnProxyObjectAs<Subject>(subject);
+            }
+
+            if ((subject as Plant) != null) return SubjectType.Plant;
+            if ((subject as Animal) !=null) return SubjectType.Animal;
+            if ((subject as Effect) != null) return SubjectType.Effect;
+            
 
             return SubjectType.Unknow;
 
+        }
+
+        public static List<InteractionModel> ConverInteractionModels(List<Interaction> interactions)
+        {
+            List<InteractionModel> interactionModels = new List<InteractionModel>();
+
+            foreach (var i in interactions)
+            {
+                interactionModels.Add( InteractionModel.Convert(i));
+            }
+
+            return interactionModels;
         }
     }
 
@@ -58,4 +80,59 @@ namespace MCT.Web.Models.Search
         Plant,
         Unknow
     }
+
+    public class InteractionModel
+    {
+        public InteractionElementModel Subject { get; set; }
+        public InteractionElementModel Predicate { get; set; }
+        public InteractionElementModel Object { get; set; }
+        public InteractionElementModel ImpactSubject { get; set; }
+        public Int32 Indicator { get; set; }
+
+        public static InteractionModel Convert(Interaction interaction)
+        {
+            return new InteractionModel()
+            {
+                Subject = InteractionElementModel.Convert(interaction.Subject),
+                Predicate = InteractionElementModel.Convert(interaction.Predicate),
+                Object = InteractionElementModel.Convert(interaction.Object),
+                ImpactSubject = InteractionElementModel.Convert(interaction.ImpactSubject),
+                Indicator = interaction.Indicator,
+            };
+        }
+
+    }
+
+    public class InteractionElementModel
+    {
+        public long Id { get; set; }
+        public String Name { get; set; }
+        public String Type { get; set; }
+
+        public static InteractionElementModel Convert(Subject subject)
+        {
+            if (subject != null)
+                return new InteractionElementModel()
+                {
+                    Id = subject.Id,
+                    Name = subject.Name,
+                    Type = SubjectModel.GetType(subject).ToString()
+                };
+
+            return null;
+        }
+
+        public static InteractionElementModel Convert(Predicate predicate)
+        {
+            if (predicate != null)
+                return new InteractionElementModel()
+                {
+                    Id = predicate.Id,
+                    Name = predicate.Name,
+                };
+
+            return null;
+        }
+    }
+
 }

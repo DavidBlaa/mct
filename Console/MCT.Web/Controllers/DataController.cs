@@ -63,7 +63,7 @@ namespace MCT.Web.Controllers
                 }
             }
 
-            loadTestPlantData();
+            //loadTestPlantData();
 
             #endregion
 
@@ -86,7 +86,28 @@ namespace MCT.Web.Controllers
                 }
             }
 
-            loadTestAnimalData();
+            //loadTestAnimalData();
+
+            #endregion
+
+            #region Effect
+
+            path = Path.Combine(AppConfigHelper.GetWorkspace(), "EffectSeedData.txt");
+
+            if (DataReader.FileExist(path))
+            {
+                Stream fileStream = reader.Open(path);
+
+                List<Node> nodes = reader.ReadFile<Node>(fileStream, "EffectSeedData.txt", "Effect");
+
+                SubjectManager manager = new SubjectManager();
+
+                foreach (var node in nodes)
+                {
+                    Effect effect = (Effect)node;
+                    manager.Create(effect);
+                }
+            }
 
             #endregion
 

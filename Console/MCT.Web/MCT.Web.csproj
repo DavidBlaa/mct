@@ -189,7 +189,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Workspace\EffectSeedData.txt" />
     <Content Include="Workspace\PredicateSeedData.txt" />
+    <Content Include="Workspace\TaxonNamesSeedData.txt" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -235,6 +237,7 @@
     <Content Include="Views\Search\_searchResult.cshtml" />
     <Content Include="Views\Search\_speciesPartialView.cshtml" />
     <Content Include="Views\Data\Index.cshtml" />
+    <Content Include="Views\Search\_interactionsOverViewPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
