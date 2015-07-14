@@ -105,6 +105,23 @@ namespace MCT.IO
 
                         break;
                     }
+
+                    case "Effect":
+                    {
+                        while ((line = streamReader.ReadLine()) != null)
+                        {
+                            position++;
+                            if (position == 1)
+                            {
+                                setStructure(line);
+                            }
+
+                            if (position >= StartPosition)
+                                nodes.Add(rowToEffect(line) as T);
+                        }
+
+                        break;
+                    }
                 }
             }
 
@@ -304,14 +321,56 @@ namespace MCT.IO
                     }
                 }
 
-                //set rank
                 subject.Rank = TaxonRank.SubSpecies;
 
-                //set Image
-                //Media media = new Media();
-                //media.ImagePath = "/Images/" + subject.Name + ".jpg";
-                //subject.Medias.Add(media);
 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return subject;
+
+        }
+
+        /// <summary>
+        /// 0 Name                	
+        /// 1 Description
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private Node rowToEffect(string line)
+        {
+            string[] values = line.Split(IOHelper.GetSeperator(Seperator));
+
+            Debug.WriteLine("values count : " + values.Count());
+            Debug.WriteLine("datastructure count : " + Structure.Count());
+
+            Effect subject = new Effect();
+
+            try
+            {
+                for (int i = 0; i < Structure.Count(); i++)
+                {
+                    string variable = Structure.ElementAt(i);
+
+                    switch (variable)
+                    {
+                        case "Name": { subject.Name = values[i]; break; }
+                        case "Description":
+                            {
+
+                                string description = values[i];
+                                if (description.Length > 250)
+                                    subject.Description = description.Substring(0, 250) + "...";
+                                else
+                                    subject.Description = values[i];
+
+                                break;
+                            }
+                    }
+                }
             }
             catch (Exception ex)
             {

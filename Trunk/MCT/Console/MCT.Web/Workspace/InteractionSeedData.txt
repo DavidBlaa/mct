@@ -1,2 +1,13 @@
 Subject	Predicate	Object	Indicator	ImpactSubject
 Groﬂe Kohlweiﬂling	sch‰digt	Blumenkohl Erfurter Zwerg	5	
+Erdfloh	sch‰digt	Blumenkohl Erfurter Zwerg	5	
+Kleine Kohlfliege	sch‰digt	Blumenkohl Erfurter Zwerg	5	
+Rettichschw‰rze	sch‰digt	Blumenkohl Erfurter Zwerg	5	
+Groﬂe Kohlweiﬂling	sch‰digt	Weiﬂkohl Marner Lagerweiss	5	
+Erdfloh	sch‰digt	Weiﬂkohl Marner Lagerweiss	5	
+Kleine Kohlfliege	sch‰digt	Weiﬂkohl Marner Lagerweiss	5	
+Rettichschw‰rze	sch‰digt	Weiﬂkohl Marner Lagerweiss	5	
+Groﬂe Kohlweiﬂling	sch‰digt	Radieschen Parat	5	
+Erdfloh	sch‰digt	Radieschen Parat	5	
+Kleine Kohlfliege	sch‰digt	Radieschen Parat	5	
+Rettichschw‰rze	sch‰digt	Radieschen Parat	5	

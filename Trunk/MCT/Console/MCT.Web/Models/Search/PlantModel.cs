@@ -18,11 +18,13 @@ namespace MCT.Web.Models.Search
         public List<String> Bloom { get; set; }
         public List<String> SeedMaturity { get; set; }
 
+
         public static PlantModel Convert(Plant plant)
         {
             PlantModel model = new PlantModel();
 
             model.Id = plant.Id;
+
             #region subject
                 if (!String.IsNullOrEmpty(plant.Name))
                     model.Name = plant.Name;
@@ -60,6 +62,7 @@ namespace MCT.Web.Models.Search
 
             return model;
         }
+
 
         private static List<string> GetTimePeriodsAsStringList<T>(ICollection<T> timeperiods) where T : TimePeriod
         {

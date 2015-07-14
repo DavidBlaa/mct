@@ -1,0 +1,25 @@
+Lat Namen	Name	Sprache
+Apiaceae	Doldenblütler	de
+Apiales	Doldenblütlerartige	de
+Brassica	Kohl	de
+Brassica oleracea	Gemüsekohl	de
+Brassica oleracea convar. capitata var. alba	Weißkohl	de
+Brassica oleracea convar. capitata var. alba	Weißkraut	de
+Brassica oleracea convar. capitata var. alba	Weißkabis	de
+Brassica oleracea convar. capitata var. alba	Kaps	de
+Brassica oleracea convar. capitata var. alba	Kappus	de
+Brassica oleracea convar. capitata var. alba	Kabis	de
+Brassica oleracea convar. capitata var. alba	Kraut	de
+Brassicaceae	Kreuzblütengewächse	de
+Brassicales	Kreuzblütlerartige	de
+Daucus	Möhren	de
+Daucus carota	Möhre	de
+Lepidoptera	Schmetterling	de
+Magnoliopsida	Bedecktsamer	de
+Pieris rapae	Kleine Kohlfliege	de
+Pieris brassicae	Große Kohlweißling	de
+Chrysomelidae	Blattkäfer	de
+Psylliodes	Erdflöh	de
+Coleoptera	Käfer	de
+Insecta	Insekten	de
+Petroselinum crispum	Petersilie	de

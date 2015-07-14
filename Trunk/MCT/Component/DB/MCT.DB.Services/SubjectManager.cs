@@ -16,6 +16,8 @@ namespace MCT.DB.Services
             CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
         }
 
+        
+
         //Example zum get einträge von aus einer spalte als liste
         public List<string> GetAllNames()
         {
@@ -35,6 +37,34 @@ namespace MCT.DB.Services
             var list = stateSearchCriteria.List();
 
             return list.Cast<string>().ToList();
+        }
+
+        /// <summary>
+        /// load all depening interactions for a selected subject
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        public IEnumerable<Interaction> GetAllDependingInteractions(Subject subject)
+        {
+            //var interactions = from x in GetAll<Interaction>()
+            //                   where subject != null && (x.Subject.Name.Equals(subject.Name)
+            //                            || x.Object.Name.Equals(subject.Name)
+            //                            || (x.ImpactSubject == null || x.ImpactSubject.Name.Equals(subject.Name)))
+            //                   select x;
+
+            List<Interaction> interactions = new List<Interaction> ();
+
+            foreach (var interaction in GetAll<Interaction>())
+            {
+                if (interaction.Subject.Name.Equals(subject.Name)
+                    || interaction.Object.Name.Equals(subject.Name)
+                    || (interaction.ImpactSubject!=null && interaction.ImpactSubject.Name.Equals(subject.Name)))
+                {
+                    interactions.Add(interaction);
+                }
+            }
+
+            return interactions;
         }
     }
 }
