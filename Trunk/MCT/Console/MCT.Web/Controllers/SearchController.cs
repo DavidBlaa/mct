@@ -6,6 +6,7 @@ using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Search;
 using MCT.Web.Models.Search;
+using NHibernate.Properties;
 
 namespace MCT.Web.Controllers
 {
@@ -22,10 +23,7 @@ namespace MCT.Web.Controllers
 
             SearchModel Model = new SearchModel();
 
-            //convert all subjects to subjectModels
-            species.ToList().ForEach(s => Model.Species.Add(SpeciesModel.Convert(s)));
-
-            Model.Species = Model.Species.OrderBy(p => p.Name).ToList();
+            ResetSearchProvider();
 
             return View("Search",Model);
         }
@@ -34,22 +32,54 @@ namespace MCT.Web.Controllers
         [HttpPost]
         public ActionResult Search(string searchValue)
         {
+            SearchProvider sp = GetSearchProvider();
+
+            if (string.IsNullOrEmpty(searchValue))
+                sp.DeleteSearchCriterias(SearchProvider.FREETEXT_SEARCH_KEY);
+            else
+                sp.UpateSearchCriterias(SearchProvider.FREETEXT_SEARCH_KEY, searchValue);
+
             Debug.WriteLine("SEARCH : "+searchValue);
 
             List<SpeciesModel> Model = new List<SpeciesModel>();
             SubjectManager subjectManager = new SubjectManager();
 
             //Get filtered subjects
-            var species = string.IsNullOrEmpty(searchValue) ? SearchProvider.Search(searchValue) : SearchProvider.Search(searchValue);
+            var species = sp.Search();
 
             //convert all subjects to subjectModels
             species = species.OrderBy(p => p.Name);
             species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
 
+            //update searchcriterias
+
             return PartialView("_searchResult", Model);
         
         }
 
+        public JsonResult SetTimeFilter(string key, string value)
+        {
+            SearchProvider sp = GetSearchProvider();
+
+            if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
+                sp.UpateSearchCriterias(key, value);
+            else
+                sp.DeleteSearchCriterias(key);
+
+            return Json(true);
+        }
+
+        public ActionResult UpdateSearch()
+        {
+            List<SpeciesModel> Model = new List<SpeciesModel>();
+
+            return PartialView("_searchResult", Model);
+        }
+
+        public ActionResult UpdateBreadcrumb()
+        {
+            return PartialView("_searchBreadcrumb", GetSearchProvider().SearchCriterias);
+        }
 
         public ActionResult Details(long id, string type)
         {
@@ -91,5 +121,27 @@ namespace MCT.Web.Controllers
 
             return View("Search");
         }
+
+        #region Sessions
+
+        private SearchProvider GetSearchProvider()
+        {
+            if (Session[SearchProvider.SEARCH_PROVIDER_NAME] == null)
+            {
+                Session[SearchProvider.SEARCH_PROVIDER_NAME] = new SearchProvider();
+                
+            }
+
+            return Session[SearchProvider.SEARCH_PROVIDER_NAME] as SearchProvider;
+        }
+
+        private SearchProvider ResetSearchProvider()
+        {
+            Session[SearchProvider.SEARCH_PROVIDER_NAME] = new SearchProvider();
+            return Session[SearchProvider.SEARCH_PROVIDER_NAME] as SearchProvider;
+        }
+
+
+        #endregion
     }
 }
