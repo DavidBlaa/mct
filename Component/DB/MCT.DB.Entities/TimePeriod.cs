@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Search.Attributes;
 
@@ -130,6 +131,14 @@ namespace MCT.DB.Entities
             }
 
             return TimePeriodMonth.Januar;
+        }
+
+        public static List<string> GetMonthsAsStringList()
+        {
+            return Enum.GetValues(typeof(TimePeriodMonth))
+                    .Cast<TimePeriodMonth>()
+                    .Select(v => v.ToString())
+                    .ToList();
         }
     }
 
