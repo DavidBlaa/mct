@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -60,6 +61,7 @@ namespace MCT.Web.Controllers
                     }
 
                     manager.Create(plant);
+                    
                 }
             }
 
@@ -162,13 +164,14 @@ namespace MCT.Web.Controllers
             SubjectManager manager = new SubjectManager();
             Plant tempPlant = new Plant();
             // create some big test data for plant
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 tempPlant = new Plant();
                 tempPlant.Name = "Plant Name" + i;
                 tempPlant.Description = "Description Description Description Description Description Description" + i;
                 tempPlant.ScientificName = "ScientificName" + i;
                 manager.Create(tempPlant);
+                Debug.WriteLine(tempPlant.Name);
             }
         }
 

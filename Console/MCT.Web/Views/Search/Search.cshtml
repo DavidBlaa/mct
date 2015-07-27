@@ -5,18 +5,29 @@
 @model MCT.Web.Models.Search.SearchModel
 
 <h2>Search</h2>
+<table id="SearchHeaderTable">
+    <tr>
+        <td>
+            <input type="search" id="searchInput" class="form-control" placeholder="search...">
+        </td>
+        <td>
+            Filter an/aus
+        </td>
+        <td>
+            <input id="filterOptions" name="Filter on/off" type="checkbox" value="false" onclick="filterOptionsOnClick()">
+        </td>
+    </tr>
+</table>
+<div id="searchBreadcrumb">
+    @Html.Partial("_searchBreadcrumb", new Dictionary<string,string>())
+</div>
 
-<input type="search" id="searchInput" class="form-control" placeholder="search...">
 
 
-<br />
-@*<div class="button-group js-radio-button-group">
-    <button class="btn btn-primary" onclick="OnClick(this)">Animal</button>
-    <button class="btn btn-primary" onclick="OnClick(this)">Effect</button>
-    <button class="btn btn-primary" onclick="OnClick(this)">Plant</button>
-    <button class="btn btn-primary" onclick="OnClick(this)">All</button>
-    
-</div>*@
+<br/>
+<div id="filter" style="display: none;">
+    @Html.Partial("_searchFilterPartialView", Model.Filter)
+</div>
 <br/>
 <div id="searchResult">
     @Html.Partial("_searchResult", Model.Species.ToList())
@@ -24,22 +35,56 @@
 
 <script type="text/javascript">
 
-    $("#searchInput").keyup(function (e) {
+    $("#searchInput").keyup(function(e) {
 
         //alert("s:" + $("#searchInput").val() +" "+String.fromCharCode(e.keyCode) );
-        
+
         var searchValue = $("#searchInput").val();
         $("#searchInput").attr("disabled");
         //alert(searchValue)
         if (searchValue.length >= 0) {
-            $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function (response) {
-               
+            $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function(response) {
+
                 $("#searchResultContent").replaceWith(response);
                 $("#searchInput").removeAttr("disabled");
+                UpdateBreadcrumb();
             });
 
         }
 
     });
 
+    function UpdateSearch() {
+
+        $.post('@Url.Action("UpdateSearch", "Search")', function (response) {
+
+            $("#searchResultContent").replaceWith(response);
+ 
+        });
+
+    }
+
+    function UpdateBreadcrumb() {
+
+        $.post('@Url.Action("UpdateBreadcrumb", "Search")', function (response) {
+
+            $("#searchBreadcrumbContent").replaceWith(response);
+
+        });
+
+    }
+
+    function filterOptionsOnClick() {
+        $('#filter').toggle();
+    }
+
 </script>
+
+<style type="text/css">
+    #SearchHeaderTable TD {
+
+        padding-right: 10px;
+
+    }
+
+</style>
