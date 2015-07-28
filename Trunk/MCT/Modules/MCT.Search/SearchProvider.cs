@@ -42,16 +42,16 @@ namespace MCT.Search
 
             if (SearchCriterias.Any())
             {
-                // suchanfrage beginnt
-                if (SearchCriterias.ContainsKey(FREETEXT_SEARCH_KEY))
-                {
-                    results = search(SearchCriterias[FREETEXT_SEARCH_KEY]);
-                }
+                //// suchanfrage beginnt
+                //if (SearchCriterias.ContainsKey(FREETEXT_SEARCH_KEY))
+                //{
+                //    results = search(SearchCriterias[FREETEXT_SEARCH_KEY]);
+                //}
 
-                if (SearchCriterias.ContainsKey(SOWING))
-                {
-                    results = searchTimeFilter(SOWING, SearchCriterias[SOWING]);
-                }
+                //if (SearchCriterias.ContainsKey(SOWING))
+                //{
+                //    results = searchTimeFilter(SOWING, SearchCriterias[SOWING]);
+                //}
 
                 return ((IQueryable<Species>)results).ToList();
 

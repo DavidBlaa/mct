@@ -6,7 +6,8 @@ using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Search;
 using MCT.Web.Models.Search;
-using NHibernate.Properties;
+using NHibernate;
+using NHibernate.Linq;
 
 namespace MCT.Web.Controllers
 {
@@ -45,7 +46,11 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
 
             //Get filtered subjects
-            var species = sp.Search();
+            //var species = sp.Search();
+
+            SearchManager searchManager = new SearchManager();
+
+            var species = searchManager.Search(sp.SearchCriterias);
 
             //convert all subjects to subjectModels
             species = species.OrderBy(p => p.Name);
