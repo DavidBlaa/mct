@@ -122,6 +122,9 @@ namespace MCT.Web.Controllers
             return View("Search");
         }
 
+
+
+
         #region Sessions
 
         private SearchProvider GetSearchProvider()

@@ -1,0 +1,28 @@
+﻿@{
+    int count = 0;
+}
+@model Dictionary<string, string>
+
+<div id="searchBreadcrumbContent">
+
+    @foreach (KeyValuePair<string, string> kvp in Model)
+    {
+        if (Model.Count > count)
+        {
+            <div class="breadcrumb">
+                <h6>@kvp.Key : @kvp.Value </h6>
+            </div>
+        }
+    }
+
+</div>
+<style type="text/css">
+    .breadcrumb {
+      float:left 
+    }
+
+    .breadcrumbLast {
+
+    }
+
+</style>
