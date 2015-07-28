@@ -1,0 +1,17 @@
+﻿@model FilterModel
+@using MCT.Web.Models.Search
+
+<div class="panel-group" id="FilterAccordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="accordion-toggle collapsed" data-parent="#FilterAccordion" data-toggle="collapse" href="#FilterAccordion-1">Zeit</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" id="FilterAccordion-1" style="height: 0px;">
+            <div class="panel-body">
+                @Html.Partial("_searchFilterTimePartialView", Model)
+            </div>
+        </div>
+    </div>
+</div>

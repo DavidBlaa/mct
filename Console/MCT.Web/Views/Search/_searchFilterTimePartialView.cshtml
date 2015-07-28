@@ -1,0 +1,63 @@
+﻿@model MCT.Web.Models.Search.FilterModel
+
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+        <h4>Aussaat</h4>
+        <select class="form-control" id="Sowing" name="Sowing" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.Months)
+            {
+                <option value="@m">@m</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <!-- harvest -->
+        <h4>Ernten</h4>
+        <select class="form-control" id="Harvest" name="Harvest" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.Months)
+            {
+                <option value="@m">@m</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <!-- Blühen -->
+        <h4>Blüte</h4>
+        <select class="form-control" id="Bloom" name="Bloom" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.Months)
+            {
+                <option value="@m">@m</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <!-- Blühen -->
+        <h4>Samenreife</h4>
+        <select class="form-control" id="SeedMaturity" name="SeedMaturity" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.Months)
+            {
+                <option value="@m">@m</option>
+            }
+        </select>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function change(e) {
+        
+        var url = '@Url.Action("SetTimeFilter", "Search")';
+            $.post(url, { key: e.id, value: e.value },
+            function (data) {
+                if(data === true)
+                    UpdateSearch();
+                    UpdateBreadcrumb();
+            });
+
+    }
+
+</script>
