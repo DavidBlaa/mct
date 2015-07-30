@@ -133,11 +133,40 @@ namespace MCT.DB.Entities
             return TimePeriodMonth.Januar;
         }
 
+        public static TimePeriodMonth GetMonth(int id)
+        {
+            return (TimePeriodMonth)id;
+        }
+
+        public static string GetMonthName(int id)
+        {
+            return ((TimePeriodMonth)id).ToString();
+        }
+
+        public static int GetMonthIndex(string value)
+        {
+            TimePeriodMonth result;
+            if (Enum.TryParse(value, out result))
+            {
+                return (int)result;
+            }
+
+            return (int)TimePeriodMonth.Januar;
+        }
+
         public static List<string> GetMonthsAsStringList()
         {
             return Enum.GetValues(typeof(TimePeriodMonth))
                     .Cast<TimePeriodMonth>()
                     .Select(v => v.ToString())
+                    .ToList();
+        }
+
+        public static List<int> GetMonthsAsIdList()
+        {
+            return Enum.GetValues(typeof(TimePeriodMonth))
+                    .Cast<TimePeriodMonth>()
+                    .Select(v => (int)v)
                     .ToList();
         }
     }

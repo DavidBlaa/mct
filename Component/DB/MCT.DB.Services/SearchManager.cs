@@ -63,7 +63,7 @@ namespace MCT.DB.Services
 
                     case "Sowing":
                         {
-                            var sowings = GetAll<Sowing>().Where(s => s.StartMonth.Equals(TimePeriodHelper.GetMonth(kvp.Value)) || s.EndMonth.Equals(TimePeriodHelper.GetMonth(kvp.Value)));
+                            var sowings = GetAll<Sowing>().Where(s => s.StartMonth >= (TimePeriodHelper.GetMonth(kvp.Value)) && s.EndMonth <= (TimePeriodHelper.GetMonth(kvp.Value)));
 
                             if (query == null)
                             {
@@ -77,11 +77,29 @@ namespace MCT.DB.Services
                             break;
                         }
 
+                    case "Harvest":
+                        {
+                            var harvest = GetAll<Harvest>().Where(s => s.StartMonth >= (TimePeriodHelper.GetMonth(kvp.Value)) && s.EndMonth <= (TimePeriodHelper.GetMonth(kvp.Value)));
+
+                            if (query == null)
+                            {
+                                query = session.Query<Plant>().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
+                            }
+                            else
+                            {
+                                query = query.AsQueryable().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
+                            }
+
+                            break;
+                        }
+
+
                 }
             }
 
             return query;
         }
+
 
         #endregion
     }
