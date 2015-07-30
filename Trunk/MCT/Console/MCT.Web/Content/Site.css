@@ -22,3 +22,68 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/*SEARCH*/
+
+#SearchHeaderTable TD {padding-right: 10px;}
+
+.searchBreadcrumbContent {margin: 5px;}
+
+
+/*Species Details View*/
+
+.name {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header {
+    margin-top: 20px;
+    height: 70px;
+}
+
+.headerplant {
+    border-top: solid 2px yellowgreen;
+    margin-top: 20px;
+    height: 70px;
+} 
+
+.headeranimal {
+    border-top: solid 2px darkorange;
+    margin-top: 20px;
+    height: 70px;
+}
+
+.detailsBtnplant {
+    background-color: yellowgreen;
+    color: white;
+}
+
+.detailsBtnplant:hover {
+    background-color: green;  
+    color: white;
+}  
+   
+.detailsBtnanimal {
+    background-color: darkorange;
+    color: white;
+}
+
+.detailsBtnanimal:hover {
+    background-color: orange;  
+    color: white;
+}  
+
+.speciesImage {
+        
+    width:  260px;
+    height: 260px;
+    text-align: center;
+}
+
+.details {
+    text-align: justify;
+    height: 200px;
+    margin: 3px;
+}

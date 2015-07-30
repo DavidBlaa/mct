@@ -77,6 +77,14 @@ namespace MCT.Web.Controllers
         public ActionResult UpdateSearch()
         {
             List<SpeciesModel> Model = new List<SpeciesModel>();
+            SearchProvider sp = GetSearchProvider();
+            SearchManager searchManager = new SearchManager();
+
+            var species = searchManager.Search(sp.SearchCriterias);
+
+            //convert all subjects to subjectModels
+            species = species.OrderBy(p => p.Name);
+            species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
 
             return PartialView("_searchResult", Model);
         }
