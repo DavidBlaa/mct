@@ -26,10 +26,12 @@ textarea {
 
 /*SEARCH*/
 
-#SearchHeaderTable TD {padding-right: 10px;}
-
-.searchBreadcrumbContent {margin: 5px;}
-
+#SearchHeaderTable TD
+{
+    padding-right: 10px;
+}
+#searchBreadcrumb {padding: 20px 0 20px 0;}
+.breadCrumbItem {padding-right: 10px;}
 
 /*Species Details View*/
 
