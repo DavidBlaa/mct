@@ -28,18 +28,22 @@ namespace MCT.DB.Services
         {
             var session = NHibernateHelper.GetCurrentSession();
 
-            IQueryable<Plant> query = null;
+            IQueryable<Species> freeTextQuery = null;
+            IQueryable<Plant> plantQuery = null;
 
             foreach (KeyValuePair<string, string> kvp in searchCriteria)
             {
                 switch (kvp.Key)
                 {
+                    #region free text
+                    
                     case "FREETEXT_SEARCH_KEY":
                     {
+                        
 
-                        if (query == null)
+                        if (freeTextQuery == null)
                         {
-                            query = session.Query<Plant>().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
+                            freeTextQuery = session.Query<Species>().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
                                                                       ||
                                                                       s.Description.ToLower()
                                                                           .Contains(kvp.Value.ToLower())
@@ -49,7 +53,7 @@ namespace MCT.DB.Services
                         }
                         else
                         {
-                            query = query.AsQueryable().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
+                            freeTextQuery = freeTextQuery.AsQueryable().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
                                                                    ||
                                                                    s.Description.ToLower().Contains(kvp.Value.ToLower())
                                                                    ||
@@ -57,49 +61,98 @@ namespace MCT.DB.Services
                                                                        .Contains(kvp.Value.ToLower()));
                         }
 
+                    
                         break;
+
                     }
 
+                    #endregion
 
-                    case "Sowing":
+                    #region plants
+
+                        #region Time
+                        case "Sowing":
                         {
-                            var sowings = GetAll<Sowing>().Where(s => s.StartMonth >= (TimePeriodHelper.GetMonth(kvp.Value)) && s.EndMonth <= (TimePeriodHelper.GetMonth(kvp.Value)));
+                            var sowings = getMatchingTimePeriods(GetAll<Sowing>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
 
-                            if (query == null)
-                            {
-                                query = session.Query<Plant>().Where(p => p.Sowing.Any(s => sowings.Contains(s)));
-                            }
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => p.Sowing.Any(s => sowings.Contains(s)));
                             else
-                            {
-                                query = query.AsQueryable().Where(p => p.Sowing.Any(s => sowings.Contains(s)));
-                            }
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.Sowing.Any(s => sowings.Contains(s)));
 
                             break;
                         }
 
-                    case "Harvest":
+                        case "Harvest":
                         {
-                            var harvest = GetAll<Harvest>().Where(s => s.StartMonth >= (TimePeriodHelper.GetMonth(kvp.Value)) && s.EndMonth <= (TimePeriodHelper.GetMonth(kvp.Value)));
+                            var harvest = getMatchingTimePeriods(GetAll<Harvest>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
 
-                            if (query == null)
-                            {
-                                query = session.Query<Plant>().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
-                            }
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
                             else
-                            {
-                                query = query.AsQueryable().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
-                            }
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
 
                             break;
                         }
 
+                        case "Bloom":
+                        {
+                            var bloom = getMatchingTimePeriods(GetAll<Bloom>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
 
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => p.Bloom.Any(s => bloom.Contains(s)));
+                            else
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.Bloom.Any(s => bloom.Contains(s)));
+
+                            break;
+                        }
+
+                        case "SeedMaturity":
+                        {
+                            var seedMaturity = getMatchingTimePeriods(GetAll<SeedMaturity>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
+
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => p.SeedMaturity.Any(s => seedMaturity.Contains(s)));
+                            else
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.SeedMaturity.Any(s => seedMaturity.Contains(s)));
+
+                            break;
+                        }
+                        #endregion
+
+                    
+
+                    #endregion
                 }
             }
 
-            return query;
+            if (freeTextQuery != null && plantQuery!=null)
+                return (freeTextQuery.ToList().Intersect(plantQuery.ToList())).AsQueryable();
+
+
+            if (freeTextQuery != null)
+                return freeTextQuery;
+
+            if (plantQuery != null)
+                return plantQuery;
+
+
+            return null;
         }
 
+
+        private IEnumerable<TimePeriod> getMatchingTimePeriods(IEnumerable<TimePeriod> tps, TimePeriodMonth month)
+        {
+            List<TimePeriod> tempTimePeriods = new List<TimePeriod>();
+
+            foreach (TimePeriod VARIABLE in tps)
+            {
+                if(VARIABLE.StartMonth <= month && VARIABLE.EndMonth >= month)
+                    tempTimePeriods.Add(VARIABLE);
+            }
+
+            return tempTimePeriods;
+        }
 
         #endregion
     }

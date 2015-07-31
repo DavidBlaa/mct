@@ -51,10 +51,12 @@ namespace MCT.Web.Controllers
             SearchManager searchManager = new SearchManager();
 
             var species = searchManager.Search(sp.SearchCriterias);
-
-            //convert all subjects to subjectModels
-            species = species.OrderBy(p => p.Name);
-            species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
+            if (species != null)
+            {
+                //convert all subjects to subjectModels
+                species = species.OrderBy(p => p.Name);
+                species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
+            }
 
             //update searchcriterias
 
@@ -82,9 +84,12 @@ namespace MCT.Web.Controllers
 
             var species = searchManager.Search(sp.SearchCriterias);
 
-            //convert all subjects to subjectModels
-            species = species.OrderBy(p => p.Name);
-            species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
+            if (species != null)
+            {
+                //convert all subjects to subjectModels
+                species = species.OrderBy(p => p.Name);
+                species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
+            }
 
             return PartialView("_searchResult", Model);
         }
