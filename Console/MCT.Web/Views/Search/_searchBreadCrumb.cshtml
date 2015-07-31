@@ -9,8 +9,25 @@
     {
         if (Model.Count > count)
         {
-            <span><b>@kvp.Key</b> : @kvp.Value</span>
+            <span class="breadCrumbItem">| <b>@kvp.Key</b> : <a id="@kvp.Key" onclick="clickBreadcrumb(this)">@kvp.Value</a> </span>
         }
     }
 
 </div>
+
+<script type="text/javascript">
+
+    function clickBreadcrumb(e)
+    {
+
+        var url = '@Url.Action("DeleteSearchCriteria", "Search")';
+        $.post(url, { key: e.id},
+        function (data) {
+            if (data === true)
+                UpdateSearch();
+                UpdateBreadcrumb();
+        });
+
+    }
+
+</script>

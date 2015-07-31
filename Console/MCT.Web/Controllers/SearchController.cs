@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
+using Lucene.Net.Util;
 using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Search;
@@ -94,54 +95,69 @@ namespace MCT.Web.Controllers
             return PartialView("_searchResult", Model);
         }
 
+        #region Breadcrumb
+
         public ActionResult UpdateBreadcrumb()
         {
             return PartialView("_searchBreadcrumb", GetSearchProvider().SearchCriterias);
         }
 
-        public ActionResult Details(long id, string type)
+        public JsonResult DeleteSearchCriteria(string key)
         {
-            SubjectManager sm = new SubjectManager();
+            SearchProvider sp = GetSearchProvider();
 
-            Subject s = sm.Get(id);
+            if (!string.IsNullOrEmpty(key))
+                sp.DeleteSearchCriterias(key);
 
-            switch (type)
-            {
-                case "Plant":
-                    {
-
-                        Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
-
-                        PlantModel Model = PlantModel.Convert(plant);
-                        //load interactions
-                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
-
-                        return View("PlantDetails", Model);
-                    }
-                case "Animal":
-                    {
-                        Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
-
-                        AnimalModel Model = AnimalModel.Convert(animal);
-                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal).ToList());
-
-                        return View("AnimalDetails", Model);
-                    }
-                case "Effect":
-                    {
-                        Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
-
-                        return View("EffectDetails");
-                    }
-
-                default: { break; }
-            }
-
-            return View("Search");
+            return Json(true);
         }
 
+        #endregion
 
+        #region Show Data
 
+            public ActionResult Details(long id, string type)
+            {
+                SubjectManager sm = new SubjectManager();
+
+                Subject s = sm.Get(id);
+
+                switch (type)
+                {
+                    case "Plant":
+                        {
+
+                            Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
+
+                            PlantModel Model = PlantModel.Convert(plant);
+                            //load interactions
+                            Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
+
+                            return View("PlantDetails", Model);
+                        }
+                    case "Animal":
+                        {
+                            Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+
+                            AnimalModel Model = AnimalModel.Convert(animal);
+                            Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal).ToList());
+
+                            return View("AnimalDetails", Model);
+                        }
+                    case "Effect":
+                        {
+                            Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
+
+                            return View("EffectDetails");
+                        }
+
+                    default: { break; }
+                }
+
+                return View("Search");
+            }
+
+        #endregion
 
         #region Sessions
 
