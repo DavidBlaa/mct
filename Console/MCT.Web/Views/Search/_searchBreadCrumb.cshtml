@@ -17,17 +17,17 @@
 
 <script type="text/javascript">
 
-    function clickBreadcrumb(e)
-    {
+    function clickBreadcrumb(e) {
 
         var url = '@Url.Action("DeleteSearchCriteria", "Search")';
-        $.post(url, { key: e.id},
-        function (data) {
-            if (data === true)
-                UpdateSearch();
+        $.post(url, { key: e.id },
+            function(data) {
+                if (data === true)
+                    UpdateSearch();
                 UpdateBreadcrumb();
-        });
+                ClearSearchInput();
 
+            });
     }
 
 </script>
