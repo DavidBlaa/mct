@@ -11,6 +11,8 @@ namespace MCT.Web.Models.Search
         public List<FilterDropdownElement> Months { get; set; }
         public List<FilterDropdownElement> NutrientClaims { get; set; }
         public List<FilterDropdownElement> RootDepths { get; set; }
+        public List<FilterDropdownElement> SubjectList { get; set; }
+        
 
         public int SelectedSowing { get; set; }
         public int SelectedHarvest { get; set; }
@@ -20,26 +22,28 @@ namespace MCT.Web.Models.Search
         public int SelectedNutrientClaim { get; set; }
         public int SelectedRootDepth { get; set; }
 
+        public int SelectedPositiveInteraction { get; set; }
+        public int SelectedNegativeInteraction { get; set; }
 
-        public FilterModel()
+        public FilterModel(List<Subject> subjects)
         {
             Months = getMonthDropdownList();
             NutrientClaims = getNutrientClaimsDropdownList();
             RootDepths = getRootDepthsDropdownList();
+            SubjectList = getSubjectsList(subjects);
         }
 
 
-        private List<FilterDropdownElement> createMonthDropdownList()
+        private List<FilterDropdownElement> getSubjectsList(List<Subject> subjects)
         {
             List<FilterDropdownElement> temp = new List<FilterDropdownElement>();
 
-            foreach (var Id in TimePeriodHelper.GetMonthsAsIdList())
+            foreach (Subject s in subjects)
             {
                 temp.Add(new FilterDropdownElement()
                 {
-                    Id = Id,
-                    Name = TimePeriodHelper.GetMonthName(Id)
-
+                    Id = s.Id,
+                    Name = s.Name
                 });
             }
 
@@ -108,7 +112,7 @@ namespace MCT.Web.Models.Search
 
     public class FilterDropdownElement
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name{get; set; }
     }
 }
