@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MCT.DB.Entities;
 
 namespace MCT.Web.Models.Search
 {
@@ -11,7 +12,14 @@ namespace MCT.Web.Models.Search
         public SearchModel()
         {
             Species = new List<SpeciesModel>();
-            Filter = new FilterModel();
+            Filter = new FilterModel(new List<Subject>());
+            SearchCriterias = new Dictionary<string, string>();
+        }
+
+        public SearchModel(List<Subject> subjects)
+        {
+            Species = new List<SpeciesModel>();
+            Filter = new FilterModel(subjects);
             SearchCriterias = new Dictionary<string, string>();
         }
     }

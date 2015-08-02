@@ -16,6 +16,9 @@ namespace MCT.DB.Services
 {
     public class SearchManager : ManagerBase<Subject, long>
     {
+        private const long POSITIV_PREDICATE_ROOT_ID = 1;
+        private const long NEGAVTIV_PREDICATE_ROOT_ID = 2;
+
         public SearchManager()
         {
             
@@ -28,8 +31,9 @@ namespace MCT.DB.Services
         {
             var session = NHibernateHelper.GetCurrentSession();
 
-            IQueryable<Species> freeTextQuery = null;
+            IQueryable<Species> speciesQuery = null;
             IQueryable<Plant> plantQuery = null;
+
 
             foreach (KeyValuePair<string, string> kvp in searchCriteria)
             {
@@ -39,11 +43,11 @@ namespace MCT.DB.Services
                     
                     case "FREETEXT_SEARCH_KEY":
                     {
-                        
 
-                        if (freeTextQuery == null)
+
+                        if (speciesQuery == null)
                         {
-                            freeTextQuery = session.Query<Species>().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
+                            speciesQuery = session.Query<Species>().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
                                                                       ||
                                                                       s.Description.ToLower()
                                                                           .Contains(kvp.Value.ToLower())
@@ -53,7 +57,7 @@ namespace MCT.DB.Services
                         }
                         else
                         {
-                            freeTextQuery = freeTextQuery.AsQueryable().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
+                            speciesQuery = speciesQuery.AsQueryable().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
                                                                    ||
                                                                    s.Description.ToLower().Contains(kvp.Value.ToLower())
                                                                    ||
@@ -140,18 +144,67 @@ namespace MCT.DB.Services
 
                             break;
                         }
+
                     #endregion
 
+                    #endregion
+
+                    #region interactions
+
+                        case "PositivInteractionOn":
+                        {
+
+                            if (speciesQuery == null)
+                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
+                            else
+                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery );
+
+                            break;
+                        }
+
+                        case "NegativInteractionOn":
+                        {
+                            if (speciesQuery == null)
+                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID);
+                            else
+                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID, speciesQuery);
+
+                            break;
+                        }
+
+                        case "DoPositivInteraction":
+                        {
+
+                            if (speciesQuery == null)
+                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
+                            else
+                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery);
+
+                            break;
+                        }
+
+                        case "DoNegativInteraction":
+                        {
+                            if (speciesQuery == null)
+                                speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID);
+                            else
+                                speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID, speciesQuery);
+
+                            break;
+                        }
+                        
                     #endregion
                 }
             }
 
-            if (freeTextQuery != null && plantQuery!=null)
-                return (freeTextQuery.ToList().Intersect(plantQuery.ToList())).AsQueryable();
+            if (speciesQuery != null && plantQuery!=null)
+            {
+                return (speciesQuery.ToList().Intersect(plantQuery.ToList())).AsQueryable();
+            }
 
 
-            if (freeTextQuery != null)
-                return freeTextQuery;
+            if (speciesQuery != null)
+                return speciesQuery;
 
             if (plantQuery != null)
                 return plantQuery;
@@ -172,6 +225,56 @@ namespace MCT.DB.Services
             }
 
             return tempTimePeriods;
+        }
+
+        private IQueryable<Species> getSubjectsOfInteractionWithObject(long objectId, long predicateId)
+        {
+            Predicate rootPredicate =
+                this.GetAll<Predicate>().Where(i => i.Id.Equals(predicateId)).FirstOrDefault();
+
+            var matchingInteractionSubjectsIds =
+                this.GetAll<Interaction>()
+                    .Where(i => i.Predicate.Parent.Equals(rootPredicate) && i.Object.Id.Equals(objectId))
+                    .Select(i => i.Subject.Id);
+
+            return this.GetAllAsQueryable<Species>().Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
+        }
+
+        private IQueryable<Species> getSubjectsOfInteractionWithObject(long objectId, long predicateId, IQueryable<Species> query)
+        {
+            Predicate rootPredicate = this.GetAll<Predicate>().FirstOrDefault(i => i.Id.Equals(predicateId));
+
+            var matchingInteractionSubjectsIds = GetAll<Interaction>()
+                    .Where(i => i.Predicate.Parent.Equals(rootPredicate) && i.Object.Id.Equals(objectId))
+                    .Select(i => i.Subject.Id);
+
+
+            return query.Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
+        }
+
+        private IQueryable<Species> getObjectsOfInteractionWithSubject(long subjectId, long predicateId)
+        {
+            Predicate rootPredicate =
+                this.GetAll<Predicate>().Where(i => i.Id.Equals(predicateId)).FirstOrDefault();
+
+            var matchingInteractionSubjectsIds =
+                this.GetAll<Interaction>()
+                    .Where(i => i.Predicate.Parent.Equals(rootPredicate) && i.Subject.Id.Equals(subjectId))
+                    .Select(i => i.Object.Id);
+
+            return this.GetAllAsQueryable<Species>().Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
+        }
+
+        private IQueryable<Species> getObjectsOfInteractionWithSubject(long subjectId, long predicateId, IQueryable<Species> query)
+        {
+            Predicate rootPredicate = this.GetAll<Predicate>().FirstOrDefault(i => i.Id.Equals(predicateId));
+
+            var matchingInteractionSubjectsIds = GetAll<Interaction>()
+                    .Where(i => i.Predicate.Parent.Equals(rootPredicate) && i.Subject.Id.Equals(subjectId))
+                    .Select(i => i.Object.Id);
+
+
+            return query.Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
         }
 
         #endregion

@@ -1,0 +1,65 @@
+﻿@model MCT.Web.Models.Search.FilterModel
+
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+        <h4>Positiven Effekte auf...</h4>
+        <select class="form-control" id="PositiveInteraction" name="PositivInteractionOn" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.SubjectList)
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <!-- harvest -->
+        <h4>Negativen Effekt auf...</h4>
+        <select class="form-control" id="NegativeInteraction" name="NegativInteractionOn" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.SubjectList)
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <!-- harvest -->
+        <h4>... beeinflusst positiv</h4>
+        <select class="form-control" id="DoPositivInteraction" name="DoPositivInteraction" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.SubjectList)
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <!-- harvest -->
+        <h4>... beeinflusst negativ</h4>
+        <select class="form-control" id="DoNegativInteraction" name="DoNegativInteraction" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.SubjectList)
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        </select>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function change(e) {
+
+        var url = '@Url.Action("SetFilter", "Search")';
+            $.post(url, { key: e.id, value: e.value },
+            function (data) {
+                if(data === true)
+                    UpdateSearch();
+                    UpdateBreadcrumb();
+            });
+
+    }
+
+</script>

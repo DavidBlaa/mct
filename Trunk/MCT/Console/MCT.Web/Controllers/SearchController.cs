@@ -21,9 +21,9 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
 
             //Get all subjects
-            var species = subjectManager.GetAll<Species>();
+            var subjects = subjectManager.GetAll<Subject>();
 
-            SearchModel Model = new SearchModel();
+            SearchModel Model = new SearchModel(subjects.ToList());
 
             ResetSearchProvider();
 
