@@ -251,6 +251,7 @@
     <Content Include="Views\Search\_searchFilterPartialView.cshtml" />
     <Content Include="Views\Search\_searchFilterTimePartialView.cshtml" />
     <Content Include="Views\Search\_searchBreadCrumb.cshtml" />
+    <Content Include="Views\Search\_searchFilterPlantPropertiesPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

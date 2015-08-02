@@ -65,7 +65,7 @@ namespace MCT.Web.Controllers
         
         }
 
-        public JsonResult SetTimeFilter(string key, string value)
+        public JsonResult SetFilter(string key, string value)
         {
             SearchProvider sp = GetSearchProvider();
 
