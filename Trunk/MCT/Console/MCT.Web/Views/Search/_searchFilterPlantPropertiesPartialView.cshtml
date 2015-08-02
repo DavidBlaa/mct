@@ -1,0 +1,41 @@
+﻿@model MCT.Web.Models.Search.FilterModel
+
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+        <h4>Nährstoff-Anspruch</h4>
+        <select class="form-control" id="NutrientClaim" name="NutrientClaim" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.NutrientClaims)
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <!-- harvest -->
+        <h4>Würzel-Tiefe</h4>
+        <select class="form-control" id="RootDepth" name="RootDepth" class="valid" onchange="change(this)">
+            <option value>-- Select --</option>
+            @foreach (var m in Model.RootDepths)
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        </select>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function change(e) {
+        
+        var url = '@Url.Action("SetFilter", "Search")';
+            $.post(url, { key: e.id, value: e.value },
+            function (data) {
+                if(data === true)
+                    UpdateSearch();
+                    UpdateBreadcrumb();
+            });
+
+    }
+
+</script>

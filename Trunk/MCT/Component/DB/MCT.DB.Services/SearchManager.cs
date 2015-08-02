@@ -120,7 +120,27 @@ namespace MCT.DB.Services
                         }
                         #endregion
 
-                    
+                    #region Properties
+                        case "NutrientClaim":
+                        {
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => ((int)p.NutrientClaim).Equals(Convert.ToInt32(kvp.Value)));
+                            else
+                                plantQuery = plantQuery.AsQueryable().Where(p => ((int)p.NutrientClaim).Equals(Convert.ToInt32(kvp.Value)));
+
+                            break;
+                        }
+
+                        case "RootDepth":
+                        {
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => ((int)p.RootDepth).Equals(Convert.ToInt32(kvp.Value)));
+                            else
+                                plantQuery = plantQuery.AsQueryable().Where(p => ((int)p.RootDepth).Equals(Convert.ToInt32(kvp.Value)));
+
+                            break;
+                        }
+                    #endregion
 
                     #endregion
                 }
