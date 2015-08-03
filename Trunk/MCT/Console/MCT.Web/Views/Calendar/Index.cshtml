@@ -17,6 +17,18 @@
 
                 // page is now ready, initialize the calendar...
                 calendar.fullCalendar({
+
+                    header: {
+                        center: 'month,x' // buttons for switching between views
+                    },
+                    views: {
+                        x: {
+                            type: 'basic',
+                            duration: { days: 4 },
+                            buttonText: '4 day'
+                        }
+                    },
+
                     eventSources: [{
                         events: data
                     }]

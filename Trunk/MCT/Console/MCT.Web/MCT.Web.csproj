@@ -223,7 +223,11 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\BlumenkohlErfurterZwerg.jpg" />
     <Content Include="Images\Blumenkohl.jpg" />
+    <Content Include="Images\Cocktailtomate.JPG" />
     <Content Include="Images\GrosserKohlweissling.jpg" />
+    <Content Include="Images\KohlrabiGigant.JPG" />
+    <Content Include="Images\PetersilieGruenePerle.JPG" />
+    <Content Include="Images\RadieschenParat.JPG" />
     <Content Include="Images\SpinatButterflay.jpg" />
     <Content Include="App_Readme\Ext.NET\Sample.Web.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
