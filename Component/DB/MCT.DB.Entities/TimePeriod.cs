@@ -192,7 +192,7 @@ namespace MCT.DB.Entities
         September = 9,
         Oktober = 10,
         November= 11,
-        Dezember=12
+        Dezember= 12
     }
 
     public enum TimePeriodType

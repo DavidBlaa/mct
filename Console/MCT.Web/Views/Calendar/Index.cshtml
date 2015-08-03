@@ -1,0 +1,30 @@
+﻿
+@{
+    
+}
+
+<div id="calendar"></div>
+
+<script type="text/javascript">
+
+    var calendar = $('#calendar');
+
+    $(document).ready(function () {
+        var url = '@Url.Action("GetEvents", "Calendar")';
+
+        $.post(url,
+            function (data) {
+
+                // page is now ready, initialize the calendar...
+                calendar.fullCalendar({
+                    eventSources: [{
+                        events: data
+                    }]
+                });
+
+            });
+
+        
+    });
+
+</script>

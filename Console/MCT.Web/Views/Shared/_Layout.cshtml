@@ -6,10 +6,19 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/css/font-awesome.min.css")
+    @Styles.Render("~/Content/fullcalendar.css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
     @Scripts.Render("~/Scripts/isotope.pkgd.min.js")
+    @Scripts.Render("~/Scripts/moment.min.js")
+    @Scripts.Render("~/Scripts/fullcalendar.min.js")
     @Scripts.Render("~/Scripts/mct_basic.js")
+
+
+    @*<link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+    <script src='lib/jquery.min.js'></script>
+    <script src='lib/moment.min.js'></script>
+    <script src='fullcalendar/fullcalendar.js'></script>*@
 
 </head>
 <body>
@@ -26,6 +35,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Spielwiese", "Index", "Test")</li>
+                    <li>@Html.ActionLink("Calendar", "Index", "Calendar")</li>
                     <li>@Html.ActionLink("Data", "Index", "Data")</li>
                     <li>@Html.ActionLink("Search", "Search", "Search")</li>
                 </ul>
