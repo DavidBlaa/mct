@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-3 col-sm-6">
         <h4>Positiven Effekte auf...</h4>
-        <select class="form-control" id="PositiveInteraction" name="PositivInteractionOn" class="valid" onchange="change(this)">
+        <select class="form-control" id="PositivInteractionOn" name="PositivInteractionOn" class="valid" onchange="change(this)">
             <option value>-- Select --</option>
             @foreach (var m in Model.SubjectList)
             {
@@ -14,7 +14,7 @@
     <div class="col-md-3 col-sm-6">
         <!-- harvest -->
         <h4>Negativen Effekt auf...</h4>
-        <select class="form-control" id="NegativeInteraction" name="NegativInteractionOn" class="valid" onchange="change(this)">
+        <select class="form-control" id="NegativInteractionOn" name="NegativInteractionOn" class="valid" onchange="change(this)">
             <option value>-- Select --</option>
             @foreach (var m in Model.SubjectList)
             {
