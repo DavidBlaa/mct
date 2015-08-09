@@ -44,6 +44,7 @@ namespace MCT.DB.Services
                     case "FREETEXT_SEARCH_KEY":
                     {
 
+                        List<long> speciesIdsForMatchingTaxas = GetSpeciesWhereParentMatchs(kvp.Value);
 
                         if (speciesQuery == null)
                         {
@@ -53,7 +54,9 @@ namespace MCT.DB.Services
                                                                           .Contains(kvp.Value.ToLower())
                                                                       ||
                                                                       s.ScientificName.ToLower()
-                                                                          .Contains(kvp.Value.ToLower()));
+                                                                          .Contains(kvp.Value.ToLower()) 
+                                                                      ||
+                                                                      speciesIdsForMatchingTaxas.Contains(s.Id));
                         }
                         else
                         {
@@ -62,7 +65,9 @@ namespace MCT.DB.Services
                                                                    s.Description.ToLower().Contains(kvp.Value.ToLower())
                                                                    ||
                                                                    s.ScientificName.ToLower()
-                                                                       .Contains(kvp.Value.ToLower()));
+                                                                       .Contains(kvp.Value.ToLower()) 
+                                                                   ||
+                                                                   speciesIdsForMatchingTaxas.Contains(s.Id));
                         }
 
                     
@@ -275,6 +280,36 @@ namespace MCT.DB.Services
 
 
             return query.Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
+        }
+
+        private List<long> GetSpeciesWhereParentMatchs(string value)
+        {
+            List<long> speciesIds = new List<long>();
+
+            SubjectManager _sm = new SubjectManager();
+
+            var species = _sm.GetAll<Species>();
+
+            foreach (var s in species)
+            {
+                if (IsInTaxonParent(value, s)) speciesIds.Add(s.Id);
+            }
+
+            return speciesIds;
+        }
+
+        private bool IsInTaxonParent(string value, Node node)
+        {
+            if (node.Parent != null)
+            {
+                var parent = node.Parent;
+                if (parent.Name.Contains(value) || parent.ScientificName.Contains(value))
+                    return true;
+
+                return IsInTaxonParent(value, node.Parent);
+            }
+
+            return false;
         }
 
         #endregion

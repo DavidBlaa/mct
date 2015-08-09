@@ -1,42 +1,41 @@
 ﻿
-@{
-    
-}
-
 <div id="calendar"></div>
 
 <script type="text/javascript">
 
     var calendar = $('#calendar');
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         var url = '@Url.Action("GetEvents", "Calendar")';
 
+        
+
         $.post(url,
-            function (data) {
+            function(data) {
 
                 // page is now ready, initialize the calendar...
                 calendar.fullCalendar({
-
                     header: {
-                        center: 'month,x' // buttons for switching between views
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month'
                     },
-                    views: {
-                        x: {
-                            type: 'basic',
-                            duration: { days: 4 },
-                            buttonText: '4 day'
+                    eventSources: [
+                        {
+                            events: data
                         }
-                    },
-
-                    eventSources: [{
-                        events: data
-                    }]
+                    ]
                 });
 
             });
 
-        
+
     });
+
+    function GetCalendar() {
+
+        return $('#calendar');
+
+    }
 
 </script>
