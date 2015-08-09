@@ -161,6 +161,7 @@
     <Compile Include="Helpers\SeedDataGenerator.cs" />
     <Compile Include="Models\Search\AnimalModel.cs" />
     <Compile Include="Models\Search\FilterModel.cs" />
+    <Compile Include="Models\Search\SimpleNodeViewModel.cs" />
     <Compile Include="Models\Search\SpeciesModel.cs" />
     <Compile Include="Models\Search\PlantModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
@@ -304,6 +305,7 @@
     <Content Include="Views\Search\_searchFilterPlantPropertiesPartialView.cshtml" />
     <Content Include="Views\Search\_searchFilterInteractionPartialView.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
+    <Content Include="Views\Search\_taxonRankPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

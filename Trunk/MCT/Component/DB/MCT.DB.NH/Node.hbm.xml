@@ -6,7 +6,7 @@
     <!--//Name und Hierarchie-->
     <property name="ScientificName" type="String"/>
     <property name="Rank" type="TaxonRank"/>
-    
+
     <many-to-one name="Parent" class="MCT.DB.Entities.Node, MCT.DB.Entities" column="Parent" cascade="all" not-null="false" />
     
   </joined-subclass>

@@ -11,6 +11,7 @@ namespace MCT.Web.Models.Search
         public String ScientificName { get; set; }
         public String Description { get; set; }
         public String ImagePath { get; set; }
+        public SpeciesModel Parent { get; set; }
 
         public SpeciesType Type { get; set; }
 

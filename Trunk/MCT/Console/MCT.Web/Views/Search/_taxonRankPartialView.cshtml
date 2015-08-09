@@ -1,0 +1,15 @@
+﻿@using MCT.Web.Models.Search;
+@model SimpleNodeViewModel
+
+@{
+    ViewBag.Title = "_taxonRankPartialView";
+}
+
+<span> <b>@Model.TaxonRank : </b> @Model.Name  (  @Model.ScientificName )</span>
+<br/>
+
+@if (Model.Parent != null)
+{
+    @Html.Partial("_taxonRankPartialView", Model.Parent)
+    
+}

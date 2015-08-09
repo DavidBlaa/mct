@@ -1,25 +1,33 @@
-Lat Namen	Name	Sprache
-Apiaceae	Doldenblütler	de
-Apiales	Doldenblütlerartige	de
-Brassica	Kohl	de
-Brassica oleracea	Gemüsekohl	de
-Brassica oleracea convar. capitata var. alba	Weißkohl	de
-Brassica oleracea convar. capitata var. alba	Weißkraut	de
-Brassica oleracea convar. capitata var. alba	Weißkabis	de
-Brassica oleracea convar. capitata var. alba	Kaps	de
-Brassica oleracea convar. capitata var. alba	Kappus	de
-Brassica oleracea convar. capitata var. alba	Kabis	de
-Brassica oleracea convar. capitata var. alba	Kraut	de
-Brassicaceae	Kreuzblütengewächse	de
-Brassicales	Kreuzblütlerartige	de
-Daucus	Möhren	de
-Daucus carota	Möhre	de
-Lepidoptera	Schmetterling	de
-Magnoliopsida	Bedecktsamer	de
-Pieris rapae	Kleine Kohlfliege	de
-Pieris brassicae	Große Kohlweißling	de
-Chrysomelidae	Blattkäfer	de
-Psylliodes	Erdflöh	de
-Coleoptera	Käfer	de
-Insecta	Insekten	de
-Petroselinum crispum	Petersilie	de
+ScientificName	Name	Sprache	BevorzugterName
+Apiaceae	Doldenblütler	de	TRUE
+Apiales	Doldenblütlerartige	de	TRUE
+Brassica	Kohl	de	TRUE
+Brassica oleracea	Gemüsekohl	de	TRUE
+Brassica oleracea convar. capitata var. alba	Weißkohl	de	TRUE
+Brassica oleracea convar. capitata var. alba	Weißkraut	de	FALSE
+Brassica oleracea convar. capitata var. alba	Weißkabis	de	FALSE
+Brassica oleracea convar. capitata var. alba	Kaps	de	FALSE
+Brassica oleracea convar. capitata var. alba	Kappus	de	FALSE
+Brassica oleracea convar. capitata var. alba	Kabis	de	FALSE
+Brassica oleracea convar. capitata var. alba	Kraut	de	FALSE
+Brassicaceae	Kreuzblütengewächse	de	TRUE
+Brassicales	Kreuzblütlerartige	de	TRUE
+Chrysomelidae	Blattkäfer	de	TRUE
+Coleoptera	Käfer	de	TRUE
+Daucus	Möhren	de	TRUE
+Daucus carota	Möhre	de	TRUE
+Insecta	Insekten	de	TRUE
+Lamiaceae	Lippenblütler	de	TRUE
+Lamiales	Lippenblütlerartigen	de	TRUE
+Lepidoptera	Schmetterling	de	TRUE
+Magnoliopsida	Bedecktsamer	de	TRUE
+Ocimum	Basilikum	de	TRUE
+Ocimum basilicum	Basilikum Genoveser	de	TRUE
+Ocimum basilicum	Basilikum	de	FALSE
+Petroselinum crispum	Petersilie	de	TRUE
+Pieris brassicae	Große Kohlweißling	de	TRUE
+Pieris rapae	Kleine Kohlfliege	de	TRUE
+Psylliodes	Erdflöh	de	TRUE
+Solanaceae	Nachtschattengewächse	de	TRUE
+Solanales	Nachtschattenartige	de	TRUE
+Solanum	Nachtschatten	de	TRUE

@@ -18,6 +18,11 @@
             <h4>Beschreibung</h4>
             @Html.DisplayFor(model => model.Description)
         </div>
+
+        <div id="TaxonRank" class="col-md-8">
+            <h4>Taxon</h4>
+            @Html.Partial("_taxonRankPartialView", Model.Parent)
+        </div>
     </div>
 </div>
 <div class="row">
