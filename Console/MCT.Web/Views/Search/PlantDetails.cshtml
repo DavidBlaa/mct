@@ -14,14 +14,14 @@
         <img src="@Model.ImagePath" class=" speciesImage img-responsive " />
     </div>
     <div class="col-md-8">
-        <div id="Description" class="col-md-8">
+        <div id="Description" class="col-md-12">
             <h4>Beschreibung</h4>
             @Html.DisplayFor(model => model.Description)
         </div>
 
-        <div id="TaxonRank" class="col-md-8">
+        <div id="TaxonRanks" class="col-md-12">
             <h4>Taxon</h4>
-           @Html.Partial("_taxonRankPartialView", Model.Parent)
+            @Html.Partial("_taxonRankPartialView", Model.Parent)
         </div>
     </div>
 </div>
