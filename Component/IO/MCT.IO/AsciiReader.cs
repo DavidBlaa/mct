@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MCT.DB.Entities;
+using MCT.DB.Services;
 
 namespace MCT.IO
 {
@@ -174,12 +175,12 @@ namespace MCT.IO
 
         /// <summary>
         /// 0 Name                	
-        /// 1 Subspecies
-        ///     2 Species	
-        ///     3 Class
-        ///     4 Order	
-        ///     5 Family	
-        ///     6 Genus	
+        /// 1 Subspecies 1
+        ///     2 Species 2
+        ///     3 Class 6
+        ///     4 Order	 5
+        ///     5 Family 4	
+        ///     6 Genus	3
         /// 7 Description
         /// 8 Width
         /// 9 Height	
@@ -252,6 +253,13 @@ namespace MCT.IO
                 //set rank
                 plant.Rank = TaxonRank.SubSpecies;
 
+                //    2 Species 2
+                //     3 Class 6
+                //     4 Order	 5
+                //     5 Family 4	
+                //     6 Genus	3
+                plant.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
+
 
             }
             catch (Exception ex)
@@ -262,6 +270,135 @@ namespace MCT.IO
             return plant;
 
         }
+
+        ///     2 Species 2
+        ///     3 Class 6
+        ///     4 Order	 5
+        ///     5 Family 4	
+        ///     6 Genus	3
+
+        private Taxon generateTaxonParents(string species, string genus, string family, string order, string className)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+
+            #region class
+
+                Taxon classTaxon = null;
+
+                if (
+                    subjectManager.GetAll<Taxon>()
+                        .Any(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className)))
+                {
+                    classTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className));
+                }
+                else
+                {
+                    classTaxon = new Taxon()
+                    {
+                        Rank = TaxonRank.Class,
+                        Name = className,
+                        ScientificName = className
+                    };
+                }
+
+            #endregion
+
+            #region order
+
+            Taxon orderTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order)))
+            {
+                orderTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order));
+            }
+            else
+            {
+                orderTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Order,
+                    Name = order,
+                    ScientificName = order,
+                    Parent = classTaxon
+                };
+            }
+
+            #endregion
+
+            #region family
+
+            Taxon familyTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family)))
+            {
+                familyTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family));
+            }
+            else
+            {
+                familyTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Family,
+                    Name = family,
+                    ScientificName = family,
+                    Parent = orderTaxon
+                };
+            }
+
+            #endregion
+
+            #region genus
+
+            Taxon genusTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus)))
+            {
+                genusTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus));
+            }
+            else
+            {
+                genusTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Genus,
+                    Name = genus,
+                    ScientificName = genus,
+                    Parent = familyTaxon
+                };
+            }
+
+            #endregion
+
+            #region species
+
+            Taxon speciesTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species)))
+            {
+                speciesTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species));
+            }
+            else
+            {
+                speciesTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Species,
+                    Name = species,
+                    ScientificName = species,
+                    Parent = genusTaxon
+                };
+            }
+
+            #endregion
+
+            return speciesTaxon;
+        }
+
+
 
         /// <summary>
         /// 0 Name                	
