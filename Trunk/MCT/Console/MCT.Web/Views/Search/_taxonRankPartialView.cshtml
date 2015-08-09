@@ -4,12 +4,21 @@
 @{
     ViewBag.Title = "_taxonRankPartialView";
 }
+<div class="row">
+    <div id="TaxonRank" class="col-md-2">
+        <b>@Model.TaxonRank : </b>
+    </div>
 
-<span> <b>@Model.TaxonRank : </b> @Model.Name  (  @Model.ScientificName )</span>
-<br/>
+    <div id="TaxonName" class="col-md-4">
+        @Model.Name
+    </div>
+    <div id="TaxonScientificName" class="col-md-6">
+        ( @Model.TaxonRank )
+    </div>
+</div>
 
 @if (Model.Parent != null)
 {
     @Html.Partial("_taxonRankPartialView", Model.Parent)
-    
+
 }
