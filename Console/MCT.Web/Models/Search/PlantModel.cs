@@ -19,6 +19,7 @@ namespace MCT.Web.Models.Search
         public List<String> SeedMaturity { get; set; }
 
 
+
         public static PlantModel Convert(Plant plant)
         {
             PlantModel model = new PlantModel();
@@ -57,6 +58,12 @@ namespace MCT.Web.Models.Search
             if (plant.Bloom != null) model.Bloom = GetTimePeriodsAsStringList(plant.Bloom);
             if (plant.SeedMaturity != null) model.SeedMaturity = GetTimePeriodsAsStringList(plant.SeedMaturity);
 
+
+            #endregion
+
+            #region loadParentModels
+
+            model.Parent = SimpleNodeViewModel.Convert(plant.Parent);
 
             #endregion
 

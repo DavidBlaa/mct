@@ -8,10 +8,11 @@
     </id>
     
     <!--foreign-key-->
-    <many-to-one name="NodeId" class="MCT.DB.Entities.Node, MCT.DB.Entities" column="Node" cascade="all" not-null="true" />
-
+    <many-to-one name="Node" class="MCT.DB.Entities.Node, MCT.DB.Entities" column="Node" cascade="all" not-null="true" />
+    
     <!--//Name und Hierarchie-->
     <property name="Name" type="String"/>
     <property name="Language" type="String"/>
+    <property name="IsPreferredName" type="Boolean"/>
   </class>
 </hibernate-mapping>

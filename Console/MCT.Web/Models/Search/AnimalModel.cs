@@ -35,6 +35,12 @@ namespace MCT.Web.Models.Search
 
             model.ScientificName = animal.ScientificName;
 
+            #region loadParentModels
+
+            model.Parent = SimpleNodeViewModel.Convert(animal.Parent);
+
+            #endregion
+
             return model;
         }
     }

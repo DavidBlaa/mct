@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.Helpers;
 
 namespace MCT.IO
 {
@@ -17,6 +18,7 @@ namespace MCT.IO
         private string FileName;
 
         private List<string> Structure;
+        private List<AddtionalNameHelper> allAdditionalNameHelpers; 
 
         public int StartPosition  { get; set; }
 
@@ -27,6 +29,90 @@ namespace MCT.IO
             //Orientation = IO.Orientation.columnwise;
             StartPosition = 2;
             Structure = new List<string>();
+            allAdditionalNameHelpers = loadAddtionialNames();
+        }
+
+        public List<String> ReadFile(Stream fileStream)
+        {
+            List<string> lines = new List<string>();
+
+            // Check params
+            if (fileStream == null)
+            {
+                throw new Exception("File not exist");
+            }
+
+            if (!fileStream.CanRead)
+            {
+                throw new Exception("File is not readable");
+            }
+
+
+            using (StreamReader streamReader = new StreamReader(fileStream, Encoding.Default))
+            {
+                string line;
+
+                int position = 0;
+
+
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    position++;
+                    if (position == 1)
+                    {
+                        setStructure(line);
+                    }
+
+                    if (position >= StartPosition)
+                        lines.Add(line);
+                }
+
+            }
+
+            return lines;
+        }
+
+        public List<String> ReadFile(Stream file, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            FileStream = file;
+            FileName = fileName;
+
+            // Check params
+            if (FileStream == null)
+            {
+                throw new Exception("File not exist");
+            }
+
+            if (!FileStream.CanRead)
+            {
+                throw new Exception("File is not readable");
+            }
+
+
+            using (StreamReader streamReader = new StreamReader(file, Encoding.Default))
+            {
+                string line;
+
+                int position = 0;
+
+
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    position++;
+                    if (position == 1)
+                    {
+                        setStructure(line);
+                    }
+
+                    if (position >= StartPosition)
+                        lines.Add(line);
+                }
+
+            }
+
+            return lines;
         }
 
         public List<T> ReadFile<T>(Stream file, string fileName, string entityName) where T : class
@@ -130,49 +216,6 @@ namespace MCT.IO
             return nodes;
         }
 
-        public List<String> ReadFile(Stream file, string fileName)
-        {
-            List<string> lines = new List<string>();
-
-            FileStream = file;
-            FileName = fileName;
-
-            // Check params
-            if (FileStream == null)
-            {
-                throw new Exception("File not exist");
-            }
-
-            if (!FileStream.CanRead)
-            {
-                throw new Exception("File is not readable");
-            }
-
-
-            using (StreamReader streamReader = new StreamReader(file, Encoding.Default))
-            {
-                string line;
-
-                int position = 0;
-
-
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    position++;
-                    if (position == 1)
-                    {
-                        setStructure(line);
-                    }
-
-                    if (position >= StartPosition)
-                        lines.Add(line);
-                }
-
-            }
-
-            return lines;
-        }
-
         /// <summary>
         /// 0 Name                	
         /// 1 Subspecies 1
@@ -271,135 +314,6 @@ namespace MCT.IO
 
         }
 
-        ///     2 Species 2
-        ///     3 Class 6
-        ///     4 Order	 5
-        ///     5 Family 4	
-        ///     6 Genus	3
-
-        private Taxon generateTaxonParents(string species, string genus, string family, string order, string className)
-        {
-            SubjectManager subjectManager = new SubjectManager();
-
-            #region class
-
-                Taxon classTaxon = null;
-
-                if (
-                    subjectManager.GetAll<Taxon>()
-                        .Any(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className)))
-                {
-                    classTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className));
-                }
-                else
-                {
-                    classTaxon = new Taxon()
-                    {
-                        Rank = TaxonRank.Class,
-                        Name = className,
-                        ScientificName = className
-                    };
-                }
-
-            #endregion
-
-            #region order
-
-            Taxon orderTaxon = null;
-
-            if (
-                subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order)))
-            {
-                orderTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order));
-            }
-            else
-            {
-                orderTaxon = new Taxon()
-                {
-                    Rank = TaxonRank.Order,
-                    Name = order,
-                    ScientificName = order,
-                    Parent = classTaxon
-                };
-            }
-
-            #endregion
-
-            #region family
-
-            Taxon familyTaxon = null;
-
-            if (
-                subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family)))
-            {
-                familyTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family));
-            }
-            else
-            {
-                familyTaxon = new Taxon()
-                {
-                    Rank = TaxonRank.Family,
-                    Name = family,
-                    ScientificName = family,
-                    Parent = orderTaxon
-                };
-            }
-
-            #endregion
-
-            #region genus
-
-            Taxon genusTaxon = null;
-
-            if (
-                subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus)))
-            {
-                genusTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus));
-            }
-            else
-            {
-                genusTaxon = new Taxon()
-                {
-                    Rank = TaxonRank.Genus,
-                    Name = genus,
-                    ScientificName = genus,
-                    Parent = familyTaxon
-                };
-            }
-
-            #endregion
-
-            #region species
-
-            Taxon speciesTaxon = null;
-
-            if (
-                subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species)))
-            {
-                speciesTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species));
-            }
-            else
-            {
-                speciesTaxon = new Taxon()
-                {
-                    Rank = TaxonRank.Species,
-                    Name = species,
-                    ScientificName = species,
-                    Parent = genusTaxon
-                };
-            }
-
-            #endregion
-
-            return speciesTaxon;
-        }
-
-
-
         /// <summary>
         /// 0 Name                	
         /// 1 Subspecies
@@ -459,7 +373,7 @@ namespace MCT.IO
                 }
 
                 subject.Rank = TaxonRank.SubSpecies;
-
+                subject.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
 
             }
             catch (Exception ex)
@@ -571,7 +485,6 @@ namespace MCT.IO
             string[] values = line.Split(IOHelper.GetSeperator(Seperator));
             Structure = values.ToList();
         }
-
 
         public List<Interaction> ConvertToInteractions(List<string> sources, IEnumerable<Subject> subjects, IEnumerable<Predicate> predicates)
         {
@@ -722,9 +635,240 @@ namespace MCT.IO
             return temp;
         }
 
+        private Taxon generateTaxonParents(string species, string genus, string family, string order, string className)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+
+            #region class
+
+            Taxon classTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className)))
+            {
+                classTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className));
+            }
+            else
+            {
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(className)).ToList();
+
+                string name = className;
+
+                if (addtionalNameHelperMatches.Any())
+                    name = addtionalNameHelperMatches.FirstOrDefault().Name;
+
+                classTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Class,
+                    Name = name,
+                    ScientificName = className
+                };
+
+            }
+
+            #endregion
+
+            #region order
+
+            Taxon orderTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order)))
+            {
+                orderTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order));
+            }
+            else
+            {
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(order)).ToList();
+                string name = order;
+
+                if (addtionalNameHelperMatches.Any())
+                    name = addtionalNameHelperMatches.FirstOrDefault().Name;
+
+
+                orderTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Order,
+                    Name = name,
+                    ScientificName = order,
+                    Parent = classTaxon
+                };
+            }
+
+            #endregion
+
+            #region family
+
+            Taxon familyTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family)))
+            {
+                familyTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family));
+            }
+            else
+            {
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(family)).ToList();
+
+                string name = family;
+
+                if (addtionalNameHelperMatches.Any())
+                    name = addtionalNameHelperMatches.FirstOrDefault().Name;
+
+                familyTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Family,
+                    Name = name,
+                    ScientificName = family,
+                    Parent = orderTaxon
+                };
+            }
+
+            #endregion
+
+            #region genus
+
+            Taxon genusTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus)))
+            {
+                genusTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus));
+            }
+            else
+            {
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(genus)).ToList();
+
+                string name = genus;
+
+                if (addtionalNameHelperMatches.Any())
+                    name = addtionalNameHelperMatches.FirstOrDefault().Name;
+
+                genusTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Genus,
+                    Name = name,
+                    ScientificName = genus,
+                    Parent = familyTaxon
+                };
+            }
+
+            #endregion
+
+            #region species
+
+            Taxon speciesTaxon = null;
+
+            if (
+                subjectManager.GetAll<Taxon>()
+                    .Any(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species)))
+            {
+                speciesTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species));
+            }
+            else
+            {
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(species)).ToList();
+
+                string name = species;
+
+                if (addtionalNameHelperMatches.Any())
+                    name = addtionalNameHelperMatches.FirstOrDefault().Name;
+
+                speciesTaxon = new Taxon()
+                {
+                    Rank = TaxonRank.Species,
+                    Name = name,
+                    ScientificName = species,
+                    Parent = genusTaxon
+                };
+            }
+
+            #endregion
+
+            return speciesTaxon;
+        }
 
         #endregion
 
-        
+        #region readAdditionalNameFile
+
+        private List<AddtionalNameHelper> loadAddtionialNames()
+        {
+            List<AddtionalNameHelper> temp= new List<AddtionalNameHelper>();
+
+            string path = Path.Combine(AppConfigHelper.GetWorkspace(), "TaxonNamesSeedData.txt");
+
+            Stream fileStream = Open(path);
+
+            List<string> rows = ReadFile(fileStream);
+
+            foreach (string row in rows)
+            {
+                temp.Add(rowToAddtionalNameHelper(row));
+            }
+
+            return temp;
+        }
+
+        private AddtionalNameHelper rowToAddtionalNameHelper(string line)
+        {
+            string[] values = line.Split(IOHelper.GetSeperator(Seperator));
+
+            Debug.WriteLine("values count : " + values.Count());
+            Debug.WriteLine("datastructure count : " + Structure.Count());
+
+            AddtionalNameHelper subject = new AddtionalNameHelper();
+
+            try
+            {
+                for (int i = 0; i < Structure.Count(); i++)
+                {
+                    string variable = Structure.ElementAt(i);
+
+                    switch (variable)
+                    {
+                        case "Name": { subject.Name = values[i]; break; }
+                        case "ScientificName": { subject.ScientificName = values[i]; break; }
+                        case "Sprache": { subject.Language = values[i]; break; }
+                        case "BevorzugterName": { subject.IsPreferredName = Convert.ToBoolean(values[i]); break; }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return subject;
+
+        }
+
+        #endregion
+
     }
+
+    public class AddtionalNameHelper
+    {
+        public string Name { get; set; } 
+        public string ScientificName { get; set; }
+        public string Language { get; set; }
+        public bool IsPreferredName { get; set; }
+
+
+        public AdditionalName convertToAdditonalName(Node node)
+        {
+            return new AdditionalName()
+            {
+                Name = this.Name,
+                Language = this.Language,
+                Node = node,
+                IsPreferredName = IsPreferredName
+            };
+        }
+    }
+
 }

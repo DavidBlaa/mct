@@ -18,6 +18,8 @@ namespace MCT.Web.Models.Search
 
         public SubjectType Type { get; set; }
 
+        public SimpleNodeViewModel Parent { get; set; }
+
         public List<InteractionModel> Interactions { get; set; }
 
         public static SubjectModel Convert(Subject subject)
