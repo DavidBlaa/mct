@@ -73,7 +73,9 @@
     <EmbeddedResource Include="Effect.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Node.hbm.xml" />
+    <EmbeddedResource Include="Node.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Species.hbm.xml" />

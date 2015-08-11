@@ -55,15 +55,48 @@ namespace MCT.Web.Controllers
                 foreach (var node in nodes)
                 {
                     Plant plant = (Plant)node;
-                    if (plant.Cultivation != null)
+                    if(!manager.GetAll<Plant>().Any(p=>p.Name.Equals(plant.Name)))
                     {
-                        manager.Create(plant.Cultivation);
+                        if (plant.Cultivation != null)
+                        {
+                            manager.Create(plant.Cultivation);
+                        }
                     }
 
                     manager.Create(plant);
                     
                 }
             }
+
+            //mischkulturtabelle
+
+            path = Path.Combine(AppConfigHelper.GetWorkspace(), "MischkulturTabelle.txt");
+
+            if (DataReader.FileExist(path))
+            {
+                Stream fileStream = reader.Open(path);
+
+                List<Node> nodes = reader.ReadFile<Node>(fileStream, "MischkulturTabelle.txt", "Plant_MKT");
+
+                SubjectManager manager = new SubjectManager();
+
+                foreach (var node in nodes)
+                {
+                    Plant plant = (Plant)node;
+
+                    if(!manager.GetAll<Plant>().Any(p=>p.Name.Equals(plant.Name)))
+                    {
+                        if (plant.Cultivation != null)
+                        {
+                            manager.Create(plant.Cultivation);
+                        }
+
+                        manager.Create(plant);
+                    }
+
+                }
+            }
+
 
             //loadTestPlantData();
 
@@ -84,7 +117,10 @@ namespace MCT.Web.Controllers
                 foreach (var node in nodes)
                 {
                     Animal animal = (Animal)node;
-                    manager.Create(animal);
+                    if(!manager.GetAll<Animal>().Any(p=>p.Name.Equals(animal.Name)))
+                    {
+                        manager.Create(animal);
+                    }
                 }
             }
 
@@ -106,8 +142,12 @@ namespace MCT.Web.Controllers
 
                 foreach (var node in nodes)
                 {
+
                     Effect effect = (Effect)node;
-                    manager.Create(effect);
+                    if(!manager.GetAll<Effect>().Any(p=>p.Name.Equals(effect.Name)))
+                    {
+                        manager.Create(effect);
+                    }
                 }
             }
 
@@ -128,7 +168,10 @@ namespace MCT.Web.Controllers
                 foreach (var node in predicates)
                 {
                     Predicate predicate = (Predicate)node;
-                    manager.Create(predicate);
+                    if(!manager.GetAll<Predicate>().Any(p=>p.Name.Equals(predicate.Name)))
+                    {
+                        manager.Create(predicate);
+                    }
                 }
             }
 
@@ -149,7 +192,10 @@ namespace MCT.Web.Controllers
                 
                 foreach (var node in interactions)
                 {
-                    manager.Create(node);
+                    if(!manager.GetAll<Interaction>().Any(i=>i.Subject.Equals(node.Subject) && i.Object.Equals(node.Object)))
+                    {
+                        manager.Create(node);
+                    }
                 }
             }
 

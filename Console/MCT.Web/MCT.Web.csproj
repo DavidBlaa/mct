@@ -246,6 +246,7 @@
     <Content Include="Scripts\mct_basic.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Workspace\EffectSeedData.txt" />
+    <Content Include="Workspace\MischkulturTabelle.txt" />
     <Content Include="Workspace\PredicateSeedData.txt" />
     <Content Include="Workspace\TaxonNamesSeedData.txt" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
@@ -306,6 +307,7 @@
     <Content Include="Views\Search\_searchFilterInteractionPartialView.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
     <Content Include="Views\Search\_taxonRankPartialView.cshtml" />
+    <Content Include="Workspace\Mischkulturtabelle.csv" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

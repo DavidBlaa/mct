@@ -144,6 +144,9 @@ namespace MCT.IO
                 {
                     case "Plant":
                     {
+
+                        Seperator = TextSeperator.tab;
+
                         while ((line = streamReader.ReadLine()) != null)
                         {
                             position++;
@@ -159,8 +162,32 @@ namespace MCT.IO
                         break;
                     }
 
+                    case "Plant_MKT":
+                    {
+                        Seperator = TextSeperator.semicolon;
+
+                        while ((line = streamReader.ReadLine()) != null)
+                        {
+                            position++;
+                            if (position == 1)
+                            {
+                                setStructure(line);
+                            }
+
+                            if (position >= StartPosition)
+                            {
+                                T n = rowToPlant_MKT(line) as T;
+                                if(n!=null) nodes.Add(n);
+                            }
+                        }
+
+                        break;
+                    }
+
                     case "Animal":
                     {
+                        Seperator = TextSeperator.tab;
+
                         while ((line = streamReader.ReadLine()) != null)
                         {
                             position++;
@@ -178,6 +205,8 @@ namespace MCT.IO
 
                     case "Predicate":
                     {
+                        Seperator = TextSeperator.tab;
+
                         while ((line = streamReader.ReadLine()) != null)
                         {
                             position++;
@@ -195,6 +224,8 @@ namespace MCT.IO
 
                     case "Effect":
                     {
+                        Seperator = TextSeperator.tab;
+
                         while ((line = streamReader.ReadLine()) != null)
                         {
                             position++;
@@ -526,6 +557,20 @@ namespace MCT.IO
                         ));
 
                 }
+                else
+                { 
+                    if(!subjects.Select(s => s.Name.Equals(subjectName)).Any())
+                        Debug.WriteLine(subjectName +" - Subject is missing");
+
+                    if(!predicates.Select(p => p.Name.Equals(predicateName)).Any())
+                        Debug.WriteLine(predicateName +" - Predicate is missing");
+
+                    if(!subjects.Select(s => s.Name.Equals(objectName)).Any())
+                        Debug.WriteLine(subjectName +" - object is missing");
+
+                    if (!subjects.Select(s => s.Name.Equals(impactSubjectName)).Any())
+                        Debug.WriteLine(subjectName + " - ImpactSubject is missing");
+                }
 
             }
 
@@ -845,6 +890,158 @@ namespace MCT.IO
 
             return subject;
 
+        }
+
+        #endregion
+
+        #region read MischkulturTabelle.txt
+
+        /// <summary>
+        /// 0 Pflanze                	
+        /// 1 Pflanzenfamilie
+        /// 2 günstige Partner
+        /// 3 ungünstige Partner
+        /// 4 Vorkultur / Nachkultur
+        /// 5     1. Aussaattiefe in cm /
+                //2. Keimtemperatur
+                //(optimal/minimum) in °C /
+                //3. Keimdauer in Tagen /
+                //4. Keimfähigkeit der Samen in Jahren
+        /// 6 Bemerkungen
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private Node rowToPlant_MKT(string line)
+        {
+            string[] values = line.Split(IOHelper.GetSeperator(Seperator));
+
+            //Debug.WriteLine("values count : " + values.Count());
+            //Debug.WriteLine("datastructure count : " + Structure.Count());
+
+           
+
+            if (values.Count() == Structure.Count)
+            {
+                 Plant plant = new Plant();
+
+                try
+                {
+                    for (int i = 0; i < Structure.Count(); i++)
+                    {
+                        string variable = Structure.ElementAt(i);
+                        Debug.WriteLine(variable);
+                        switch (variable)
+                        {
+                            case "Pflanze": { 
+                                plant.Name = GetFirstNameMKT(values[i]);
+                                plant.ScientificName = GetScientificNameMKT(values[i]); break; }
+                            case "Pflanzenfamilie": { break; }
+                            case "günstige Partner": { break; }
+                            case "ungünstige Partner": { break; }
+                            case "Vorkultur / Nachkultur": { break; }
+                            case "1. Aussaattiefe in cm /2. Keimtemperatur(optimal/minimum) in °C /3. Keimdauer in Tagen /4. Keimfähigkeit der Samen in Jahren" : { break; }
+                            case "Bemerkungen":
+                                {
+
+                                    string description = values[i];
+                                    if (description.Length > 250)
+                                        plant.Description = description.Substring(0, 250) + "...";
+                                    else
+                                        plant.Description = values[i];
+
+                                    break;
+
+                                }
+
+
+                            //case "Width": { plant.Width = Convert.ToInt32(values[i]); break; }
+                            //case "Height": { plant.Height = Convert.ToInt32(values[i]); break; }
+                            //case "RootDepth": { plant.RootDepth = PlantHelper.GetRootDepth(values[i]); break; }
+                            //case "SowingDepth": { plant.SowingDepth = Convert.ToInt32(values[i]); break; }
+                            //case "NutrientClaim": { plant.NutrientClaim = PlantHelper.GetNutrientClaimDepth(values[i]); break; }
+                            //case "Sowing": { plant.Sowing = createTimePeriods<Sowing>(values[i], TimePeriodType.Sowing); break; }
+                            //case "Bloom": { plant.Bloom = createTimePeriods<Bloom>(values[i], TimePeriodType.Bloom); break; }
+                            //case "Harvest":
+                            //    {
+                            //        plant.Harvest = createTimePeriods<Harvest>(values[i], TimePeriodType.Harvest); break;
+                            //    }
+                            //case "SeedMaturity": { plant.SeedMaturity = createTimePeriods<SeedMaturity>(values[i], TimePeriodType.SeedMaturity); break; }
+                            //case "Image":
+                            //    {
+                            //        if (!String.IsNullOrEmpty(values[i]))
+                            //        {
+                            //            Media media = new Media();
+                            //            media.ImagePath = "/Images/" + values[i];
+                            //            plant.Medias.Add(media);
+                            //        }
+                            //        break;
+                            //    }
+                        }
+                    }
+
+                    //set rank
+                    plant.Rank = TaxonRank.SubSpecies;
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+
+                if (string.IsNullOrEmpty(plant.Name) && string.IsNullOrEmpty(plant.ScientificName))
+                {
+                    Debug.WriteLine("no names not stored  :" + values);
+                    return null;
+                }
+
+                return plant;
+            }
+            else
+            {
+                Debug.WriteLine("values error in number of vars  :" + values);
+                return null;
+            }
+
+            
+
+        }
+
+        private string GetFirstNameMKT(string value)
+        {
+            string[] seperateNames = value.Split(',');
+            
+            //nur ein name
+            if(seperateNames.Length==1)
+            {
+                return seperateNames[0].Split('(')[0].Replace('"', ' ').Trim();
+            }
+            // mehrere name, nur der erste zurückgesendet
+            else
+            {
+                return seperateNames[0].Replace('"', ' ').Trim();
+            }
+
+        }
+
+        private string GetScientificNameMKT(string value)
+        {
+            if(value.Contains("("))
+            {
+
+                string[] seperateNames = value.Split('(');
+                string lastPart = seperateNames[seperateNames.Length - 1];
+
+                string[] seperateNames2 = lastPart.Split(')');
+                string scientificName = seperateNames2[0];
+
+                if (scientificName.Contains("...") || scientificName.Contains('-') )
+                    return "";
+
+                return scientificName.Replace('"', ' ').Trim();
+
+            }
+
+            return "";
         }
 
         #endregion
