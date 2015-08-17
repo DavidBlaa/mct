@@ -62,8 +62,8 @@ namespace MCT.Web.Models.Search
             #endregion
 
             #region loadParentModels
-
-            model.Parent = SimpleNodeViewModel.Convert(plant.Parent);
+            if (plant.Parent!=null)
+                model.Parent = SimpleNodeViewModel.Convert(plant.Parent);
 
             #endregion
 

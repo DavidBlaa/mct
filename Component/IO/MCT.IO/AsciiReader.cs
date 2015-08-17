@@ -18,12 +18,15 @@ namespace MCT.IO
         private string FileName;
 
         private List<string> Structure;
-        private List<AddtionalNameHelper> allAdditionalNameHelpers; 
+        private List<AddtionalNameHelper> allAdditionalNameHelpers;
+
+        private SubjectManager subjectManager;
 
         public int StartPosition  { get; set; }
 
         public AsciiReader()
         {
+            subjectManager = new SubjectManager();
             Seperator = TextSeperator.tab;
             Decimal = DecimalCharacter.comma;
             //Orientation = IO.Orientation.columnwise;
@@ -178,6 +181,28 @@ namespace MCT.IO
                             {
                                 T n = rowToPlant_MKT(line) as T;
                                 if(n!=null) nodes.Add(n);
+                            }
+                        }
+
+                        break;
+                    }
+
+                    case "Plant_MKT_UPDATE":
+                    {
+                        Seperator = TextSeperator.semicolon;
+
+                        while ((line = streamReader.ReadLine()) != null)
+                        {
+                            position++;
+                            if (position == 1)
+                            {
+                                setStructure(line);
+                            }
+
+                            if (position >= StartPosition)
+                            {
+                                T n = rowToPlant_MKT_UPDATE(line) as T;
+                                if (n != null) nodes.Add(n);
                             }
                         }
 
@@ -918,8 +943,6 @@ namespace MCT.IO
             //Debug.WriteLine("values count : " + values.Count());
             //Debug.WriteLine("datastructure count : " + Structure.Count());
 
-           
-
             if (values.Count() == Structure.Count)
             {
                  Plant plant = new Plant();
@@ -935,10 +958,6 @@ namespace MCT.IO
                             case "Pflanze": { 
                                 plant.Name = GetFirstNameMKT(values[i]);
                                 plant.ScientificName = GetScientificNameMKT(values[i]); break; }
-                            case "Pflanzenfamilie": { break; }
-                            case "günstige Partner": { break; }
-                            case "ungünstige Partner": { break; }
-                            case "Vorkultur / Nachkultur": { break; }
                             case "1. Aussaattiefe in cm /2. Keimtemperatur(optimal/minimum) in °C /3. Keimdauer in Tagen /4. Keimfähigkeit der Samen in Jahren" : { break; }
                             case "Bemerkungen":
                                 {
@@ -948,34 +967,9 @@ namespace MCT.IO
                                         plant.Description = description.Substring(0, 250) + "...";
                                     else
                                         plant.Description = values[i];
-
                                     break;
 
                                 }
-
-
-                            //case "Width": { plant.Width = Convert.ToInt32(values[i]); break; }
-                            //case "Height": { plant.Height = Convert.ToInt32(values[i]); break; }
-                            //case "RootDepth": { plant.RootDepth = PlantHelper.GetRootDepth(values[i]); break; }
-                            //case "SowingDepth": { plant.SowingDepth = Convert.ToInt32(values[i]); break; }
-                            //case "NutrientClaim": { plant.NutrientClaim = PlantHelper.GetNutrientClaimDepth(values[i]); break; }
-                            //case "Sowing": { plant.Sowing = createTimePeriods<Sowing>(values[i], TimePeriodType.Sowing); break; }
-                            //case "Bloom": { plant.Bloom = createTimePeriods<Bloom>(values[i], TimePeriodType.Bloom); break; }
-                            //case "Harvest":
-                            //    {
-                            //        plant.Harvest = createTimePeriods<Harvest>(values[i], TimePeriodType.Harvest); break;
-                            //    }
-                            //case "SeedMaturity": { plant.SeedMaturity = createTimePeriods<SeedMaturity>(values[i], TimePeriodType.SeedMaturity); break; }
-                            //case "Image":
-                            //    {
-                            //        if (!String.IsNullOrEmpty(values[i]))
-                            //        {
-                            //            Media media = new Media();
-                            //            media.ImagePath = "/Images/" + values[i];
-                            //            plant.Medias.Add(media);
-                            //        }
-                            //        break;
-                            //    }
                         }
                     }
 
@@ -1003,6 +997,93 @@ namespace MCT.IO
             }
 
             
+
+        }
+
+        /// <summary>
+        /// Zweite Runde zum einlesen der Planzen aus der 
+        /// Mischkultur Tabelle. 
+        /// Da Assosciations gespeichert werden müssen,
+        /// wurde der erste Durchlauf zum erstellen der Planzen  genutzt
+        /// und der zweite druchlauf zum erstellenn der Verbindungen
+        /// 
+        /// 0 Pflanze                	
+        /// 1 Pflanzenfamilie
+        /// 2 günstige Partner
+        /// 3 ungünstige Partner
+        /// 4 Vorkultur / Nachkultur
+        /// 5     1. Aussaattiefe in cm /
+        //2. Keimtemperatur
+        //(optimal/minimum) in °C /
+        //3. Keimdauer in Tagen /
+        //4. Keimfähigkeit der Samen in Jahren
+        /// 6 Bemerkungen
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private Node rowToPlant_MKT_UPDATE(string line)
+        {
+            string[] values = line.Split(IOHelper.GetSeperator(Seperator));
+     
+            //Debug.WriteLine("values count : " + values.Count());
+            //Debug.WriteLine("datastructure count : " + Structure.Count());
+
+            if (values.Count() == Structure.Count)
+            {
+                int plantNameIndex = Structure.IndexOf(Structure.Where(e=>e.Equals("Pflanze")).FirstOrDefault());
+
+                Plant plant = subjectManager.GetAll<Plant>().Single(p => p.Name.Equals(GetFirstNameMKT(values.ElementAt(plantNameIndex))));
+
+                try
+                {
+                    for (int i = 0; i < Structure.Count(); i++)
+                    {
+                        string variable = Structure.ElementAt(i);
+                        Debug.WriteLine(variable);
+                        switch (variable)
+                        {
+
+                            case "Pflanzenfamilie": { break; }
+                            case "günstige Partner": { break; }
+                            case "ungünstige Partner": { break; }
+                            case "Vorkultur / Nachkultur": { 
+                                
+                                string[] temp = values[i].Split('/');
+                                if(temp.Length >0)
+                                {
+                                    if (!String.IsNullOrEmpty(temp[0]))
+                                        SetCultures(plant, "preculture", temp[0]);
+                                    if ((temp.Length==2 || temp.Length>2) && !String.IsNullOrEmpty(temp[1]) )
+                                        SetCultures(plant, "afterculture", temp[1]);
+
+                                }
+                                
+
+                                break; }
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+
+                if (string.IsNullOrEmpty(plant.Name) && string.IsNullOrEmpty(plant.ScientificName))
+                {
+                    Debug.WriteLine("no names not stored  :" + values);
+                    return null;
+                }
+
+                return plant;
+            }
+            else
+            {
+                Debug.WriteLine("values error in number of vars  :" + values);
+                return null;
+            }
+
+
 
         }
 
@@ -1042,6 +1123,28 @@ namespace MCT.IO
             }
 
             return "";
+        }
+
+        private void SetCultures(Plant plant, string cultureType, string culturesValues)
+        {
+            List<Plant> cultures = new List<Plant>();
+
+
+            // get plants - split incoming string
+            string[] names = culturesValues.Split(',');
+
+            foreach(string name in names)
+            {
+                string processedName = name.Split('(')[0];
+
+                if (subjectManager.GetAll<Plant>().Any(p => p.Name.Equals(processedName)))
+                    cultures.Add(subjectManager.GetAll<Plant>().Where(p => p.Name.Equals(processedName)).FirstOrDefault());
+            }
+
+
+            if(cultureType.Equals("preculture")) { plant.PreCultures = cultures;}
+            if(cultureType.Equals("afterculture")) { plant.AfterCultures = cultures;}
+
         }
 
         #endregion
