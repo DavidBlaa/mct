@@ -13,6 +13,18 @@
 
     <!--//Vorzucht-->
     <many-to-one name="Cultivation" class="MCT.DB.Entities.Cultivation, MCT.DB.Entities" column="Cultivation" cascade="all" not-null="false" />
+
+    <!-- Vor/Nachklultur -->
+    <set name="PreCultures" table="PreCultures_Mappping" cascade="all">
+      <key column="ID" />
+      <many-to-many column="PreCultures_ID" class="MCT.DB.Entities.Plant, MCT.DB.Entities" />
+    </set>
+
+    <set name="AfterCultures" table="AfterCultures_Mappping" cascade="all">
+      <key column="ID" />
+      <many-to-many column="AfterCultures_ID" class="MCT.DB.Entities.Plant, MCT.DB.Entities" />
+    </set>
+
     <!--<property name="Cultivation" type="Int64"/>-->
 
     <set cascade="all-delete-orphan" name="Bloom" >

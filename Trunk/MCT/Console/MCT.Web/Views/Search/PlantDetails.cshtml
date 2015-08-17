@@ -21,7 +21,9 @@
 
         <div id="TaxonRanks" class="col-md-12">
             <h4>Taxon</h4>
-            @Html.Partial("_taxonRankPartialView", Model.Parent)
+            @if (Model.Parent != null) { 
+                @Html.Partial("_taxonRankPartialView", Model.Parent)
+            }
         </div>
     </div>
 </div>

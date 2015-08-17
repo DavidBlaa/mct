@@ -97,6 +97,23 @@ namespace MCT.Web.Controllers
                 }
             }
 
+            //update after creation for associations
+
+            if (DataReader.FileExist(path))
+            {
+                Stream fileStream = reader.Open(path);
+
+                List<Node> nodes = reader.ReadFile<Node>(fileStream, "MischkulturTabelle.txt", "Plant_MKT_UPDATE");
+
+                SubjectManager manager = new SubjectManager();
+
+                foreach (var node in nodes)
+                {
+                    Plant plant = (Plant)node;
+                    manager.Update(plant);
+                }
+            }
+
 
             //loadTestPlantData();
 

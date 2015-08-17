@@ -17,7 +17,7 @@ namespace MCT.DB.Entities
         public virtual RootDepth RootDepth { get; set; }
         public virtual NutrientClaim NutrientClaim { get; set; }
         public virtual int SowingDepth { get; set; }
-     
+
         #endregion
 
         #region Associations
@@ -32,6 +32,9 @@ namespace MCT.DB.Entities
         public virtual ICollection<Harvest> Harvest { get; set; }
         public virtual ICollection<SeedMaturity> SeedMaturity { get; set; }
 
+        public virtual ICollection<Plant> PreCultures { get; set; }
+        public virtual ICollection<Plant> AfterCultures { get; set; }
+
         #endregion
 
         public Plant()
@@ -40,6 +43,8 @@ namespace MCT.DB.Entities
             Bloom = new List<Bloom>();
             Harvest = new List<Harvest>();
             SeedMaturity = new List<SeedMaturity>();
+            PreCultures = new List<Plant>();
+            AfterCultures = new List<Plant>();
         }
 
 
