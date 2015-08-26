@@ -56,13 +56,11 @@ namespace MCT.IO
             {
                 string body = this.Html.Substring(namePosition);
 
-                int start = body.IndexOf('(');
-                int end = body.IndexOf(')');
+                string start = body.Split('(').ElementAt(1);
+                string test = start.Split(')').ElementAt(0);
 
-                if (start != -1 && end != -1)
-                {
-                    scientificName = body.Substring(start, end);
-                }
+                scientificName = test.Replace("<i>","").Replace("</i>","");
+                scientificName = scientificName.Split('<').ElementAt(0);
             }
 
             return scientificName;
