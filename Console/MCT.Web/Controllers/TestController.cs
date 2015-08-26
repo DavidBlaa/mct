@@ -94,7 +94,16 @@ namespace MCT.Web.Controllers
 
             //NHibernateHelper.ReIndex();
             //NHibernateHelper.Search();
+
+            WikipediaReader wReader = new WikipediaReader();
             
+            
+            
+            
+            
+            wReader.GetScientificName("Blumenkohl");
+
+
 
             return View();
         }
