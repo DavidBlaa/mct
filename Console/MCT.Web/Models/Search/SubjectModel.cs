@@ -105,11 +105,29 @@ namespace MCT.Web.Models.Search
 
     }
 
-    public class InteractionElementModel
+    public class SimpleLinkModel
     {
         public long Id { get; set; }
         public String Name { get; set; }
         public String Type { get; set; }
+
+        public SimpleLinkModel()
+        {
+            Id = 0;
+            Name = string.Empty;
+            Type = string.Empty;
+        }
+
+        public SimpleLinkModel(long id, string name, string type)
+        { 
+            Id = id;
+            Name = name;
+            Type = type;
+        }
+    }
+
+    public class InteractionElementModel : SimpleLinkModel
+    {
 
         public static InteractionElementModel Convert(Subject subject)
         {

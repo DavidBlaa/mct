@@ -18,6 +18,14 @@ namespace MCT.Web.Models.Search
         public List<String> Bloom { get; set; }
         public List<String> SeedMaturity { get; set; }
 
+        public virtual List<SimpleLinkModel> PreCultures { get; set; }
+        public virtual List<SimpleLinkModel> AfterCultures { get; set; }
+
+        public PlantModel()
+        {
+            PreCultures = new List<SimpleLinkModel>();
+            AfterCultures = new List<SimpleLinkModel>();
+        }
 
 
         public static PlantModel Convert(Plant plant)
@@ -62,14 +70,34 @@ namespace MCT.Web.Models.Search
             #endregion
 
             #region loadParentModels
+
             if (plant.Parent!=null)
                 model.Parent = SimpleNodeViewModel.Convert(plant.Parent);
 
             #endregion
 
+            #region load pre/after cultures
+
+                if (plant.PreCultures.Count > 0)
+                {
+                    foreach (var p in plant.PreCultures)
+                    { 
+                        model.PreCultures.Add(new SimpleLinkModel(p.Id,p.Name, SubjectType.Plant.ToString()));
+                    }
+                }
+
+                if (plant.AfterCultures.Count > 0)
+                {
+                    foreach (var p in plant.AfterCultures)
+                    {
+                        model.AfterCultures.Add(new SimpleLinkModel(p.Id,p.Name, SubjectType.Plant.ToString()));
+                    }
+                }
+
+            #endregion
+
             return model;
         }
-
 
         private static List<string> GetTimePeriodsAsStringList<T>(ICollection<T> timeperiods) where T : TimePeriod
         {

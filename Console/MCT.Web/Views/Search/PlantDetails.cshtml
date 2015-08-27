@@ -113,6 +113,24 @@
     </dl>
 </div>
 
+<div class="row">
+    <h4>Vorkultur</h4>
+
+    @foreach(var p in Model.PreCultures)
+    {
+        @Html.ActionLink(p.Name, "Details", new { id = p.Id, type = p.Type })<br/>
+    }
+
+    <h4>Nachkultur</h4>
+
+    @foreach (var p in Model.AfterCultures)
+    {
+        @Html.ActionLink(p.Name, "Details", new { id = p.Id, type = p.Type })<br />
+    }
+
+
+</div>
+
 @if (Model.Interactions != null)
 {
     @Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);

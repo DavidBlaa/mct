@@ -15,52 +15,65 @@ namespace MCT.IO
             BaseUrl = @"https://de.wikipedia.org/wiki";
         }
 
-        private void LoadSubjectPage(string name)
+        private bool LoadSubjectPage(string name)
         {
+            
             string urlAddress = Path.Combine(BaseUrl,name);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-            if (response.StatusCode == HttpStatusCode.OK)
+            
+            try
             {
-                Stream receiveStream = response.GetResponseStream();
-                StreamReader readStream = null;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-                if (response.CharacterSet == null)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    readStream = new StreamReader(receiveStream);
-                }
-                else
-                {
-                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                }
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream = null;
 
-                this.Html = readStream.ReadToEnd();
+                    if (response.CharacterSet == null)
+                    {
+                        readStream = new StreamReader(receiveStream);
+                    }
+                    else
+                    {
+                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    }
 
-                response.Close();
-                readStream.Close();
+                    this.Html = readStream.ReadToEnd();
+
+                    response.Close();
+                    readStream.Close();
+
+                    return true;
+                }
             }
+            catch
+            {
+                return false;
+            }
+
+            return false;
         }
 
         public string GetScientificName(string name)
         {
             string scientificName = "";
 
-            if (String.IsNullOrEmpty(this.Html))
-                LoadSubjectPage(name);
-
-            int namePosition = this.Html.IndexOf("<p><b>" + name + "</b>");
-
-            if (namePosition != -1)
+            if (LoadSubjectPage(name))
             {
-                string body = this.Html.Substring(namePosition);
+                int namePosition = this.Html.IndexOf("<p><b>" + name + "</b>");
 
-                string start = body.Split('(').ElementAt(1);
-                string test = start.Split(')').ElementAt(0);
+                if (namePosition != -1)
+                {
+                    string body = this.Html.Substring(namePosition);
 
-                scientificName = test.Replace("<i>","").Replace("</i>","");
-                scientificName = scientificName.Split('<').ElementAt(0);
+                    string start = body.Split('(').ElementAt(1);
+                    string test = start.Split(')').ElementAt(0);
+
+                    scientificName = test.Replace("<i>", "").Replace("</i>", "");
+                    scientificName = scientificName.Split('<').ElementAt(0);
+                }
             }
 
             return scientificName;
