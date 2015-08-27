@@ -84,14 +84,19 @@ namespace MCT.Web.Controllers
                 {
                     Plant plant = (Plant)node;
 
-                    if(!manager.GetAll<Plant>().Any(p=>p.Name.Equals(plant.Name)))
+                    if (!string.IsNullOrEmpty(plant.Name) && !string.IsNullOrEmpty(plant.ScientificName))
                     {
-                        if (plant.Cultivation != null)
+                        // pflanze noch nicht vorhanden
+                        if (!manager.GetAll<Plant>().Any(p => p.Name.ToLower().Equals(plant.Name.ToLower())))
                         {
-                            manager.Create(plant.Cultivation);
+                                if (plant.Cultivation != null)
+                                {
+                                    manager.Create(plant.Cultivation);
+                                }
+
+                                manager.Create(plant);
                         }
 
-                        manager.Create(plant);
                     }
 
                 }

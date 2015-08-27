@@ -21,6 +21,7 @@ namespace MCT.IO
         private List<AddtionalNameHelper> allAdditionalNameHelpers;
 
         private SubjectManager subjectManager;
+        private WikipediaReader wikipediaReader;
 
         public int StartPosition  { get; set; }
 
@@ -33,6 +34,7 @@ namespace MCT.IO
             StartPosition = 2;
             Structure = new List<string>();
             allAdditionalNameHelpers = loadAddtionialNames();
+            wikipediaReader = new WikipediaReader();
         }
 
         public List<String> ReadFile(Stream fileStream)
@@ -320,7 +322,7 @@ namespace MCT.IO
 
                             string description = values[i];
                             if (description.Length > 250)
-                                plant.Description = description.Substring(0, 250) + "...";
+                                plant.Description = description;
                             else
                                 plant.Description = values[i]; 
                             
@@ -407,7 +409,7 @@ namespace MCT.IO
 
                             string description = values[i];
                             if (description.Length > 250)
-                                subject.Description = description.Substring(0, 250) + "...";
+                                subject.Description = description;
                             else
                                 subject.Description = values[i];
 
@@ -470,7 +472,7 @@ namespace MCT.IO
 
                                 string description = values[i];
                                 if (description.Length > 250)
-                                    subject.Description = description.Substring(0, 250) + "...";
+                                    subject.Description = description;
                                 else
                                     subject.Description = values[i];
 
@@ -957,18 +959,11 @@ namespace MCT.IO
                         {
                             case "Pflanze": { 
                                 plant.Name = GetFirstNameMKT(values[i]);
-                                plant.ScientificName = GetScientificNameMKT(values[i]); break; }
+                                plant.ScientificName = GetScientificNameMKT(values[i], plant.Name); break; }
                             case "1. Aussaattiefe in cm /2. Keimtemperatur(optimal/minimum) in °C /3. Keimdauer in Tagen /4. Keimfähigkeit der Samen in Jahren" : { break; }
                             case "Bemerkungen":
                                 {
-
                                     string description = values[i];
-                                    if (description.Length > 250)
-                                        plant.Description = description.Substring(0, 250) + "...";
-                                    else
-                                        plant.Description = values[i];
-                                    break;
-
                                 }
                         }
                     }
@@ -1032,7 +1027,13 @@ namespace MCT.IO
             {
                 int plantNameIndex = Structure.IndexOf(Structure.Where(e=>e.Equals("Pflanze")).FirstOrDefault());
 
-                Plant plant = subjectManager.GetAll<Plant>().Single(p => p.Name.Equals(GetFirstNameMKT(values.ElementAt(plantNameIndex))));
+                Plant plant = subjectManager.GetAll<Plant>().Where(p => p.Name.Equals(GetFirstNameMKT(values.ElementAt(plantNameIndex)))).FirstOrDefault();
+
+                if (plant == null)
+                {
+                    Debug.WriteLine("no plant existing for this update:" + values);
+                    return null;
+                }
 
                 try
                 {
@@ -1069,6 +1070,8 @@ namespace MCT.IO
                     throw new Exception(ex.Message);
                 }
 
+                
+
                 if (string.IsNullOrEmpty(plant.Name) && string.IsNullOrEmpty(plant.ScientificName))
                 {
                     Debug.WriteLine("no names not stored  :" + values);
@@ -1104,7 +1107,7 @@ namespace MCT.IO
 
         }
 
-        private string GetScientificNameMKT(string value)
+        private string GetScientificNameMKT(string value, string name)
         {
             if(value.Contains("("))
             {
@@ -1115,8 +1118,8 @@ namespace MCT.IO
                 string[] seperateNames2 = lastPart.Split(')');
                 string scientificName = seperateNames2[0];
 
-                if (scientificName.Contains("...") || scientificName.Contains('-') )
-                    return "";
+                if (scientificName.Contains("...") || scientificName.Contains('-'))
+                    return wikipediaReader.GetScientificName(name);
 
                 return scientificName.Replace('"', ' ').Trim();
 
@@ -1135,10 +1138,24 @@ namespace MCT.IO
 
             foreach(string name in names)
             {
-                string processedName = name.Split('(')[0];
+                string processedName = name.Split('(')[0].Replace("\"","").Trim();
 
                 if (subjectManager.GetAll<Plant>().Any(p => p.Name.Equals(processedName)))
                     cultures.Add(subjectManager.GetAll<Plant>().Where(p => p.Name.Equals(processedName)).FirstOrDefault());
+                else
+                {
+
+                    Debug.WriteLine("create a new plant in SetCultures: " + processedName);
+                    string scientificName = wikipediaReader.GetScientificName(processedName);
+                    if(!string.IsNullOrEmpty(scientificName))
+                    {
+                        cultures.Add(new Plant()
+                        {
+                            Name = processedName,
+                            ScientificName = scientificName
+                        });
+                    }
+                }
             }
 
 

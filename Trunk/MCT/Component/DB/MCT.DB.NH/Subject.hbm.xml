@@ -6,8 +6,10 @@
       <generator class="native" />
     </id>
     
-    <property name="Name" type="String"/> 
-    <property name="Description" type="String"/>
+    <property name="Name" type="String"/>
+    <property name="Description" type="String">
+      <column name="Description" sql-type="VARCHAR(3000)"/>
+    </property>
 
     <set name="Medias" cascade="all-delete-orphan">
       <key column="Subject" />
