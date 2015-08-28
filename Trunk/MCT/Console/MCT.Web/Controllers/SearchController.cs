@@ -25,6 +25,16 @@ namespace MCT.Web.Controllers
 
             SearchModel Model = new SearchModel(subjects.ToList());
 
+            // load all species
+            var species = subjectManager.GetAll<Species>();
+
+            if (species != null)
+            {
+                //convert all subjects to subjectModels
+                species = species.AsQueryable().OrderBy(p => p.Name).ToArray();
+                species.ToList().ForEach(s => Model.Species.Add(SpeciesModel.Convert(s)));
+            }
+
             ResetSearchProvider();
 
             return View("Search",Model);

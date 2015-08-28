@@ -66,6 +66,8 @@ namespace MCT.Web.Controllers
                     manager.Create(plant);
                     
                 }
+
+                Debug.WriteLine("PlantSeedData.txt  : " + nodes.Count);
             }
 
             //mischkulturtabelle
@@ -100,6 +102,8 @@ namespace MCT.Web.Controllers
                     }
 
                 }
+
+                Debug.WriteLine("MischkulturTabelle.txt  : " + nodes.Count);
             }
 
             //update after creation for associations
@@ -117,6 +121,8 @@ namespace MCT.Web.Controllers
                     Plant plant = (Plant)node;
                     manager.Update(plant);
                 }
+
+                Debug.WriteLine("MischkulturTabelle.txt Update  : " + nodes.Count);
             }
 
 
@@ -144,6 +150,8 @@ namespace MCT.Web.Controllers
                         manager.Create(animal);
                     }
                 }
+
+                Debug.WriteLine("AnimalSeedData.txt  : " + nodes.Count);
             }
 
             //loadTestAnimalData();
@@ -171,6 +179,8 @@ namespace MCT.Web.Controllers
                         manager.Create(effect);
                     }
                 }
+
+                Debug.WriteLine("EffectSeedData.txt  : " + nodes.Count);
             }
 
             #endregion
@@ -195,6 +205,8 @@ namespace MCT.Web.Controllers
                         manager.Create(predicate);
                     }
                 }
+
+                Debug.WriteLine("PredicateSeedData.txt  : " + predicates.Count);
             }
 
             #endregion
@@ -219,6 +231,8 @@ namespace MCT.Web.Controllers
                         manager.Create(node);
                     }
                 }
+
+                Debug.WriteLine("InteractionSeedData.txt  : " + interactions.Count);
             }
 
             #endregion
