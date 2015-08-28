@@ -8,9 +8,8 @@ Angelika;Doldenblütengewächse;;;;;Bodengare belastend
 Apfel (Malus domestica);Rosengewächse;Beifuß, Brombeeren, Fingerhut, Gartenkresse, Johannisbeere n, Pfefferminze, Schnittlauch;Möhren, Kartoffeln;;;"Bodenbearbeitung vermeiden, da Flachwurzler"
 Aprikosen (Prunus armeniaca);Rosengewächse;Gartenkresse;Eberraute, Kartoffeln, Tomaten;;;
 Artischocke (Cynara scolymus);Korbblütengewächse;Fenchel, Gurken, Kopfsalate, Kartoffeln, Knoblauch, Schnittlauch;Sellerie, Petersilie;;5 / (18-25/8) / 8-12 / 4-5;Tiefwurzler
-"Asia-Salate (Brassica-Arten)";Kreuzblütengewächse;Feldsalat, Gartenmelde, Neuseeländer Spinat, Portulak, Salate, Spinat, Zwiebeln;Brokkoli, Chinakohl, Grünkohl, Kohlrabi, Kopfkohl, Pak Choi, Radieschen, Rettiche, Rosenkohl, Senf;;;Mittel- Schwachzehrer, Flachwurzler, Bodengare fördernd
-"Aubergine, Melanzani, Eierfrucht (Solanum melongena)";Nachtschattengewächse;Andenbeere, Eiskraut, Erbsen, Estragon, Gartenbohnen, Kartoffeln, Neuseeländer Spinat, Sommerportula k, Thymian;Knoblauch, Paprikas, Tomaten, Zwiebeln;"Salate (frühe
-Sorten), Spinat/ Gründüngung, Senf";0,5 / (25-28/12,1) / 6-8 / >6;Starkzehrer, Mittelwurzler, Bodengare fördernd
+Asia-Salate (Brassica-Arten);Kreuzblütengewächse;Feldsalat, Gartenmelde, Neuseeländer Spinat, Portulak, Salate, Spinat, Zwiebeln;Brokkoli, Chinakohl, Grünkohl, Kohlrabi, Kopfkohl, Pak Choi, Radieschen, Rettiche, Rosenkohl, Senf;;;Mittel- Schwachzehrer, Flachwurzler, Bodengare fördernd
+Aubergine, Melanzani, Eierfrucht (Solanum melongena);Nachtschattengewächse;Andenbeere, Eiskraut, Erbsen, Estragon, Gartenbohnen, Kartoffeln, Neuseeländer Spinat, Sommerportula k, Thymian;Knoblauch, Paprikas, Tomaten, Zwiebeln;"Salate (frühe Sorten), Spinat/ Gründüngung, Senf";0,5 / (25-28/12,1) / 6-8 / >6;Starkzehrer, Mittelwurzler, Bodengare fördernd
 Augenbohne, Kuherbse, Spaghettiebohne, Spargelbohne;;(Vigna unguiculata ssp.);;;- / - / - / 4-5;Mittelwurzler
 Baldrian;Baldriangewächse;;;;- / (15-25/6) / - / -;Lichtkeimer
 Barbarakresse, Barbarakraut, Winterkresse (Barbarea vulgaris);Kreuzblütengewächse;Erdbeeren, Feldsalate, Gartenmelde, Mangold, Spinat;Brokkoli, Chinakohl, Grünkohl, Kohlrabi, Kopfkohl, Pak Choi, Radieschen, Rettiche, Rosenkohl;;- / (12-22/3) / 2 / 2-3;Lichtkeimer
@@ -33,7 +32,7 @@ Buchweizen, Heidekorn (Fagopyrum esculentum);Knöterichgewächse;;;;;zu Sellerie g
 Chicorée (Cichorium intybus);Korbblütengewächse;Fenchel, Gartenbohnen, Kopfsalate, Möhren, Rote Bete, Tomaten, Zwiebeln;;;1,5 / (15-18/5,3) / - / 4-5;Mittel- Schwachzehrer
 Chili (Capsicum annuum, Capsicum frutescens u. a.);Nachtschattengewächse;Kerbel, Senf;;;- / - / - / 4-5;Mittelwurzler, Bodengare fördernd
 Chinakohl, Pekingkohl (Brassica rapa ssp. Chinensis);Kreuzblütengewächse;Endivien, Erbsen, Gartenbohnen, Gartenmelde, Kopfsalate, Möhren, Neuseeländer Spinat, Spinat;Brokkoli, Chinakohl, Grünkohl, Kartoffeln, Kohlrabi, Kopfkohl, Pak Choi, Porree, Radieschen, Rettiche, Rosenkohl;;1,5 / (15/-) / 4-6 / >6;Mittelzehrer, Mittelwurzler
-"Dicke Bohnen (siehePuffbohnen)";;;;;;
+Dicke Bohnen (siehePuffbohnen);;;;;;
 Dill (Anethum gravolens);Doldenblütengewächse;Blumenkohl, Brokkoli, Erbsen, Gartenbohnen, Grünkohl, Gurken, Kartoffeln, Kohlrabi, Kopfkohl, Möhren, Porree, Rettiche, Rosenkohl, Salate, Spinat, Tomaten, Zuckermais, Zwiebeln;Fenchel, Petersilie;;1 / (10-15/-) / 10-14 / 2-3;Lichtkeimer, Bodengare belastend, in Mischkultur mit Sellerie gibt es widersprüchliche Informationen
 Dinkel (Triticum aestivum ssp. Speltum);Süßgräser;;;;;
 Duftpelargonie;;;;;;hält im Gewächshaus die weiße Fliege von Gemüse- und Zierpflanzen fern

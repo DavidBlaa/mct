@@ -303,8 +303,8 @@ namespace MCT.IO
         { 
             string[] values = line.Split(IOHelper.GetSeperator(Seperator));
 
-            Debug.WriteLine("values count : "+values.Count());
-            Debug.WriteLine("datastructure count : " + Structure.Count());
+            //Debug.WriteLine("values count : "+values.Count());
+            //Debug.WriteLine("datastructure count : " + Structure.Count());
 
             Plant plant = new Plant();
 
@@ -389,8 +389,8 @@ namespace MCT.IO
         {
             string[] values = line.Split(IOHelper.GetSeperator(Seperator));
 
-            Debug.WriteLine("values count : " + values.Count());
-            Debug.WriteLine("datastructure count : " + Structure.Count());
+            //Debug.WriteLine("values count : " + values.Count());
+            //Debug.WriteLine("datastructure count : " + Structure.Count());
 
             Animal subject = new Animal();
 
@@ -453,8 +453,8 @@ namespace MCT.IO
         {
             string[] values = line.Split(IOHelper.GetSeperator(Seperator));
 
-            Debug.WriteLine("values count : " + values.Count());
-            Debug.WriteLine("datastructure count : " + Structure.Count());
+            //Debug.WriteLine("values count : " + values.Count());
+            //Debug.WriteLine("datastructure count : " + Structure.Count());
 
             Effect subject = new Effect();
 
@@ -501,8 +501,8 @@ namespace MCT.IO
         {
             string[] values = line.Split(IOHelper.GetSeperator(Seperator));
 
-            Debug.WriteLine("values count : " + values.Count());
-            Debug.WriteLine("datastructure count : " + Structure.Count());
+            //Debug.WriteLine("values count : " + values.Count());
+            //Debug.WriteLine("datastructure count : " + Structure.Count());
 
             Predicate predicate = new Predicate();
 
@@ -954,7 +954,7 @@ namespace MCT.IO
                     for (int i = 0; i < Structure.Count(); i++)
                     {
                         string variable = Structure.ElementAt(i);
-                        Debug.WriteLine(variable);
+                        //Debug.WriteLine(variable);
                         switch (variable)
                         {
                             case "Pflanze": { 
@@ -963,7 +963,9 @@ namespace MCT.IO
                             case "1. Aussaattiefe in cm /2. Keimtemperatur(optimal/minimum) in °C /3. Keimdauer in Tagen /4. Keimfähigkeit der Samen in Jahren" : { break; }
                             case "Bemerkungen":
                                 {
+                                    plant = UpdatePlantBasedOnDescription(plant, values[i]);
                                     string description = values[i];
+                                    break;
                                 }
                         }
                     }
@@ -1040,7 +1042,7 @@ namespace MCT.IO
                     for (int i = 0; i < Structure.Count(); i++)
                     {
                         string variable = Structure.ElementAt(i);
-                        Debug.WriteLine(variable);
+                        //Debug.WriteLine(variable);
                         switch (variable)
                         {
 
@@ -1109,7 +1111,7 @@ namespace MCT.IO
 
         private string GetScientificNameMKT(string value, string name)
         {
-            if(value.Contains("("))
+            if (value.Contains("("))
             {
 
                 string[] seperateNames = value.Split('(');
@@ -1124,8 +1126,44 @@ namespace MCT.IO
                 return scientificName.Replace('"', ' ').Trim();
 
             }
+            else
+            {
+                return wikipediaReader.GetScientificName(name); 
+            }
 
             return "";
+        }
+
+        private Plant UpdatePlantBasedOnDescription(Plant plant, string description)
+        {
+
+            #region wurzeln
+
+            if (description.Contains("Flachwurzler"))
+                plant.RootDepth = RootDepth.Flat;
+
+            if (description.Contains("Mittelwurzler"))
+                plant.RootDepth = RootDepth.Flat;
+
+            if (description.Contains("Tiefwurzler"))
+                plant.RootDepth = RootDepth.Deep;
+
+            #endregion
+
+            #region Nährstoff
+
+            if (description.Contains("Schwachzehrer"))
+                plant.NutrientClaim = NutrientClaim.Weak;
+
+            if (description.Contains("Mittelzehrer"))
+                plant.NutrientClaim = NutrientClaim.Medium;
+
+            if (description.Contains("Starkzehrer"))
+                plant.NutrientClaim = NutrientClaim.Strong;
+
+            #endregion
+
+            return plant;
         }
 
         private void SetCultures(Plant plant, string cultureType, string culturesValues)

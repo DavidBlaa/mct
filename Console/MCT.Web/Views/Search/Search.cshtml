@@ -21,6 +21,12 @@
         <td>
             <input id="filterOptions" name="Filter on/off" type="checkbox" value="false" onclick="filterOptionsOnClick()" >
         </td>
+        <td>
+            @Html.ActionLink("Alle Anzeigen", "Search", "Search", new { @class = "btn btn-default" })
+        </td>
+        <td>
+            Alle Species: @Model.Species.Count
+        </td>
     </tr>
 </table>
 
