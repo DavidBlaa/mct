@@ -1,0 +1,13 @@
+﻿@model Bloom
+@using MCT.DB.Entities
+
+
+
+@if (Model.StartArea != TimePeriodArea.Voll)
+{@Model.StartArea} @Model.StartMonth
+
+-
+
+@if (Model.EndArea != TimePeriodArea.Voll)
+{ @Model.EndArea;
+}  @Model.EndMonth

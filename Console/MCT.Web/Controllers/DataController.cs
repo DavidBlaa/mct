@@ -1,16 +1,16 @@
-﻿using System;
+﻿using MCT.DB.Entities;
+using MCT.DB.Services;
+using MCT.Helpers;
+using MCT.IO;
+using MCT.Search;
+using MCT.Web.Helpers;
+using MCT.Web.Models;
+using MCT.Web.Models.Data;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using MCT.DB.Entities;
-using MCT.Search;
-using MCT.DB.Services;
-using MCT.Helpers;
-using MCT.IO;
-using MCT.Web.Helpers;
 
 namespace MCT.Web.Controllers
 {
@@ -19,7 +19,16 @@ namespace MCT.Web.Controllers
         // GET: Data
         public ActionResult Index()
         {
-            return View();
+            DataModel model = new DataModel();
+
+            SubjectManager manager = new SubjectManager();
+
+            //model.Species = DataModelHelper.ToDataTable<Species>(manager.GetAll<Species>());
+
+            List<PlantModel> lPLants = new List<PlantModel>();
+            manager.GetAll<Plant>().ToList().ForEach(p => lPLants.Add(PlantModel.Convert(p)));
+            model.Plants = DataModelHelper.ToDataTable<PlantModel>(lPLants);
+            return View(model);
         }
 
         public ActionResult ReIndex()
@@ -55,7 +64,7 @@ namespace MCT.Web.Controllers
                 foreach (var node in nodes)
                 {
                     Plant plant = (Plant)node;
-                    if(!manager.GetAll<Plant>().Any(p=>p.Name.Equals(plant.Name)))
+                    if (!manager.GetAll<Plant>().Any(p => p.Name.Equals(plant.Name)))
                     {
                         if (plant.Cultivation != null)
                         {
@@ -64,7 +73,7 @@ namespace MCT.Web.Controllers
                     }
 
                     manager.Create(plant);
-                    
+
                 }
 
                 Debug.WriteLine("PlantSeedData.txt  : " + nodes.Count);
@@ -91,12 +100,12 @@ namespace MCT.Web.Controllers
                         // pflanze noch nicht vorhanden
                         if (!manager.GetAll<Plant>().Any(p => p.Name.ToLower().Equals(plant.Name.ToLower())))
                         {
-                                if (plant.Cultivation != null)
-                                {
-                                    manager.Create(plant.Cultivation);
-                                }
+                            if (plant.Cultivation != null)
+                            {
+                                manager.Create(plant.Cultivation);
+                            }
 
-                                manager.Create(plant);
+                            manager.Create(plant);
                         }
 
                     }
@@ -145,7 +154,7 @@ namespace MCT.Web.Controllers
                 foreach (var node in nodes)
                 {
                     Animal animal = (Animal)node;
-                    if(!manager.GetAll<Animal>().Any(p=>p.Name.Equals(animal.Name)))
+                    if (!manager.GetAll<Animal>().Any(p => p.Name.Equals(animal.Name)))
                     {
                         manager.Create(animal);
                     }
@@ -174,7 +183,7 @@ namespace MCT.Web.Controllers
                 {
 
                     Effect effect = (Effect)node;
-                    if(!manager.GetAll<Effect>().Any(p=>p.Name.Equals(effect.Name)))
+                    if (!manager.GetAll<Effect>().Any(p => p.Name.Equals(effect.Name)))
                     {
                         manager.Create(effect);
                     }
@@ -200,7 +209,7 @@ namespace MCT.Web.Controllers
                 foreach (var node in predicates)
                 {
                     Predicate predicate = (Predicate)node;
-                    if(!manager.GetAll<Predicate>().Any(p=>p.Name.Equals(predicate.Name)))
+                    if (!manager.GetAll<Predicate>().Any(p => p.Name.Equals(predicate.Name)))
                     {
                         manager.Create(predicate);
                     }
@@ -223,16 +232,32 @@ namespace MCT.Web.Controllers
 
                 List<Interaction> interactions = reader.ConvertToInteractions(interactionsAsStringList,
                     manager.GetAll<Subject>().ToList(), manager.GetAll<Predicate>().ToList());
-                
+
                 foreach (var node in interactions)
                 {
-                    if(!manager.GetAll<Interaction>().Any(i=>i.Subject.Equals(node.Subject) && i.Object.Equals(node.Object)))
+                    if (!manager.GetAll<Interaction>().Any(i => i.Subject.Equals(node.Subject) && i.Object.Equals(node.Object)))
                     {
                         manager.Create(node);
                     }
                 }
 
                 Debug.WriteLine("InteractionSeedData.txt  : " + interactions.Count);
+            }
+
+
+            path = Path.Combine(AppConfigHelper.GetWorkspace(), "MischkulturTabelle.txt");
+
+            if (DataReader.FileExist(path))
+            {
+                SubjectManager manager = new SubjectManager();
+                Stream fileStream = reader.Open(path);
+                // hoier werden alle interactions und fehlende objecte erzeugt
+                List<Interaction> l = reader.ReadFile<Interaction>(fileStream, "MischkulturTabelle.txt", "Plant_MKT_UPDATE_INTERACTION");
+                foreach (var node in l)
+                {
+                    manager.Create(node);
+                }
+
             }
 
             #endregion

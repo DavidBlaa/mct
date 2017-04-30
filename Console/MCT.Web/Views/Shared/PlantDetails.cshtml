@@ -1,13 +1,19 @@
 ﻿@using System.Diagnostics
-@model MCT.Web.Models.Search.PlantModel
+@model MCT.Web.Models.PlantModel
+@using MCT.DB.Entities;
 
 @{
     ViewBag.Title = "Plant";
 }
-
 <div id="DetailsHeader" class="jumbotron">
-    <h2>@Html.DisplayFor(model => model.Name)</h2>
+    <h2>@Html.DisplayFor(model => model.Name)</h2>form-control
+    <h2>@Html.EditorFor(model => model.Name)</h2>
     <h3>@Html.DisplayFor(model => model.ScientificName)</h3>
+    <h2>@Html.EditorFor(model => model.ScientificName)</h2>
+
+    <h4>@Html.DisplayFor(model => model.TaxonRank)</h4>
+    <h2>@Html.EditorFor(model => model.TaxonRank)</h2>
+
 </div>
 <div id="DetailsContent" class="row">
     <div id="Image" class="col-md-4">
@@ -17,6 +23,7 @@
         <div id="Description" class="col-md-12">
             <h4>Beschreibung</h4>
             @Html.DisplayFor(model => model.Description)
+            @Html.EditorFor(model => model.Description)
         </div>
 
         <div id="TaxonRanks" class="col-md-12">
@@ -39,6 +46,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Width)
+                @Html.EditorFor(model => model.Width)
             </dd>
 
             <dt>
@@ -47,6 +55,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Height)
+                @Html.EditorFor(model => model.Height)
             </dd>
 
             <dt>
@@ -55,6 +64,9 @@
 
             <dd>
                 @Html.DisplayFor(model => model.RootDepth)
+                @Html.EnumDropDownListFor(model => model.RootDepth)
+
+
             </dd>
 
             <dt>
@@ -63,6 +75,9 @@
 
             <dd>
                 @Html.DisplayFor(model => model.NutrientClaim)
+                @Html.EnumDropDownListFor(model => model.NutrientClaim)
+
+
             </dd>
 
             <dt>
@@ -71,6 +86,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.SowingDepth)
+                @Html.EditorFor(model => model.SowingDepth)
             </dd>
         </dl>
     </div>
@@ -79,36 +95,36 @@
 <div class="row">
     <h4>Termine</h4>
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.Bloom)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Bloom)
+            @Html.EditorFor(model => model.Sowing)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Sowing)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Sowing)
+            @Html.EditorFor(model => model.Sowing)
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Harvest)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Harvest)
+            @Html.EditorFor(model => model.Harvest)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.SeedMaturity)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.SeedMaturity)
+            @Html.EditorFor(model => model.SeedMaturity)
+           
         </dd>
     </dl>
 </div>
@@ -119,7 +135,10 @@
     @foreach(var p in Model.PreCultures)
     {
         @Html.ActionLink(p.Name, "Details", new { id = p.Id, type = p.Type })<br/>
+        
     }
+
+    @Html.EditorFor(model => model.PreCultures)
 
     <h4>Nachkultur</h4>
 

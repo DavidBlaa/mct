@@ -1,4 +1,4 @@
-﻿@using MCT.Web.Models.Search;
+﻿@using MCT.Web.Models;
 @model SimpleNodeViewModel
 
 @{
@@ -13,7 +13,7 @@
         @Model.Name
     </div>
     <div id="TaxonScientificName" class="col-md-6">
-        ( @Model.TaxonRank )
+        ( @Model.ScientificName )
     </div>
 </div>
 
