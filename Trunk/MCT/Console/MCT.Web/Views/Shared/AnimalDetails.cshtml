@@ -1,4 +1,4 @@
-﻿@model MCT.Web.Models.Search.AnimalModel
+﻿@model MCT.Web.Models.AnimalModel
 
 @{
     ViewBag.Title = "Animal";
@@ -8,6 +8,7 @@
 <div id="DetailsHeader" class="jumbotron">
     <h2>@Html.DisplayFor(model => model.Name)</h2>
     <h3>@Html.DisplayFor(model => model.ScientificName)</h3>
+    <h4>@Html.DisplayFor(model => model.TaxonRank)</h4>
 </div>
 <div id="DetailsContent" class="row">
     <div id="Image" class="col-md-4">

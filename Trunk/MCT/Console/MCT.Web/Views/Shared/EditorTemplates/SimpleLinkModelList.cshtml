@@ -1,0 +1,6 @@
+﻿@model List<MCT.Web.Models.SimpleLinkModel>
+
+
+@foreach (var item in Model) {
+    @Html.EditorFor(modelItem=>item)
+}

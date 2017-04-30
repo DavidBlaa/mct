@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MCT.IO
 {
-    public class WikipediaReader:WebsiteReader
+    public class WikipediaReader : WebsiteReader
     {
         public WikipediaReader()
         {
@@ -17,10 +14,10 @@ namespace MCT.IO
 
         private bool LoadSubjectPage(string name)
         {
-            
-            string urlAddress = Path.Combine(BaseUrl,name);
 
-            
+            string urlAddress = Path.Combine(BaseUrl, name);
+
+
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);

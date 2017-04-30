@@ -1,0 +1,10 @@
+﻿@model List<MCT.DB.Entities.SeedMaturity>
+<dl class="dl-horizontal">
+    @foreach (var item in Model)
+    {
+
+        <dd>
+            @Html.DisplayFor(modelItem => item)
+        </dd>
+    }
+</dl>

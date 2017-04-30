@@ -51,7 +51,7 @@
         $("#searchInput").attr("disabled");
         //alert(searchValue)
         if (searchValue.length >= 0) {
-            $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function(response) {
+            $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function (response) {
 
                 $("#searchResultContent").replaceWith(response);
                 $("#searchInput").removeAttr("disabled");
@@ -59,6 +59,7 @@
             });
 
         }
+
 
     });
 

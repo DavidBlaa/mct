@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using MCT.DB.Entities;
+using MCT.DB.Services;
+using MCT.Search;
+using MCT.Web.Models;
+using MCT.Web.Models.Search;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
-using Lucene.Net.Util;
-using MCT.DB.Entities;
-using MCT.DB.Services;
-using MCT.Search;
-using MCT.Web.Models.Search;
-using NHibernate;
-using NHibernate.Linq;
 
 namespace MCT.Web.Controllers
 {
@@ -37,7 +35,7 @@ namespace MCT.Web.Controllers
 
             ResetSearchProvider();
 
-            return View("Search",Model);
+            return View("Search", Model);
         }
 
         // GET: Search
@@ -51,7 +49,7 @@ namespace MCT.Web.Controllers
             else
                 sp.UpateSearchCriterias(SearchProvider.FREETEXT_SEARCH_KEY, searchValue);
 
-            Debug.WriteLine("SEARCH : "+searchValue);
+            Debug.WriteLine("SEARCH : " + searchValue);
 
             List<SpeciesModel> Model = new List<SpeciesModel>();
             SubjectManager subjectManager = new SubjectManager();
@@ -72,7 +70,7 @@ namespace MCT.Web.Controllers
             //update searchcriterias
 
             return PartialView("_searchResult", Model);
-        
+
         }
 
         public JsonResult SetFilter(string key, string value)
@@ -126,46 +124,46 @@ namespace MCT.Web.Controllers
 
         #region Show Data
 
-            public ActionResult Details(long id, string type)
+        public ActionResult Details(long id, string type)
+        {
+            SubjectManager sm = new SubjectManager();
+
+            Subject s = sm.Get(id);
+
+            switch (type)
             {
-                SubjectManager sm = new SubjectManager();
+                case "Plant":
+                    {
 
-                Subject s = sm.Get(id);
+                        Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
 
-                switch (type)
-                {
-                    case "Plant":
-                        {
+                        PlantModel Model = PlantModel.Convert(plant);
+                        //load interactions
+                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
 
-                            Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
+                        return View("PlantDetails", Model);
+                    }
+                case "Animal":
+                    {
+                        Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
 
-                            PlantModel Model = PlantModel.Convert(plant);
-                            //load interactions
-                            Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
+                        AnimalModel Model = AnimalModel.Convert(animal);
+                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal).ToList());
 
-                            return View("PlantDetails", Model);
-                        }
-                    case "Animal":
-                        {
-                            Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+                        return View("AnimalDetails", Model);
+                    }
+                case "Effect":
+                    {
+                        Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
 
-                            AnimalModel Model = AnimalModel.Convert(animal);
-                            Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal).ToList());
+                        return View("EffectDetails");
+                    }
 
-                            return View("AnimalDetails", Model);
-                        }
-                    case "Effect":
-                        {
-                            Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
-
-                            return View("EffectDetails");
-                        }
-
-                    default: { break; }
-                }
-
-                return View("Search");
+                default: { break; }
             }
+
+            return View("Search");
+        }
 
         #endregion
 
@@ -176,7 +174,7 @@ namespace MCT.Web.Controllers
             if (Session[SearchProvider.SEARCH_PROVIDER_NAME] == null)
             {
                 Session[SearchProvider.SEARCH_PROVIDER_NAME] = new SearchProvider();
-                
+
             }
 
             return Session[SearchProvider.SEARCH_PROVIDER_NAME] as SearchProvider;

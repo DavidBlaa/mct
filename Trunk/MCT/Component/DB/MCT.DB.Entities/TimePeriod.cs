@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NHibernate.Search.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NHibernate.Search.Attributes;
 
 namespace MCT.DB.Entities
 {
@@ -29,44 +29,44 @@ namespace MCT.DB.Entities
         public virtual TimePeriodType Type { get; set; }
 
         public virtual Subject AssignedTo { get; set; }
-            
+
 
 
         protected void setParameters(string startDateText, string endDateText, TimePeriodType type)
         {
-             Type = type;
+            Type = type;
 
-             string[] start = startDateText.Split(' ');
+            string[] start = startDateText.Split(' ');
 
-             if (start.Count() == 0)
-                 throw new Exception("Start date is not Valid");
+            if (start.Count() == 0)
+                throw new Exception("Start date is not Valid");
 
-             if (start.Count() == 1)
-             {
-                 StartMonth = TimePeriodHelper.GetMonth(start[0]);
-             }
+            if (start.Count() == 1)
+            {
+                StartMonth = TimePeriodHelper.GetMonth(start[0]);
+            }
 
-             if (start.Count() == 2)
-             {
-                 StartArea = TimePeriodHelper.GetTimeArea(start[0]);
-                 StartMonth = TimePeriodHelper.GetMonth(start[1]);
-             }
+            if (start.Count() == 2)
+            {
+                StartArea = TimePeriodHelper.GetTimeArea(start[0]);
+                StartMonth = TimePeriodHelper.GetMonth(start[1]);
+            }
 
-             string[] end = endDateText.Split(' ');
+            string[] end = endDateText.Split(' ');
 
-             if (end.Count() == 0)
-                 throw new Exception("Start date is not Valid");
+            if (end.Count() == 0)
+                throw new Exception("Start date is not Valid");
 
-             if (end.Count() == 1)
-             {
-                 EndMonth = TimePeriodHelper.GetMonth(end[0]);
-             }
+            if (end.Count() == 1)
+            {
+                EndMonth = TimePeriodHelper.GetMonth(end[0]);
+            }
 
-             if (end.Count() == 2)
-             {
-                 EndArea = TimePeriodHelper.GetTimeArea(end[0]);
-                 EndMonth = TimePeriodHelper.GetMonth(end[1]);
-             }
+            if (end.Count() == 2)
+            {
+                EndArea = TimePeriodHelper.GetTimeArea(end[0]);
+                EndMonth = TimePeriodHelper.GetMonth(end[1]);
+            }
 
 
 
@@ -89,9 +89,9 @@ namespace MCT.DB.Entities
             string tpString = "";
 
             if (StartArea != TimePeriodArea.Voll)
-                tpString += StartArea +" ";
+                tpString += StartArea + " ";
 
-                tpString += StartMonth;
+            tpString += StartMonth;
 
             if (EndArea != TimePeriodArea.Voll)
                 tpString += "-" + EndArea + " ";
@@ -100,7 +100,7 @@ namespace MCT.DB.Entities
                 tpString += "-" + EndMonth;
             else
                 tpString += EndMonth;
-  
+
             return tpString;
         }
 
@@ -172,7 +172,7 @@ namespace MCT.DB.Entities
     }
 
     public enum TimePeriodArea
-    { 
+    {
         Voll,
         Anfang,
         Mitte,
@@ -181,22 +181,22 @@ namespace MCT.DB.Entities
 
     public enum TimePeriodMonth
     {
-        Januar  = 1,
+        Januar = 1,
         Februar = 2,
-        März    = 3,
-        April   = 4,
-        Mai     = 5,
-        Juni    = 6,
-        Juli    = 7,
-        August  = 8,
+        März = 3,
+        April = 4,
+        Mai = 5,
+        Juni = 6,
+        Juli = 7,
+        August = 8,
         September = 9,
         Oktober = 10,
-        November= 11,
-        Dezember= 12
+        November = 11,
+        Dezember = 12
     }
 
     public enum TimePeriodType
-    { 
+    {
         Bloom,
         Harvest,
         Sowing,

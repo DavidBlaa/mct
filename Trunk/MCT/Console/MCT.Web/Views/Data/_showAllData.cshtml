@@ -1,0 +1,110 @@
+﻿@model MCT.Web.Models.Data.DataModel
+@using MCT.Web.Models;
+@using System.Data;
+
+<h3>Plants</h3>
+
+@if (Model.Plants != null)
+{
+
+    <table id="plantsTable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                @foreach (DataColumn c in Model.Plants.Columns)
+                {
+                    <th>@c.ColumnName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow r in Model.Plants.Rows)
+            {
+                <tr>
+                    @foreach (object o in r.ItemArray)
+                    {
+                        if (o is List<string>)
+                        {
+                            List<string> tmp = o as List<string>;
+
+                            <td>@String.Join(", ", tmp.ToArray())</td>
+                        }
+                        else if (o is List<SimpleLinkModel>)
+                        {
+                            List<string> tmp = (o as List<SimpleLinkModel>).Select(s => s.Name).ToList();
+
+                            <td>@String.Join(", ", tmp.ToArray())</td>
+                        }//SimpleNodeViewModel
+                        else if (o is SimpleNodeViewModel)
+                        {
+                            SimpleNodeViewModel snvm = o as SimpleNodeViewModel;
+                            <td>@snvm.Name</td>
+                        }
+                        else
+                        {
+                            <td>@o</td>
+
+                        }
+                    }
+                </tr>
+            }
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                @foreach (DataColumn c in Model.Plants.Columns)
+                {
+                    <th>@c.ColumnName</th>
+                }
+            </tr>
+        </tfoot>
+    </table>
+
+}
+
+@*<h3>Animals</h3>
+
+@if (Model.Animals != null)
+{
+
+    <table id="animalsTable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                @foreach (DataColumn c in Model.Animals.Columns)
+                {
+                    <th>@c.ColumnName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow r in Model.Animals.Rows)
+            {
+                <tr>
+                    @foreach (object o in r.ItemArray)
+                    {
+                        <td>@o</td>
+                    }
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                @foreach (DataColumn c in Model.Animals.Columns)
+                {
+                    <th>@c.ColumnName</th>
+                }
+            </tr>
+        </tfoot>
+    </table>
+
+}*@
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#speciesTable').DataTable();
+        $('#plantsTable').DataTable();
+        $('#animalsTable').DataTable();
+    });
+
+</script>String.Join(String.Empty, tmp.ToArray());
