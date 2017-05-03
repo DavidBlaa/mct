@@ -12,7 +12,7 @@
     <h2>@Html.EditorFor(model => model.ScientificName)</h2>
 
     <h4>@Html.DisplayFor(model => model.TaxonRank)</h4>
-    <h2>@Html.EditorFor(model => model.TaxonRank)</h2>
+    <h2>@Html.EnumDropDownListFor(model => model.TaxonRank)</h2>
 
 </div>
 <div id="DetailsContent" class="row">
@@ -147,6 +147,7 @@
         @Html.ActionLink(p.Name, "Details", new { id = p.Id, type = p.Type })<br />
     }
 
+    @Html.EditorFor(model => model.AfterCultures)
 
 </div>
 
