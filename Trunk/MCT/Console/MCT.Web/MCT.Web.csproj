@@ -569,6 +569,8 @@
     <Content Include="Views\Shared\DisplayTemplates\BloomList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SimpleLinkModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SimpleLinkModelList.cshtml" />
+    <Content Include="Views\Shared\PlantEdit.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TaxonRank.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

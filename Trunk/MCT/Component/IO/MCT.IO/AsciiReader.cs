@@ -1008,7 +1008,7 @@ namespace MCT.IO
                     }
 
                     //set rank
-                    plant.Rank = TaxonRank.SubSpecies;
+                    plant.Rank = TaxonRank.Species;
 
                 }
                 catch (Exception ex)

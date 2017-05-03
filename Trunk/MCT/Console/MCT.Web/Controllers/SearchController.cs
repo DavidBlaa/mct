@@ -141,7 +141,7 @@ namespace MCT.Web.Controllers
                         //load interactions
                         Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
 
-                        return View("PlantDetails", Model);
+                        return View("PlantEdit", Model);
                     }
                 case "Animal":
                     {
