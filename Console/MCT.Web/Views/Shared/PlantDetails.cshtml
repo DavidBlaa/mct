@@ -64,6 +64,7 @@
 
             <dd>
                 @Html.DisplayFor(model => model.RootDepth)
+                @Html.LabelFor(model => model.RootDepth)
                 @Html.EnumDropDownListFor(model => model.RootDepth)
 
 
@@ -101,14 +102,14 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Bloom)
-            @Html.EditorFor(model => model.Sowing)
+            @Html.EditorFor(model => model.Bloom)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Sowing)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Sowing)
-            @Html.EditorFor(model => model.Sowing)
+            @Html.EditorFor(model => model.Sowing, "TimePeriodList")
         </dd>
 
         <dt>

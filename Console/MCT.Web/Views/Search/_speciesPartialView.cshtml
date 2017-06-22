@@ -22,7 +22,11 @@
 
 <div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3" >
     <div class="@headerClassName" >
-        <h3 class="name">@Model.Name</h3>
+        <h3 class="name">
+        @Html.ActionLink(@Model.Name, "Details", new { id = Model.Id, type = @Model.Type.ToString() })
+        </h3>
+
+
     </div>
     <h5 class="type">@Model.Type</h5>
     <h6 class="type">@Model.TaxonRank</h6>

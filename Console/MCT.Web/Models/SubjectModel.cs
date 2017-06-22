@@ -3,6 +3,7 @@ using MCT.Helpers;
 using NHibernate.Proxy;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace MCT.Web.Models
@@ -18,6 +19,7 @@ namespace MCT.Web.Models
 
         public SimpleNodeViewModel Parent { get; set; }
 
+        [UIHint("Interactions")]
         public List<InteractionModel> Interactions { get; set; }
 
         public static SubjectModel Convert(Subject subject)
