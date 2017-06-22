@@ -456,7 +456,7 @@ namespace MCT.IO
 
                 subject.Rank = TaxonRank.SubSpecies;
                 subject.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
-                
+
             }
             catch (Exception ex)
             {
@@ -735,7 +735,6 @@ namespace MCT.IO
         {
             //todo duplikate checken - in der Datenbank sind die Scientific names mehrfach drin
 
-
             SubjectManager subjectManager = new SubjectManager();
 
             #region class
@@ -744,13 +743,13 @@ namespace MCT.IO
 
             if (
                 subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className)))
+                    .Any(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.ToLower().Equals(className)))
             {
-                classTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.Equals(className));
+                classTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.ToLower().Equals(className.ToLower()));
             }
             else
             {
-                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(className)).ToList();
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.ToLower().Equals(className.ToLower())).ToList();
 
                 string name = className;
 
@@ -776,13 +775,13 @@ namespace MCT.IO
 
             if (
                 subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order)))
+                    .Any(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.ToLower().Equals(order.ToLower())))
             {
-                orderTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.Equals(order));
+                orderTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Order) && p.ScientificName.ToLower().Equals(order.ToLower()));
             }
             else
             {
-                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(order)).ToList();
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.ToLower().Equals(order.ToLower())).ToList();
                 string name = order;
 
                 if (addtionalNameHelperMatches.Any())
@@ -808,13 +807,13 @@ namespace MCT.IO
 
             if (
                 subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family)))
+                    .Any(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.ToLower().Equals(family.ToLower())))
             {
-                familyTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.Equals(family));
+                familyTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Family) && p.ScientificName.ToLower().Equals(family.ToLower()));
             }
             else
             {
-                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(family)).ToList();
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.ToLower().Equals(family.ToLower())).ToList();
 
                 string name = family;
 
@@ -840,13 +839,13 @@ namespace MCT.IO
 
             if (
                 subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus)))
+                    .Any(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.ToLower().Equals(genus.ToLower())))
             {
-                genusTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.Equals(genus));
+                genusTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Genus) && p.ScientificName.ToLower().Equals(genus.ToLower()));
             }
             else
             {
-                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(genus)).ToList();
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.ToLower().Equals(genus.ToLower())).ToList();
 
                 string name = genus;
 
@@ -872,13 +871,13 @@ namespace MCT.IO
 
             if (
                 subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species)))
+                    .Any(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.ToLower().Equals(species.ToLower())))
             {
-                speciesTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.Equals(species));
+                speciesTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.ToLower().Equals(species.ToLower()));
             }
             else
             {
-                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.Equals(species)).ToList();
+                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.ToLower().Equals(species.ToLower())).ToList();
 
                 string name = species;
 
