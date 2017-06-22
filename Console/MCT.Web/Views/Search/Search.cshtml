@@ -10,7 +10,7 @@
     <tr>
         <td>
             <div class="input-group">
-                <input type="search" id="searchInput" class="form-control" placeholder="search..."/></input>
+                <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="search..."/></input>
                 <span class="input-group-addon">
                       <i class="fa fa-search"></i>
                 </span>
@@ -48,6 +48,23 @@
 </div>
 
 <script type="text/javascript">
+
+    $(document)
+        .ready(function() {
+
+            //ac = autocomplete
+            $.get("/Search/GetAllNames",
+                function(response) {
+
+                    $(".mct-ac-all")
+                        .autocomplete({
+                            source: response
+                        });
+                },
+                "json"
+            );
+
+        });
 
     $("#searchInput").keyup(function(e) {
 

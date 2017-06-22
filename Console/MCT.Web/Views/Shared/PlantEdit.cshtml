@@ -1,37 +1,28 @@
 ﻿@model MCT.Web.Models.PlantModel
-
-@*<div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-
 @{
     ViewBag.Title = "Plant";
 }
 <div id="DetailsHeader" class="jumbotron">
 
-    <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })</h2>
+    <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })</h2>
     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
 
-    <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })</h3>
+    <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control mct-ac-scientificnames" } })</h3>
     @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
 
-    <h4>@Html.EditorFor(model => model.TaxonRank, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })</h4>
+    @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
     @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
 
 </div>
 <div id="DetailsContent" class="row">
     <div id="Image" class="col-md-4">
-        <img src="@Model.ImagePath" class=" speciesImage img-responsive " />
+        <img src="@Model.ImagePath" class="speciesImage img-responsive " />
     </div>
     <div class="col-md-8">
-        <div id="Description" class="col-md-12">
+        <div id="Description">
             <h4>Beschreibung</h4>
   
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control autocompleteInput", style="width:100%" })
+                @Html.TextAreaFor(model => model.Description, new {@class="form-control"})
         </div>
 
 
@@ -52,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Width, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })
+                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
                 @Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -60,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Height, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })
+                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
                 @Html.ValidationMessageFor(model => model.Height, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -84,7 +75,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SowingDepth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SowingDepth, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })
+                @Html.EditorFor(model => model.SowingDepth, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
                 @Html.ValidationMessageFor(model => model.SowingDepth, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -103,8 +94,7 @@
             @Html.DisplayNameFor(model => model.SeedMaturity)
             @Html.EditorFor(model => model.SeedMaturity)
 
-        </dd>
-    </dl>
+
 </div>
 
 <div class="row">
@@ -112,7 +102,7 @@
 
     @foreach (var p in Model.PreCultures)
     {
-        @Html.ActionLink(p.Name, "Details", new { id = p.Id, type = p.Type })<br />
+        @Html.ActionLink(p.Name, "Details","Search", new { id = p.Id, type = p.Type })<br />
 
     }
 
@@ -122,7 +112,7 @@
 
     @foreach (var p in Model.AfterCultures)
     {
-        @Html.ActionLink(p.Name, "Details", new { id = p.Id, type = p.Type })<br />
+        @Html.ActionLink(p.Name, "Details", "Search", new { id = p.Id, type = p.Type })<br />
     }
 
     @Html.EditorFor(model => model.AfterCultures)
@@ -144,10 +134,31 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+        //ac = autocomplete
         $.get("/Search/GetAllSubjects",
             function (response) {
 
-                $(".autocompleteInput").autocomplete({
+                $(".mct-ac-subjects").autocomplete({
+                    source: response
+                });
+            },
+            "json"
+        );
+
+        $.get("/Search/GetAllScientificNamesResult",
+            function (response) {
+
+                $(".mct-ac-scientificnames").autocomplete({
+                    source: response
+                });
+            },
+            "json"
+        );
+
+        $.get("/Search/GetAllPredicates",
+            function (response) {
+
+                $(".mct-ac-predicates").autocomplete({
                     source: response
                 });
             },
