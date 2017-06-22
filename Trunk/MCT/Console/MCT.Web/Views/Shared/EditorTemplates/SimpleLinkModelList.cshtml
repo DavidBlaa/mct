@@ -1,6 +1,9 @@
 ﻿@model List<MCT.Web.Models.SimpleLinkModel>
+@using MCT.Web.Models
 
 
 @foreach (var item in Model) {
     @Html.EditorFor(modelItem=>item)
 }
+
+@Html.Partial("SimpleLinkModel", new SimpleLinkModel())

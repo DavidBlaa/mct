@@ -12,10 +12,20 @@ namespace MCT.Web.Controllers
 {
     public class SearchController : Controller
     {
+        public static string ALL_SUBJECTS = "ALL_SUBJECTS";
+        public static string ALL_PREDICATES = "ALL_PREDICATES";
+
         // GET: Search
         [HttpGet]
         public ActionResult Search()
         {
+            //ToDo think about setting sessions, is this the rigth place ?
+            //load all names in session
+
+            GetAllSubjectNames();
+            GetAllPredicateNames();
+
+
             SubjectManager subjectManager = new SubjectManager();
 
             //Get all subjects
@@ -126,9 +136,14 @@ namespace MCT.Web.Controllers
 
         public ActionResult Details(long id, string type)
         {
+           
+
             SubjectManager sm = new SubjectManager();
 
             Subject s = sm.Get(id);
+
+            
+            //load by loading the page and store it in a session!!!!
 
             switch (type)
             {
@@ -152,17 +167,43 @@ namespace MCT.Web.Controllers
 
                         return View("AnimalDetails", Model);
                     }
+                case "Taxon":
+                    {
+                        Taxon taxon = sm.GetAll<Taxon>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+                        SubjectModel Model = SubjectModel.Convert(taxon);
+
+                        return View("TaxonDetails", Model);
+                    }
                 case "Effect":
                     {
                         Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
 
                         return View("EffectDetails");
                     }
+                case "Unknow":
+                    {
+                        SubjectModel Model = SubjectModel.Convert(s);
 
+                        return View("SubjectDetails", Model);
+                    }
                 default: { break; }
             }
 
             return View("Search");
+        }
+
+        #endregion
+
+        #region Edit Data
+
+        public ActionResult GetAllSubjects()
+        {
+            return Json(GetAllSubjectNames(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAllPrediactes()
+        {
+            return Json(GetAllPredicateNames(), JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -186,6 +227,44 @@ namespace MCT.Web.Controllers
             return Session[SearchProvider.SEARCH_PROVIDER_NAME] as SearchProvider;
         }
 
+
+        //ToDo Maybe change to object with name and id
+        private List<string> GetAllSubjectNames()
+        {
+            if (Session[ALL_SUBJECTS] == null)
+            {
+                SubjectManager subjectManager = new SubjectManager();
+
+                //ToDo change the position of load this
+                //load Viewdata
+                // load all subject for autocomplete
+                Session[ALL_SUBJECTS] = subjectManager.GetAll<Subject>().Select(s => s.Name).ToList();
+                //Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name);
+            }
+
+            List<string> tmp = Session[ALL_SUBJECTS] as List<string>;
+
+            return tmp;
+        }
+
+        private List<string> GetAllPredicateNames()
+        {
+            if (Session[ALL_PREDICATES] == null)
+            {
+                SubjectManager subjectManager = new SubjectManager();
+
+                //ToDo change the position of load this
+                //load Viewdata
+                // load all subject for autocomplete
+                Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name);
+                //Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name);
+            }
+
+            List<string> tmp = Session[ALL_PREDICATES] as List<string>;
+
+            return tmp;
+
+        }
 
         #endregion
     }

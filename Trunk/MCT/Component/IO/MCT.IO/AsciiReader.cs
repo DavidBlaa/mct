@@ -456,7 +456,7 @@ namespace MCT.IO
 
                 subject.Rank = TaxonRank.SubSpecies;
                 subject.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
-
+                
             }
             catch (Exception ex)
             {
