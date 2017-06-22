@@ -13,6 +13,7 @@ namespace MCT.Web.Controllers
     public class SearchController : Controller
     {
         public static string ALL_SUBJECTS = "ALL_SUBJECTS";
+        public static string ALL_SCIENTIFIC_NAMES = "ALL_SCIENTIFIC_NAMES";
         public static string ALL_PREDICATES = "ALL_PREDICATES";
 
         // GET: Search
@@ -22,8 +23,9 @@ namespace MCT.Web.Controllers
             //ToDo think about setting sessions, is this the rigth place ?
             //load all names in session
 
-            GetAllSubjectNames();
-            GetAllPredicateNames();
+            getAllSubjectNames();
+            getAllPredicateNames();
+            getAllScientficNames();
 
 
             SubjectManager subjectManager = new SubjectManager();
@@ -136,13 +138,13 @@ namespace MCT.Web.Controllers
 
         public ActionResult Details(long id, string type)
         {
-           
+
 
             SubjectManager sm = new SubjectManager();
 
             Subject s = sm.Get(id);
 
-            
+
             //load by loading the page and store it in a session!!!!
 
             switch (type)
@@ -198,12 +200,23 @@ namespace MCT.Web.Controllers
 
         public ActionResult GetAllSubjects()
         {
-            return Json(GetAllSubjectNames(), JsonRequestBehavior.AllowGet);
+            return Json(getAllSubjectNames(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetAllPrediactes()
+        public ActionResult GetAllScientificNamesResult()
         {
-            return Json(GetAllPredicateNames(), JsonRequestBehavior.AllowGet);
+            return Json(getAllScientficNames(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAllPredicates()
+        {
+            return Json(getAllPredicateNames(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult GetAllNames()
+        {
+            return Json(getAllNames(), JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -229,7 +242,7 @@ namespace MCT.Web.Controllers
 
 
         //ToDo Maybe change to object with name and id
-        private List<string> GetAllSubjectNames()
+        private List<string> getAllSubjectNames()
         {
             if (Session[ALL_SUBJECTS] == null)
             {
@@ -243,11 +256,29 @@ namespace MCT.Web.Controllers
             }
 
             List<string> tmp = Session[ALL_SUBJECTS] as List<string>;
-
+            tmp.Sort();
             return tmp;
         }
 
-        private List<string> GetAllPredicateNames()
+        private List<string> getAllScientficNames()
+        {
+            if (Session[ALL_SCIENTIFIC_NAMES] == null)
+            {
+                SubjectManager subjectManager = new SubjectManager();
+
+                //ToDo change the position of load this
+                //load Viewdata
+                // load all subject for autocomplete
+                Session[ALL_SCIENTIFIC_NAMES] = subjectManager.GetAll<Species>().Select(s => s.ScientificName).ToList();
+                //Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name);
+            }
+
+            List<string> tmp = Session[ALL_SCIENTIFIC_NAMES] as List<string>;
+            tmp.Sort();
+            return tmp;
+        }
+
+        private List<string> getAllPredicateNames()
         {
             if (Session[ALL_PREDICATES] == null)
             {
@@ -264,6 +295,18 @@ namespace MCT.Web.Controllers
 
             return tmp;
 
+        }
+
+        private List<string> getAllNames()
+        {
+            List<string> tmp = getAllSubjectNames();
+            if (getAllScientficNames() != null && getAllScientficNames().Any())
+                tmp = tmp.Concat(getAllScientficNames()).ToList();
+            if (getAllPredicateNames() != null && getAllPredicateNames().Any())
+                tmp = tmp.Concat(getAllPredicateNames()).ToList();
+
+            tmp.Sort();
+            return tmp;
         }
 
         #endregion
