@@ -198,6 +198,15 @@ namespace MCT.Web.Controllers
 
         #region Edit Data
 
+        public ActionResult SavePlant(Plant plant)
+        {
+            //TODO Generate the Parent based on the ScientificName
+            // a a a = SubSpecies, a a = Species, a = Genus
+
+            return Json(true);
+        }
+
+
         public ActionResult GetAllSubjects()
         {
             return Json(getAllSubjectNames(), JsonRequestBehavior.AllowGet);

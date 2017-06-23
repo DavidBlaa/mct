@@ -584,6 +584,7 @@
     <Content Include="Views\Shared\EditorTemplates\Interactions.cshtml" />
     <Content Include="Views\Shared\SubjectDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Interactions.cshtml" />
+    <Content Include="Views\Shared\Bloom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
