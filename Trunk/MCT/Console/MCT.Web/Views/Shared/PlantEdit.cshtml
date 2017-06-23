@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Plant";
 }
+<div id="plant">
 <div id="DetailsHeader" class="jumbotron">
 
     <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })</h2>
@@ -19,20 +20,19 @@
         <img src="@Model.ImagePath" class="speciesImage img-responsive " />
     </div>
     <div class="col-md-8">
-        <div id="Description">
+        <div id="DescriptionContainer">
             <h4>Beschreibung</h4>
   
                 @Html.TextAreaFor(model => model.Description, new {@class="form-control"})
         </div>
 
-
-        <div id="TaxonRanks" class="col-md-12">
+        @*<div id="TaxonRanks" class="col-md-12">
             <h4>Taxon</h4>
             @if (Model.Parent != null)
             {
                 @Html.Partial("_taxonRankPartialView", Model.Parent)
             }
-        </div>
+        </div>*@
     </div>
 </div>
 <div class="row">
@@ -127,12 +127,45 @@
 
 
 <p>
+    <button class="fa fa-save" onclick="savePlant()"></button>
+
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Back to List", "Search")
 </p>
 
-<script type="text/javascript">
+    <script type="text/javascript">
+
+    
+
+    function savePlant() {
+        var plant = {
+            Name: $("#plant #Name").val(),
+            ScientificName: $("#plant #ScientificName").val(),
+            TaxonRank: $("#plant #TaxonRank").val(),
+            Description: $("#plant #Description").val(),
+            Width: $("#plant #Width").val(),
+            Height: $("#plant #Height").val(),
+            RootDepth: $("#plant #RootDepth").val(),
+            NutrientClaim: $("#plant #NutrientClaim").val(),
+            SowingDepth: $("#plant #SowingDepth").val(),
+        }
+
+        console.log(plant);
+
+        $.ajax({
+            type: "POST",
+            url: "/Search/SavePlant",
+            data: plant,
+            dataType: "json",
+            success: function (response) {
+
+            }
+        });
+    }
+
     $(document).ready(function () {
+
+        //readPlant();
 
         //ac = autocomplete
         $.get("/Search/GetAllSubjects",
@@ -179,3 +212,4 @@
         text-align: center;
     }
 </style>
+</div>

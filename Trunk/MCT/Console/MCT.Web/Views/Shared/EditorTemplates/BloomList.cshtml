@@ -1,10 +1,29 @@
 ﻿@model List<MCT.DB.Entities.Bloom>
+@using MCT.DB.Entities;
+
 <dl class="dl-horizontal">
     @foreach (var item in Model)
     {
-
         <dd>
-            @Html.EditorFor(modelItem => item)
+            @Html.EditorFor(modelItem => item) 
+
+            <div class="fa fa-trash"></div>
         </dd>
     }
+    <!--Add New Bloom-->
+    <dd>
+        @Html.Partial("Bloom",new Bloom())
+        <div class="fa fa-trash"></div>
+    </dd>
 </dl>
+<div class="fa fa-plus"></div>
+<script type="text/javascript">
+    function addBloom()
+    {
+
+    }
+
+    function removeBloom() {
+
+    }
+</script>
