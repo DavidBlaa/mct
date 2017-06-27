@@ -17,9 +17,13 @@ namespace MCT.Web.Models
         public NutrientClaim NutrientClaim { get; set; }
         public int SowingDepth { get; set; }
 
+        [UIHint("TimePeriods")]
         public TimePeriodListModel Sowing { get; set; }
+        [UIHint("TimePeriods")]
         public TimePeriodListModel Harvest { get; set; }
+        [UIHint("TimePeriods")]
         public TimePeriodListModel Bloom { get; set; }
+        [UIHint("TimePeriods")]
         public TimePeriodListModel SeedMaturity { get; set; }
 
         [UIHint("SimpleLinkModelList")]
@@ -78,9 +82,9 @@ namespace MCT.Web.Models
                 model.Sowing = new TimePeriodListModel(tmp, TimePeriodType.Sowing);
             }
 
-            if (plant.Harvest != null) model.Harvest = new TimePeriodListModel(plant.Harvest.ToList(), TimePeriodType.Harvest);
-            if (plant.Bloom != null) model.Bloom = new TimePeriodListModel(plant.Bloom.ToList(), TimePeriodType.Bloom); ;
-            if (plant.SeedMaturity != null) model.SeedMaturity = new TimePeriodListModel(plant.SeedMaturity.ToList(), TimePeriodType.SeedMaturity); ;
+            if (plant.Harvest != null) model.Harvest = new TimePeriodListModel(plant.Harvest as List<TimePeriod>, TimePeriodType.Harvest);
+            if (plant.Bloom != null) model.Bloom = new TimePeriodListModel(plant.Bloom as List<TimePeriod>, TimePeriodType.Bloom); ;
+            if (plant.SeedMaturity != null) model.SeedMaturity = new TimePeriodListModel(plant.SeedMaturity as List<TimePeriod>, TimePeriodType.SeedMaturity); ;
 
 
             #endregion
