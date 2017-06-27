@@ -1,10 +1,43 @@
 ﻿@model List<MCT.DB.Entities.SeedMaturity>
-<dl class="dl-horizontal">
+@using MCT.DB.Entities;
+
+@{
+    string listId = "seedmaturity-list";
+}
+
+
+<ul id="@listId" class="dl-horizontal">
     @foreach (var item in Model)
     {
-
-        <dd>
+        <li>
             @Html.EditorFor(modelItem => item)
-        </dd>
+
+        </li>
     }
-</dl>
+</ul>
+<ul>
+    <li>
+        <div class="fa fa-plus icon" onclick="addSeedMaturity()"></div>
+    </li>
+</ul>
+<script type="text/javascript">
+
+    $(function() {
+        addSeedMaturity();
+    });
+
+
+    function addSeedMaturity()
+    {
+        var newElement = $('<li>');
+
+        //getEmptySeedMaturityView
+        $.get("/Search/GetEmptySeedMaturity", function (data) {
+
+            newElement.prepend($(data));
+            $("#seedmaturity-list").append(newElement);
+
+        });
+    }
+
+</script>

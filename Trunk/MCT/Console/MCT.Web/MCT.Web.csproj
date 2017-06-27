@@ -548,14 +548,14 @@
     <Content Include="Views\Search\_searchResult.cshtml" />
     <Content Include="Views\Search\_speciesPartialView.cshtml" />
     <Content Include="Views\Data\Index.cshtml" />
-    <Content Include="Views\Search\_interactionsOverViewPartialView.cshtml" />
+    <Content Include="Views\Shared\_interactionsOverViewPartialView.cshtml" />
     <Content Include="Views\Search\_searchFilterPartialView.cshtml" />
     <Content Include="Views\Search\_searchFilterTimePartialView.cshtml" />
     <Content Include="Views\Search\_searchBreadCrumb.cshtml" />
     <Content Include="Views\Search\_searchFilterPlantPropertiesPartialView.cshtml" />
     <Content Include="Views\Search\_searchFilterInteractionPartialView.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
-    <Content Include="Views\Search\_taxonRankPartialView.cshtml" />
+    <Content Include="Views\Shared\_taxonRankPartialView.cshtml" />
     <Content Include="Views\Data\_showAllData.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimePeriod.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SeedMaturityList.cshtml" />
@@ -584,7 +584,6 @@
     <Content Include="Views\Shared\EditorTemplates\Interactions.cshtml" />
     <Content Include="Views\Shared\SubjectDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Interactions.cshtml" />
-    <Content Include="Views\Shared\Bloom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

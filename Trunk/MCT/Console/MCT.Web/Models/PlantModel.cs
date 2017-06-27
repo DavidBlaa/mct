@@ -1,4 +1,5 @@
 ﻿using MCT.DB.Entities;
+using NHibernate.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,14 +17,10 @@ namespace MCT.Web.Models
         public NutrientClaim NutrientClaim { get; set; }
         public int SowingDepth { get; set; }
 
-        [UIHint("SowingList")]
-        public List<Sowing> Sowing { get; set; }
-        [UIHint("HarvestList")]
-        public List<Harvest> Harvest { get; set; }
-        [UIHint("BloomList")]
-        public List<Bloom> Bloom { get; set; }
-        [UIHint("SeedMaturityList")]
-        public List<SeedMaturity> SeedMaturity { get; set; }
+        public TimePeriodListModel Sowing { get; set; }
+        public TimePeriodListModel Harvest { get; set; }
+        public TimePeriodListModel Bloom { get; set; }
+        public TimePeriodListModel SeedMaturity { get; set; }
 
         [UIHint("SimpleLinkModelList")]
         public virtual List<SimpleLinkModel> PreCultures { get; set; }
@@ -73,10 +70,17 @@ namespace MCT.Web.Models
 
             #region Dates
 
-            if (plant.Sowing != null) model.Sowing = plant.Sowing.ToList();
-            if (plant.Harvest != null) model.Harvest = plant.Harvest.ToList();
-            if (plant.Bloom != null) model.Bloom = plant.Bloom.ToList();
-            if (plant.SeedMaturity != null) model.SeedMaturity = plant.SeedMaturity.ToList();
+            if (plant.Sowing != null)
+            {
+                List<TimePeriod> tmp = new List<TimePeriod>();
+                plant.Sowing.ForEach(s => tmp.Add((TimePeriod)s));
+
+                model.Sowing = new TimePeriodListModel(tmp, TimePeriodType.Sowing);
+            }
+
+            if (plant.Harvest != null) model.Harvest = new TimePeriodListModel(plant.Harvest.ToList(), TimePeriodType.Harvest);
+            if (plant.Bloom != null) model.Bloom = new TimePeriodListModel(plant.Bloom.ToList(), TimePeriodType.Bloom); ;
+            if (plant.SeedMaturity != null) model.SeedMaturity = new TimePeriodListModel(plant.SeedMaturity.ToList(), TimePeriodType.SeedMaturity); ;
 
 
             #endregion
@@ -129,4 +133,29 @@ namespace MCT.Web.Models
 
 
     }
+
+    public class TimePeriodListModel
+    {
+        public TimePeriodType Type { get; set; }
+        public List<TimePeriod> TimePeriods { get; set; }
+
+        public TimePeriodListModel(List<TimePeriod> timePeriods, TimePeriodType type)
+        {
+            Type = type;
+            TimePeriods = timePeriods;
+        }
+
+        public TimePeriodListModel(TimePeriodType type)
+        {
+            Type = type;
+            TimePeriods = new List<TimePeriod>();
+        }
+
+        public TimePeriodListModel()
+        {
+            Type = TimePeriodType.Bloom;
+            TimePeriods = new List<TimePeriod>();
+        }
+    }
+
 }
