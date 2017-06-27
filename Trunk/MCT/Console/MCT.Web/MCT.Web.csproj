@@ -564,7 +564,7 @@
     <Content Include="Views\Shared\EditorTemplates\Sowing.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SowingList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SeedMaturity.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\TimePeriodList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TimePeriods.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Bloom.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HarvestList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Harvest.cshtml" />

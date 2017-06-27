@@ -1,14 +1,21 @@
 ﻿@model TimePeriod
 @using MCT.DB.Entities
 
+@{
+    string id = Model.Id + "_Sowing";
+}
 
+<div id="@id" class="row">
+    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.StartArea, new { @class = "form-control dropdown" })</div>
+    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.StartMonth, new { @class = "form-control dropdown" })</div>
+    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.EndArea, new { @class = "form-control dropdown" })</div>
+    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.EndMonth, new { @class = "form-control dropdown" })</div>
+    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control dropdown" })</div>
+    <div class="col-md-1"><div class="fa fa-trash icon" onclick="removeSowing(this)" /></div>
+</div>
 
-@Html.EnumDropDownListFor(m => m.StartArea)
-@Html.EnumDropDownListFor(m => m.StartMonth)
-@Html.EnumDropDownListFor(m => m.EndArea)
-@Html.EnumDropDownListFor(m => m.EndMonth)
-@Html.EnumDropDownListFor(m => m.Type)
-
-
-
-
+<script>
+    function removeSowing(e) {
+        $(e).parents('div.row').remove();
+    }
+</script>
