@@ -1,0 +1,13 @@
+﻿@model MCT.Web.Models.TimePeriodListModel
+
+<b>@Model.Type.ToString()</b>
+
+<dl class="dl-horizontal">
+    @foreach (var item in Model.TimePeriods)
+    {
+
+        <dd>
+            @Html.EditorFor(modelItem => item)
+        </dd>
+    }
+</dl>
