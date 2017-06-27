@@ -27,6 +27,7 @@ textarea {
     min-height: 100px;
 }
 
+li {list-style-type: none}
 
 /*SEARCH*/
 
@@ -92,4 +93,9 @@ textarea {
     text-align: justify;
     height: 200px;
     margin: 3px;
+}
+
+.icon {
+    font-size: 20px;
+    padding:5px
 }

@@ -10,6 +10,12 @@
     <div class="col-md-2">@Html.EnumDropDownListFor(m => m.StartMonth, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2">@Html.EnumDropDownListFor(m => m.EndArea, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2">@Html.EnumDropDownListFor(m => m.EndMonth, new { @class = "form-control dropdown" })</div>
-    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control dropdown" })</div>
+    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.Type, new {@class = "form-control dropdown"})</div>
+    <div class="col-md-1"><div class="fa fa-trash icon" onclick="removeBloom(this)" /></div>
 </div>
 
+<script>
+    function removeBloom(e) {
+        $(e).parents('div.row').remove();
+    }
+</script>

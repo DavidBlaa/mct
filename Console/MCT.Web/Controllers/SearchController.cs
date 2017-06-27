@@ -222,10 +222,26 @@ namespace MCT.Web.Controllers
             return Json(getAllPredicateNames(), JsonRequestBehavior.AllowGet);
         }
 
-
         public ActionResult GetAllNames()
         {
             return Json(getAllNames(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetEmptyBloom()
+        {
+            return PartialView("Bloom", new Bloom());
+        }
+        public ActionResult GetEmptySowing()
+        {
+            return PartialView("Bloom", new Bloom());
+        }
+        public ActionResult GetEmptyHarvest()
+        {
+            return PartialView("Bloom", new Bloom());
+        }
+        public ActionResult GetEmptySeedMaturity()
+        {
+            return PartialView("Bloom", new Bloom());
         }
 
         #endregion
