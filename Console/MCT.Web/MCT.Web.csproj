@@ -561,8 +561,6 @@
     <Content Include="Views\Shared\DisplayTemplates\SeedMaturityList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SowingList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Sowing.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Sowing.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\SowingList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SeedMaturity.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimePeriods.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Bloom.cshtml" />
@@ -574,16 +572,11 @@
     <Content Include="Views\Shared\PlantEdit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TaxonRank.cshtml" />
     <Content Include="Views\ExtNet\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\HarvestList.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\SeedMaturity.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\SeedMaturityList.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Harvest.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Bloom.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\BloomList.cshtml" />
     <Content Include="Views\Shared\SimpleLinkModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Interactions.cshtml" />
     <Content Include="Views\Shared\SubjectDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Interactions.cshtml" />
+    <Content Include="Views\Shared\TimePeriod.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

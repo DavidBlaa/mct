@@ -56,7 +56,7 @@ namespace MCT.Web.Controllers
         {
             SearchProvider sp = GetSearchProvider();
 
-            if (string.IsNullOrEmpty(searchValue))
+            if (searchValue == null)
                 sp.DeleteSearchCriterias(SearchProvider.FREETEXT_SEARCH_KEY);
             else
                 sp.UpateSearchCriterias(SearchProvider.FREETEXT_SEARCH_KEY, searchValue);
@@ -227,23 +227,12 @@ namespace MCT.Web.Controllers
             return Json(getAllNames(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetEmptyBloom()
-        {
-            return PartialView("Bloom", new Bloom());
+        public ActionResult GetEmptyTimePeriod()
+        { 
+            // type of the model dont matter.
+            // its important that its a entity from timeperiod
+            return PartialView("TimePeriod", new Bloom());
         }
-        public ActionResult GetEmptySowing()
-        {
-            return PartialView("Bloom", new Bloom());
-        }
-        public ActionResult GetEmptyHarvest()
-        {
-            return PartialView("Bloom", new Bloom());
-        }
-        public ActionResult GetEmptySeedMaturity()
-        {
-            return PartialView("Bloom", new Bloom());
-        }
-
         #endregion
 
         #region Sessions
