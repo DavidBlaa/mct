@@ -66,25 +66,35 @@
 
         });
 
+    var timer = null
     $("#searchInput").keyup(function(e) {
 
-        //alert("s:" + $("#searchInput").val() +" "+String.fromCharCode(e.keyCode) );
+        if (timer!=null)
+        {
+            clearTimeout(timer);
+            timer = null;
+        }
 
+        timer = setTimeout(search(), 2000);
+    });
+
+    $("#searchInput").change(function (e) {
+        //search();
+    });
+
+    function search()
+    {
+        console.log("search starting")
         var searchValue = $("#searchInput").val();
         $("#searchInput").attr("disabled");
         //alert(searchValue)
-        if (searchValue.length >= 0) {
-            $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function (response) {
+        $.post('@Url.Action("Search", "Search")', { searchValue: searchValue }, function (response) {
 
-                $("#searchResultContent").replaceWith(response);
-                $("#searchInput").removeAttr("disabled");
-                UpdateBreadcrumb();
-            });
-
-        }
-
-
-    });
+            $("#searchResultContent").replaceWith(response);
+            $("#searchInput").removeAttr("disabled");
+            UpdateBreadcrumb();
+        });
+    }
 
     function UpdateSearch() {
 

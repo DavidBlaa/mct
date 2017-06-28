@@ -1,13 +1,54 @@
 ﻿@model MCT.Web.Models.TimePeriodListModel
 
-<b>@Model.Type.ToString()</b>
+@{
+    string type = Model.Type.ToString().ToLower();
+    string listId = type+"-list";
+}
 
-<dl class="dl-horizontal">
-    @foreach (var item in Model.TimePeriods)
+<div class="timeperiod-list-container">
+    <ul id="@listId" class="dl-horizontal timeperiod-list">
+
+        @if (Model.TimePeriods != null)
+        {
+
+            foreach (var item in Model.TimePeriods)
+            {
+                <li class="timeperiod-li">
+                    @Html.EditorFor(modelItem => item)
+
+                </li>
+            }
+        }
+
+    </ul>
+
+    <div class="fa fa-plus icon" onclick="add(this)"></div>
+</div>
+
+<script type="text/javascript">
+
+    $(function() {
+        //add();
+    });
+
+
+    function add(e)
     {
+        console.log("add");
+        console.log(e);
 
-        <dd>
-            @Html.EditorFor(modelItem => item)
-        </dd>
+        var newElement = $('<li class="timeperiod-li">');
+
+        $.get("/Search/GetEmptyTimePeriod", function (data) {
+
+            newElement.prepend($(data));
+            console.log(newElement);
+            var list = $(e).parent().find("ul");
+            console.log("list");
+            console.log(list);
+            $(list).append(newElement);
+
+        });
     }
-</dl>
+
+</script>

@@ -225,7 +225,7 @@ namespace MCT.DB.Services
                 return plantQuery;
 
 
-            return null;
+            return session.Query<Species>();
         }
 
 
