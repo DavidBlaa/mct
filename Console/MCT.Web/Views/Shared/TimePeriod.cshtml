@@ -5,20 +5,17 @@
     string id = Model.Id.ToString();
 }
 
+@Html.HiddenFor(model => model.Id)
+
 <div id="@id" class="row">
     <div class="col-md-2 start-area">@Html.EnumDropDownListFor(m => m.StartArea, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 start-month">@Html.EnumDropDownListFor(m => m.StartMonth, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 end-area">@Html.EnumDropDownListFor(m => m.EndArea, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 end-month">@Html.EnumDropDownListFor(m => m.EndMonth, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2">@Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control dropdown" })</div>
-    <div class="col-md-1"><div class="fa fa-trash icon" onclick="remove(this)" /></div>
+    <div class="col-md-1"><div class="fa fa-trash icon" onclick="removeTP(this)" /></div>
 </div>
 
 <script>
-    function remove(e) {
 
-        console.log("e --->");
-        console.log(e);
-        $(e).parents(".timeperiod-li")[0].remove();
-    }
 </script>

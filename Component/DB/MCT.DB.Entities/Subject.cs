@@ -34,7 +34,7 @@ namespace MCT.DB.Entities
 
         public static bool IsEmtpy(Subject subject)
         {
-            if(subject.Id == 0)
+            if (subject.Id == 0)
                 return true;
             return false;
         }

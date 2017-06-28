@@ -1,9 +1,16 @@
 ﻿@model List<MCT.Web.Models.SimpleLinkModel>
 @using MCT.Web.Models
 
+<div class="simplelinkmodel-list-container">
 
-@foreach (var item in Model) {
-    @Html.EditorFor(modelItem=>item)
-}
-
-@Html.Partial("SimpleLinkModel", new SimpleLinkModel())
+    <ul class="simplelinkmodel-list">
+        @foreach (var item in Model)
+        {
+            <li class="simplelinkmodel-li">
+                @Html.EditorFor(modelItem => item)
+            </li>
+        }
+    </ul>
+    @*@Html.Partial("SimpleLinkModel", new SimpleLinkModel())*@
+    <div class="fa fa-plus icon" onclick="addSimpleLink(this)"></div>
+</div>

@@ -22,33 +22,5 @@
 
     </ul>
 
-    <div class="fa fa-plus icon" onclick="add(this)"></div>
+    <div class="fa fa-plus icon" onclick="addTP(this)"></div>
 </div>
-
-<script type="text/javascript">
-
-    $(function() {
-        //add();
-    });
-
-
-    function add(e)
-    {
-        console.log("add");
-        console.log(e);
-
-        var newElement = $('<li class="timeperiod-li">');
-
-        $.get("/Search/GetEmptyTimePeriod", function (data) {
-
-            newElement.prepend($(data));
-            console.log(newElement);
-            var list = $(e).parent().find("ul");
-            console.log("list");
-            console.log(list);
-            $(list).append(newElement);
-
-        });
-    }
-
-</script>
