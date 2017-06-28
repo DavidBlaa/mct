@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using NHibernate.Mapping;
-using NHibernate.Search.Attributes;
-using NHibernate.Type;
 
 namespace MCT.DB.Entities
 {
 
-    public class Plant:Species
+    public class Plant : Species
     {
 
         #region Attributes
@@ -60,9 +57,9 @@ namespace MCT.DB.Entities
         {
             // update subject
 
-            Description += " "+newPlant.Description;
+            Description += " " + newPlant.Description;
 
-            if(Parent==null)
+            if (Parent == null)
                 Parent = newPlant.Parent;
 
             //update species
@@ -78,11 +75,11 @@ namespace MCT.DB.Entities
             if (PreCultures.Count == 0)
                 //PreCultures = newPlant.PreCultures;
 
-            if (AfterCultures.Count == 0)
-                //AfterCultures = newPlant.AfterCultures;
+                if (AfterCultures.Count == 0)
+                    //AfterCultures = newPlant.AfterCultures;
 
-            if (RootDepth.Equals(RootDepth.Empty))
-                RootDepth = newPlant.RootDepth;
+                    if (RootDepth.Equals(RootDepth.Empty))
+                        RootDepth = newPlant.RootDepth;
 
             if (NutrientClaim.Equals(NutrientClaim.Empty))
                 NutrientClaim = newPlant.NutrientClaim;

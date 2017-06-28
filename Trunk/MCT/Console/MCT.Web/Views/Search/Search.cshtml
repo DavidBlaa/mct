@@ -5,6 +5,7 @@
 @model MCT.Web.Models.Search.SearchModel
 
 
+
 <h2>Search</h2>
 <table id="SearchHeaderTable">
     <tr>
@@ -66,10 +67,10 @@
 
         });
 
-    var timer = null
+    var timer = null;
     $("#searchInput").keyup(function(e) {
 
-        if (timer!=null)
+        if (timer)
         {
             clearTimeout(timer);
             timer = null;

@@ -5,6 +5,8 @@
     string id = Model.Id.ToString();
 }
 
+@Html.HiddenFor(model => model.Id)
+
 <div id="@id" class="row">
     <div class="col-md-2 start-area">@Html.EnumDropDownListFor(m => m.StartArea, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 start-month">@Html.EnumDropDownListFor(m => m.StartMonth, new { @class = "form-control dropdown" })</div>

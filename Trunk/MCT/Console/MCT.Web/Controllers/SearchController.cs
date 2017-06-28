@@ -228,10 +228,17 @@ namespace MCT.Web.Controllers
         }
 
         public ActionResult GetEmptyTimePeriod()
-        { 
+        {
             // type of the model dont matter.
             // its important that its a entity from timeperiod
             return PartialView("TimePeriod", new Bloom());
+        }
+
+        public ActionResult GetEmptySimpleLink()
+        {
+            // type of the model dont matter.
+            // its important that its a entity from timeperiod
+            return PartialView("SimpleLinkModel", new SimpleLinkModel());
         }
         #endregion
 
