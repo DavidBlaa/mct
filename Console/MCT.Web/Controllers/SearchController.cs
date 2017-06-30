@@ -198,6 +198,15 @@ namespace MCT.Web.Controllers
 
         #region Edit Data
 
+        public ActionResult CreatePlant()
+        {
+            //TODO Generate the Parent based on the ScientificName
+            // a a a = SubSpecies, a a = Species, a = Genus
+
+            return View("PlantEdit",new PlantModel());
+        }
+
+
         public ActionResult SavePlant(Plant plant, List<Interaction> interactions)
         {
             //TODO Generate the Parent based on the ScientificName
@@ -236,9 +245,12 @@ namespace MCT.Web.Controllers
 
         public ActionResult GetEmptySimpleLink()
         {
-            // type of the model dont matter.
-            // its important that its a entity from timeperiod
             return PartialView("SimpleLinkModel", new SimpleLinkModel());
+        }
+
+        public ActionResult GetEmptyInteraction()
+        {
+            return PartialView("Interaction", new InteractionModel());
         }
         #endregion
 

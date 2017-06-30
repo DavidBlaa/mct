@@ -39,16 +39,16 @@ function savePlant() {
         SeedMaturity: getTimePeriodsJSON(seedMaturity, $("#plant #Id").val()),
         PreCultures: getSimpleLinksJSON(precultures),
         AfterCultures: getSimpleLinksJSON(aftercultures)
-    }
+    };
 
     console.log(plant);
 
     var interactions = getInteractionsJSON(interactionsFromSide);
 
     var data = {
-        plant : plant,
-        interactions : interactions
-    }
+        plant: plant,
+        interactions: interactions
+    };
 
     console.log("DATA:");
     console.log(data);
@@ -70,8 +70,8 @@ function getInteractionsJSON(source)
     //source = list of tr
     $(source).each(function () {
         var i = getInteractionJSON(this);
-            JSONArray.push(i);
-    })
+        JSONArray.push(i);
+    });
 
     return JSONArray;
 }
@@ -89,12 +89,12 @@ function getInteractionJSON(e)
     var interaction = {
         Id: $(e)[0].id,
         Indicator: $(e).find("#Interactions_item_Indicator").val(),
-        Subject : {
+        Subject: {
             Id: $(e).find("#Interactions_item_Subject_Id").val(),
             Name: $(e).find("#Interactions_item_Subject_Name").val(),
             Type: $(e).find("#Interactions_item_Subject_Type").val()
         },
-        Predicate : {
+        Predicate: {
             Id: $(e).find("#Interactions_item_Predicate_Id").val(),
             Name: $(e).find("#Interactions_item_Predicate_Name").val(),
 
@@ -102,20 +102,20 @@ function getInteractionJSON(e)
                 Name: $(e).find("#Interactions_item_Predicate_ParentName").val()
             }
         },
-        Object : {
+        Object: {
             Id: $(e).find("#Interactions_item_Object_Id").val(),
             Name: $(e).find("#Interactions_item_Object_Name").val(),
             Type: $(e).find("#Interactions_item_Object_Type").val()
         },
-        ImpactSubject : {
+        ImpactSubject: {
 
             Id: $(e).find("#Interactions_item_ImpactSubject_Id").val(),
             Name: $(e).find("#Interactions_item_ImpactSubject_Name").val(),
-            Type: $(e).find("#Interactions_item_ImpactSubject_Type").val(),
+            Type: $(e).find("#Interactions_item_ImpactSubject_Type").val()
 
         },
 
-    }
+    };
     
     return interaction
 }
@@ -232,40 +232,24 @@ function removeSimpleLink(e) {
 
 function addInteraction(e) {
 
-    //$($("table tbody")[0]).find("tr").last()
-    var table = $(e).parent().find(".interactions-table tbody")[0];
-    console.log(table);
-    console.log($(table).find("tr").last());
 
-    var newChild = $($(table).find("tr").last()).clone(false, false);
-    newChild = cleanInteraction(newChild);
-    $(table).append(newChild); 
-    console.log(newChild);
+    $.get("/Search/GetEmptyInteraction", function (data) {
+
+        console.log(data)
+        var table = $(e).parent().find(".interactions-table tbody")[0];
+        $(table).append(data);
+    });
+    ////$($("table tbody")[0]).find("tr").last()
+    //var table = $(e).parent().find(".interactions-table tbody")[0];
+    //console.log(table);
+    //console.log($(table).find("tr").last());
+
+    //var newChild = $($(table).find("tr").last()).clone(false, false);
+    //newChild = cleanInteraction(newChild);
+    //$(table).append(newChild); 
+    //console.log(newChild);
 }
 
-function cleanInteraction(e) {
-
-        $(e)[0].id = 0,
-        $(e).find("#Interactions_item_Indicator").val("0"),
-        $(e).find("#Interactions_item_Subject_Id").val("0"),
-        $(e).find("#Interactions_item_Subject_Name").val(""),
-        $(e).find("#Interactions_item_Predicate_Id").val("0"),
-        $(e).find("#Interactions_item_Predicate_Name").val(""),
-        $(e).find("#Interactions_item_Predicate_Type").val("Unknow"),
-        $(e).find("#Interactions_item_Predicate_ParentName").val(""),
-        $(e).find("#Interactions_item_Object_Id").val("0"),
-        $(e).find("#Interactions_item_Object_Name").val(""),
-        $(e).find("#Interactions_item_Object_Type").val("Unknow"),
-
-        $(e).find("#Interactions_item_ImpactSubject_Id").val("0"),
-        $(e).find("#Interactions_item_ImpactSubject_Name").val(""),
-        $(e).find("#Interactions_item_ImpactSubject_Type").val("Unknow")
-
-    console.log("cleaned")
-    console.log($(e)[0])
-
-    return e;
-}
 
 function removeInteraction(e) {
 

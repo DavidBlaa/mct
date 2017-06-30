@@ -572,11 +572,12 @@
     <Content Include="Views\Shared\PlantEdit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TaxonRank.cshtml" />
     <Content Include="Views\ExtNet\Index.cshtml" />
-    <Content Include="Views\Shared\SimpleLinkModel.cshtml" />
+    <Content Include="Views\SimpleLinkModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Interactions.cshtml" />
     <Content Include="Views\Shared\SubjectDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Interactions.cshtml" />
     <Content Include="Views\Shared\TimePeriod.cshtml" />
+    <Content Include="Views\Shared\Interaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

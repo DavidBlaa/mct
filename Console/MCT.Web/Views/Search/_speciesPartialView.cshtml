@@ -6,13 +6,13 @@
     if (Model.Type == SpeciesType.Plant)
     {
         headerClassName += "plant";
-        btnClass += "plant"; 
+        btnClass += "plant";
     }
 
     if (Model.Type == SpeciesType.Animal)
     {
         headerClassName += "animal";
-        btnClass += "animal"; 
+        btnClass += "animal";
     }
 
 }
@@ -20,20 +20,20 @@
 @model SpeciesModel
 @using MCT.Web.Models;
 
-<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3" >
+<div id="@Model.Id" class="content @Model.SubjectType.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3" >
     <div class="@headerClassName" >
         <h3 class="name">
-        @Html.ActionLink(@Model.Name, "Details", new { id = Model.Id, type = @Model.Type.ToString() })
+        @Html.ActionLink(@Model.Name, "Details", new { id = Model.Id, type = @Model.SubjectType.ToString() })
         </h3>
 
 
     </div>
-    <h5 class="type">@Model.Type</h5>
+    <h5 class="type">@Model.SubjectType</h5>
     <h6 class="type">@Model.TaxonRank</h6>
     <h4 class="scientificName">@Model.ScientificName</h4>
-    <img class="speciesImage" src="@Model.ImagePath" class="img-responsive " />
+    <img class=" img-responsive  speciesImage" src="@Model.ImagePath"/>
     @*<div class="details">
         <p class="description">@Model.Description</p>
     </div>*@
-        @Html.ActionLink("Details", "Details", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = @btnClass })
+        @Html.ActionLink("Details", "Details", new { id = Model.Id, type = @Model.SubjectType.ToString() }, new { @class = @btnClass })
 </div>

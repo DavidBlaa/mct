@@ -4,17 +4,17 @@ using System.Linq;
 
 namespace MCT.Web.Models
 {
-    public class SpeciesModel
+    public class SpeciesModel:SubjectModel
     {
-        public long Id { get; set; }
-        public String Name { get; set; }
-        public String ScientificName { get; set; }
-        public String Description { get; set; }
-        public String ImagePath { get; set; }
         public TaxonRank TaxonRank { get; set; }
-        public SpeciesModel Parent { get; set; }
-
+        public String ScientificName { get; set; }
         public SpeciesType Type { get; set; }
+
+        public SpeciesModel()
+        {
+
+        }
+
 
         public static SpeciesModel Convert(Species species)
         {
