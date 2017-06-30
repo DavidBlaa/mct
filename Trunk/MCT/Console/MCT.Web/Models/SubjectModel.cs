@@ -15,7 +15,7 @@ namespace MCT.Web.Models
         public String Description { get; set; }
         public String ImagePath { get; set; }
 
-        public SubjectType SubjectType { get; set; }
+        public SubjectType Type { get; set; }
 
         public SimpleNodeViewModel Parent { get; set; }
 
@@ -40,7 +40,7 @@ namespace MCT.Web.Models
             if (!String.IsNullOrEmpty(subject.Description))
                 model.Description = subject.Description;
 
-            model.SubjectType = GetType(subject);
+            model.Type = GetType(subject);
 
             model.ImagePath = !subject.Medias.Any() ? "/Images/Empty.png" : subject.Medias.First().ImagePath;
 

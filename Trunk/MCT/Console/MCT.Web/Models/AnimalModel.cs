@@ -26,7 +26,7 @@ namespace MCT.Web.Models
             if (!String.IsNullOrEmpty(animal.Description))
                 model.Description = animal.Description;
 
-            model.SubjectType = GetType(animal);
+            model.Type = GetType(animal);
 
             if (animal.Medias.Count() == 0)
             {

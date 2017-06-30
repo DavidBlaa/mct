@@ -6,10 +6,13 @@
 <div id="plant">
 <div id="DetailsHeader" class="jumbotron">
 
-    @Html.HiddenFor(m=>m.Id)
-
-    <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })</h2>
+    @Html.HiddenFor(m => m.Id) 
+    <a class="fa fa-trash icon" onclick="deleteSubject(@Model.Id)"></a>
+    <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+    </h2>
     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    
+    
 
     <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control mct-ac-scientificnames" } })</h3>
     @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
@@ -17,7 +20,9 @@
     @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
     @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
 
+
 </div>
+
 <div id="DetailsContent" class="row">
     <div id="Image" class="col-md-4">
         <img src="@Model.ImagePath" class="speciesImage img-responsive " />

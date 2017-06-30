@@ -3,6 +3,7 @@ using MCT.DB.Services;
 using MCT.Search;
 using MCT.Web.Models;
 using MCT.Web.Models.Search;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -206,11 +207,33 @@ namespace MCT.Web.Controllers
             return View("PlantEdit",new PlantModel());
         }
 
+        public ActionResult DeleteSubject(long id)
+        {
+            try
+            {
+                SubjectManager subjectManager = new SubjectManager();
+                Subject subject = subjectManager.Get(Convert.ToInt64(id));
+                subjectManager.Delete(subject);
+
+                return Json(true);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
 
         public ActionResult SavePlant(Plant plant, List<Interaction> interactions)
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
+            
+            SubjectManager subjectManager = new SubjectManager();
+            subjectManager.Update(plant);
+
+            InteractionManager interactionManager = new InteractionManager();
+            interactions.ForEach(i => interactionManager.Update(i));
 
             return Json(true);
         }
