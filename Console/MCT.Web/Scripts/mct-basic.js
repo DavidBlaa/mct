@@ -1,6 +1,29 @@
 ﻿
 /********** EDIT PLANT *******/
 
+function deleteSubject(e)
+{
+    data = {
+        id: e
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/Search/DeletePlant",
+        data: data,
+        dataType: "json",
+        success: function (response) {
+            if (response == true) {
+
+            }
+            else {
+                alert(response);
+            }
+        }
+    });
+
+}
+
 function savePlant() {
 
     //get Timeperiods list
@@ -88,30 +111,30 @@ function getInteractionJSON(e)
 
     var interaction = {
         Id: $(e)[0].id,
-        Indicator: $(e).find("#Interactions_item_Indicator").val(),
+        Indicator: $(e).find("#Indicator").val(),
         Subject: {
-            Id: $(e).find("#Interactions_item_Subject_Id").val(),
-            Name: $(e).find("#Interactions_item_Subject_Name").val(),
-            Type: $(e).find("#Interactions_item_Subject_Type").val()
+            Id: $(e).find("#Subject_Id").val(),
+            Name: $(e).find("#Subject_Name").val(),
+            Type: $(e).find("#Subject_Type").val()
         },
         Predicate: {
-            Id: $(e).find("#Interactions_item_Predicate_Id").val(),
-            Name: $(e).find("#Interactions_item_Predicate_Name").val(),
+            Id: $(e).find("#Predicate_Id").val(),
+            Name: $(e).find("#Predicate_Name").val(),
 
             Parent: {
-                Name: $(e).find("#Interactions_item_Predicate_ParentName").val()
+                Name: $(e).find("#Predicate_ParentName").val()
             }
         },
         Object: {
-            Id: $(e).find("#Interactions_item_Object_Id").val(),
-            Name: $(e).find("#Interactions_item_Object_Name").val(),
-            Type: $(e).find("#Interactions_item_Object_Type").val()
+            Id: $(e).find("#Object_Id").val(),
+            Name: $(e).find("#Object_Name").val(),
+            Type: $(e).find("#Object_Type").val()
         },
         ImpactSubject: {
 
-            Id: $(e).find("#Interactions_item_ImpactSubject_Id").val(),
-            Name: $(e).find("#Interactions_item_ImpactSubject_Name").val(),
-            Type: $(e).find("#Interactions_item_ImpactSubject_Type").val()
+            Id: $(e).find("#ImpactSubject_Id").val(),
+            Name: $(e).find("#ImpactSubject_Name").val(),
+            Type: $(e).find("#ImpactSubject_Type").val()
 
         },
 

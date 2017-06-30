@@ -13,11 +13,11 @@ namespace MCT.DB.Services
 
         public SubjectManager()
         {
-            
             CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
         }
 
         //Example zum get einträge von aus einer spalte als liste
+            
         public List<string> GetAllNames()
         {
             ICriteria stateSearchCriteria = CurrentNHibernateSession.CreateCriteria(typeof(Subject));

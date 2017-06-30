@@ -8,7 +8,7 @@ namespace MCT.Web.Models
     {
         public TaxonRank TaxonRank { get; set; }
         public String ScientificName { get; set; }
-        public SpeciesType Type { get; set; }
+        //public SpeciesType Type { get; set; }
 
         public SpeciesModel()
         {
@@ -43,14 +43,14 @@ namespace MCT.Web.Models
             return model;
         }
 
-        protected static SpeciesType GetType(Species species)
-        {
-            if (species is Animal) return SpeciesType.Animal;
-            if (species is Plant) return SpeciesType.Plant;
+        //protected static SpeciesType GetType(Species species)
+        //{
+        //    if (species is Animal) return SpeciesType.Animal;
+        //    if (species is Plant) return SpeciesType.Plant;
 
-            return SpeciesType.Unknow;
+        //    return SpeciesType.Unknow;
 
-        }
+        //}
     }
 
     public enum SpeciesType
