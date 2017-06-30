@@ -9,20 +9,13 @@
     @Styles.Render("~/Content/jquery-ui.css")
     @Styles.Render("~/Content/typeahead.css")
 
+    @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
+    @Styles.Render("~/Content/css")
+    
     @Scripts.Render("~/bundles/jquery")
 
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
-    @Scripts.Render("~/Scripts/isotope.pkgd.min.js")
-    @Scripts.Render("~/Scripts/moment.min.js")
-    @Scripts.Render("~/Scripts/fullCalendar/fullcalendar.min.js")
-    @*@Scripts.Render("~/Scripts/jquery-ui-1.8.9.custom.min.js")*@
-    @Scripts.Render("~/Scripts/mct_basic.js")
-    @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
-    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
-    @Scripts.Render("~/Scripts/typeahead.jquery.js")
 
-    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
     @*<link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
     <script src='lib/jquery.min.js'></script>
@@ -60,6 +53,14 @@
     </div>
 
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
+    @Scripts.Render("~/Scripts/isotope.pkgd.min.js")
+    @Scripts.Render("~/Scripts/moment.min.js")
+    @Scripts.Render("~/Scripts/fullCalendar/fullcalendar.min.js")
+    @*@Scripts.Render("~/Scripts/jquery-ui-1.8.9.custom.min.js")*@
+    @Scripts.Render("~/Scripts/mct-basic.js")
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/typeahead.jquery.js")
     @RenderSection("scripts", false)
 </body>
 </html>

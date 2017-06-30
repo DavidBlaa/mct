@@ -32,8 +32,8 @@
     <h6 class="type">@Model.TaxonRank</h6>
     <h4 class="scientificName">@Model.ScientificName</h4>
     <img class="speciesImage" src="@Model.ImagePath" class="img-responsive " />
-    <div class="details">
+    @*<div class="details">
         <p class="description">@Model.Description</p>
-    </div>
+    </div>*@
         @Html.ActionLink("Details", "Details", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = @btnClass })
 </div>
