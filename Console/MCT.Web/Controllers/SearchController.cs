@@ -198,7 +198,7 @@ namespace MCT.Web.Controllers
 
         #region Edit Data
 
-        public ActionResult SavePlant(Plant plant)
+        public ActionResult SavePlant(Plant plant, List<Interaction> interactions)
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus

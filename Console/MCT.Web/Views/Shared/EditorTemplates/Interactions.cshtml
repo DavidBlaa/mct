@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<MCT.Web.Models.InteractionModel>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+<div class="fa fa-plus icon" onclick="addInteraction(this)"></div>
 </p>
-<table class="table">
+<table class="table interactions-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Indicator)
@@ -23,25 +23,33 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr id="@item.Id" class="interaction-row">
         <td>
             @Html.EditorFor(modelItem => item.Indicator, new { htmlAttributes = new { @class = "form-control" } })
         </td>
         <td>
+            @Html.HiddenFor(modelItem => item.Subject.Id)
+            @Html.HiddenFor(modelItem => item.Subject.Type)
             @Html.EditorFor(modelItem => item.Subject.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
         </td>
         <td>
+            @Html.HiddenFor(modelItem => item.Predicate.Id)
             @Html.EditorFor(modelItem => item.Predicate.Name, new { htmlAttributes = new { @class = "form-control mct-ac-predicates" } })
-            @Html.EnumDropDownListFor(modelItem => item.Predicate.Type, new { @class = "form-control dropdown" })
+            
+            @Html.DropDownListFor(modelItem => item.Predicate.ParentName,new SelectList(new List<string>{ "positiv", "negativ" }, item.Predicate.ParentName) ,new {@class = "form-control dropdown" } )
         </td>
         <td>
+            @Html.HiddenFor(modelItem => item.Object.Id)
+            @Html.HiddenFor(modelItem => item.Object.Type)
             @Html.EditorFor(modelItem => item.Object.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
         </td>
         <td>
+            @Html.HiddenFor(modelItem => item.ImpactSubject.Id)
+            @Html.HiddenFor(modelItem => item.ImpactSubject.Type)
             @Html.EditorFor(modelItem => item.ImpactSubject.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <div class="col-md-1"><div class="fa fa-trash icon" onclick="removeInteraction(this)" /></div>
         </td>
     </tr>
 }

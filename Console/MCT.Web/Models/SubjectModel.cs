@@ -85,8 +85,9 @@ namespace MCT.Web.Models
 
     public class InteractionModel
     {
+        public long Id { get; set; }
         public InteractionElementModel Subject { get; set; }
-        public InteractionElementModel Predicate { get; set; }
+        public InteractionPredicateModel Predicate { get; set; }
         public InteractionElementModel Object { get; set; }
         public InteractionElementModel ImpactSubject { get; set; }
         public Int32 Indicator { get; set; }
@@ -95,8 +96,9 @@ namespace MCT.Web.Models
         {
             return new InteractionModel()
             {
+                Id = interaction.Id,
                 Subject = InteractionElementModel.Convert(interaction.Subject),
-                Predicate = InteractionElementModel.Convert(interaction.Predicate),
+                Predicate = InteractionPredicateModel.Convert(interaction.Predicate),
                 Object = InteractionElementModel.Convert(interaction.Object),
                 ImpactSubject = InteractionElementModel.Convert(interaction.ImpactSubject),
                 Indicator = interaction.Indicator,
@@ -123,6 +125,28 @@ namespace MCT.Web.Models
             Id = id;
             Name = name;
             Type = SubjectType.Unknow;
+        }
+    }
+
+    public class InteractionPredicateModel
+    {
+
+        public long Id { get; set; }
+        public String Name { get; set; }
+        public string ParentName { get; set; }
+
+        public static InteractionPredicateModel Convert(Predicate predicate)
+        {
+            string pName = "";
+            if (predicate.Parent != null)
+                pName = predicate.Parent.Name;
+
+            return new InteractionPredicateModel
+            {
+                Id = predicate.Id,
+                Name = predicate.Name,
+                ParentName = pName
+            };
         }
     }
 
