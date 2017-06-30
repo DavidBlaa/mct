@@ -1293,7 +1293,6 @@ namespace MCT.IO
                 return wikipediaReader.GetScientificName(name);
             }
 
-            return "";
         }
 
         private Plant UpdatePlantBasedOnDescription(Plant plant, string description)

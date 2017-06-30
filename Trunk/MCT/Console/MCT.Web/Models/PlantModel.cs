@@ -7,10 +7,8 @@ using System.Linq;
 
 namespace MCT.Web.Models
 {
-    public class PlantModel : SubjectModel
+    public class PlantModel : SpeciesModel
     {
-        public string ScientificName { get; set; }
-        public TaxonRank TaxonRank { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
         public RootDepth RootDepth { get; set; }
@@ -33,8 +31,13 @@ namespace MCT.Web.Models
 
         public PlantModel()
         {
+            Sowing = new TimePeriodListModel(TimePeriodType.Sowing);
+            Harvest = new TimePeriodListModel(TimePeriodType.Harvest);
+            Bloom = new TimePeriodListModel(TimePeriodType.Bloom);
+            SeedMaturity = new TimePeriodListModel(TimePeriodType.SeedMaturity);
             PreCultures = new List<SimpleLinkModel>();
             AfterCultures = new List<SimpleLinkModel>();
+            Interactions = new List<InteractionModel>();
         }
 
 

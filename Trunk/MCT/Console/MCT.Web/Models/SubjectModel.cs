@@ -15,12 +15,17 @@ namespace MCT.Web.Models
         public String Description { get; set; }
         public String ImagePath { get; set; }
 
-        public SubjectType Type { get; set; }
+        public SubjectType SubjectType { get; set; }
 
         public SimpleNodeViewModel Parent { get; set; }
 
         [UIHint("Interactions")]
         public List<InteractionModel> Interactions { get; set; }
+
+        public SubjectModel()
+        {
+            ImagePath = "/Images/Empty.png";
+        }
 
         public static SubjectModel Convert(Subject subject)
         {
@@ -35,7 +40,7 @@ namespace MCT.Web.Models
             if (!String.IsNullOrEmpty(subject.Description))
                 model.Description = subject.Description;
 
-            model.Type = GetType(subject);
+            model.SubjectType = GetType(subject);
 
             model.ImagePath = !subject.Medias.Any() ? "/Images/Empty.png" : subject.Medias.First().ImagePath;
 
@@ -46,8 +51,6 @@ namespace MCT.Web.Models
 
         public static SubjectType GetType(Subject subject)
         {
-            Type test;
-
             if (subject.IsProxy())
             {
                 subject = NHibernateHelper.UnProxyObjectAs<Subject>(subject);
@@ -92,6 +95,16 @@ namespace MCT.Web.Models
         public InteractionElementModel ImpactSubject { get; set; }
         public Int32 Indicator { get; set; }
 
+        public InteractionModel()
+        {
+            Id = 0;
+            Indicator = 0;
+            Subject = new InteractionElementModel();
+            Object = new InteractionElementModel();
+            ImpactSubject = new InteractionElementModel();
+            Predicate = new InteractionPredicateModel();
+        }
+
         public static InteractionModel Convert(Interaction interaction)
         {
             return new InteractionModel()
@@ -134,6 +147,13 @@ namespace MCT.Web.Models
         public long Id { get; set; }
         public String Name { get; set; }
         public string ParentName { get; set; }
+
+        public InteractionPredicateModel()
+        {
+            Id = 0;
+            Name = "";
+            ParentName = "";
+        }
 
         public static InteractionPredicateModel Convert(Predicate predicate)
         {
