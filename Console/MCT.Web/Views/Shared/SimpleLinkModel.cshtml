@@ -1,0 +1,23 @@
+﻿@model MCT.Web.Models.SimpleLinkModel
+
+
+<div class="form-horizontal simplelinkmodel">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-1" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-1" })
+        <div class="col-md-3">
+            @Html.EnumDropDownListFor(model => model.Type, new { @class = "form-control dropdown" })
+            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+
