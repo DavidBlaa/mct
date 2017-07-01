@@ -578,6 +578,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Interactions.cshtml" />
     <Content Include="Views\Shared\TimePeriod.cshtml" />
     <Content Include="Views\Shared\Interaction.cshtml" />
+    <Content Include="Views\Shared\SimpleLinkModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
