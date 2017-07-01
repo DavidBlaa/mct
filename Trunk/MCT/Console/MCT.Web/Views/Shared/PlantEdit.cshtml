@@ -8,13 +8,13 @@
 
     @Html.HiddenFor(m => m.Id) 
     <a class="fa fa-trash icon" onclick="deleteSubject(@Model.Id)"></a>
-    <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+    <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
     </h2>
     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     
     
 
-    <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control mct-ac-scientificnames" } })</h3>
+    <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })</h3>
     @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
 
     @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
@@ -138,7 +138,8 @@
 
     $(document).ready(function () {
 
-        //readPlant();
+        //convert interactions table to a cool table
+        $('#example').DataTable();
 
         //ac = autocomplete
         $.get("/Search/GetAllSubjects",

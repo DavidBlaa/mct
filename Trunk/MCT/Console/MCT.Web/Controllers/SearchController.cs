@@ -204,7 +204,7 @@ namespace MCT.Web.Controllers
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
 
-            return View("PlantEdit",new PlantModel());
+            return View("PlantEdit", new PlantModel());
         }
 
         public ActionResult DeleteSubject(long id)
@@ -228,7 +228,19 @@ namespace MCT.Web.Controllers
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
-            
+            /* - based on the scientficname create or set the parents
+             * - use maybe some webservices to create missing one
+             *
+             */
+
+            //ToDO check all entities that comes from the ui that has no id. they need to get from or create
+            /* all timeperiods need the have the id from the created plant
+             * - need to create the plant frist??
+             * - maybee task fro the udatemanager
+             * */
+
+
+
             SubjectManager subjectManager = new SubjectManager();
             subjectManager.Update(plant);
 
