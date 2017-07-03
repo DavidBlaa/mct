@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using MCT.DB.Entities;
+﻿using MCT.DB.Entities;
 using MCT.Helpers;
 using NHibernate;
 using NHibernate.Criterion;
-using NHibernate.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MCT.DB.Services
 {
-    public class SubjectManager:ManagerBase<Subject, long>
+    public class SubjectManager : ManagerBase<Subject, long>
     {
 
         public SubjectManager()
@@ -16,8 +15,53 @@ namespace MCT.DB.Services
             CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
         }
 
+        #region Create PLANT
+
+        public Plant CreatePlant(Plant plant)
+        {
+            Plant tmp = Create(plant);
+
+            // go to each timerperiod and create
+            #region go to each timerperiod and create
+
+            //foreach (var tp in tmp.Bloom)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            //foreach (var tp in tmp.Sowing)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            //foreach (var tp in tmp.Harvest)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            //foreach (var tp in tmp.SeedMaturity)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            #endregion
+
+            return tmp;
+        }
+
+
+        #endregion
+
         //Example zum get einträge von aus einer spalte als liste
-            
+
         public List<string> GetAllNames()
         {
             ICriteria stateSearchCriteria = CurrentNHibernateSession.CreateCriteria(typeof(Subject));
@@ -51,13 +95,13 @@ namespace MCT.DB.Services
             //                            || (x.ImpactSubject == null || x.ImpactSubject.Name.Equals(subject.Name)))
             //                   select x;
 
-            List<Interaction> interactions = new List<Interaction> ();
+            List<Interaction> interactions = new List<Interaction>();
 
             foreach (var interaction in GetAll<Interaction>())
             {
                 if (interaction.Subject.Name.Equals(subject.Name)
                     || interaction.Object.Name.Equals(subject.Name)
-                    || (interaction.ImpactSubject!=null && interaction.ImpactSubject.Name.Equals(subject.Name)))
+                    || (interaction.ImpactSubject != null && interaction.ImpactSubject.Name.Equals(subject.Name)))
                 {
                     interactions.Add(interaction);
                 }
