@@ -261,7 +261,7 @@ namespace MCT.Web.Controllers
                         if (all.Where(s => s.Name.Equals(interaction.Subject.Name)).Any())
                         {
                             var obj = all.Where(s => s.Name.Equals(interaction.Subject.Name)).FirstOrDefault();
-                            interaction.Subject.Id = obj.Id;
+                            interaction.Subject = obj;
                         }
                         else
                             interaction.Subject = subjectManager.Create(interaction.Subject);
@@ -272,7 +272,7 @@ namespace MCT.Web.Controllers
                         if (all.Where(s => s.Name.Equals(interaction.Object.Name)).Any())
                         {
                             var obj = all.Where(s => s.Name.Equals(interaction.Object.Name)).FirstOrDefault();
-                            interaction.Object.Id = obj.Id;
+                            interaction.Object = obj;
                         }
                         else
                             interaction.Object = subjectManager.Create(interaction.Object);
@@ -283,8 +283,8 @@ namespace MCT.Web.Controllers
                     {
                         if (allPredicates.Where(s => s.Name.Equals(interaction.Predicate.Name)).Any())
                         {
-                            var obj = all.Where(s => s.Name.Equals(interaction.Predicate.Name)).FirstOrDefault();
-                            interaction.Predicate.Id = obj.Id;
+                            var obj = allPredicates.Where(s => s.Name.Equals(interaction.Predicate.Name)).FirstOrDefault();
+                            interaction.Predicate = obj;
                         }
                         else
                         {
@@ -297,17 +297,21 @@ namespace MCT.Web.Controllers
                         }
                     }
 
-                    if (interaction.ImpactSubject != null && interaction.ImpactSubject.Id == 0)
+                    if (interaction.ImpactSubject != null && !String.IsNullOrEmpty(interaction.ImpactSubject.Name) && interaction.ImpactSubject.Id == 0)
                     {
                         if (all.Where(s => s.Name.Equals(interaction.ImpactSubject.Name)).Any())
                         {
                             var obj = all.Where(s => s.Name.Equals(interaction.ImpactSubject.Name)).FirstOrDefault();
-                            interaction.ImpactSubject.Id = obj.Id;
+                            interaction.ImpactSubject = obj;
                         }
                         else
                             interaction.ImpactSubject = subjectManager.Create(interaction.ImpactSubject);
-                    }
 
+                    }
+                    else
+                    {
+                        interaction.ImpactSubject = null;
+                    }
                     interactionManager.Update(interaction);
                 }
 
