@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Linq;
+using System.Linq;
 
 namespace MCT.DB.Services
 {
@@ -34,7 +34,18 @@ namespace MCT.DB.Services
 
         public T Get(V v)
         {
-            return (T) CurrentNHibernateSession.Load(typeof(T), v);
+            return (T)CurrentNHibernateSession.Load(typeof(T), v);
+        }
+
+        public T Create(T t)
+        {
+            using (ITransaction transaction = CurrentNHibernateSession.BeginTransaction())
+            {
+                CurrentNHibernateSession.Save(t);
+                transaction.Commit();
+
+                return t;
+            }
         }
 
         public void Update(T t)

@@ -85,10 +85,29 @@ namespace MCT.Web.Models
                 model.Sowing = new TimePeriodListModel(tmp, TimePeriodType.Sowing);
             }
 
-            if (plant.Harvest != null) model.Harvest = new TimePeriodListModel(plant.Harvest as List<TimePeriod>, TimePeriodType.Harvest);
-            if (plant.Bloom != null) model.Bloom = new TimePeriodListModel(plant.Bloom as List<TimePeriod>, TimePeriodType.Bloom); ;
-            if (plant.SeedMaturity != null) model.SeedMaturity = new TimePeriodListModel(plant.SeedMaturity as List<TimePeriod>, TimePeriodType.SeedMaturity); ;
+            if (plant.Bloom != null)
+            {
+                List<TimePeriod> tmp = new List<TimePeriod>();
+                plant.Bloom.ForEach(s => tmp.Add((TimePeriod)s));
 
+                model.Bloom = new TimePeriodListModel(tmp, TimePeriodType.Bloom);
+            }
+
+            if (plant.Harvest != null)
+            {
+                List<TimePeriod> tmp = new List<TimePeriod>();
+                plant.Harvest.ForEach(s => tmp.Add((TimePeriod)s));
+
+                model.Harvest = new TimePeriodListModel(tmp, TimePeriodType.Harvest);
+            }
+
+            if (plant.SeedMaturity != null)
+            {
+                List<TimePeriod> tmp = new List<TimePeriod>();
+                plant.SeedMaturity.ForEach(s => tmp.Add((TimePeriod)s));
+
+                model.SeedMaturity = new TimePeriodListModel(tmp, TimePeriodType.SeedMaturity);
+            }
 
             #endregion
 

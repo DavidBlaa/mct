@@ -238,14 +238,81 @@ namespace MCT.Web.Controllers
              * - need to create the plant frist??
              * - maybee task fro the udatemanager
              * */
-
-
-
             SubjectManager subjectManager = new SubjectManager();
-            subjectManager.Update(plant);
 
-            InteractionManager interactionManager = new InteractionManager();
-            interactions.ForEach(i => interactionManager.Update(i));
+
+            if (plant.Id == 0)
+                plant = subjectManager.CreatePlant(plant);
+            else
+                subjectManager.Update(plant);
+
+            if (interactions != null && interactions.Any())
+            {
+                InteractionManager interactionManager = new InteractionManager();
+
+                foreach (var interaction in interactions)
+                {
+                    List<Subject> all = subjectManager.GetAll<Subject>().ToList();
+                    List<Predicate> allPredicates = subjectManager.GetAll<Predicate>().ToList();
+
+                    //check if all entities has a 0 id, then it needs to create first
+                    if (interaction.Subject != null && interaction.Subject.Id == 0)
+                    {
+                        if (all.Where(s => s.Name.Equals(interaction.Subject.Name)).Any())
+                        {
+                            var obj = all.Where(s => s.Name.Equals(interaction.Subject.Name)).FirstOrDefault();
+                            interaction.Subject.Id = obj.Id;
+                        }
+                        else
+                            interaction.Subject = subjectManager.Create(interaction.Subject);
+                    }
+
+                    if (interaction.Object != null && interaction.Object.Id == 0)
+                    {
+                        if (all.Where(s => s.Name.Equals(interaction.Object.Name)).Any())
+                        {
+                            var obj = all.Where(s => s.Name.Equals(interaction.Object.Name)).FirstOrDefault();
+                            interaction.Object.Id = obj.Id;
+                        }
+                        else
+                            interaction.Object = subjectManager.Create(interaction.Object);
+
+                    }
+
+                    if (interaction.Predicate != null && interaction.Predicate.Id == 0)
+                    {
+                        if (allPredicates.Where(s => s.Name.Equals(interaction.Predicate.Name)).Any())
+                        {
+                            var obj = all.Where(s => s.Name.Equals(interaction.Predicate.Name)).FirstOrDefault();
+                            interaction.Predicate.Id = obj.Id;
+                        }
+                        else
+                        {
+                            if (interaction.Predicate.Parent.Id == 0)
+                            {
+                                interaction.Predicate.Parent.Id = allPredicates.Where(p => p.Name.Equals(interaction.Predicate.Parent.Name)).FirstOrDefault().Id;
+                            }
+                            interaction.Predicate = subjectManager.Create(interaction.Predicate);
+
+                        }
+                    }
+
+                    if (interaction.ImpactSubject != null && interaction.ImpactSubject.Id == 0)
+                    {
+                        if (all.Where(s => s.Name.Equals(interaction.ImpactSubject.Name)).Any())
+                        {
+                            var obj = all.Where(s => s.Name.Equals(interaction.ImpactSubject.Name)).FirstOrDefault();
+                            interaction.ImpactSubject.Id = obj.Id;
+                        }
+                        else
+                            interaction.ImpactSubject = subjectManager.Create(interaction.ImpactSubject);
+                    }
+
+                    interactionManager.Update(interaction);
+                }
+
+
+            }
 
             return Json(true);
         }
