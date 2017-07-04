@@ -239,16 +239,28 @@ namespace MCT.Web.Controllers
              * - maybee task fro the udatemanager
              * */
             SubjectManager subjectManager = new SubjectManager();
+            InteractionManager interactionManager = new InteractionManager();
 
 
             if (plant.Id == 0)
                 plant = subjectManager.CreatePlant(plant);
             else
+            {
                 subjectManager.Update(plant);
+                //Delete interactions
+                IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(plant);
+                for (int i = 0; i < interactionListFromDB.Count(); i++)
+                {
+                    Interaction tmp = interactionListFromDB.ElementAt(i);
+                    if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
+                        interactionManager.Delete(tmp);
+                }
 
+            }
+
+            //save or update interactions
             if (interactions != null && interactions.Any())
             {
-                InteractionManager interactionManager = new InteractionManager();
 
                 foreach (var interaction in interactions)
                 {
@@ -314,7 +326,6 @@ namespace MCT.Web.Controllers
                     }
                     interactionManager.Update(interaction);
                 }
-
 
             }
 
