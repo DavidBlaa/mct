@@ -24,6 +24,29 @@ function deleteSubject(e)
 
 }
 
+function deleteSubjectInSearch(e) {
+    data = {
+        id: e
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/Search/DeleteSubject",
+        data: data,
+        dataType: "json",
+        success: function (response) {
+            if (response == true) {
+                alert(response);
+                $(e).remove();
+            }
+            else {
+                alert(response);
+            }
+        }
+    });
+
+}
+
 function savePlant() {
 
     //get Timeperiods list
@@ -80,9 +103,55 @@ function savePlant() {
         type: "POST",
         url: "/Search/SavePlant",
         data: data,
-        dataType: "json",
+        dataType: "html",
         success: function (response) {
+            alert(response);
+            window.location.href = "/Search/Details?id=" + response + "&type=Plant";
+        }
+    });
+}
 
+function saveAnimal() {
+
+    //get Timeperiods list
+    //string listId = type + "-list";
+
+
+    //all tr of table
+    var interactionsFromSide = $(".interactions-table tr.interaction-row");
+
+
+    //var tmp = getSimpleLinksJSON(precultures);
+    //console.log("tmp -> preculture");
+    //console.log(tmp);
+
+    var animal = {
+        Id: $("#animal #Id").val(),
+        Name: $("#animal #Name").val(),
+        ScientificName: $("#animal #ScientificName").val(),
+        Rank: $("#animal #TaxonRank").val(),
+        Description: $("#animal #Description").val()
+    };
+
+    console.log(plant);
+
+    var interactions = getInteractionsJSON(interactionsFromSide);
+
+    var data = {
+        plant: plant,
+        interactions: interactions
+    };
+
+    console.log("DATA:");
+    console.log(data);
+
+    $.ajax({
+        type: "POST",
+        url: "/Search/SaveAnimal",
+        data: data,
+        dataType: "html",
+        success: function (response) {
+            window.location.href = "/Search/Details?id=" + $("#animal #Id").val() + "&type=Animal";
         }
     });
 }

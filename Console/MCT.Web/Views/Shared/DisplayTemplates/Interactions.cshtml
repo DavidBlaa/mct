@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MCT.Web.Models.InteractionModel>
 
 <p>
-    <div class="fa fa-plus icon" onclick="addInteraction(this)"></div>
+    @*<div class="fa fa-plus icon" onclick="addInteraction(this)"></div>*@
 </p>
 <table class="table interactions-table">
     <tr>
@@ -22,8 +22,9 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        @Html.Partial("Interaction", item);
-    }
+        @foreach (var item in Model)
+        {
+            @Html.DisplayFor(modelItem => item)
+        }
+
 </table>

@@ -571,10 +571,11 @@
     <Content Include="Views\Shared\TimePeriod.cshtml" />
     <Content Include="Views\Shared\Interaction.cshtml" />
     <Content Include="Views\Shared\SimpleLinkModel.cshtml" />
-    <Content Include="Views\Shared\AnimlaEdit.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Interaction.cshtml" />
+    <Content Include="Views\Shared\AnimalEdit.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\InteractionModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TimePeriod.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TimePeriods.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InteractionModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

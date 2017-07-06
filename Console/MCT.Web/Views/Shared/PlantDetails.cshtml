@@ -40,38 +40,38 @@
 
         <h4>Anbau Informationen</h4>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Width, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Width,new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.Width, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.Width, new {  @class = "form-control" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Height, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Height,new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.Height, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+                @Html.DisplayFor(model => model.Height, new { @class = "form-control"  })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RootDepth, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group row">
+            @Html.LabelFor(model => model.RootDepth, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.RootDepth, new { @class = "form-control" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NutrientClaim, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group row">
+            @Html.LabelFor(model => model.NutrientClaim, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.NutrientClaim, new { @class = "form-control" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SowingDepth, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group row">
+            @Html.LabelFor(model => model.SowingDepth, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.SowingDepth, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+                @Html.DisplayFor(model => model.SowingDepth, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SowingDepth, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -124,9 +124,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        //convert interactions table to a cool table
-        $('#example').DataTable();
-
+  
         //ac = autocomplete
         $.get("/Search/GetAllSubjects",
             function (response) {
