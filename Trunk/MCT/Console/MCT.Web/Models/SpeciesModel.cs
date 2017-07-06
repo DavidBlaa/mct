@@ -12,7 +12,8 @@ namespace MCT.Web.Models
 
         public SpeciesModel()
         {
-
+            ScientificName = "";
+            TaxonRank = TaxonRank.Species;
         }
 
 

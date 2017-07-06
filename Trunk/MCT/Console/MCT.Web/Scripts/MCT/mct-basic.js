@@ -9,7 +9,7 @@ function deleteSubject(e)
 
     $.ajax({
         type: "POST",
-        url: "/Search/DeletePlant",
+        url: "/Search/DeleteSubject",
         data: data,
         dataType: "json",
         success: function (response) {

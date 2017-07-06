@@ -1,0 +1,17 @@
+﻿@model TimePeriod
+@using MCT.DB.Entities
+
+@{
+    string id = Model.Id.ToString();
+}
+
+@Html.HiddenFor(model => model.Id)
+
+<div id="@id" class="row">
+    <div class="col-md-2 start-area">@Html.DisplayFor(m => m.StartArea)</div>
+    <div class="col-md-2 start-month">@Html.DisplayFor(m => m.StartMonth)</div>
+    <div class="col-md-2 end-area">@Html.DisplayFor(m => m.EndArea)</div>
+    <div class="col-md-2 end-month">@Html.DisplayFor(m => m.EndMonth)</div>
+    <div class="col-md-2">@Html.DisplayFor(m => m.Type)</div>
+</div>
+

@@ -57,6 +57,45 @@ namespace MCT.DB.Services
             return tmp;
         }
 
+        public Animal CreateAnimal(Animal animal)
+        {
+            Animal tmp = Create(animal);
+
+            // go to each timerperiod and create
+            #region go to each timerperiod and create
+
+            //foreach (var tp in tmp.Bloom)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            //foreach (var tp in tmp.Sowing)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            //foreach (var tp in tmp.Harvest)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            //foreach (var tp in tmp.SeedMaturity)
+            //{
+            //    tp.Subject = tmp.Id;
+            //    var newtp = Create(tp);
+            //    tp.Id = newtp.Id;
+            //}
+
+            #endregion
+
+            return tmp;
+        }
 
         #endregion
 

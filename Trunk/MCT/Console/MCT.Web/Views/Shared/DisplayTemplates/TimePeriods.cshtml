@@ -1,0 +1,26 @@
+﻿@model MCT.Web.Models.TimePeriodListModel
+
+@{ 
+    string type = Model.Type.ToString().ToLower();
+    string listId = type + "-list";
+}
+
+<div class="timeperiod-list-container">
+    <ul id="@listId" class="dl-horizontal timeperiod-list">
+
+        @if (Model.TimePeriods != null)
+        {
+
+            foreach (var item in Model.TimePeriods)
+            {
+                <li class="timeperiod-li">
+                    @Html.DisplayFor(modelItem => item)
+
+                </li>
+            }
+        }
+
+    </ul>
+
+    <div class="fa fa-plus icon" onclick="addTP(this)"></div>
+</div>

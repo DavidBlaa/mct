@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<MCT.Web.Models.InteractionModel>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <div class="fa fa-plus icon" onclick="addInteraction(this)"></div>
 </p>
-<table class="table">
+<table class="table interactions-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Indicator)
@@ -15,38 +15,15 @@
             Predicate
         </th>
         <th>
-           Object
+            Object
         </th>
         <th>
             ImpactObject
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Indicator, new { htmlAttributes = new { @class = "form-control" } })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject.Name, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Predicate.Name, new { htmlAttributes = new { @class = "form-control" } })
-            //todo editortemplate für 
-            @Html.DisplayFor(modelItem => item.Predicate.Type, new { htmlAttributes = new { @class = "form-control" } })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Object.Name, new { htmlAttributes = new { @class = "form-control autocompleteInput" } })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImpactSubject.Name, new { htmlAttributes = new { @class = "form-control" } })
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        @Html.Partial("Interaction", item);
+    }
 </table>
-

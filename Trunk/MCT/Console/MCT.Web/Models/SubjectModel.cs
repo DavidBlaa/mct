@@ -24,7 +24,10 @@ namespace MCT.Web.Models
 
         public SubjectModel()
         {
+            Name = "";
+            Description = "";
             ImagePath = "/Images/Empty.png";
+            Type = SubjectType.Unknow;
         }
 
         public static SubjectModel Convert(Subject subject)

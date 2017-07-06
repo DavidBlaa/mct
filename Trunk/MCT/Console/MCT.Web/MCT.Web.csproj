@@ -494,7 +494,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\mct-basic.js" />
+    <Content Include="Scripts\MCT\mct-basic.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
@@ -558,15 +558,7 @@
     <Content Include="Views\Shared\_taxonRankPartialView.cshtml" />
     <Content Include="Views\Data\_showAllData.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimePeriod.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SeedMaturityList.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SowingList.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Sowing.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SeedMaturity.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimePeriods.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Bloom.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\HarvestList.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Harvest.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\BloomList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SimpleLinkModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SimpleLinkModelList.cshtml" />
     <Content Include="Views\Shared\PlantEdit.cshtml" />
@@ -579,6 +571,10 @@
     <Content Include="Views\Shared\TimePeriod.cshtml" />
     <Content Include="Views\Shared\Interaction.cshtml" />
     <Content Include="Views\Shared\SimpleLinkModel.cshtml" />
+    <Content Include="Views\Shared\AnimlaEdit.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Interaction.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TimePeriod.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TimePeriods.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
