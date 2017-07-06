@@ -327,7 +327,7 @@ namespace MCT.Web.Controllers
             #endregion
             //save or update interactions
 
-            return Json(true);
+            return Json(plant.Id, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveAnimal(Animal animal, List<Interaction> interactions)
@@ -373,7 +373,7 @@ namespace MCT.Web.Controllers
             #endregion
             //save or update interactions
 
-            return Json(true);
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         //ToDo Function --> InteractionManager

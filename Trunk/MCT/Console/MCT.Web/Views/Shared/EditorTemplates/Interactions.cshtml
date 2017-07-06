@@ -3,7 +3,7 @@
 <p>
 <div class="fa fa-plus icon" onclick="addInteraction(this)"></div>
 </p>
-<table class="table interactions-table">
+<table id="interactions-table" class="table interactions-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Indicator)
@@ -15,14 +15,17 @@
             Predicate
         </th>
         <th>
-           Object
+            Object
         </th>
         <th>
             ImpactObject
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    @Html.Partial("Interaction", item);
-}
+        @foreach (var item in Model)
+        {
+            @Html.EditorFor(modelitem =>item)
+            
+        }
+
 </table>

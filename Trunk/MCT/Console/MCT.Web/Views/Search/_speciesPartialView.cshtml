@@ -39,7 +39,7 @@
         @Html.ActionLink(@name, "Details", new { id = Model.Id, type = @Model.Type.ToString() })
         </h3>
         @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil icon" })
-        <div class="fa fa-trash icon col-md-1" onclick="deleteSubject(@Model.Id)"></div>
+        <div class="fa fa-trash icon col-md-1" onclick="deleteSubjectInSearch(@Model.Id)"></div>
         <div class="@iconClass col-md-1"></div>
     </div>
 
