@@ -320,6 +320,10 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.print.css" />
+    <Content Include="Content\Gantt\style.css" />
+    <Content Include="Content\img\grid.png" />
+    <Content Include="Content\img\icon_sprite.png" />
+    <Content Include="Content\img\slider_handle.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -479,6 +483,11 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="App_Readme\Ext.NET\Sample.Web.config" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\Gantt\dataDays.js" />
+    <Content Include="Scripts\Gantt\dataDaysEnh.js" />
+    <Content Include="Scripts\Gantt\dataHours.js" />
+    <Content Include="Scripts\Gantt\jquery.fn.gantt.js" />
+    <Content Include="Scripts\Gantt\jquery.fn.gantt.min.js" />
     <Content Include="Scripts\gcal.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />

@@ -1,14 +1,12 @@
 ﻿
 <div id="calendar"></div>
-
+<div id="gantt"></div>
 <script type="text/javascript">
 
     var calendar = $('#calendar');
 
     $(document).ready(function() {
         var url = '@Url.Action("GetEvents", "Calendar")';
-
-        
 
         $.post(url,
             function(data) {
@@ -26,6 +24,16 @@
                         }
                     ]
                 });
+
+            });
+
+
+        var url = '@Url.Action("GetEventsForGantt", "Calendar")';
+
+        $.post(url,
+            function (data) {
+
+                
 
             });
 

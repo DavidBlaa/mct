@@ -17,35 +17,35 @@
 
 <script type="text/javascript">
 
-  $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#tags" ).autocomplete({
-      source: availableTags
+    $( function() {
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+        $( "#tags" ).autocomplete({
+            source: availableTags
+        });
     });
-  });
 
 </script>
 
@@ -543,8 +543,43 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        $('#example').DataTable();
-    });
+    $(document)
+        .ready(function() {
+            $('#example').DataTable();
+        });
 
+</script>
+
+<h3> Gantt Chart</h3>
+
+<div class="gantt"></div>
+
+<script>
+    $(function () {
+
+        "use strict";
+
+        var today = moment();
+        var andTwoHours = moment().add(2, "hours");
+
+        var today_friendly = "/Date(" + today.valueOf() + ")/";
+        var next_friendly = "/Date(" + andTwoHours.valueOf() + ")/";
+
+        $(".gantt").gantt({
+            source: [{
+                name: "Testing",
+                desc: " ",
+                values: [{
+                    from: today_friendly,
+                    to: next_friendly,
+                    label: "Test",
+                    customClass: "ganttRed"
+                }]
+            }],
+            scale: "hours",
+            minScale: "hours",
+            navigate: "scroll"
+        });
+
+    });
 </script>
