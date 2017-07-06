@@ -139,12 +139,9 @@ namespace MCT.Web.Controllers
 
         public ActionResult Details(long id, string type)
         {
-
-
             SubjectManager sm = new SubjectManager();
 
             Subject s = sm.Get(id);
-
 
             //load by loading the page and store it in a session!!!!
 
@@ -159,7 +156,7 @@ namespace MCT.Web.Controllers
                         //load interactions
                         Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
 
-                        return View("PlantEdit", Model);
+                        return View("PlantDetails", Model);
                     }
                 case "Animal":
                     {
@@ -199,12 +196,75 @@ namespace MCT.Web.Controllers
 
         #region Edit Data
 
+        public ActionResult Edit(long id, string type)
+        {
+            SubjectManager sm = new SubjectManager();
+
+            Subject s = sm.Get(id);
+
+            //load by loading the page and store it in a session!!!!
+
+            switch (type)
+            {
+                case "Plant":
+                    {
+
+                        Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
+
+                        PlantModel Model = PlantModel.Convert(plant);
+                        //load interactions
+                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant).ToList());
+
+                        return View("PlantEdit", Model);
+                    }
+                case "Animal":
+                    {
+                        Animal animal = sm.GetAll<Animal>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+
+                        AnimalModel Model = AnimalModel.Convert(animal);
+                        Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal).ToList());
+
+                        return View("AnimalEdit", Model);
+                    }
+                case "Taxon":
+                    {
+                        Taxon taxon = sm.GetAll<Taxon>().Where(a => a.Id.Equals(id)).FirstOrDefault();
+                        SubjectModel Model = SubjectModel.Convert(taxon);
+
+                        return View("TaxonDetails", Model);
+                    }
+                case "Effect":
+                    {
+                        Effect effect = sm.GetAll<Effect>().Where(e => e.Id.Equals(id)).FirstOrDefault();
+
+                        return View("EffectDetails");
+                    }
+                case "Unknow":
+                    {
+                        SubjectModel Model = SubjectModel.Convert(s);
+
+                        return View("SubjectDetails", Model);
+                    }
+                default: { break; }
+            }
+
+            return View("Search");
+        }
+
         public ActionResult CreatePlant()
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
 
             return View("PlantEdit", new PlantModel());
+        }
+
+        public ActionResult CreateAnimal()
+        {
+            //TODO Generate the Parent based on the ScientificName
+            // a a a = SubSpecies, a a = Species, a = Genus
+
+            return View("AnimalEdit", new PlantModel());
         }
 
         public ActionResult DeleteSubject(long id)
@@ -236,11 +296,13 @@ namespace MCT.Web.Controllers
             //ToDO check all entities that comes from the ui that has no id. they need to get from or create
             /* all timeperiods need the have the id from the created plant
              * - need to create the plant frist??
-             * - maybee task fro the udatemanager
+             * - maybe task fro the udatemanager
              * */
             SubjectManager subjectManager = new SubjectManager();
             InteractionManager interactionManager = new InteractionManager();
 
+            //ToDo Store Image in folder : project/images/
+            //add a media to plant
 
             if (plant.Id == 0)
                 plant = subjectManager.CreatePlant(plant);
@@ -258,7 +320,68 @@ namespace MCT.Web.Controllers
 
             }
 
+            #region save or update interactions
+
+            saveOrUpdateInteractions(interactions);
+
+            #endregion
             //save or update interactions
+
+            return Json(true);
+        }
+
+        public ActionResult SaveAnimal(Animal animal, List<Interaction> interactions)
+        {
+            //TODO Generate the Parent based on the ScientificName
+            // a a a = SubSpecies, a a = Species, a = Genus
+            /* - based on the scientficname create or set the parents
+             * - use maybe some webservices to create missing one
+             *
+             */
+
+            //ToDO check all entities that comes from the ui that has no id. they need to get from or create
+            /* all timeperiods need the have the id from the created plant
+             * - need to create the plant frist??
+             * - maybe task fro the udatemanager
+             * */
+            SubjectManager subjectManager = new SubjectManager();
+            InteractionManager interactionManager = new InteractionManager();
+
+            //ToDo Store Image in folder : project/images/
+            //add a media to plant
+
+            if (animal.Id == 0)
+                animal = subjectManager.CreateAnimal(animal);
+            else
+            {
+                subjectManager.Update(animal);
+                //Delete interactions
+                IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(animal);
+                for (int i = 0; i < interactionListFromDB.Count(); i++)
+                {
+                    Interaction tmp = interactionListFromDB.ElementAt(i);
+                    if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
+                        interactionManager.Delete(tmp);
+                }
+
+            }
+
+            #region save or update interactions
+
+            saveOrUpdateInteractions(interactions);
+
+            #endregion
+            //save or update interactions
+
+            return Json(true);
+        }
+
+        //ToDo Function --> InteractionManager
+        private void saveOrUpdateInteractions(List<Interaction> interactions)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+            InteractionManager interactionManager = new InteractionManager();
+
             if (interactions != null && interactions.Any())
             {
 
@@ -328,8 +451,6 @@ namespace MCT.Web.Controllers
                 }
 
             }
-
-            return Json(true);
         }
 
 

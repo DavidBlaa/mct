@@ -378,7 +378,7 @@ namespace MCT.IO
                 //set rank
                 plant.Rank = TaxonRank.SubSpecies;
 
-                //    2 Species 2
+                //     2 Species 2
                 //     3 Class 6
                 //     4 Order	 5
                 //     5 Family 4	
