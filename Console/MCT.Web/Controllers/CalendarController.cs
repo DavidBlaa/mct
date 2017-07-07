@@ -1,6 +1,7 @@
 ﻿using MCT.Cal;
 using MCT.DB.Entities;
 using MCT.DB.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -82,6 +83,8 @@ namespace MCT.Web.Controllers
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
+        //private object createPlants()
+
         private object getEventFromTimeperiodForGantt(TimePeriod tp, TimePeriodType type)
         {
             string color = "";
@@ -95,16 +98,34 @@ namespace MCT.Web.Controllers
                 case TimePeriodType.Bloom: { color = "yellow"; break; }
                 case TimePeriodType.SeedMaturity: { color = "red"; break; }
             }
+            var x = System.DateTime.Today;
+            var y = System.DateTime.Now;
+            var fromDT = x.Millisecond; //TimeConverter.GetStartDateTime((int)tp.StartMonth).Ticks;
+            var toDT = y.Millisecond;//TimeConverter.GetEndDateTime((int)tp.EndMonth).Ticks;
 
-            var fromDT = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToShortDateString();
-            var ToDT = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToShortDateString();
+            //name: "Testing",
+            //    desc: " ",
+            //    values: [{
+            //    from: today_friendly,
+            //        to: next_friendly,
+            //        label: "Test",
+            //        customClass: "ganttRed"
+            //    }]
+
+            var tpJSON = new
+            {
+                label = tp.AssignedTo.Name,
+                from = "/Date(" + fromDT + ")/",
+                to = "/Date(" + toDT + ")/",
+                customClass = "ganttRed"
+            };
+
 
             var json = new
             {
-                label = tp.AssignedTo.Name,
-                from = "/Date(," + fromDT + "/",
-                to = "/Date(," + ToDT + "/"
-
+                name = tp.AssignedTo.Name,
+                desc = "",
+                values = new []{tpJSON}  
             };
 
             Debug.WriteLine(json);

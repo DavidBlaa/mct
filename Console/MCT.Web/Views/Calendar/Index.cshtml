@@ -6,39 +6,62 @@
     var calendar = $('#calendar');
 
     $(document).ready(function() {
-        var url = '@Url.Action("GetEvents", "Calendar")';
+       var url = '@Url.Action("GetEventsForGantt", "Calendar")';
 
         $.post(url,
-            function(data) {
+            function (data) {
 
-                // page is now ready, initialize the calendar...
-                calendar.fullCalendar({
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month'
+                console.log(data);
+
+                $("#gantt").gantt({
+                    source: data,
+                    scale: "weeks",
+                    minScale: "weeks",
+                    maxScale: "months",
+                    months:	["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    onItemClick: function (data) {
+                        alert("Item clicked - show some details");
                     },
-                    eventSources: [
-                        {
-                            events: data
-                        }
-                    ]
+                    onAddClick: function (dt, rowId) {
+                        alert("Empty space clicked - add an item!");
+                    },
+                    onRender: function () {
+                        console.log("chart rendered");
+                    }
                 });
 
             });
 
 
-        var url = '@Url.Action("GetEventsForGantt", "Calendar")';
-
-        $.post(url,
-            function (data) {
-
-                
-
-            });
-
-
     });
+
+    //$(function () {
+
+    //    "use strict";
+
+    //    var today = moment();
+    //    var andTwoHours = moment().add(2, "hours");
+
+    //    var today_friendly = "/Date(" + today.valueOf() + ")/";
+    //    var next_friendly = "/Date(" + andTwoHours.valueOf() + ")/";
+
+    //    $(".gantt").gantt({
+    //        source: [{
+    //            name: "Testing",
+    //            desc: " ",
+    //            values: [{
+    //                from: today_friendly,
+    //                to: next_friendly,
+    //                label: "Test",
+    //                customClass: "ganttRed"
+    //            }]
+    //        }],
+    //        scale: "hours",
+    //        minScale: "hours",
+    //        navigate: "scroll"
+    //    });
+
+    //});
 
     function GetCalendar() {
 

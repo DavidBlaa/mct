@@ -488,6 +488,7 @@
     <Content Include="Scripts\Gantt\dataHours.js" />
     <Content Include="Scripts\Gantt\jquery.fn.gantt.js" />
     <Content Include="Scripts\Gantt\jquery.fn.gantt.min.js" />
+    <Content Include="Scripts\Gantt\jquery.min.js" />
     <Content Include="Scripts\gcal.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
