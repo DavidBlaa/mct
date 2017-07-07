@@ -1,10 +1,10 @@
 ﻿using MCT.Cal;
 using MCT.DB.Entities;
 using MCT.DB.Services;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace MCT.Web.Controllers
@@ -74,16 +74,52 @@ namespace MCT.Web.Controllers
 
             var events = new List<object>();
 
-            foreach (var VARIABLE in subjectmanager.GetAll<TimePeriod>())
+            foreach (var VARIABLE in subjectmanager.GetAll<Plant>().ToList().OrderBy(p => p.Name))
             {
                 if (VARIABLE != null)
-                    events.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+                    events.Add(createPlants(VARIABLE));
             }
 
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        //private object createPlants()
+        private object createPlants(Plant plant)
+        {
+            var tps = new List<object>();
+
+            foreach (var VARIABLE in plant.Bloom)
+            {
+                if (VARIABLE != null)
+                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+            }
+
+            foreach (var VARIABLE in plant.Sowing)
+            {
+                if (VARIABLE != null)
+                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+            }
+
+            foreach (var VARIABLE in plant.Harvest)
+            {
+                if (VARIABLE != null)
+                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+            }
+
+            foreach (var VARIABLE in plant.SeedMaturity)
+            {
+                if (VARIABLE != null)
+                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+            }
+
+            var json = new
+            {
+                name = plant.Name,
+                desc = plant.ScientificName,
+                values = tps
+            };
+
+            return json;
+        }
 
         private object getEventFromTimeperiodForGantt(TimePeriod tp, TimePeriodType type)
         {
@@ -93,15 +129,14 @@ namespace MCT.Web.Controllers
 
             switch (type)
             {
-                case TimePeriodType.Sowing: { color = "green"; break; }
-                case TimePeriodType.Harvest: { color = "blue"; break; }
-                case TimePeriodType.Bloom: { color = "yellow"; break; }
-                case TimePeriodType.SeedMaturity: { color = "red"; break; }
+                case TimePeriodType.Sowing: { color = "Green"; break; }
+                case TimePeriodType.Harvest: { color = "Blue"; break; }
+                case TimePeriodType.Bloom: { color = "Yellow"; break; }
+                case TimePeriodType.SeedMaturity: { color = "Red"; break; }
             }
-            var x = System.DateTime.Today;
-            var y = System.DateTime.Now;
-            var fromDT = x.Millisecond; //TimeConverter.GetStartDateTime((int)tp.StartMonth).Ticks;
-            var toDT = y.Millisecond;//TimeConverter.GetEndDateTime((int)tp.EndMonth).Ticks;
+
+            var fromDT = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
+            var toDT = TimeConverter.GetStartDateTime((int)tp.EndMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
 
             //name: "Testing",
             //    desc: " ",
@@ -112,26 +147,19 @@ namespace MCT.Web.Controllers
             //        customClass: "ganttRed"
             //    }]
 
+
             var tpJSON = new
             {
-                label = tp.AssignedTo.Name,
+                label = type.ToString(),
                 from = "/Date(" + fromDT + ")/",
                 to = "/Date(" + toDT + ")/",
-                customClass = "ganttRed"
+                customClass = "gantt" + color
             };
 
+            Debug.WriteLine(tpJSON);
 
-            var json = new
-            {
-                name = tp.AssignedTo.Name,
-                desc = "",
-                values = new []{tpJSON}  
-            };
-
-            Debug.WriteLine(json);
-
-            if (json != null)
-                return json;
+            if (tpJSON != null)
+                return tpJSON;
 
             return null;
         }
