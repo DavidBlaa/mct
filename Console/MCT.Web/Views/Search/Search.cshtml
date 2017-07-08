@@ -69,15 +69,19 @@
 
     var timer = null;
     $("#searchInput").keyup(function(e) {
+        delay(function () {
+            search();
+        }, 500);
+    }
+    );
 
-        if (timer)
-        {
+    var delay = (function () {
+        var timer = 0;
+        return function (callback, ms) {
             clearTimeout(timer);
-            timer = null;
-        }
-
-        timer = setTimeout(search(), 2000);
-    });
+            timer = setTimeout(callback, ms);
+        };
+    })();
 
     $("#searchInput").change(function (e) {
         //search();

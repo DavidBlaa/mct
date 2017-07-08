@@ -74,47 +74,80 @@ namespace MCT.Web.Controllers
 
             var events = new List<object>();
 
-            foreach (var VARIABLE in subjectmanager.GetAll<Plant>().ToList().OrderBy(p => p.Name))
+            foreach (var plant in subjectmanager.GetAll<Plant>().ToList().OrderBy(p => p.Name))
             {
-                if (VARIABLE != null)
-                    events.Add(createPlants(VARIABLE));
+                if (plant != null)
+                {
+                    if(plant.Bloom.Any())   
+                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.Bloom));
+                    if (plant.Sowing.Any())
+                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.Sowing));
+                    if (plant.Harvest.Any())
+                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.Harvest));
+                    if (plant.SeedMaturity.Any())
+                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.SeedMaturity));
+                }
             }
 
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        private object createPlants(Plant plant)
+        private object createEventForEachPlantsTimeperiodType(Plant plant,TimePeriodType type)
         {
             var tps = new List<object>();
 
-            foreach (var VARIABLE in plant.Bloom)
+            switch (type)
             {
-                if (VARIABLE != null)
-                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+                case TimePeriodType.Bloom:
+                    {
+                        foreach (var VARIABLE in plant.Bloom)
+                        {
+                            if (VARIABLE != null)
+                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+                        }
+
+                        break;
+                    }
+                   
+                case TimePeriodType.Harvest:
+                    {
+                        foreach (var VARIABLE in plant.Harvest)
+                        {
+                            if (VARIABLE != null)
+                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+                        }
+
+                        break;
+                    }
+                case TimePeriodType.Sowing:
+                    {
+                        foreach (var VARIABLE in plant.Sowing)
+                        {
+                            if (VARIABLE != null)
+                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+                        }
+
+                        break;
+                    }
+                case TimePeriodType.SeedMaturity:
+                    {
+                        foreach (var VARIABLE in plant.SeedMaturity)
+                        {
+                            if (VARIABLE != null)
+                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
+                        }
+
+                        break;
+                    }
+                default:
+                    break;
             }
 
-            foreach (var VARIABLE in plant.Sowing)
-            {
-                if (VARIABLE != null)
-                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-            }
-
-            foreach (var VARIABLE in plant.Harvest)
-            {
-                if (VARIABLE != null)
-                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-            }
-
-            foreach (var VARIABLE in plant.SeedMaturity)
-            {
-                if (VARIABLE != null)
-                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-            }
-
+            
             var json = new
             {
                 name = plant.Name,
-                desc = plant.ScientificName,
+                desc = type.ToString(),
                 values = tps
             };
 
@@ -131,12 +164,12 @@ namespace MCT.Web.Controllers
             {
                 case TimePeriodType.Sowing: { color = "Green"; break; }
                 case TimePeriodType.Harvest: { color = "Blue"; break; }
-                case TimePeriodType.Bloom: { color = "Yellow"; break; }
+                case TimePeriodType.Bloom: { color = "Orange"; break; }
                 case TimePeriodType.SeedMaturity: { color = "Red"; break; }
             }
-
+            //ToDo datetime is not focusing on the on voll, anfang, end
             var fromDT = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
-            var toDT = TimeConverter.GetStartDateTime((int)tp.EndMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
+            var toDT = TimeConverter.GetEndDateTime((int)tp.EndMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
 
             //name: "Testing",
             //    desc: " ",

@@ -4,11 +4,8 @@ using System.Linq;
 
 namespace MCT.Web.Models
 {
-    public class AnimalModel : SubjectModel
+    public class AnimalModel : SpeciesModel
     {
-        public string ScientificName { get; set; }
-        public string TaxonRank { get; set; }
-
         public static AnimalModel Convert(Animal animal)
         {
             AnimalModel model = new AnimalModel();
@@ -20,7 +17,7 @@ namespace MCT.Web.Models
                 model.Name = animal.Name;
 
             if (!String.IsNullOrEmpty(animal.Rank.ToString()))
-                model.TaxonRank = animal.Rank.ToString();
+                model.TaxonRank = animal.Rank;
 
 
             if (!String.IsNullOrEmpty(animal.Description))
@@ -41,7 +38,7 @@ namespace MCT.Web.Models
             model.ScientificName = animal.ScientificName;
 
             #region loadParentModels
-
+            if(animal.Parent!=null)
             model.Parent = SimpleNodeViewModel.Convert(animal.Parent);
 
             #endregion

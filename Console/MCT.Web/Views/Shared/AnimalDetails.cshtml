@@ -4,57 +4,66 @@
     ViewBag.Title = "Animal";
 }
 
-
-<div id="DetailsHeader" class="jumbotron">
-    <h2>@Html.DisplayFor(model => model.Name)</h2>
-    <h3>@Html.DisplayFor(model => model.ScientificName)</h3>
-    <h4>@Html.DisplayFor(model => model.TaxonRank)</h4>
-</div>
-<div id="DetailsContent" class="row">
-    <div id="Image" class="col-md-4">
-        <img src="@Model.ImagePath" class=" speciesImage img-responsive " />
+<div id="aminal">
+    <div id="DetailsHeader" class="jumbotron">
+        @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil" })
+        @Html.HiddenFor(m => m.Id)
+        <a class="fa fa-trash icon" onclick="deleteSubject(@Model.Id)"></a>
+        <h2>
+            @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </h2>
+        <h3>@Html.DisplayFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })</h3>
+        @Html.DisplayFor(model => model.TaxonRank, new { @class = "form-control" })
     </div>
-    <div class="col-md-8">
-        <div id="Description" class="col-md-12">
-            <h4>Beschreibung</h4>
-            @Html.DisplayFor(model => model.Description)
+    <div id="DetailsContent" class="row">
+        <div id="Image" class="col-md-4">
+            <img src="@Model.ImagePath" class=" speciesImage img-responsive " />
         </div>
+        <div class="col-md-8">
+            <div id="Description" class="col-md-12">
+                <h4>Beschreibung</h4>
+                @Html.DisplayFor(model => model.Description)
+            </div>
 
-        <div id="TaxonRanks" class="col-md-12">
-            <h4>Taxon</h4>
-            @Html.Partial("_taxonRankPartialView", Model.Parent)
+            <div id="TaxonRanks" class="col-md-12">
+                <h4>Taxon</h4>
+                @if (Model.Parent != null)
+                {
+                    @Html.Partial("_taxonRankPartialView", Model.Parent)
+                }
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-8">
-        <h4>Details</h4>
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Details</h4>
+        </div>
     </div>
-</div>
 
-<div>
-    <h4>Termine</h4>
+    <div>
+        <h4>Termine</h4>
 
-</div>
+    </div>
 
-@if(Model.Interactions !=null)
-{
-    @Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);
-}
-
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Search")
-</p>
-
-<style type="text/css">
-    .row {
-        margin-bottom: 20px;
+    @if (Model.Interactions != null)
+    {
+        @Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);
     }
 
-    .speciesImage {
-        width: 390px;
-        height: 390px;
-        text-align: center;
-    }
-</style>
+    <p>
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+        @Html.ActionLink("Back to List", "Search")
+    </p>
+
+    <style type="text/css">
+        .row {
+            margin-bottom: 20px;
+        }
+
+        .speciesImage {
+            width: 390px;
+            height: 390px;
+            text-align: center;
+        }
+    </style>
+</div>
