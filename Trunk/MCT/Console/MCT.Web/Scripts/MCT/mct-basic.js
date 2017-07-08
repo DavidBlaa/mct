@@ -133,12 +133,10 @@ function saveAnimal() {
         Description: $("#animal #Description").val()
     };
 
-    console.log(plant);
-
     var interactions = getInteractionsJSON(interactionsFromSide);
 
     var data = {
-        plant: plant,
+        animal: animal,
         interactions: interactions
     };
 

@@ -264,7 +264,7 @@ namespace MCT.Web.Controllers
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
 
-            return View("AnimalEdit", new PlantModel());
+            return View("AnimalEdit", new AnimalModel());
         }
 
         public ActionResult DeleteSubject(long id)
@@ -304,18 +304,52 @@ namespace MCT.Web.Controllers
             //ToDo Store Image in folder : project/images/
             //add a media to plant
 
+            //corecction the timperiod type
+            //ToDo remove ugly preperations
+            #region ugly preperations
+
+            if (plant.Sowing.Any())
+            {
+                foreach (var item in plant.Sowing)
+                {
+                    item.Type = TimePeriodType.Sowing;
+                }
+            }
+
+            if (plant.Harvest.Any())
+            {
+                foreach (var item in plant.Harvest)
+                {
+                    item.Type = TimePeriodType.Harvest;
+                }
+            }
+
+            if (plant.SeedMaturity.Any())
+            {
+                foreach (var item in plant.SeedMaturity)
+                {
+                    item.Type = TimePeriodType.SeedMaturity;
+                }
+            }
+
+            #endregion
+
             if (plant.Id == 0)
                 plant = subjectManager.CreatePlant(plant);
             else
             {
                 subjectManager.Update(plant);
-                //Delete interactions
-                IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(plant);
-                for (int i = 0; i < interactionListFromDB.Count(); i++)
+                if (interactions != null)
                 {
-                    Interaction tmp = interactionListFromDB.ElementAt(i);
-                    if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
-                        interactionManager.Delete(tmp);
+
+                    //Delete interactions
+                    IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(plant);
+                    for (int i = 0; i < interactionListFromDB.Count(); i++)
+                    {
+                        Interaction tmp = interactionListFromDB.ElementAt(i);
+                        if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
+                            interactionManager.Delete(tmp);
+                    }
                 }
 
             }
@@ -355,13 +389,16 @@ namespace MCT.Web.Controllers
             else
             {
                 subjectManager.Update(animal);
-                //Delete interactions
-                IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(animal);
-                for (int i = 0; i < interactionListFromDB.Count(); i++)
+                if (interactions != null)
                 {
-                    Interaction tmp = interactionListFromDB.ElementAt(i);
-                    if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
-                        interactionManager.Delete(tmp);
+                    //Delete interactions
+                    IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(animal);
+                    for (int i = 0; i < interactionListFromDB.Count(); i++)
+                    {
+                        Interaction tmp = interactionListFromDB.ElementAt(i);
+                        if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
+                            interactionManager.Delete(tmp);
+                    }
                 }
 
             }
