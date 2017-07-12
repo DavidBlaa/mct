@@ -7,7 +7,7 @@
 <div id="DetailsHeader" class="jumbotron">
 
     @Html.HiddenFor(m => m.Id) 
-    <a class="fa fa-trash icon" onclick="deleteSubject(@Model.Id)"></a>
+    <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
     <h2>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
     </h2>
     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -51,7 +51,7 @@
 
 
 <p>
-    <button class="fa fa-save" onclick="saveAnimal()"></button>
+    <button class="fa fa-save mct-button-icon" onclick="saveAnimal()"></button>
 
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Back to List", "Search")

@@ -6,9 +6,9 @@
 
 <div id="aminal">
     <div id="DetailsHeader" class="jumbotron">
-        @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil" })
+        @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon" })
         @Html.HiddenFor(m => m.Id)
-        <a class="fa fa-trash icon" onclick="deleteSubject(@Model.Id)"></a>
+        <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
         <h2>
             @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
         </h2>
@@ -51,7 +51,6 @@
     }
 
     <p>
-        @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
         @Html.ActionLink("Back to List", "Search")
     </p>
 

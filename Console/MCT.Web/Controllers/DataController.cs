@@ -105,6 +105,7 @@ namespace MCT.Web.Controllers
                                 manager.Create(plant.Cultivation);
                             }
 
+                            //ToDO Remove dublicates - check if a plant is existing
                             manager.Create(plant);
                         }
 
