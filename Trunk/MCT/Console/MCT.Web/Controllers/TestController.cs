@@ -1,7 +1,8 @@
 ﻿using MCT.DB.Services;
 using MCT.IO;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Web.Mvc;
-
 
 
 namespace MCT.Web.Controllers
@@ -93,5 +94,47 @@ namespace MCT.Web.Controllers
             return View();
         }
 
+
+        public JsonResult GetJson()
+        {
+            treeNodeElement e = new treeNodeElement();
+            e.name = "1";
+
+            treeElement x = new treeElement();
+            x.name = "2";
+
+
+            e.children.Add(x);
+
+
+
+            string j = JsonConvert.SerializeObject(e);
+
+            return Json(j, JsonRequestBehavior.AllowGet);
+        }
+
+        public class treeNodeElement
+        {
+            public string name { get; set; }
+            public List<treeElement> children { get; set; }
+
+            public treeNodeElement()
+            {
+                children = new List<treeElement>();
+            }
+        }
+
+        public class treeElement
+        {
+            public string name { get; set; }
+            public int size { get; set; }
+
+            public treeElement()
+            {
+                name = "";
+                size = 1234;
+            }
+
+        }
     }
 }
