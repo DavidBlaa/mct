@@ -108,6 +108,20 @@ namespace MCT.Web.Controllers
                             //ToDO Remove dublicates - check if a plant is existing
                             manager.Create(plant);
                         }
+                        //else // pflanze existiert
+                        //{
+                        //    Plant plantFromDb =
+                        //        manager.GetAll<Plant>()
+                        //            .FirstOrDefault(
+                        //                p => p.ScientificName.ToLower().Equals(plant.ScientificName.ToLower()) && p.Rank == TaxonRank.Species);
+
+                        //    if (plantFromDb != null && plantFromDb.Name.Equals(plantFromDb.ScientificName))
+                        //    {
+                        //        plantFromDb.Name = plant.Name;
+                        //    }
+
+                        //    manager.Update(plantFromDb);
+                        //}
 
                     }
 
