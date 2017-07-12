@@ -38,9 +38,11 @@
         <h3 class="name col-lg-8">
         @Html.ActionLink(@name, "Details", new { id = Model.Id, type = @Model.Type.ToString() })
         </h3>
-        @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil icon" })
-        <div class="fa fa-trash icon col-md-1" onclick="deleteSubjectInSearch(@Model.Id)"></div>
-        <div class="@iconClass col-md-1"></div>
+        <div class="mct-button-icon-container">
+            @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon" })
+            <a class="fa fa-trash icon mct-button-icon" onclick="deleteSubjectInSearch(@Model.Id)"></a>
+            <a class="@iconClass mct-button-icon"></a>
+        </div>
     </div>
 
     <h5 class="type">@Model.Type</h5>

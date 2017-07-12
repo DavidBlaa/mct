@@ -6,17 +6,15 @@
 }
 <div class="row">
     <div id="TaxonRank" class="col-md-2">
-        <b>@Model.TaxonRank : </b>
+        <b>@Model.TaxonRank</b>
     </div>
 
     <div id="TaxonName" class="col-md-4">
-        @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control"} })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        @Html.DisplayFor(model => model.Name)
     </div>
     
     <div id="TaxonScientificName" class="col-md-5">
-        @Html.DisplayFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
+        @Html.DisplayFor(model => model.ScientificName)
     </div>
     
 </div>
