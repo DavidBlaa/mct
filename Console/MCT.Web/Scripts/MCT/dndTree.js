@@ -27,7 +27,12 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 
 
 // Get JSON data
-treeJSON = d3.json("flare.json", function(error, treeData) {
+treeJSON = d3.json("/Test/GetJson", function(error, treeData) {
+
+    console.log(treeData);
+    treeData = jQuery.parseJSON(treeData);
+    console.log(treeData);
+
 
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -44,8 +49,8 @@ treeJSON = d3.json("flare.json", function(error, treeData) {
     var root;
 
     // size of the diagram
-    var viewerWidth = $(document).width();
-    var viewerHeight = $(document).height();
+    var viewerWidth = 600;//$(document).width();
+    var viewerHeight = 400;//$(document).height();
 
     var tree = d3.layout.tree()
         .size([viewerHeight, viewerWidth]);
@@ -402,12 +407,14 @@ treeJSON = d3.json("flare.json", function(error, treeData) {
             });
 
         // Enter any new nodes at the parent's previous position.
-        var nodeEnter = node.enter().append("g")
+        var nodeEnter = node.enter()
+            .append("g")
             .call(dragListener)
             .attr("class", "node")
-            .attr("transform", function(d) {
-                return "translate(" + source.y0 + "," + source.x0 + ")";
-            })
+            .attr("transform",
+                function(d) {
+                    return "translate(" + source.y0 + "," + source.x0 + ")";
+                })
             .on('click', click);
 
         nodeEnter.append("circle")
