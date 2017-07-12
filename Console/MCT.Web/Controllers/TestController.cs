@@ -1,17 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Web.Mvc;
-using MCT.DB.Entities;
-using MCT.DB.Services;
-using MCT.Helpers;
+﻿using MCT.DB.Services;
 using MCT.IO;
-using Lucene.Net.QueryParsers;
-using Lucene.Net.Search;
-using NHibernate.Search;
-using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
-using MCT.Web.Helpers;
-using NHibernate;
+using System.Web.Mvc;
 
 
 
@@ -96,11 +85,7 @@ namespace MCT.Web.Controllers
             //NHibernateHelper.Search();
 
             WikipediaReader wReader = new WikipediaReader();
-            
-            
-            
-            
-            
+
             wReader.GetScientificName("Blumenkohl");
 
 
