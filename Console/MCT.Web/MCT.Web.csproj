@@ -143,6 +143,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TreeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -599,6 +600,7 @@
     <Content Include="Views\Shared\DisplayTemplates\TimePeriod.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TimePeriods.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InteractionModel.cshtml" />
+    <Content Include="Views\Tree\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
