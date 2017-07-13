@@ -731,7 +731,7 @@ namespace MCT.IO
             return temp;
         }
 
-        private Taxon generateTaxonParents(string species, string genus, string family, string order, string className)
+        private Node generateTaxonParents(string species, string genus, string family, string order, string className)
         {
             //todo duplikate checken - in der Datenbank sind die Scientific names mehrfach drin
 
@@ -743,7 +743,7 @@ namespace MCT.IO
 
             if (
                 subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.ToLower().Equals(className)))
+                    .Any(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.ToLower().Equals(className.ToLower())))
             {
                 classTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Class) && p.ScientificName.ToLower().Equals(className.ToLower()));
             }

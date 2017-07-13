@@ -27,7 +27,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 
 
 // Get JSON data
-treeJSON = d3.json("/Test/GetJson", function(error, treeData) {
+treeJSON = d3.json("/Tree/GetJson", function(error, treeData) {
 
     console.log(treeData);
     treeData = jQuery.parseJSON(treeData);
@@ -49,8 +49,8 @@ treeJSON = d3.json("/Test/GetJson", function(error, treeData) {
     var root;
 
     // size of the diagram
-    var viewerWidth = 600;//$(document).width();
-    var viewerHeight = 400;//$(document).height();
+    var viewerWidth = $(document).width();
+    var viewerHeight = $(document).height();
 
     var tree = d3.layout.tree()
         .size([viewerHeight, viewerWidth]);
