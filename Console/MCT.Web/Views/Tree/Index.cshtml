@@ -1,0 +1,50 @@
+﻿
+<style type="text/css">
+    .node {
+        cursor: pointer;
+    }
+
+    .overlay {
+        background-color: #EEE;
+    }
+
+    .nodeCicle {
+        fill: #red;
+    }
+
+    .node circle {
+        fill: #red;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+
+    .node text {
+        font-size: 10px;
+        font-family: sans-serif;
+    }
+
+    .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
+    }
+
+    .templink {
+        fill: none;
+        stroke: red;
+        stroke-width: 3px;
+    }
+
+    .ghostCircle.show {
+        display: block;
+    }
+
+    .ghostCircle, .activeDrag .ghostCircle {
+        display: none;
+    }
+</style>
+
+<script src="~/Scripts/d3/d3.js"></script>
+<script src="~/Scripts/MCT/dndTree.js"></script>
+
+<div id="tree-container"></div>

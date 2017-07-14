@@ -1,0 +1,16 @@
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\MCT.DB.NH.dll
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\MCT.DB.NH.pdb
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\Iesi.Collections.dll
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\MCT.DB.Entities.dll
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\NHibernate.dll
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\NHibernate.Search.dll
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\Lucene.Net.dll
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\MCT.DB.Entities.pdb
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\Iesi.Collections.xml
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\NHibernate.xml
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\NHibernate.Search.pdb
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\Lucene.Net.pdb
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\bin\Debug\Lucene.Net.xml
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\obj\Debug\MCT.DB.NH.csprojResolveAssemblyReference.cache
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\obj\Debug\MCT.DB.NH.dll
+C:\Users\dblaa\Documents\Visual Studio 2015\Projects\MCT_GIT\Component\DB\MCT.DB.NH\obj\Debug\MCT.DB.NH.pdb
