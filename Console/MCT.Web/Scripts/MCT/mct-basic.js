@@ -37,6 +37,7 @@ function deleteSubjectInSearch(e) {
         success: function (response) {
             if (response == true) {
                 alert(response);
+                alert(e);
                 $(e).remove();
             }
             else {

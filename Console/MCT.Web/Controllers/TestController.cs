@@ -85,8 +85,9 @@ namespace MCT.Web.Controllers
 
             WikipediaReader wReader = new WikipediaReader();
 
-            wReader.GetScientificName("Blumenkohl");
+            var x = wReader.GetScientificName("Blumenkohl");
 
+            x = wReader.GetName("Brassica");
 
 
             return View();

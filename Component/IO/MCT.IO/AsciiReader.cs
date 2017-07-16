@@ -383,6 +383,7 @@ namespace MCT.IO
                 //     4 Order	 5
                 //     5 Family 4	
                 //     6 Genus	3
+                //ToDO check if the plant is realy a sub species
                 plant.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
 
 
@@ -1006,6 +1007,13 @@ namespace MCT.IO
                         }
                     }
 
+                    // find parents
+                    // get genus
+                    string genusScientifcName = plant.ScientificName.Split(' ').FirstOrDefault();
+
+                    //Get or create genus
+                    if (!String.IsNullOrEmpty(genusScientifcName)) plant.Parent = GetOrCreate(genusScientifcName, TaxonRank.Genus);
+
                     //set rank
                     plant.Rank = TaxonRank.Species;
 
@@ -1403,6 +1411,22 @@ namespace MCT.IO
             }
 
             return tmp;
+        }
+
+        private Taxon GetOrCreate(string scientificName, TaxonRank rank)
+        {
+            var p = subjectManager.GetAll<Node>().Where(n => n.ScientificName.Equals(scientificName)).FirstOrDefault();
+
+            if (p != null) return p as Taxon;
+
+            Taxon t = new Taxon();
+            t.Name = wikipediaReader.GetName(scientificName);
+            t.ScientificName = scientificName;
+            t.Rank = rank;
+
+            t = subjectManager.Create(t);
+
+            return t;
         }
 
         #endregion

@@ -34,7 +34,7 @@ namespace MCT.Web.Controllers
             //Get all subjects
             var subjects = subjectManager.GetAll<Subject>();
 
-            SearchModel Model = new SearchModel(subjects.ToList());
+            SearchModel Model = new SearchModel(subjects.ToList().OrderBy(s => s.Name).ToList());
 
             // load all species
             var species = subjectManager.GetAll<Species>();
@@ -286,82 +286,92 @@ namespace MCT.Web.Controllers
 
         public ActionResult SavePlant(Plant plant, List<Interaction> interactions)
         {
-            //TODO Generate the Parent based on the ScientificName
-            // a a a = SubSpecies, a a = Species, a = Genus
-            /* - based on the scientficname create or set the parents
+            try
+            {
+                //TODO Generate the Parent based on the ScientificName
+                // a a a = SubSpecies, a a = Species, a = Genus
+                /* - based on the scientficname create or set the parents
              * - use maybe some webservices to create missing one
              *
              */
 
-            //ToDO check all entities that comes from the ui that has no id. they need to get from or create
-            /* all timeperiods need the have the id from the created plant
+                //ToDO check all entities that comes from the ui that has no id. they need to get from or create
+                /* all timeperiods need the have the id from the created plant
              * - need to create the plant frist??
              * - maybe task fro the udatemanager
              * */
-            SubjectManager subjectManager = new SubjectManager();
-            InteractionManager interactionManager = new InteractionManager();
+                SubjectManager subjectManager = new SubjectManager();
+                InteractionManager interactionManager = new InteractionManager();
 
-            //ToDo Store Image in folder : project/images/
-            //add a media to plant
+                //ToDo Store Image in folder : project/images/
+                //add a media to plant
 
-            //corecction the timperiod type
-            //ToDo remove ugly preperations
-            #region ugly preperations
+                //corecction the timperiod type
+                //ToDo remove ugly preperations
 
-            if (plant.Sowing.Any())
-            {
-                foreach (var item in plant.Sowing)
+                #region ugly preperations
+
+                if (plant.Sowing.Any())
                 {
-                    item.Type = TimePeriodType.Sowing;
-                }
-            }
-
-            if (plant.Harvest.Any())
-            {
-                foreach (var item in plant.Harvest)
-                {
-                    item.Type = TimePeriodType.Harvest;
-                }
-            }
-
-            if (plant.SeedMaturity.Any())
-            {
-                foreach (var item in plant.SeedMaturity)
-                {
-                    item.Type = TimePeriodType.SeedMaturity;
-                }
-            }
-
-            #endregion
-
-            if (plant.Id == 0)
-                plant = subjectManager.CreatePlant(plant);
-            else
-            {
-                subjectManager.Update(plant);
-                if (interactions != null)
-                {
-
-                    //Delete interactions
-                    IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(plant);
-                    for (int i = 0; i < interactionListFromDB.Count(); i++)
+                    foreach (var item in plant.Sowing)
                     {
-                        Interaction tmp = interactionListFromDB.ElementAt(i);
-                        if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
-                            interactionManager.Delete(tmp);
+                        item.Type = TimePeriodType.Sowing;
                     }
                 }
 
+                if (plant.Harvest.Any())
+                {
+                    foreach (var item in plant.Harvest)
+                    {
+                        item.Type = TimePeriodType.Harvest;
+                    }
+                }
+
+                if (plant.SeedMaturity.Any())
+                {
+                    foreach (var item in plant.SeedMaturity)
+                    {
+                        item.Type = TimePeriodType.SeedMaturity;
+                    }
+                }
+
+                #endregion
+
+                if (plant.Id == 0)
+                    plant = subjectManager.CreatePlant(plant);
+                else
+                {
+                    subjectManager.Update(plant);
+                    if (interactions != null)
+                    {
+
+                        //Delete interactions
+                        IEnumerable<Interaction> interactionListFromDB =
+                            subjectManager.GetAllDependingInteractions(plant);
+                        for (int i = 0; i < interactionListFromDB.Count(); i++)
+                        {
+                            Interaction tmp = interactionListFromDB.ElementAt(i);
+                            if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
+                                interactionManager.Delete(tmp);
+                        }
+                    }
+
+                }
+
+                #region save or update interactions
+
+                saveOrUpdateInteractions(interactions);
+
+                #endregion
+
+                //save or update interactions
+
+                return Json(plant.Id, JsonRequestBehavior.AllowGet);
             }
-
-            #region save or update interactions
-
-            saveOrUpdateInteractions(interactions);
-
-            #endregion
-            //save or update interactions
-
-            return Json(plant.Id, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult SaveAnimal(Animal animal, List<Interaction> interactions)
@@ -410,10 +420,11 @@ namespace MCT.Web.Controllers
             #endregion
             //save or update interactions
 
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(animal.Id, JsonRequestBehavior.AllowGet);
         }
 
         //ToDo Function --> InteractionManager
+        //ToD0 Error by saving interaction that exist in the system
         private void saveOrUpdateInteractions(List<Interaction> interactions)
         {
             SubjectManager subjectManager = new SubjectManager();
@@ -484,6 +495,7 @@ namespace MCT.Web.Controllers
                     {
                         interaction.ImpactSubject = null;
                     }
+
                     interactionManager.Update(interaction);
                 }
 

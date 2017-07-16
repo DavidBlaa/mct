@@ -96,5 +96,49 @@ namespace MCT.IO
 
             return scientificName;
         }
+
+        public string GetName(string scientificNname)
+        {
+            string name = "";
+
+            if (LoadSubjectPage(scientificNname))
+            {
+                //<h1 id="firstHeading" class="firstHeading" lang="de">
+                int namePosition = this.Html.IndexOf("<h1");
+
+                if (namePosition != -1)
+                {
+                    string body = this.Html.Substring(namePosition);
+
+                    string start = body.Split('>').ElementAt(1);
+                    string test = start.Split('<').ElementAt(0);
+
+                    name = test;
+                }
+            }
+
+            //// Name_(Pflanzengattung)
+            //if (string.IsNullOrEmpty(scientificName) || scientificName.Equals("Pflanzengattung"))
+            //{
+            //    if (LoadSubjectPage(name + "_(Pflanzengattung)"))
+            //    {
+            //        int namePosition = this.Html.IndexOf("<p><b>" + name + "</b>");
+
+            //        if (namePosition != -1)
+            //        {
+            //            string body = this.Html.Substring(namePosition);
+
+            //            string start = body.Split('(').ElementAt(1);
+            //            string test = start.Split(')').ElementAt(0);
+
+            //            scientificName = test.Replace("<i>", "").Replace("</i>", "");
+            //            scientificName = scientificName.Split('<').ElementAt(0);
+            //        }
+            //    }
+
+            //}
+
+            return name;
+        }
     }
 }
