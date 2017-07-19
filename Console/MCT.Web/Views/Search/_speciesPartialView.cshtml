@@ -35,13 +35,13 @@
 
 <div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3" >
     <div class="@headerClassName" >
-        <h3 class="name col-lg-8">
+        <h3 class="name col-lg-8 mct-species-title">
         @Html.ActionLink(@name, "Details", new { id = Model.Id, type = @Model.Type.ToString() })
         </h3>
         <div class="mct-button-icon-container">
             @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon" })
             <a class="fa fa-trash icon mct-button-icon" onclick="deleteSubjectInSearch(@Model.Id)"></a>
-            <a class="@iconClass mct-button-icon"></a>
+            <a class="@iconClass mct-icon"></a>
         </div>
     </div>
 

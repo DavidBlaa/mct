@@ -42,6 +42,11 @@ h1, h2, h3, h4, h5 {
     margin:0;
 }
 
+h3.mct-species-title {
+    position: absolute;
+    left: 0;
+}
+
 /*SEARCH*/
 
 #SearchHeaderTable TD
@@ -108,9 +113,11 @@ h1, h2, h3, h4, h5 {
     margin: 3px;
 }
 
+.mct-icon,
 .icon {
     font-size: 20px;
-    padding:5px
+    padding: 5px;
+    text-decoration: none;
 }
 
 .mct-button-icon {
@@ -128,4 +135,7 @@ h1, h2, h3, h4, h5 {
 .mct-button-icon-container {
     padding:0;
     margin:0;
+    position: absolute;
+    right: 10px;
+    top: 30px;
 }
