@@ -1,12 +1,14 @@
 ﻿using MCT.DB.Entities;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace MCT.Web.Models
 {
-    public class SpeciesModel:SubjectModel
+    public class SpeciesModel : SubjectModel
     {
         public TaxonRank TaxonRank { get; set; }
+        [Required]
         public String ScientificName { get; set; }
         //public SpeciesType Type { get; set; }
 
