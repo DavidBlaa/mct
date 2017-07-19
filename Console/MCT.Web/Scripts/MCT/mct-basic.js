@@ -36,9 +36,9 @@ function deleteSubjectInSearch(e) {
         dataType: "json",
         success: function (response) {
             if (response == true) {
-                alert(response);
-                alert(e);
-                $(e).remove();
+
+                $("#" + e).remove();
+                window.location.href = "/Search/Search";
             }
             else {
                 alert(response);
@@ -150,7 +150,7 @@ function saveAnimal() {
         data: data,
         dataType: "html",
         success: function (response) {
-            window.location.href = "/Search/Details?id=" + $("#animal #Id").val() + "&type=Animal";
+            window.location.href = "/Search/Details?id=" + response + "&type=Animal";
         }
     });
 }
