@@ -5,16 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace MCT.Web.Models
 {
     public class SubjectModel
     {
         public long Id { get; set; }
+
+        [Required]
+        [Remote("CheckNameExist", "Search", ErrorMessage = "Name existiert bereits.")]
         public String Name { get; set; }
         public String Description { get; set; }
         public String ImagePath { get; set; }
-
+        [Required]
         public SubjectType Type { get; set; }
 
         public SimpleNodeViewModel Parent { get; set; }
@@ -126,6 +130,7 @@ namespace MCT.Web.Models
     public class SimpleLinkModel
     {
         public long Id { get; set; }
+        [Required]
         public String Name { get; set; }
         public SubjectType Type { get; set; }
 
@@ -148,6 +153,7 @@ namespace MCT.Web.Models
     {
 
         public long Id { get; set; }
+        [Required]
         public String Name { get; set; }
         public string ParentName { get; set; }
 

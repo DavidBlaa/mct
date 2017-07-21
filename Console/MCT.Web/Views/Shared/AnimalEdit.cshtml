@@ -1,54 +1,58 @@
 ﻿@using MCT.DB.Entities
+@using AjaxOptions = System.Web.Mvc.Ajax.AjaxOptions
 @model MCT.Web.Models.AnimalModel
 @{
     ViewBag.Title = "Animal";
 }
 
+<div id="animal">
+    @using (Ajax.BeginForm("X", "Search", new AjaxOptions
+    {
+        
+    }))
+    {
 
-@using (Html.BeginForm())
-{
-
-    <div id="animal">
         <div id="DetailsHeader" class="jumbotron">
 
             @Html.HiddenFor(m => m.Id)
             <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
-            <h2>@Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+            <h2>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             </h2>
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
 
-            <h3>@Html.EditorFor(model => model.ScientificName, new {htmlAttributes = new {@class = "form-control"}})</h3>
-            @Html.ValidationMessageFor(model => model.ScientificName, "", new {@class = "text-danger"})
+            <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })</h3>
+            @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
 
-            @Html.EnumDropDownListFor(model => model.TaxonRank, new {@class = "form-control dropdown"})
-            @Html.ValidationMessageFor(model => model.TaxonRank, "", new {@class = "text-danger"})
+            @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
+            @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
 
 
         </div>
 
         <div id="DetailsContent" class="row">
             <div id="Image" class="col-md-4">
-                <img src="@Model.ImagePath" class="speciesImage img-responsive "/>
+                <img src="@Model.ImagePath" class="speciesImage img-responsive " />
             </div>
             <div class="col-md-8">
                 <div id="DescriptionContainer">
                     <h4>Beschreibung</h4>
 
-                    @Html.TextAreaFor(model => model.Description, new {@class = "form-control"})
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
                 </div>
 
                 @*<div id="TaxonRanks" class="col-md-12">
-            <h4>Taxon</h4>
-            @if (Model.Parent != null)
-            {
-                @Html.Partial("_taxonRankPartialView", Model.Parent)
-            }
-        </div>*@
+                        <h4>Taxon</h4>
+                        @if (Model.Parent != null)
+                        {
+                            @Html.Partial("_taxonRankPartialView", Model.Parent)
+                        }
+                    </div>*@
             </div>
         </div>
 
 
-        @if (Model.Interactions != null)
+        if (Model.Interactions != null)
         {
             @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
             @Html.EditorFor(model => model.Interactions)
@@ -56,21 +60,21 @@
 
 
         <p>
-        <button type="submit" class="fa fa-save mct-button-icon" onclick="alert('checker!');"></button> @*onclick="saveAnimal()"></button>*@
+            <button type="submit" class="fa fa-save mct-button-icon" onclick="saveAnimal(this)"></button>
 
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
             @Html.ActionLink("Back to List", "Search")
         </p>
         <script type="text/javascript">
             $(document)
-                .ready(function() {
+                .ready(function () {
 
                     //convert interactions table to a cool table
                     $('#example').DataTable();
 
                     //ac = autocomplete
                     $.get("/Search/GetAllSubjects",
-                        function(response) {
+                        function (response) {
 
                             $(".mct-ac-subjects")
                                 .autocomplete({
@@ -81,7 +85,7 @@
                     );
 
                     $.get("/Search/GetAllScientificNamesResult",
-                        function(response) {
+                        function (response) {
 
                             $(".mct-ac-scientificnames")
                                 .autocomplete({
@@ -91,6 +95,7 @@
                         "json"
                     );
                 })
+
 
         </script>
 
@@ -105,5 +110,6 @@
                 text-align: center;
             }
         </style>
-    </div>
-}
+
+    }
+</div>

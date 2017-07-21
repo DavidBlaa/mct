@@ -267,6 +267,20 @@ namespace MCT.Web.Controllers
             return View("AnimalEdit", new AnimalModel());
         }
 
+
+        //ToDO find a way to handle a form in a other way :D
+        /// <summary>
+        /// only a action to return from ajax form for validation
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult X()
+        {
+            //TODO Generate the Parent based on the ScientificName
+            // a a a = SubSpecies, a a = Species, a = Genus
+
+            return Json("x");
+        }
+
         public ActionResult DeleteSubject(long id)
         {
             try
@@ -539,6 +553,35 @@ namespace MCT.Web.Controllers
         {
             return PartialView("Interaction", new InteractionModel());
         }
+
+        /// <summary>
+        /// Check if Name exist
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CheckNameExist(string name)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+
+            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(name))) return Json(false, JsonRequestBehavior.AllowGet);
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Check if Name exist
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CheckScientificNameExist(string scientificName)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+
+            if (subjectManager.GetAll<Node>().Any(n => n.ScientificName.Equals(scientificName))) return Json(false, JsonRequestBehavior.AllowGet);
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Sessions
@@ -630,5 +673,6 @@ namespace MCT.Web.Controllers
         }
 
         #endregion
+
     }
 }

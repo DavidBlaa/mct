@@ -50,109 +50,135 @@ function deleteSubjectInSearch(e) {
 
 function savePlant() {
 
-    //get Timeperiods list
-    //string listId = type + "-list";
 
-    var bloom = $("#bloom-list");
-    var sowing = $("#sowing-list");
-    var harvest = $("#harvest-list");
-    var seedMaturity = $("#seedmaturity-list");
+    if ($("form").valid()) {
 
-    var precultures = $(".preculture .simplelinkmodel-list");
-    var aftercultures = $(".afterculture .simplelinkmodel-list");
+        //get Timeperiods list
+        //string listId = type + "-list";
 
-    //all tr of table
-    var interactionsFromSide = $(".interactions-table tr.interaction-row");
+        var bloom = $("#bloom-list");
+        var sowing = $("#sowing-list");
+        var harvest = $("#harvest-list");
+        var seedMaturity = $("#seedmaturity-list");
+
+        var precultures = $(".preculture .simplelinkmodel-list");
+        var aftercultures = $(".afterculture .simplelinkmodel-list");
+
+        //all tr of table
+        var interactionsFromSide = $(".interactions-table tr.interaction-row");
 
 
-    //var tmp = getSimpleLinksJSON(precultures);
-    //console.log("tmp -> preculture");
-    //console.log(tmp);
+        //var tmp = getSimpleLinksJSON(precultures);
+        //console.log("tmp -> preculture");
+        //console.log(tmp);
 
-    var plant = {
-        Id: $("#plant #Id").val(),
-        Name: $("#plant #Name").val(),
-        ScientificName: $("#plant #ScientificName").val(),
-        Rank: $("#plant #TaxonRank").val(),
-        Description: $("#plant #Description").val(),
-        Width: $("#plant #Width").val(),
-        Height: $("#plant #Height").val(),
-        RootDepth: $("#plant #RootDepth").val(),
-        NutrientClaim: $("#plant #NutrientClaim").val(),
-        SowingDepth: $("#plant #SowingDepth").val(),
-        Bloom: getTimePeriodsJSON(bloom, $("#plant #Id").val()),
-        Sowing: getTimePeriodsJSON(sowing, $("#plant #Id").val()),
-        Harvest: getTimePeriodsJSON(harvest, $("#plant #Id").val()),
-        SeedMaturity: getTimePeriodsJSON(seedMaturity, $("#plant #Id").val()),
-        PreCultures: getSimpleLinksJSON(precultures),
-        AfterCultures: getSimpleLinksJSON(aftercultures)
-    };
+        var plant = {
+            Id: $("#plant #Id").val(),
+            Name: $("#plant #Name").val(),
+            ScientificName: $("#plant #ScientificName").val(),
+            Rank: $("#plant #TaxonRank").val(),
+            Description: $("#plant #Description").val(),
+            Width: $("#plant #Width").val(),
+            Height: $("#plant #Height").val(),
+            RootDepth: $("#plant #RootDepth").val(),
+            NutrientClaim: $("#plant #NutrientClaim").val(),
+            SowingDepth: $("#plant #SowingDepth").val(),
+            Bloom: getTimePeriodsJSON(bloom, $("#plant #Id").val()),
+            Sowing: getTimePeriodsJSON(sowing, $("#plant #Id").val()),
+            Harvest: getTimePeriodsJSON(harvest, $("#plant #Id").val()),
+            SeedMaturity: getTimePeriodsJSON(seedMaturity, $("#plant #Id").val()),
+            PreCultures: getSimpleLinksJSON(precultures),
+            AfterCultures: getSimpleLinksJSON(aftercultures)
+        };
 
-    console.log(plant);
+        console.log(plant);
 
-    var interactions = getInteractionsJSON(interactionsFromSide);
+        var interactions = getInteractionsJSON(interactionsFromSide);
 
-    var data = {
-        plant: plant,
-        interactions: interactions
-    };
+        var data = {
+            plant: plant,
+            interactions: interactions
+        };
 
-    console.log("DATA:");
-    console.log(data);
+        console.log("DATA:");
+        console.log(data);
 
-    $.ajax({
-        type: "POST",
-        url: "/Search/SavePlant",
-        data: data,
-        dataType: "html",
-        success: function (response) {
-            alert(response);
-            window.location.href = "/Search/Details?id=" + response + "&type=Plant";
-        }
-    });
+        $.ajax({
+            type: "POST",
+            url: "/Search/SavePlant",
+            data: data,
+            dataType: "html",
+            success: function(response) {
+                alert(response);
+                window.location.href = "/Search/Details?id=" + response + "&type=Plant";
+            }
+        });
+    }
 }
 
-function saveAnimal() {
+function saveAnimal(e) {
 
-    //get Timeperiods list
-    //string listId = type + "-list";
+    //$("input").validate();
+
+    //alert($("form").valid());
+
+    if ($("form").valid()) {
+        // some other code
+        // maybe disabling submit button
+        // then:
+        //alert("This is a valid form!");
+
+        //get Timeperiods list
+        //string listId = type + "-list";
 
 
-    //all tr of table
-    var interactionsFromSide = $(".interactions-table tr.interaction-row");
+        //all tr of table
+        var interactionsFromSide = $(".interactions-table tr.interaction-row");
 
 
-    //var tmp = getSimpleLinksJSON(precultures);
-    //console.log("tmp -> preculture");
-    //console.log(tmp);
+        //var tmp = getSimpleLinksJSON(precultures);
+        //console.log("tmp -> preculture");
+        //console.log(tmp);
 
-    var animal = {
-        Id: $("#animal #Id").val(),
-        Name: $("#animal #Name").val(),
-        ScientificName: $("#animal #ScientificName").val(),
-        Rank: $("#animal #TaxonRank").val(),
-        Description: $("#animal #Description").val()
-    };
+        var animal = {
+            Id: $("#animal #Id").val(),
+            Name: $("#animal #Name").val(),
+            ScientificName: $("#animal #ScientificName").val(),
+            Rank: $("#animal #TaxonRank").val(),
+            Description: $("#animal #Description").val()
+        };
 
-    var interactions = getInteractionsJSON(interactionsFromSide);
+        var interactions = getInteractionsJSON(interactionsFromSide);
 
-    var data = {
-        animal: animal,
-        interactions: interactions
-    };
+        var data = {
+            animal: animal,
+            interactions: interactions
+        };
 
-    console.log("DATA:");
-    console.log(data);
+        console.log("DATA:");
+        console.log(data);
 
-    $.ajax({
-        type: "POST",
-        url: "/Search/SaveAnimal",
-        data: data,
-        dataType: "html",
-        success: function (response) {
-            window.location.href = "/Search/Details?id=" + response + "&type=Animal";
-        }
-    });
+        $.ajax({
+            type: "POST",
+            url: "/Search/SaveAnimal",
+            data: data,
+            dataType: "html",
+            success: function (response) {
+                window.location.href = "/Search/Details?id=" + response + "&type=Animal";
+            }
+        });
+
+
+    }
+
+    //$("form").validate({
+    //    submitHandler: function (form) {
+            
+
+    //        
+    //    }
+    //});
+
 }
 
 function getInteractionsJSON(source)

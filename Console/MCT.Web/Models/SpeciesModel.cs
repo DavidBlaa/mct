@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace MCT.Web.Models
 {
@@ -9,6 +10,7 @@ namespace MCT.Web.Models
     {
         public TaxonRank TaxonRank { get; set; }
         [Required]
+        [Remote("CheckScientificNameExist", "Search", ErrorMessage = "Scientific Name existiert bereits.")]
         public String ScientificName { get; set; }
         //public SpeciesType Type { get; set; }
 
