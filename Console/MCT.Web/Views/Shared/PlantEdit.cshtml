@@ -15,18 +15,20 @@
     <div id="DetailsHeader" class="jumbotron">
 
         @Html.HiddenFor(m => m.Id)
+        @Html.Hidden("initName", Model.Name)
+        @Html.Hidden("initScientificName",Model.ScientificName)
         <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
         <h2>@Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
         </h2>
         @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
 
 
-
         <h3>@Html.EditorFor(model => model.ScientificName, new {htmlAttributes = new {@class = "form-control"}})</h3>
         @Html.ValidationMessageFor(model => model.ScientificName, "", new {@class = "text-danger"})
 
-        @Html.EnumDropDownListFor(model => model.TaxonRank, new {@class = "form-control dropdown"})
-        @Html.ValidationMessageFor(model => model.TaxonRank, "", new {@class = "text-danger"})
+        @*@Html.EnumDropDownListFor(model => model.TaxonRank, new {@class = "form-control dropdown"})
+        @Html.ValidationMessageFor(model => model.TaxonRank, "", new {@class = "text-danger"})*@
+        @Html.HiddenFor(m=>m.TaxonRank);
 
 
     </div>

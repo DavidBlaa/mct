@@ -6,6 +6,7 @@ using MCT.Web.Models.Search;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -273,7 +274,7 @@ namespace MCT.Web.Controllers
         /// only a action to return from ajax form for validation
         /// </summary>
         /// <returns></returns>
-        public ActionResult X()
+        public ActionResult X(FileInfo file)
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
@@ -302,6 +303,11 @@ namespace MCT.Web.Controllers
         {
             try
             {
+                //Todo Select the type based on the scientific name
+                if (plant.ScientificName.Split(' ').Length > 1) plant.Rank = TaxonRank.SubSpecies;
+                else if (plant.ScientificName.Split(' ').Length == 1) plant.Rank = TaxonRank.Species;
+
+
                 //TODO Generate the Parent based on the ScientificName
                 // a a a = SubSpecies, a a = Species, a = Genus
                 /* - based on the scientficname create or set the parents
@@ -559,11 +565,11 @@ namespace MCT.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CheckNameExist(string name)
+        public ActionResult CheckNameExist(string name, string initName)
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(name))) return Json(false, JsonRequestBehavior.AllowGet);
+            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(name) && !n.Name.Equals(initName))) return Json(false, JsonRequestBehavior.AllowGet);
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
@@ -573,11 +579,11 @@ namespace MCT.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CheckScientificNameExist(string scientificName)
+        public ActionResult CheckScientificNameExist(string scientificName, string initScientifcName)
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            if (subjectManager.GetAll<Node>().Any(n => n.ScientificName.Equals(scientificName))) return Json(false, JsonRequestBehavior.AllowGet);
+            if (subjectManager.GetAll<Node>().Any(n => n.ScientificName.Equals(scientificName) && !n.ScientificName.Equals(initScientifcName))) return Json(false, JsonRequestBehavior.AllowGet);
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }

@@ -14,7 +14,7 @@ namespace MCT.Web.Models
         public long Id { get; set; }
 
         [Required]
-        [Remote("CheckNameExist", "Search", ErrorMessage = "Name existiert bereits.")]
+        [Remote("CheckNameExist", "Search", ErrorMessage = "Name existiert bereits.", AdditionalFields = "initScientificName")]
         public String Name { get; set; }
         public String Description { get; set; }
         public String ImagePath { get; set; }
@@ -132,6 +132,7 @@ namespace MCT.Web.Models
         public long Id { get; set; }
         [Required]
         public String Name { get; set; }
+        [Required]
         public SubjectType Type { get; set; }
 
         public SimpleLinkModel()
@@ -155,6 +156,7 @@ namespace MCT.Web.Models
         public long Id { get; set; }
         [Required]
         public String Name { get; set; }
+        [Required]
         public string ParentName { get; set; }
 
         public InteractionPredicateModel()

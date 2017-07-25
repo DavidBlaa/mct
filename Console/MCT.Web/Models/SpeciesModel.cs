@@ -10,7 +10,7 @@ namespace MCT.Web.Models
     {
         public TaxonRank TaxonRank { get; set; }
         [Required]
-        [Remote("CheckScientificNameExist", "Search", ErrorMessage = "Scientific Name existiert bereits.")]
+        [Remote("CheckScientificNameExist", "Search", ErrorMessage = "Scientific Name existiert bereits.", AdditionalFields = "initScientificName")]
         public String ScientificName { get; set; }
         //public SpeciesType Type { get; set; }
 
@@ -19,7 +19,6 @@ namespace MCT.Web.Models
             ScientificName = "";
             TaxonRank = TaxonRank.Species;
         }
-
 
         public static SpeciesModel Convert(Species species)
         {
