@@ -1,4 +1,5 @@
-﻿using MCT.DB.Entities;
+﻿using Lucene.Net.Support;
+using MCT.DB.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace MCT.Web.Models
         {
             ScientificName = "";
             TaxonRank = TaxonRank.Species;
+            Interactions = new EquatableList<InteractionModel>();
         }
 
         public static SpeciesModel Convert(Species species)

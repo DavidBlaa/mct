@@ -10,10 +10,43 @@
 
 <h3>image upload</h3>
 
-<input type="file"/>
+
+<image id="previewImage" src="~/Images/Empty.png" style="width: 200px; height: 200px;"/>
+<input type="file" data-target="previewImage" class="file-input"/>
+
+<script type="text/javascript">
+
+    $(function() {
+
+        $('.file-input')
+            .on('change',
+                function() {
+                    previewImage(this);
+                });
+    });
 
 
+    function previewImage(input) {
 
+        alert("p-image");
+
+        if (input.files && input.files[[0]]) {
+
+            var reader = new FileReader(),
+                preview = $('#' + $(input).data('target'));
+
+            reader.onload = function (e) {
+                preview.attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+
+
+<br/>
 <h3> Autocomplete</h3>
 
 <div class="ui-widget">

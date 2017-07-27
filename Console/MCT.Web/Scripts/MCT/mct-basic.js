@@ -1,4 +1,15 @@
 ﻿
+$(function () {
+
+    //set file change event on images uploader
+    $('.file-input')
+        .on('change',
+            function () {
+                previewImage(this);
+            });
+});
+
+
 /********** EDIT PLANT *******/
 
 function deleteSubject(e)
@@ -95,6 +106,7 @@ function savePlant() {
 
         var interactions = getInteractionsJSON(interactionsFromSide);
 
+
         var data = {
             plant: plant,
             interactions: interactions
@@ -109,7 +121,28 @@ function savePlant() {
             data: data,
             dataType: "html",
             success: function(response) {
-                alert(response);
+                
+                var image = getImage();
+
+                if (image) {
+                    //upload image
+                    $.ajax({
+                        type: "POST",
+                        url: '/Search/SaveImage?id=' + response,
+                        contentType: false,
+                        processData: false,
+                        data: image,
+                        success: function (result) {
+                            console.log(result);
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                }
                 window.location.href = "/Search/Details?id=" + response + "&type=Plant";
             }
         });
@@ -155,8 +188,6 @@ function saveAnimal(e) {
             interactions: interactions
         };
 
-        console.log("DATA:");
-        console.log(data);
 
         $.ajax({
             type: "POST",
@@ -164,11 +195,33 @@ function saveAnimal(e) {
             data: data,
             dataType: "html",
             success: function (response) {
+                
+
+                var image = getImage();
+
+                if (image) {
+                    //upload image
+                    $.ajax({
+                        type: "POST",
+                        url: '/Search/SaveImage?id=' + response,
+                        contentType: false,
+                        processData: false,
+                        data: image,
+                        success: function (result) {
+                            console.log(result);
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                }
+
                 window.location.href = "/Search/Details?id=" + response + "&type=Animal";
             }
         });
-
-
     }
 
     //$("form").validate({
@@ -291,84 +344,119 @@ function getSimpleLinkJSON(e) {
     return simplelink;
 }
 
+function getImage() {
 
+    var fileName = $('#previewImageInput').val().replace(/.*(\/|\\)/, '');
+    if (fileName != "") {
+        var formData = new FormData();
+
+        formData.append('file', $('input[type=file]')[0].files[0]);
+
+        return formData;
+
+    }
+}
 
 
 /*** TIME PERIODS ***/
 
-function addTP(e) {
+    function addTP(e) {
 
-    var newElement = $('<li class="timeperiod-li">');
+        var newElement = $('<li class="timeperiod-li">');
 
-    $.get("/Search/GetEmptyTimePeriod", function (data) {
+        $.get("/Search/GetEmptyTimePeriod",
+            function(data) {
 
-        newElement.prepend($(data));
-        //console.log(newElement);
-        var list = $(e).parent().find("ul");
-        //console.log("list");
-        //console.log(list);
-        $(list).append(newElement);
+                newElement.prepend($(data));
+                //console.log(newElement);
+                var list = $(e).parent().find("ul");
+                //console.log("list");
+                //console.log(list);
+                $(list).append(newElement);
 
-    });
-}
+            });
+    }
 
-function removeTP(e) {
+    function removeTP(e) {
 
-    //console.log("e --->");
-    //console.log(e);
-    $(e).parents(".timeperiod-li")[0].remove();
-}
+        //console.log("e --->");
+        //console.log(e);
+        $(e).parents(".timeperiod-li")[0].remove();
+    }
 
 /*** Simple Links ***/
 
-function addSimpleLink(e) {
+    function addSimpleLink(e) {
 
-    var newElement = $('<li class="timeperiod-li">');
+        var newElement = $('<li class="timeperiod-li">');
 
-    $.get("/Search/GetEmptySimpleLink", function (data) {
+        $.get("/Search/GetEmptySimpleLink",
+            function(data) {
 
-        newElement.prepend($(data));
-        //console.log(newElement);
-        var list = $(e).parent().find("ul");
-        console.log("list");
-        
-        $(list).append(newElement);
-        console.log(list);
+                newElement.prepend($(data));
+                //console.log(newElement);
+                var list = $(e).parent().find("ul");
+                console.log("list");
 
-    });
-}
+                $(list).append(newElement);
+                console.log(list);
 
-function removeSimpleLink(e) {
+            });
+    }
 
-    console.log("e --->");
-    console.log(e);
-    $(e).parents(".simplelinkmodel-li")[0].remove();
-}
+    function removeSimpleLink(e) {
+
+        console.log("e --->");
+        console.log(e);
+        $(e).parents(".simplelinkmodel-li")[0].remove();
+    }
 
 /*** Interactions ***/
 
-function addInteraction(e) {
+    function addInteraction(e) {
 
 
-    $.get("/Search/GetEmptyInteraction", function (data) {
+        $.get("/Search/GetEmptyInteraction",
+            function(data) {
 
-        console.log(data)
-        var table = $(e).parent().find(".interactions-table tbody")[0];
-        $(table).append(data);
-    });
-    ////$($("table tbody")[0]).find("tr").last()
-    //var table = $(e).parent().find(".interactions-table tbody")[0];
-    //console.log(table);
-    //console.log($(table).find("tr").last());
+                console.log(data)
+                var table = $(e).parent().find(".interactions-table tbody")[0];
+                $(table).append(data);
+            });
+        ////$($("table tbody")[0]).find("tr").last()
+        //var table = $(e).parent().find(".interactions-table tbody")[0];
+        //console.log(table);
+        //console.log($(table).find("tr").last());
 
-    //var newChild = $($(table).find("tr").last()).clone(false, false);
-    //newChild = cleanInteraction(newChild);
-    //$(table).append(newChild); 
-    //console.log(newChild);
-}
+        //var newChild = $($(table).find("tr").last()).clone(false, false);
+        //newChild = cleanInteraction(newChild);
+        //$(table).append(newChild); 
+        //console.log(newChild);
+    }
 
 
-function removeInteraction(e) {
+    function removeInteraction(e) {
 
-    $(e).parents("tr")[0].remove();
-}
+        $(e).parents("tr")[0].remove();
+    }
+
+
+/************** IMAGES *****************/
+
+
+    function previewImage(input) {
+
+        //alert("p-image");
+
+        if (input.files && input.files[[0]]) {
+
+            var reader = new FileReader(),
+                preview = $('#' + $(input).data('target'));
+
+            reader.onload = function(e) {
+                preview.attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace MCT.Web.Controllers
@@ -394,7 +395,7 @@ namespace MCT.Web.Controllers
             }
         }
 
-        public ActionResult SaveAnimal(Animal animal, List<Interaction> interactions)
+        public ActionResult SaveAnimal(Animal animal, List<Interaction> interactions = null)
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
@@ -441,6 +442,49 @@ namespace MCT.Web.Controllers
             //save or update interactions
 
             return Json(animal.Id, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveImage(long id)
+        {
+
+            try
+            {
+                foreach (string file in Request.Files)
+                {
+                    var fileContent = Request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        // get a stream
+                        var stream = fileContent.InputStream;
+                        // and optionally write the file to disk
+                        var fileName = Path.GetFileName(fileContent.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                        using (var fileStream = System.IO.File.Create(path))
+                        {
+                            stream.CopyTo(fileStream);
+
+                            SubjectManager subjectManager = new SubjectManager();
+                            Subject s = subjectManager.Get(id);
+
+                            Media media = new Media();
+                            media.ImagePath = "/Images/" + fileName;
+
+                            s.Medias.Add(media);
+
+                            subjectManager.Update(s);
+
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Upload failed");
+            }
+
+            return Json("File uploaded successfully");
         }
 
         //ToDo Function --> InteractionManager
@@ -579,11 +623,11 @@ namespace MCT.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CheckScientificNameExist(string scientificName, string initScientifcName)
+        public ActionResult CheckScientificNameExist(string scientificName, string initScientificName)
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            if (subjectManager.GetAll<Node>().Any(n => n.ScientificName.Equals(scientificName) && !n.ScientificName.Equals(initScientifcName))) return Json(false, JsonRequestBehavior.AllowGet);
+            if (subjectManager.GetAll<Node>().Any(n => n.ScientificName.Equals(scientificName) && !n.ScientificName.Equals(initScientificName))) return Json(false, JsonRequestBehavior.AllowGet);
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
