@@ -6,7 +6,7 @@
 }
 
 <div id="animal">
-    @using (Ajax.BeginForm("X", "Search", new AjaxOptions
+    @using (Ajax.BeginForm("X", "Subject", new AjaxOptions
     {
         
     }))
@@ -62,7 +62,7 @@
             <button type="submit" class="fa fa-save mct-button-icon" onclick="saveAnimal(this)"></button>
 
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-            @Html.ActionLink("Back to List", "Search")
+            @Html.ActionLink("Back to List", "Search","Search")
         </p>
         <script type="text/javascript">
             

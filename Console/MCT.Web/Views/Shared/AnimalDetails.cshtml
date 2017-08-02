@@ -40,15 +40,24 @@
         </div>
     </div>
 
-    <div>
+    @*<div>
         <h4>Termine</h4>
 
+    </div>*@
+
+    <div class="row">
+        <h4>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h4>
+        <div class="content">
+            @if (Model.Interactions != null)
+            {
+                @Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions)
+            }
+        </div>
     </div>
 
-    @Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);
 
     <p>
-        @Html.ActionLink("Back to List", "Search")
+        @Html.ActionLink("Back to List", "Search", "Search")
     </p>
 
     <style type="text/css">

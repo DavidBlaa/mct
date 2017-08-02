@@ -14,7 +14,7 @@ namespace MCT.Web.Models
         public long Id { get; set; }
 
         [Required]
-        [Remote("CheckNameExist", "Search", ErrorMessage = "Name existiert bereits.", AdditionalFields = "initScientificName")]
+        [Remote("CheckNameExist", "Subject", ErrorMessage = "Name existiert bereits.", AdditionalFields = "initScientificName")]
         public String Name { get; set; }
         public String Description { get; set; }
         public String ImagePath { get; set; }

@@ -15,7 +15,7 @@ namespace MCT.DB.Services
             CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
         }
 
-        #region Create PLANT
+        #region Create
 
         public Plant CreatePlant(Plant plant)
         {
@@ -128,7 +128,7 @@ namespace MCT.DB.Services
         /// </summary>
         /// <param name="subject"></param>
         /// <returns></returns>
-        public IEnumerable<Interaction> GetAllDependingInteractions(Subject subject)
+        public IEnumerable<Interaction> GetAllDependingInteractions(Node species, bool recursive = false)
         {
             //var interactions = from x in GetAll<Interaction>()
             //                   where subject != null && (x.Subject.Name.Equals(subject.Name)
@@ -138,15 +138,24 @@ namespace MCT.DB.Services
 
             List<Interaction> interactions = new List<Interaction>();
 
+
+            //get parents
+            if (species.Parent != null && recursive)
+            {
+                interactions.AddRange(GetAllDependingInteractions(species.Parent, recursive));
+            }
+
             foreach (var interaction in GetAll<Interaction>())
             {
-                if (interaction.Subject.Name.Equals(subject.Name)
-                    || interaction.Object.Name.Equals(subject.Name)
-                    || (interaction.ImpactSubject != null && interaction.ImpactSubject.Name.Equals(subject.Name)))
+                if (interaction.Subject.Name.Equals(species.Name)
+                    || interaction.Object.Name.Equals(species.Name)
+                    || (interaction.ImpactSubject != null && interaction.ImpactSubject.Name.Equals(species.Name)))
                 {
                     interactions.Add(interaction);
                 }
             }
+
+
 
             return interactions;
         }

@@ -78,21 +78,21 @@ namespace MCT.Web.Controllers
             {
                 if (plant != null)
                 {
-                    if(plant.Bloom.Any())   
-                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.Bloom));
+                    if (plant.Bloom.Any())
+                        events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Bloom));
                     if (plant.Sowing.Any())
-                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.Sowing));
+                        events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Sowing));
                     if (plant.Harvest.Any())
-                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.Harvest));
+                        events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Harvest));
                     if (plant.SeedMaturity.Any())
-                        events.Add(createEventForEachPlantsTimeperiodType(plant,TimePeriodType.SeedMaturity));
+                        events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.SeedMaturity));
                 }
             }
 
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        private object createEventForEachPlantsTimeperiodType(Plant plant,TimePeriodType type)
+        private object createEventForEachPlantsTimeperiodType(Plant plant, TimePeriodType type)
         {
             var tps = new List<object>();
 
@@ -108,7 +108,7 @@ namespace MCT.Web.Controllers
 
                         break;
                     }
-                   
+
                 case TimePeriodType.Harvest:
                     {
                         foreach (var VARIABLE in plant.Harvest)
@@ -143,7 +143,7 @@ namespace MCT.Web.Controllers
                     break;
             }
 
-            
+
             var json = new
             {
                 name = plant.Name,

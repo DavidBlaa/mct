@@ -20,7 +20,7 @@ function deleteSubject(e)
 
     $.ajax({
         type: "POST",
-        url: "/Search/DeleteSubject",
+        url: "/Subject/DeleteSubject",
         data: data,
         dataType: "json",
         success: function (response) {
@@ -42,7 +42,7 @@ function deleteSubjectInSearch(e) {
 
     $.ajax({
         type: "POST",
-        url: "/Search/DeleteSubject",
+        url: "/Subject/DeleteSubject",
         data: data,
         dataType: "json",
         success: function (response) {
@@ -117,7 +117,7 @@ function savePlant() {
 
         $.ajax({
             type: "POST",
-            url: "/Search/SavePlant",
+            url: "/Subject/SavePlant",
             data: data,
             dataType: "html",
             success: function(response) {
@@ -128,7 +128,7 @@ function savePlant() {
                     //upload image
                     $.ajax({
                         type: "POST",
-                        url: '/Search/SaveImage?id=' + response,
+                        url: '/Subject/SaveImage?id=' + response,
                         contentType: false,
                         processData: false,
                         data: image,
@@ -143,7 +143,7 @@ function savePlant() {
                         }
                     });
                 }
-                window.location.href = "/Search/Details?id=" + response + "&type=Plant";
+                window.location.href = "/Subject/Details?id=" + response + "&type=Plant";
             }
         });
     }
@@ -191,7 +191,7 @@ function saveAnimal(e) {
 
         $.ajax({
             type: "POST",
-            url: "/Search/SaveAnimal",
+            url: "/Subject/SaveAnimal",
             data: data,
             dataType: "html",
             success: function (response) {
@@ -203,7 +203,7 @@ function saveAnimal(e) {
                     //upload image
                     $.ajax({
                         type: "POST",
-                        url: '/Search/SaveImage?id=' + response,
+                        url: '/Subject/SaveImage?id=' + response,
                         contentType: false,
                         processData: false,
                         data: image,
@@ -219,7 +219,7 @@ function saveAnimal(e) {
                     });
                 }
 
-                window.location.href = "/Search/Details?id=" + response + "&type=Animal";
+                window.location.href = "/Subject/Details?id=" + response + "&type=Animal";
             }
         });
     }
@@ -364,7 +364,7 @@ function getImage() {
 
         var newElement = $('<li class="timeperiod-li">');
 
-        $.get("/Search/GetEmptyTimePeriod",
+        $.get("/Subject/GetEmptyTimePeriod",
             function(data) {
 
                 newElement.prepend($(data));
@@ -390,7 +390,7 @@ function getImage() {
 
         var newElement = $('<li class="timeperiod-li">');
 
-        $.get("/Search/GetEmptySimpleLink",
+        $.get("/Subject/GetEmptySimpleLink",
             function(data) {
 
                 newElement.prepend($(data));
@@ -416,7 +416,7 @@ function getImage() {
     function addInteraction(e) {
 
 
-        $.get("/Search/GetEmptyInteraction",
+        $.get("/Subject/GetEmptyInteraction",
             function(data) {
 
                 console.log(data)
@@ -439,6 +439,16 @@ function getImage() {
 
         $(e).parents("tr")[0].remove();
     }
+
+
+
+/************** Plant Show ******************/
+    $(".containerSwitch").on("click",
+    function () {
+        console.log("click");
+        $($($(this).parents(".row")[0]).find(".content")[0]).toggle(200);
+        $(this).toggleClass("fa-angle-double-down", "fa-angle-double-down");
+    });
 
 
 /************** IMAGES *****************/

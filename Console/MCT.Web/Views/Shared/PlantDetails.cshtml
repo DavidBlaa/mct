@@ -17,29 +17,29 @@
 
 <div id="DetailsContent" class="row">
     <div id="Image" class="col-md-4">
-        <img src="@Model.ImagePath" class="speciesImage img-responsive " />
+        <img src="@Model.ImagePath" class="speciesImage img-responsive "/>
     </div>
     <div class="col-md-8">
         <div id="DescriptionContainer">
             <h4>Beschreibung</h4>
 
-            @Html.DisplayFor(model => model.Description, new { @class = "form-control" })
+            @Html.DisplayFor(model => model.Description, new {@class = "form-control"})
         </div>
 
         <div id="TaxonRanks" class="col-md-12">
-                <h4>Taxon</h4>
-                @if (Model.Parent != null)
-                {
-                    @Html.Partial("_taxonRankPartialView", Model.Parent)
-                }
+            <h4>Taxon</h4>
+            @if (Model.Parent != null)
+            {
+                @Html.Partial("_taxonRankPartialView", Model.Parent)
+            }
         </div>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-md-8">
+    <h4>Anbau Informationen <span class="containerSwitch fa fa-angle-double-up"></span></h4>
 
-        <h4>Anbau Informationen</h4>
-
+    <div  class="content col-md-8">
         <div class="form-group row">
             @Html.LabelFor(model => model.Width,new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -78,47 +78,51 @@
     </div>
 </div>
 
-<div class="row">
-    <h4>Termine</h4>
-
-    @Html.DisplayNameFor(model => model.Bloom)
-    @Html.DisplayFor(model => model.Bloom)
-    @Html.DisplayNameFor(model => model.Sowing)
-    @Html.DisplayFor(model => model.Sowing)
-    @Html.DisplayNameFor(model => model.Harvest)
-    @Html.DisplayFor(model => model.Harvest)
-    @Html.DisplayNameFor(model => model.SeedMaturity)
-    @Html.DisplayFor(model => model.SeedMaturity)
-
-
-</div>
-
-<div class="row">
-
-    <h4>Vorkultur</h4>
-    <div class="preculture">
-        @Html.DisplayFor(model => model.PreCultures)
-    </div>
-
-    <div class="afterculture">
-        <h4>Nachkultur</h4>
-
-        @Html.DisplayFor(model => model.AfterCultures)
-    </div>
-</div>
-
-@if (Model.Interactions != null)
+@if (Model.Bloom.TimePeriods.Any() ||
+     Model.Sowing.TimePeriods.Any() ||
+     Model.SeedMaturity.TimePeriods.Any() ||
+     Model.Harvest.TimePeriods.Any())
 {
-    @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
-    @Html.DisplayFor(model => model.Interactions)
+    <div class="row">
+        <h4>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h4>
+
+        <div class="content">
+            <div id="ganttTermine"></div>
+        </div>
+    </div>
 }
+    <div class="row">
+
+        <h4>Vorkultur <span class="containerSwitch fa fa-angle-double-up"></span></h4>
+        <div class="preculture content">
+            @Html.DisplayFor(model => model.PreCultures)
+        </div>
+    </div>
+    <div class="row">
+        <h4>Nachkultur<span class="containerSwitch fa fa-angle-double-up"></span></h4>
+        <div class="afterculture content">
+            @Html.DisplayFor(model => model.AfterCultures)
+        </div>
+    </div>
+
+<div class="row">
+    <h4>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h4>
+    <div class="content">
+        @if (Model.Interactions != null)
+        {
+            @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
+            @Html.DisplayFor(model => model.Interactions)
+        }
+    </div>
+</div>
 
 
 <p>
     @*<button class="fa fa-save" onclick="savePlant()"></button>*@
 
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Search")
+    @Html.ActionLink("Back to List", "Search","Search")
+
 </p>
 
 <script type="text/javascript">
@@ -126,7 +130,7 @@
 
   
         //ac = autocomplete
-        $.get("/Search/GetAllSubjects",
+        $.get("/Subject/GetAllSubjects",
             function (response) {
 
                 $(".mct-ac-subjects").autocomplete({
@@ -136,7 +140,7 @@
             "json"
         );
 
-        $.get("/Search/GetAllScientificNamesResult",
+        $.get("/Subject/GetAllScientificNamesResult",
             function (response) {
 
                 $(".mct-ac-scientificnames").autocomplete({
@@ -146,7 +150,7 @@
             "json"
         );
 
-        $.get("/Search/GetAllPredicates",
+        $.get("/Subject/GetAllPredicates",
             function (response) {
 
                 $(".mct-ac-predicates").autocomplete({
@@ -155,6 +159,42 @@
             },
             "json"
         );
+
+
+
+        //load gantt 
+        var url = '@Url.Action("GetEventsForGantt", "Subject", new {id = @Model.Id})';
+
+        $.post(url,
+            function (data) {
+
+                console.log(data);
+
+                $("#ganttTermine").gantt({
+                    source: data,
+                    scale: "weeks",
+                    minScale: "weeks",
+                    maxScale: "months",
+                    itemsPerPage: 50,
+                    navigate: "scroll",
+                    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    onItemClick: function (data) {
+                        alert("Item clicked - show some details");
+                    },
+                    onAddClick: function (dt, rowId) {
+                        alert("Empty space clicked - add an item!");
+                    },
+                    onRender: function () {
+                        console.log("chart rendered");
+                    }
+                });
+
+
+                //$(".content")
+                //    .each(function () {
+                //        $(this).toggle();
+                //    });
+            });
     })
 
 </script>

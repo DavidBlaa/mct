@@ -11,7 +11,7 @@ namespace MCT.Web.Models
     {
         public TaxonRank TaxonRank { get; set; }
         [Required]
-        [Remote("CheckScientificNameExist", "Search", ErrorMessage = "Scientific Name existiert bereits.", AdditionalFields = "initScientificName")]
+        [Remote("CheckScientificNameExist", "Subject", ErrorMessage = "Scientific Name existiert bereits.", AdditionalFields = "initScientificName")]
         public String ScientificName { get; set; }
         //public SpeciesType Type { get; set; }
 
