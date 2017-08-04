@@ -33,17 +33,7 @@
                 </button>
                 @Html.ActionLink("Mixed Culture Tool", "Index", "Test", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Spielwiese", "Index", "Test")</li>
-                    <li>@Html.ActionLink("Calendar", "Index", "Calendar")</li>
-                    <li>@Html.ActionLink("Tree", "Index", "Tree")</li>
-                    <li>@Html.ActionLink("Data", "Index", "Data")</li>
-                    <li>@Html.ActionLink("Search", "Search", "Search")</li>
-                    <li>@Html.ActionLink("Create Plant", "CreatePlant", "Subject")</li>
-                    <li>@Html.ActionLink("Create Animal", "CreateAnimal", "Subject")</li>
-                </ul>
-            </div>
+            @Html.Partial("_navbar")
         </div>
     </div>
     <div class="container body-content">

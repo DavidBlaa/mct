@@ -1,0 +1,42 @@
+﻿
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+
+
+    <li>@Html.ActionLink("Search", "Search", "Search")</li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
+            Create<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink("Create Plant", "CreatePlant", "Subject")</li>
+            <li>@Html.ActionLink("Create Animal", "CreateAnimal", "Subject")</li>
+            <li></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
+            Data Overview<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink("Taxon Tree", "Index", "Tree")</li>
+            <li>@Html.ActionLink("Season Calendar", "Index", "Calendar")</li>
+            <li></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
+            Delevoper <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink("Spielwiese", "Index", "Test")</li>
+            <li>@Html.ActionLink("Data", "Index", "Data")</li>
+            <li></li>
+        </ul>
+    </li>
+
+    </ul>
+</div>

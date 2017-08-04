@@ -5,52 +5,53 @@
 }
 
 <div id="aminal">
-    <div id="DetailsHeader" class="jumbotron">
-        @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon" })
-        @Html.HiddenFor(m => m.Id)
-        <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
-        <h2>
-            @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        </h2>
-        <h3>@Html.DisplayFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })</h3>
-        @Html.DisplayFor(model => model.TaxonRank, new { @class = "form-control" })
-    </div>
-    <div id="DetailsContent" class="row">
-        <div id="Image" class="col-md-4">
-            <img src="@Model.ImagePath" class=" speciesImage img-responsive " />
+    <div class="row panel-default">
+        <div id="DetailsHeader" class="panel-heading">
+            @Html.HiddenFor(m => m.Id)
+            <h2>
+                @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </h2>
+            @Html.ActionLink(" ", "Edit", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon" })
+            <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
+            <h3>@Html.DisplayFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })</h3>
+            @Html.DisplayFor(model => model.TaxonRank, new { @class = "form-control" })
         </div>
-        <div class="col-md-8">
-            <div id="Description" class="col-md-12">
-                <h4>Beschreibung</h4>
-                @Html.DisplayFor(model => model.Description)
+
+        <div id="DetailsContent" class="row panel-body panel-info">
+                <div id="Image" class="col-md-4">
+                    <img src="@Model.ImagePath" class="speciesImage img-responsive " />
+                </div>
+                <div class="col-md-8">
+                    <div id="DescriptionContainer" class="panel-default">
+                        <div class="panel-heading">
+                            <h4>Beschreibung</h4>
+                        </div>
+
+                        @Html.DisplayFor(model => model.Description, new { @class = "form-control" })
+                    </div>
+
+                    <div id="TaxonRanks" class="panel-default">
+                        <div class="panel-heading">
+                            <h4>Taxon</h4>
+                        </div>
+                        @if (Model.Parent != null)
+                        {
+                            @Html.Partial("_taxonRankPartialView", Model.Parent)
+                        }
+                    </div>
+                </div>
             </div>
-
-            <div id="TaxonRanks" class="col-md-12">
-                <h4>Taxon</h4>
-                @if (Model.Parent != null)
-                {
-                    @Html.Partial("_taxonRankPartialView", Model.Parent)
-                }
-            </div>
-        </div>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Details</h4>
+    
+    <div class="row panel-default">
+        <div class="panel-heading">
+            <h3>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
         </div>
-    </div>
-
-    @*<div>
-        <h4>Termine</h4>
-
-    </div>*@
-
-    <div class="row">
-        <h4>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h4>
-        <div class="content">
+        <div class="content panel-body">
             @if (Model.Interactions != null)
             {
-                @Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions)
+                @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
+                @Html.DisplayFor(model => model.Interactions)
             }
         </div>
     </div>

@@ -47,6 +47,12 @@ h3.mct-species-title {
     left: 0;
 }
 
+img {
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 /*SEARCH*/
 
 #SearchHeaderTable TD
@@ -68,16 +74,18 @@ h3.mct-species-title {
     height: 70px;
 }
 
+.mct-species-header {
+    margin-top: 20px;
+    height: 50px;
+}
 .headerplant {
     border-top: solid 2px yellowgreen;
-    margin-top: 20px;
-    height: 70px;
+   
 } 
 
 .headeranimal {
     border-top: solid 2px darkorange;
-    margin-top: 20px;
-    height: 70px;
+
 }
 
 .detailsBtnplant {

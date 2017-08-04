@@ -1,15 +1,27 @@
-﻿@{
+﻿
+@using MCT.Search
+@model MCT.Web.Models.Search.SearchModel
+@{
     ViewBag.Title = "Search";
+
+    string searchvalue = "";
+
+    if (Model.SearchCriterias.ContainsKey(SearchProvider.FREETEXT_SEARCH_KEY))
+    {
+        searchvalue = Model.SearchCriterias[SearchProvider.FREETEXT_SEARCH_KEY];
+    }
+
 }
 
-@model MCT.Web.Models.Search.SearchModel
+
 <br/>
 <br/>
 <table id="SearchHeaderTable">
     <tr>
         <td>
             <div class="input-group">
-                <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="search..."/></input>
+                <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="search..." value="@searchvalue"/>
+
                 <span class="input-group-addon">
                       <i class="fa fa-search"></i>
                 </span>

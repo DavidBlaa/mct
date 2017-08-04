@@ -8,55 +8,63 @@
 <div id="animal">
     @using (Ajax.BeginForm("X", "Subject", new AjaxOptions
     {
-        
+
     }))
     {
+        <div class="row panel-default ">
+            <div id="DetailsHeader" class="panel-heading">
 
-        <div id="DetailsHeader" class="jumbotron">
+                @Html.HiddenFor(m => m.Id)
+                @Html.Hidden("initName", Model.Name)
+                @Html.Hidden("initScientificName", Model.ScientificName)
+                <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
 
-            @Html.HiddenFor(m => m.Id)
-            @Html.Hidden("initName", Model.Name)
-            @Html.Hidden("initScientificName",Model.ScientificName)
-            <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
-            <h2>
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            </h2>
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-
-            <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })</h3>
-            @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
-
-            @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
-            @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
+                <h2>
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                </h2>
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
 
 
-        </div>
+                <h3>@Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })</h3>
+                @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
 
-        <div id="DetailsContent" class="row">
-            <div id="Image" class="col-md-4">
-                <img id="previewImage" src="@Model.ImagePath" class="speciesImage img-responsive " />
-                <input id="previewImageInput" type="file" data-target="previewImage" class="file-input" />
+                @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
+                @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
+
+
             </div>
-            <div class="col-md-8">
-                <div id="DescriptionContainer">
-                    <h4>Beschreibung</h4>
 
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+            <div id="DetailsContent" class="row panel-body panel-info">
+                <div id="Image" class="col-md-4">
+                    <img id="previewImage" src="@Model.ImagePath" class="speciesImage img-responsive " />
+                    <input id="previewImageInput" type="file" data-target="previewImage" class="file-input" />
                 </div>
-
-                @*<div id="TaxonRanks" class="col-md-12">
-                        <h4>Taxon</h4>
-                        @if (Model.Parent != null)
-                        {
-                            @Html.Partial("_taxonRankPartialView", Model.Parent)
-                        }
-                    </div>*@
+                <div class="col-md-8">
+                    <div id="DescriptionContainer" class="panel-default">
+                        <div class="panel-heading">
+                            <h4>Beschreibung</h4>
+                        </div>
+                    
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                    </div>
+                </div>
             </div>
         </div>
 
+      
 
-       @Html.EditorFor(model => model.Interactions)
-
+        <div class="row panel-default">
+            <div class="panel-heading">
+                <h3>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
+            </div>
+            <div class="content panel-body">
+                @if (Model.Interactions != null)
+                {
+                    @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
+                    @Html.EditorFor(model => model.Interactions)
+                }
+            </div>
+        </div>
 
         <p>
             <button type="submit" class="fa fa-save mct-button-icon" onclick="saveAnimal(this)"></button>
