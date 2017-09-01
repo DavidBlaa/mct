@@ -2,6 +2,7 @@
 using MCT.Helpers;
 using NHibernate;
 using NHibernate.Criterion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,6 +98,30 @@ namespace MCT.DB.Services
             #endregion
 
             return tmp;
+        }
+
+
+        public void DeleteNode(Node node)
+        {
+            try
+            {
+                List<Interaction> interactons = GetAllDependingInteractions(node).ToList();
+                InteractionManager interactionManager = new InteractionManager();
+
+                for (int i = 0; i < interactons.Count; i++)
+                {
+                    interactionManager.Delete(interactons[i]);
+                }
+
+
+                Delete(node);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         #endregion

@@ -1,48 +1,15 @@
 ﻿@using MCT.DB.Entities
+@using MCT.Web.Models
 @model MCT.Web.Models.PlantModel
 @{
-    ViewBag.Title = "Plant";
+    ViewBag.Title = Model.Type.ToString();
+    
 }
 <div id="plant">
-    <div class="row panel-default">
-        <div id="DetailsHeader" class="panel-heading">
-            @Html.HiddenFor(m => m.Id)
-            <h2>
-                @Html.DisplayFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
-            </h2>
-            @Html.ActionLink(" ", "Edit", new {id = Model.Id, type = @Model.Type.ToString()}, new {@class = "fa fa-pencil mct-button-icon "})
-            <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
-            <h3>@Html.DisplayFor(model => model.ScientificName, new {htmlAttributes = new {@class = "form-control"}})</h3>
-            @Html.DisplayFor(model => model.TaxonRank, new {@class = "form-control"})
-        </div>
-        
-        <div id="DetailsContent" class="row panel-body panel-info">
-            <div id="Image" class="col-md-4">
-                <img src="@Model.ImagePath" class="speciesImage img-responsive " />
-            </div>
-            <div class="col-md-8">
-                <div id="DescriptionContainer" class="panel-default">
-                    <div class="panel-heading">
-                        <h4>Beschreibung</h4>
-                    </div>
 
-                    @Html.DisplayFor(model => model.Description, new {@class = "form-control"})
-                </div>
+    @Html.Partial("SpeciesDetails", Model as SpeciesModel)
 
-                <div id="TaxonRanks" class="panel-default">
-                    <div class="panel-heading">
-                        <h4>Taxon</h4>
-                    </div>
-                    @if (Model.Parent != null)
-                    {
-                        @Html.Partial("_taxonRankPartialView", Model.Parent)
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-
-<div class="row panel-default panel-info">
+    <div class="row panel-default panel-info">
         <div class="panel-heading">
             <h3>Anbau Informationen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
 
@@ -50,134 +17,90 @@
 
         <div class="content col-md-8 panel-body">
             <div class="form-group row">
-                @Html.LabelFor(model => model.Width, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Width, new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.DisplayFor(model => model.Width, new { @class = "form-control" })
+                    @Html.DisplayFor(model => model.Width, new {@class = "form-control"})
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.Height, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Height, new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.DisplayFor(model => model.Height, new { @class = "form-control" })
+                    @Html.DisplayFor(model => model.Height, new {@class = "form-control"})
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.RootDepth, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.RootDepth, new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.DisplayFor(model => model.RootDepth, new { @class = "form-control" })
+                    @Html.DisplayFor(model => model.RootDepth, new {@class = "form-control"})
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.NutrientClaim, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.NutrientClaim, new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.DisplayFor(model => model.NutrientClaim, new { @class = "form-control" })
+                    @Html.DisplayFor(model => model.NutrientClaim, new {@class = "form-control"})
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.SowingDepth, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.SowingDepth, new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.DisplayFor(model => model.SowingDepth, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SowingDepth, "", new { @class = "text-danger" })
+                    @Html.DisplayFor(model => model.SowingDepth, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.SowingDepth, "", new {@class = "text-danger"})
                 </div>
             </div>
         </div>
     </div>
 
-@if (Model.Bloom.TimePeriods.Any() ||
-                    Model.Sowing.TimePeriods.Any() ||
-                    Model.SeedMaturity.TimePeriods.Any() ||
-                    Model.Harvest.TimePeriods.Any())
-{
+
     <div class="row panel-default">
         <div class="panel-heading">
             <h3>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h3>
         </div>
 
         <div class="content panel-body">
-            <div id="ganttTermine"></div>
-        </div>
-    </div>
-}
-<div class="row panel-default">
-    <div class="panel-heading">
-        <h3>Vorkultur <span class="containerSwitch fa fa-angle-double-up"></span></h3>
-    </div>
-    <div class="preculture content panel-body">
-        @Html.DisplayFor(model => model.PreCultures)
-    </div>
-</div>
-<div class="row panel-default">
-    <div class="panel-heading">
-        <h3>Nachkultur<span class="containerSwitch fa fa-angle-double-up"></span></h3>
-    </div>
-    <div class="afterculture content panel-body">
-        @Html.DisplayFor(model => model.AfterCultures)
-    </div>
-</div>
-
-<div class="row panel-default">
-    <div class="panel-heading">
-        <h3>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
-        </div>
-        <div class="content panel-body">
-            @if (Model.Interactions != null)
+            @if (Model.Bloom.TimePeriods.Any() ||
+                 Model.Sowing.TimePeriods.Any() ||
+                 Model.SeedMaturity.TimePeriods.Any() ||
+                 Model.Harvest.TimePeriods.Any())
             {
-                @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
-                @Html.DisplayFor(model => model.Interactions)
+                <div id="ganttTermine"></div>
             }
         </div>
     </div>
 
+    <div class="row panel-default">
+        <div class="panel-heading">
+            <h3>Vorkultur <span class="containerSwitch fa fa-angle-double-up"></span></h3>
+        </div>
+        <div class="preculture content panel-body">
+            @Html.DisplayFor(model => model.PreCultures)
+        </div>
+    </div>
 
-        <p>
-            @*<button class="fa fa-save" onclick="savePlant()"></button>*@
+    <div class="row panel-default">
+        <div class="panel-heading">
+            <h3>Nachkultur<span class="containerSwitch fa fa-angle-double-up"></span></h3>
+        </div>
+        <div class="afterculture content panel-body">
+            @Html.DisplayFor(model => model.AfterCultures)
+        </div>
+    </div>
 
-            @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-            @Html.ActionLink("Back to List", "Search", "Search")
+    <p>
+        @Html.ActionLink("Back to List", "Search", "Search")
 
-        </p>
+    </p>
 
-        <script type="text/javascript">
+</div>
+
+<script type="text/javascript">
             $(document).ready(function () {
 
 
-                //ac = autocomplete
-                $.get("/Subject/GetAllSubjects",
-                    function (response) {
-
-                        $(".mct-ac-subjects").autocomplete({
-                            source: response
-                        });
-                    },
-                    "json"
-                );
-
-                $.get("/Subject/GetAllScientificNamesResult",
-                    function (response) {
-
-                        $(".mct-ac-scientificnames").autocomplete({
-                            source: response
-                        });
-                    },
-                    "json"
-                );
-
-                $.get("/Subject/GetAllPredicates",
-                    function (response) {
-
-                        $(".mct-ac-predicates").autocomplete({
-                            source: response
-                        });
-                    },
-                    "json"
-                );
-
-
-
+                
                 //load gantt
                 var url = '@Url.Action("GetEventsForGantt", "Subject", new {id = @Model.Id})';
 
@@ -213,17 +136,4 @@
                     });
             })
 
-        </script>
-
-        <style type="text/css">
-            .row {
-                margin-bottom: 20px;
-            }
-
-            .speciesImage {
-                width: 390px;
-                height: 390px;
-                text-align: center;
-            }
-        </style>
-    </div>
+</script>

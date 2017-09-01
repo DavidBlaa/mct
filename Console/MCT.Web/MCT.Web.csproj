@@ -141,6 +141,7 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\ExtNetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InteractionController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -150,6 +151,7 @@
     </Compile>
     <Compile Include="Helpers\DataModelHelper.cs" />
     <Compile Include="Helpers\SeedDataGenerator.cs" />
+    <Compile Include="Models\DataTableModel.cs" />
     <Compile Include="Models\Data\DataModel.cs" />
     <Compile Include="Models\AnimalModel.cs" />
     <Compile Include="Models\ExtNetModel.cs" />
@@ -593,7 +595,6 @@
     <Content Include="Views\Shared\SubjectDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Interactions.cshtml" />
     <Content Include="Views\Shared\TimePeriod.cshtml" />
-    <Content Include="Views\Shared\Interaction.cshtml" />
     <Content Include="Views\Shared\SimpleLinkModel.cshtml" />
     <Content Include="Views\Shared\AnimalEdit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\InteractionModel.cshtml" />
@@ -601,6 +602,13 @@
     <Content Include="Views\Shared\DisplayTemplates\TimePeriods.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InteractionModel.cshtml" />
     <Content Include="Views\Tree\Index.cshtml" />
+    <Content Include="Views\Shared\_navbar.cshtml" />
+    <Content Include="Views\Shared\SpeciesDetails.cshtml" />
+    <Content Include="Views\Shared\SpeciesEdit.cshtml" />
+    <Content Include="Views\Interaction\Interactions.cshtml" />
+    <Content Include="Views\Interaction\InteractionElement_DELETE.cshtml" />
+    <Content Include="Views\Interaction\InteractionView.cshtml" />
+    <Content Include="Views\Interaction\InteractionEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -36,7 +36,7 @@
 <div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3" >
     <div class="@headerClassName header" >
         <h3 class="name col-lg-8 mct-species-title">
-        @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() })
+            @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new {})
         </h3>
         <div class="mct-button-icon-container">
             @Html.ActionLink(" ", "Edit", "Subject", new {id = Model.Id, type = @Model.Type.ToString()}, new {@class = "fa fa-pencil mct-button-icon"})

@@ -20,7 +20,7 @@ function deleteSubject(e)
 
     $.ajax({
         type: "POST",
-        url: "/Subject/DeleteSubject",
+        url: "/Subject/DeleteNode",
         data: data,
         dataType: "json",
         success: function (response) {
@@ -42,7 +42,7 @@ function deleteSubjectInSearch(e) {
 
     $.ajax({
         type: "POST",
-        url: "/Subject/DeleteSubject",
+        url: "/Subject/DeleteNode",
         data: data,
         dataType: "json",
         success: function (response) {
@@ -61,6 +61,7 @@ function deleteSubjectInSearch(e) {
 
 function savePlant() {
 
+    //alert("start saving");
 
     if ($("form").valid()) {
 
@@ -69,6 +70,7 @@ function savePlant() {
 
         var bloom = $("#bloom-list");
         var sowing = $("#sowing-list");
+
         var harvest = $("#harvest-list");
         var seedMaturity = $("#seedmaturity-list");
 
@@ -76,8 +78,15 @@ function savePlant() {
         var aftercultures = $(".afterculture .simplelinkmodel-list");
 
         //all tr of table
-        var interactionsFromSide = $(".interactions-table tr.interaction-row");
+        //var interactionsFromSide = $(".interactions-table tr.interaction-row");
 
+        console.log(bloom);
+        console.log(sowing);
+        console.log(harvest);
+        console.log(seedMaturity);
+        console.log(precultures);
+        console.log(aftercultures);
+        //console.log(interactionsFromSide);
 
         //var tmp = getSimpleLinksJSON(precultures);
         //console.log("tmp -> preculture");
@@ -104,24 +113,26 @@ function savePlant() {
 
         console.log(plant);
 
-        var interactions = getInteractionsJSON(interactionsFromSide);
+        //var interactions = getInteractionsJSON(interactionsFromSide);
 
 
         var data = {
             plant: plant,
-            interactions: interactions
+            //interactions: interactions
         };
 
-        console.log("DATA:");
+        //alert("DATA:");
         console.log(data);
-
+        //alert("bevor save");
         $.ajax({
             type: "POST",
             url: "/Subject/SavePlant",
             data: data,
             dataType: "html",
             success: function(response) {
-                
+
+
+                //alert(response);
                 var image = getImage();
 
                 if (image) {
@@ -166,7 +177,7 @@ function saveAnimal(e) {
 
 
         //all tr of table
-        var interactionsFromSide = $(".interactions-table tr.interaction-row");
+        //var interactionsFromSide = $(".interactions-table tr.interaction-row");
 
 
         //var tmp = getSimpleLinksJSON(precultures);
@@ -181,11 +192,11 @@ function saveAnimal(e) {
             Description: $("#animal #Description").val()
         };
 
-        var interactions = getInteractionsJSON(interactionsFromSide);
+        //var interactions = getInteractionsJSON(interactionsFromSide);
 
         var data = {
             animal: animal,
-            interactions: interactions
+            //interactions: interactions
         };
 
 
@@ -253,41 +264,44 @@ function getInteractionJSON(e)
      * $($($(".interactions-table tr.interaction-row")[0]).find("#Interactions_item_Predicate_Type")[0]).val()
         "Unknow"
      */
-    //console.log("interactionRow:  " + $(e));
-    //console.log($(e)[0].id);
+    console.log("interactionRow:  ");
+    console.log($(e));
+    console.log($(e)[0].id);
 
     var interaction = {
-        Id: $(e)[0].id,
-        Indicator: $(e).find("#Indicator").val(),
-        Subject: {
-            Id: $(e).find("#Subject_Id").val(),
-            Name: $(e).find("#Subject_Name").val(),
-            Type: $(e).find("#Subject_Type").val()
-        },
-        Predicate: {
-            Id: $(e).find("#Predicate_Id").val(),
-            Name: $(e).find("#Predicate_Name").val(),
+            Id : $(e)[0].id,
+                Indicator: $(e).find("#Indicator").val(),
+                Subject: {
+                    Id: $(e).find(".mct-interaction-subject #Subject_Id").val(),
+                    Name: $(e).find(".mct-interaction-subject #Subject_Name").val(),
+                    Type: $(e).find(".mct-interaction-subject #Subject_Type").val()
+                    },
+                Predicate: {
+                    Id: $(e).find(".mct-interaction-predicate #Predicate_Id").val(),
+                    Name: $(e).find(".mct-interaction-predicate #Predicate_Name").val(),
 
-            Parent: {
-                Name: $(e).find("#Predicate_ParentName").val()
-            }
-        },
-        Object: {
-            Id: $(e).find("#Object_Id").val(),
-            Name: $(e).find("#Object_Name").val(),
-            Type: $(e).find("#Object_Type").val()
-        },
-        ImpactSubject: {
+                    Parent: {
+                        Name: $(e).find(".mct-interaction-predicate #Predicate_ParentName").val()
+                    }
+                    },
+                Object: {
+                    Id: $(e).find(".mct-interaction-object #Object_Id").val(),
+                    Name: $(e).find(".mct-interaction-object #Object_Name").val(),
+                    Type: $(e).find(".mct-interaction-object #Object_Type").val()
+                    },
+                ImpactSubject: {
 
-            Id: $(e).find("#ImpactSubject_Id").val(),
-            Name: $(e).find("#ImpactSubject_Name").val(),
-            Type: $(e).find("#ImpactSubject_Type").val()
+                    Id: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Id").val(),
+                    Name: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Name").val(),
+                    Type: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Type").val()
 
-        },
+                }
 
-    };
-    
-    return interaction
+                };
+
+   
+
+    return interaction;
 }
 
 function getTimePeriodsJSON(source, parentid) {
@@ -413,15 +427,35 @@ function getImage() {
 
 /*** Interactions ***/
 
-    function addInteraction(e) {
+function saveInteractions() {
+    
+    var interactionsFromSide = $(".interactions-table tr.interaction-row");
+    var interactions = getInteractionsJSON(interactionsFromSide);
 
 
-        $.get("/Subject/GetEmptyInteraction",
+    $.ajax({
+        type: "POST",
+        url: "/Interaction/Save",
+        data: interactions,
+        dataType: "html",
+        success: function (response) {
+
+            alert("saved");
+        }
+    });
+
+
+}
+
+function addInteraction(e) {
+
+
+        $.get("/Interaction/GetEmptyInteraction",
             function(data) {
 
-                console.log(data)
-                var table = $(e).parent().find(".interactions-table tbody")[0];
-                $(table).append(data);
+                console.log(data);
+                var table = $(e).parent().find(".interactions-table tbody tr.interaction-row")[0];
+                $(table).prepend(data);
             });
         ////$($("table tbody")[0]).find("tr").last()
         //var table = $(e).parent().find(".interactions-table tbody")[0];

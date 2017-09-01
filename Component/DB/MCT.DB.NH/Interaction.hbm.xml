@@ -7,10 +7,10 @@
       <generator class="native" />
     </id>
 
-    <many-to-one name="Subject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="Subject" cascade="all" not-null="true" />
-    <many-to-one name="Predicate" class="MCT.DB.Entities.Predicate, MCT.DB.Entities" column="Predicate" cascade="all" not-null="true" />
-    <many-to-one name="Object" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="Object" cascade="all" not-null="true" />
-    <many-to-one name="ImpactSubject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="ImpactSubject" cascade="all" />
+    <many-to-one name="Subject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="Subject" not-null="true" />
+    <many-to-one name="Predicate" class="MCT.DB.Entities.Predicate, MCT.DB.Entities" column="Predicate" not-null="true" />
+    <many-to-one name="Object" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="Object" not-null="true" />
+    <many-to-one name="ImpactSubject" class="MCT.DB.Entities.Subject, MCT.DB.Entities" column="ImpactSubject" not-null="false" />
 
     <property name="Indicator" type="Int32"/>
     

@@ -1,5 +1,6 @@
-﻿using MCT.DB.Services;
-using MCT.IO;
+﻿using MCT.DB.Entities;
+using MCT.DB.Services;
+using System.Linq;
 using System.Web.Mvc;
 
 
@@ -10,7 +11,9 @@ namespace MCT.Web.Controllers
         // GET: Test
         public ActionResult Index()
         {
-            SubjectManager subjectManager = new SubjectManager();
+            testIntractions();
+
+            //SubjectManager subjectManager = new SubjectManager();
 
 
             //Subject subject = new Subject();
@@ -83,16 +86,48 @@ namespace MCT.Web.Controllers
             //NHibernateHelper.ReIndex();
             //NHibernateHelper.Search();
 
-            WikipediaReader wReader = new WikipediaReader();
 
-            var x = wReader.GetScientificName("Blumenkohl");
-
-            x = wReader.GetName("Brassica");
+            //WikipediaReader wReader = new WikipediaReader();
+            //var x = wReader.GetScientificName("Blumenkohl");
+            //x = wReader.GetName("Brassica");
 
 
             return View();
         }
 
+        private void testIntractions()
+        {
+            //SubjectManager subjectManager = new SubjectManager();
 
+
+            //Subject subject = new Subject();
+            //subject.Name = "ALTER FETTE SCHEIßE 3";
+            //subject.Description = "ES FUNKT 3";
+            //subjectManager.Create(subject);
+
+            //Subject Object = new Subject();
+            //Object.Name = "ALTER FETTE SCHEIßE 3";
+            //Object.Description = "ES FUNKT 3";
+            //subjectManager.Create(Object);
+
+            //Predicate positive =
+            //    subjectManager.GetAll<Predicate>().Where(p => p.Name.ToLower().Equals("positiv")).FirstOrDefault();
+
+            //Predicate predicate = new Predicate();
+            //predicate.Parent = positive;
+            //predicate.Name = "X";
+
+            //InteractionManager interactionManager = new InteractionManager();
+            //Interaction interaction = new Interaction();
+            //interaction.Subject = subject;
+            //interaction.Object = Object;
+            //interaction.Predicate = predicate;
+
+            //interactionManager.Create(interaction);
+            //interactionManager.Delete(interaction);
+
+
+
+        }
     }
 }

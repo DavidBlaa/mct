@@ -1,0 +1,76 @@
+﻿@model MCT.Web.Models.SpeciesModel
+
+@{
+    ViewBag.Title = Model.Type.ToString();
+}
+
+<div id="species">
+    @*Details*@
+    <div class="row panel-default">
+        <div id="DetailsHeader" class="panel-heading">
+            @Html.HiddenFor(m => m.Id)
+            <h2>
+                @Html.DisplayFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+            </h2>
+            @Html.ActionLink(" ", "Edit", new {id = Model.Id, type = @Model.Type.ToString()}, new {@class = "fa fa-pencil mct-button-icon "})
+            <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
+            <h3>@Html.DisplayFor(model => model.ScientificName, new {htmlAttributes = new {@class = "form-control"}})</h3>
+            @Html.DisplayFor(model => model.TaxonRank, new {@class = "form-control"})
+        </div>
+
+        <div id="DetailsContent" class="row panel-body panel-info">
+            <div id="Image" class="col-md-4">
+                <img src="@Model.ImagePath" class="speciesImage img-responsive "/>
+            </div>
+            <div class="col-md-8">
+                <div id="DescriptionContainer" class="panel-default">
+                    <div class="panel-heading">
+                        <h4>Beschreibung</h4>
+                    </div>
+
+                    @Html.DisplayFor(model => model.Description, new {@class = "form-control"})
+                </div>
+
+                <div id="TaxonRanks" class="panel-default">
+                    <div class="panel-heading">
+                        <h4>Taxon</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if (Model.Parent != null)
+                        {
+                            @Html.Partial("_taxonRankPartialView", Model.Parent)
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @*Interactions*@
+    <div class="row panel-default">
+        <div class="panel-heading">
+            <h3>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
+        </div>
+        <div class="content panel-body">
+            @if (Model.Interactions != null)
+            {
+                @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
+                @Html.DisplayFor(model => model.Interactions)
+            }
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+    .row {
+        margin-bottom: 20px;
+    }
+
+    .speciesImage {
+        width: 390px;
+        height: 390px;
+        text-align: center;
+    }
+</style>

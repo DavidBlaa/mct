@@ -1,0 +1,11 @@
+﻿@model MCT.Web.Models.InteractionElementModel
+
+
+
+
+@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+
+@Html.HiddenFor(modelItem => Model.Id)
+@Html.HiddenFor(modelItem => Model.Type)
+@Html.EditorFor(modelItem => Model.Name, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })

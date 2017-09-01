@@ -1,0 +1,43 @@
+﻿@using AjaxOptions = System.Web.Mvc.Ajax.AjaxOptions
+@model MCT.Web.Models.InteractionModel
+
+
+
+<tr id="@Model.Id" class="interaction-row">
+    <td>
+        @Html.EditorFor(modelItem => Model.Indicator, new {htmlAttributes = new {@class = "form-control"}})
+    </td>
+    <td>
+        <div class="mct-interaction-subject">
+
+            @Html.ValidationMessageFor(modelItem => Model.Subject.Name, "", new {@class = "text-danger"})
+
+
+            @Html.HiddenFor(modelItem => Model.Subject.Id)
+            @Html.HiddenFor(modelItem => Model.Subject.Type)
+            @Html.EditorFor(modelItem => Model.Subject.Name, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
+        </div>
+    </td>
+    <td>
+        <div class="mct-interaction-predicate">
+            @Html.HiddenFor(modelItem => Model.Predicate.Id)
+            @Html.EditorFor(modelItem => Model.Predicate.Name, new {htmlAttributes = new {@class = "form-control mct-ac-predicates"}})
+
+            @Html.DropDownListFor(modelItem => Model.Predicate.ParentName, new SelectList(new List<string> {"positiv", "negativ"}, Model.Predicate.ParentName), new {@class = "form-control dropdown"})
+        </div>
+    </td>
+    <td>
+        <div class="mct-interaction-object">
+            @Html.HiddenFor(modelItem => Model.Object.Id)
+            @Html.HiddenFor(modelItem => Model.Object.Type)
+            @Html.EditorFor(modelItem => Model.Object.Name, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
+        </div>
+    </td>
+    <td>
+        <div class="mct-interaction-impactsubject">
+            @Html.HiddenFor(modelItem => Model.ImpactSubject.Id)
+            @Html.HiddenFor(modelItem => Model.ImpactSubject.Type)
+            @Html.EditorFor(modelItem => Model.ImpactSubject.Name, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
+        </div>
+    </td>
+</tr>

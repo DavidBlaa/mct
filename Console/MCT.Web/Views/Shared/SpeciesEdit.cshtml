@@ -1,0 +1,69 @@
+﻿@using AjaxOptions = System.Web.Mvc.Ajax.AjaxOptions
+@model MCT.Web.Models.SpeciesModel
+
+
+<div id="species">
+    @using (Ajax.BeginForm("X", "Subject", new AjaxOptions
+    {
+
+    }))
+    {
+        @*Details*@
+        <div class="row panel-default ">
+            <div id="DetailsHeader" class="panel-heading">
+
+                @Html.HiddenFor(m => m.Id)
+
+                <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
+
+                <h2>
+                    @Html.Hidden("initName", Model.Name)
+                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                </h2>
+                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+
+                <h3>
+                    @Html.Hidden("initScientificName", Model.ScientificName)
+                    @Html.EditorFor(model => model.ScientificName, new {htmlAttributes = new {@class = "form-control"}})
+                </h3>
+                @Html.ValidationMessageFor(model => model.ScientificName, "", new {@class = "text-danger"})
+
+                @Html.EnumDropDownListFor(model => model.TaxonRank, new {@class = "form-control dropdown"})
+                @Html.ValidationMessageFor(model => model.TaxonRank, "", new {@class = "text-danger"})
+
+
+            </div>
+
+            <div id="DetailsContent" class="row panel-body panel-info">
+                <div id="Image" class="col-md-4">
+                    <img id="previewImage" src="@Model.ImagePath" class="speciesImage img-responsive "/>
+                    <input id="previewImageInput" type="file" data-target="previewImage" class="file-input"/>
+                </div>
+                <div class="col-md-8">
+                    <div id="DescriptionContainer" class="panel-default">
+                        <div class="panel-heading">
+                            <h4>Beschreibung</h4>
+                        </div>
+                        <div class="panel-body">
+                            @Html.TextAreaFor(model => model.Description, new {@class = "form-control"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Interactions*@
+        @*<div class="row panel-default">
+            <div class="panel-heading">
+                <h3>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
+            </div>
+            <div class="content panel-body">
+                @if (Model.Interactions != null)
+                {
+                    @Html.Partial("Interactions", Model.Interactions)
+                }
+
+            </div>
+        </div>*@
+    }
+</div>

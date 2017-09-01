@@ -1,0 +1,30 @@
+﻿@using AjaxOptions = System.Web.Mvc.Ajax.AjaxOptions
+@model MCT.Web.Models.InteractionModel
+
+
+
+<tr id="@Model.Id" class="interaction-row">
+    <td>
+        @Html.DisplayFor(modelItem => Model.Indicator)
+    </td>
+    <td>
+        <div class="mct-interaction-subject">
+            @Html.DisplayFor(modelItem => Model.Subject.Name)
+        </div>
+    </td>
+    <td>
+        <div class="mct-interaction-predicate">
+            @Html.DisplayFor(modelItem => Model.Predicate.Name)
+        </div>
+    </td>
+    <td>
+        <div class="mct-interaction-object">
+            @Html.DisplayFor(modelItem => Model.Object.Name)
+        </div>
+    </td>
+    <td>
+        <div class="mct-interaction-impactsubject">
+            @Html.DisplayFor(modelItem => Model.ImpactSubject.Name)
+        </div>
+    </td>
+</tr>

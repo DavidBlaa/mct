@@ -14,7 +14,7 @@ namespace MCT.Web.Models
         public long Id { get; set; }
 
         [Required]
-        [Remote("CheckNameExist", "Subject", ErrorMessage = "Name existiert bereits.", AdditionalFields = "initScientificName")]
+        [Remote("CheckNameExist", "Subject", ErrorMessage = "Name existiert bereits.", AdditionalFields = "initName")]
         public String Name { get; set; }
         public String Description { get; set; }
         public String ImagePath { get; set; }
@@ -127,10 +127,45 @@ namespace MCT.Web.Models
 
     }
 
+    public class InteractionViewModel
+    {
+        public long Id { get; set; }
+        public string Subject { get; set; }
+        public string Predicate { get; set; }
+        public string Object { get; set; }
+        public string ImpactSubject { get; set; }
+        public Int32 Indicator { get; set; }
+
+        public InteractionViewModel()
+        {
+            Id = 0;
+            Indicator = 0;
+            Subject = "";
+            Object = "";
+            ImpactSubject = "";
+            Predicate = "";
+        }
+
+        public static InteractionViewModel Convert(Interaction interaction)
+        {
+            return new InteractionViewModel()
+            {
+                Id = interaction.Id,
+                Subject = interaction.Subject == null ? "" : interaction.Subject.Name,
+                Predicate = interaction.Predicate == null ? "" : interaction.Predicate.Name,
+                Object = interaction.Object == null ? "" : interaction.Object.Name,
+                ImpactSubject = interaction.ImpactSubject == null ? "" : interaction.ImpactSubject.Name,
+                Indicator = interaction.Indicator,
+            };
+        }
+
+    }
+
     public class SimpleLinkModel
     {
         public long Id { get; set; }
         [Required]
+        [Remote("CheckNameOfSimpleLink", "Interaction", ErrorMessage = "Name existiert bereits.")]
         public String Name { get; set; }
         [Required]
         public SubjectType Type { get; set; }

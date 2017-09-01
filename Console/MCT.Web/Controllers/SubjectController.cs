@@ -294,16 +294,27 @@ namespace MCT.Web.Controllers
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
 
-            return Json("x");
+            return Json("x", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DeleteSubject(long id)
+
+        public ActionResult DeleteNode(long id)
         {
             try
             {
                 SubjectManager subjectManager = new SubjectManager();
-                Subject subject = subjectManager.Get(Convert.ToInt64(id));
-                subjectManager.Delete(subject);
+                //InteractionManager interactionManager = new InteractionManager();
+                Node node = subjectManager.GetAllAsQueryable<Node>().Where(n => n.Id.Equals(Convert.ToInt64(id))).FirstOrDefault();
+
+                //remove all dependend interacions
+                //var interactions = subjectManager.GetAllDependingInteractions(node).ToList();
+
+                //for (int i = 0; i < interactions.Count(); i++)
+                //{
+                //    interactionManager.Delete(interactions[i]);
+                //}
+
+                subjectManager.DeleteNode(node);
 
                 return Json(true);
 
@@ -314,7 +325,7 @@ namespace MCT.Web.Controllers
             }
         }
 
-        public ActionResult SavePlant(Plant plant, List<Interaction> interactions)
+        public ActionResult SavePlant(Plant plant)
         {
             try
             {
@@ -377,29 +388,7 @@ namespace MCT.Web.Controllers
                 else
                 {
                     subjectManager.Update(plant);
-                    if (interactions != null)
-                    {
-
-                        //Delete interactions
-                        IEnumerable<Interaction> interactionListFromDB =
-                            subjectManager.GetAllDependingInteractions(plant);
-                        for (int i = 0; i < interactionListFromDB.Count(); i++)
-                        {
-                            Interaction tmp = interactionListFromDB.ElementAt(i);
-                            if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
-                                interactionManager.Delete(tmp);
-                        }
-                    }
-
                 }
-
-                #region save or update interactions
-
-                saveOrUpdateInteractions(interactions);
-
-                #endregion
-
-                //save or update interactions
 
                 return Json(plant.Id, JsonRequestBehavior.AllowGet);
             }
@@ -409,7 +398,7 @@ namespace MCT.Web.Controllers
             }
         }
 
-        public ActionResult SaveAnimal(Animal animal, List<Interaction> interactions = null)
+        public ActionResult SaveAnimal(Animal animal)
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
@@ -434,26 +423,8 @@ namespace MCT.Web.Controllers
             else
             {
                 subjectManager.Update(animal);
-                if (interactions != null)
-                {
-                    //Delete interactions
-                    IEnumerable<Interaction> interactionListFromDB = subjectManager.GetAllDependingInteractions(animal);
-                    for (int i = 0; i < interactionListFromDB.Count(); i++)
-                    {
-                        Interaction tmp = interactionListFromDB.ElementAt(i);
-                        if (!interactions.Any(x => x.Id.Equals(tmp.Id)))
-                            interactionManager.Delete(tmp);
-                    }
-                }
-
             }
 
-            #region save or update interactions
-
-            saveOrUpdateInteractions(interactions);
-
-            #endregion
-            //save or update interactions
 
             return Json(animal.Id, JsonRequestBehavior.AllowGet);
         }
@@ -495,10 +466,10 @@ namespace MCT.Web.Controllers
             catch (Exception)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("Upload failed");
+                return Json("Upload failed", JsonRequestBehavior.AllowGet);
             }
 
-            return Json("File uploaded successfully");
+            return Json("File uploaded successfully", JsonRequestBehavior.AllowGet);
         }
 
         //ToDo Function --> InteractionManager
@@ -510,11 +481,20 @@ namespace MCT.Web.Controllers
 
             if (interactions != null && interactions.Any())
             {
+                List<Subject> all = subjectManager.GetAll<Subject>().ToList();
+                List<Predicate> allPredicates = subjectManager.GetAll<Predicate>().ToList();
 
                 foreach (var interaction in interactions)
                 {
-                    List<Subject> all = subjectManager.GetAll<Subject>().ToList();
-                    List<Predicate> allPredicates = subjectManager.GetAll<Predicate>().ToList();
+
+                    Interaction targetInteraction = interaction;
+
+                    //ToDO Check if all interactions null
+
+                    if (interaction.Id > 0)
+                    {
+                        targetInteraction = interactionManager.Get(interaction.Id);
+                    }
 
                     //check if all entities has a 0 id, then it needs to create first
                     if (interaction.Subject != null && interaction.Subject.Id == 0)
@@ -522,10 +502,10 @@ namespace MCT.Web.Controllers
                         if (all.Where(s => s.Name.Equals(interaction.Subject.Name)).Any())
                         {
                             var obj = all.Where(s => s.Name.Equals(interaction.Subject.Name)).FirstOrDefault();
-                            interaction.Subject = obj;
+                            targetInteraction.Subject = obj;
                         }
                         else
-                            interaction.Subject = subjectManager.Create(interaction.Subject);
+                            targetInteraction.Subject = subjectManager.Create(interaction.Subject);
                     }
 
                     if (interaction.Object != null && interaction.Object.Id == 0)
@@ -533,10 +513,10 @@ namespace MCT.Web.Controllers
                         if (all.Where(s => s.Name.Equals(interaction.Object.Name)).Any())
                         {
                             var obj = all.Where(s => s.Name.Equals(interaction.Object.Name)).FirstOrDefault();
-                            interaction.Object = obj;
+                            targetInteraction.Object = obj;
                         }
                         else
-                            interaction.Object = subjectManager.Create(interaction.Object);
+                            targetInteraction.Object = subjectManager.Create(interaction.Object);
 
                     }
 
@@ -551,9 +531,14 @@ namespace MCT.Web.Controllers
                         {
                             if (interaction.Predicate.Parent.Id == 0)
                             {
-                                interaction.Predicate.Parent.Id = allPredicates.Where(p => p.Name.Equals(interaction.Predicate.Parent.Name)).FirstOrDefault().Id;
+                                Predicate predicate =
+                                    allPredicates.Where(p => p.Name.Equals(interaction.Predicate.Parent.Name))
+                                        .FirstOrDefault();
+                                if (predicate != null)
+                                    targetInteraction.Predicate.Parent.Id = predicate.Id;
+
                             }
-                            interaction.Predicate = subjectManager.Create(interaction.Predicate);
+                            targetInteraction.Predicate = subjectManager.Create(interaction.Predicate);
 
                         }
                     }
@@ -563,18 +548,18 @@ namespace MCT.Web.Controllers
                         if (all.Where(s => s.Name.Equals(interaction.ImpactSubject.Name)).Any())
                         {
                             var obj = all.Where(s => s.Name.Equals(interaction.ImpactSubject.Name)).FirstOrDefault();
-                            interaction.ImpactSubject = obj;
+                            targetInteraction.ImpactSubject = obj;
                         }
                         else
-                            interaction.ImpactSubject = subjectManager.Create(interaction.ImpactSubject);
+                            targetInteraction.ImpactSubject = subjectManager.Create(interaction.ImpactSubject);
 
                     }
                     else
                     {
-                        interaction.ImpactSubject = null;
+                        targetInteraction.ImpactSubject = null;
                     }
 
-                    interactionManager.Update(interaction);
+                    interactionManager.Update(targetInteraction);
                 }
 
             }
@@ -613,10 +598,7 @@ namespace MCT.Web.Controllers
             return PartialView("SimpleLinkModel", new SimpleLinkModel());
         }
 
-        public ActionResult GetEmptyInteraction()
-        {
-            return PartialView("Interaction", new InteractionModel());
-        }
+
 
         /// <summary>
         /// Check if Name exist
@@ -627,7 +609,10 @@ namespace MCT.Web.Controllers
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(name) && !n.Name.Equals(initName))) return Json(false, JsonRequestBehavior.AllowGet);
+            string defaultstring = "";
+            if (!String.IsNullOrEmpty(initName)) defaultstring = initName;
+
+            if (subjectManager.GetAll<Node>().Any(n => n.Name != null && n.Name.Equals(name) && !n.Name.Equals(defaultstring))) return Json(false, JsonRequestBehavior.AllowGet);
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
@@ -640,10 +625,27 @@ namespace MCT.Web.Controllers
         public ActionResult CheckScientificNameExist(string scientificName, string initScientificName)
         {
             SubjectManager subjectManager = new SubjectManager();
+            string defaultstring = "";
+            if (!String.IsNullOrEmpty(initScientificName)) defaultstring = initScientificName;
 
-            if (subjectManager.GetAll<Node>().Any(n => n.ScientificName.Equals(scientificName) && !n.ScientificName.Equals(initScientificName))) return Json(false, JsonRequestBehavior.AllowGet);
+
+            if (subjectManager.GetAll<Node>().Any(n => n.ScientificName != null && n.ScientificName.Equals(scientificName) && !n.ScientificName.Equals(defaultstring))) return Json(false, JsonRequestBehavior.AllowGet);
 
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Check if Name exist, returns true if exist
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CheckNameOfSimpleLink(string name)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+
+            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(name))) return Json(true, JsonRequestBehavior.AllowGet);
+
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
