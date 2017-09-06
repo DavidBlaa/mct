@@ -90,10 +90,18 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.NutrientClaim, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.NutrientClaim, htmlAttributes: new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.NutrientClaim, new { @class = "form-control dropdown" })
-                        @Html.ValidationMessageFor(model => model.NutrientClaim, "", new { @class = "text-danger" })
+                        @Html.EnumDropDownListFor(model => model.NutrientClaim, new {@class = "form-control dropdown"})
+                        @Html.ValidationMessageFor(model => model.NutrientClaim, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LocationType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.LocationType, new { @class = "form-control dropdown" })
+                        @Html.ValidationMessageFor(model => model.LocationType, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

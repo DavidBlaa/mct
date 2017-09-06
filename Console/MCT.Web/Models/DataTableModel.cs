@@ -7,8 +7,7 @@ namespace MCT.Web.Models
         public int draw { get; set; }
         public int start { get; set; }
         public int length { get; set; }
-        public string search { get; set; }
-        public object columns { get; set; }
+   
 
         //public int iDisplayStart { get; set; }
         //public int iDisplayLength { get; set; }

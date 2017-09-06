@@ -1,43 +1,125 @@
-﻿@using AjaxOptions = System.Web.Mvc.Ajax.AjaxOptions
-@model MCT.Web.Models.InteractionModel
+﻿@model MCT.Web.Models.InteractionSimpleModel
+
+@{
+    string title = "";
+
+    if (Model.Id > 0)
+    {
+        title = "Edit Interaction";
+    }
+    else
+    {
+        title = "Create Interaction";
+    }
+}
 
 
-
-<tr id="@Model.Id" class="interaction-row">
-    <td>
-        @Html.EditorFor(modelItem => Model.Indicator, new {htmlAttributes = new {@class = "form-control"}})
-    </td>
-    <td>
-        <div class="mct-interaction-subject">
-
-            @Html.ValidationMessageFor(modelItem => Model.Subject.Name, "", new {@class = "text-danger"})
-
-
-            @Html.HiddenFor(modelItem => Model.Subject.Id)
-            @Html.HiddenFor(modelItem => Model.Subject.Type)
-            @Html.EditorFor(modelItem => Model.Subject.Name, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
+@using (@Html.BeginForm("Save", "Interaction"))
+{
+    <div class="row panel-default panel-info">
+        <div class="panel-heading">
+            <h3>@title </h3>
         </div>
-    </td>
-    <td>
-        <div class="mct-interaction-predicate">
-            @Html.HiddenFor(modelItem => Model.Predicate.Id)
-            @Html.EditorFor(modelItem => Model.Predicate.Name, new {htmlAttributes = new {@class = "form-control mct-ac-predicates"}})
 
-            @Html.DropDownListFor(modelItem => Model.Predicate.ParentName, new SelectList(new List<string> {"positiv", "negativ"}, Model.Predicate.ParentName), new {@class = "form-control dropdown"})
+        @Html.HiddenFor(m=>m.Id)
+
+        <div class="content col-md-8 panel-body">
+
+            <div class="form-group row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Subject, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
+                </div>
+                <div class="col-md-4">
+                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Predicate, htmlAttributes: new {@class = "control-label col-md-2"})
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Predicate, new {htmlAttributes = new {@class = "form-control mct-ac-predicates"}})
+                </div>
+                <div class="col-md-4">
+                    @Html.ValidationMessageFor(model => model.Predicate, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Object, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Object, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+                </div>
+                <div class="col-md-4">
+                    @Html.ValidationMessageFor(model => model.Object, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.ImpactSubject, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.ImpactSubject, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+                </div>
+                <div class="col-md-4">
+                    @Html.ValidationMessageFor(model => model.ImpactSubject, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Indicator, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Indicator, new { htmlAttributes = new { @class = "form-control " } })
+                </div>
+                <div class="col-md-4">
+                    @Html.ValidationMessageFor(model => model.Indicator, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
         </div>
-    </td>
-    <td>
-        <div class="mct-interaction-object">
-            @Html.HiddenFor(modelItem => Model.Object.Id)
-            @Html.HiddenFor(modelItem => Model.Object.Type)
-            @Html.EditorFor(modelItem => Model.Object.Name, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
-        </div>
-    </td>
-    <td>
-        <div class="mct-interaction-impactsubject">
-            @Html.HiddenFor(modelItem => Model.ImpactSubject.Id)
-            @Html.HiddenFor(modelItem => Model.ImpactSubject.Type)
-            @Html.EditorFor(modelItem => Model.ImpactSubject.Name, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
-        </div>
-    </td>
-</tr>
+    </div>
+
+<button type="submit">save</button>
+}
+
+<script>
+            $(document)
+                .ready(function () {
+
+                    //ac = autocomplete
+                    $.get("/Interaction/GetAllSubjects",
+                        function (response) {
+
+                            $(".mct-ac-subjects")
+                                .autocomplete({
+                                    source: response
+                                });
+                        },
+                        "json"
+                    );
+
+                    $.get("/Interaction/GetAllPredicates",
+                        function (response) {
+
+                            $(".mct-ac-predicates")
+                                .autocomplete({
+                                    source: response
+                                });
+                        },
+                        "json"
+                    );
+                })
+
+</script>
+</script>

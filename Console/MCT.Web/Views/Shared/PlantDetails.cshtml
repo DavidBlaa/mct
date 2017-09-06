@@ -43,12 +43,17 @@
                     @Html.DisplayFor(model => model.NutrientClaim, new {@class = "form-control"})
                 </div>
             </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.LocationType, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.LocationType, new { @class = "form-control" })
+                </div>
+            </div>
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.SowingDepth, new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
                     @Html.DisplayFor(model => model.SowingDepth, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.SowingDepth, "", new {@class = "text-danger"})
                 </div>
             </div>
         </div>

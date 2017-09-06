@@ -11,22 +11,34 @@ namespace MCT.Web.Models
     {
         public double Width { get; set; }
         public double Height { get; set; }
+        [Display(Name = "Wurzeltiefe")]
         public RootDepth RootDepth { get; set; }
+        [Display(Name = "Nähstoff Anspruch")]
         public NutrientClaim NutrientClaim { get; set; }
+        [Display(Name = "Standort")]
+        public LocationType LocationType { get; set; }
+
+        [Display(Name = "Sähtiefe")]
         public int SowingDepth { get; set; }
 
         [UIHint("TimePeriods")]
+        [Display(Name = "Sähen")]
         public TimePeriodListModel Sowing { get; set; }
         [UIHint("TimePeriods")]
+        [Display(Name = "Ernten")]
         public TimePeriodListModel Harvest { get; set; }
         [UIHint("TimePeriods")]
+        [Display(Name = "Blühen")]
         public TimePeriodListModel Bloom { get; set; }
         [UIHint("TimePeriods")]
+        [Display(Name = "Samen Reife")]
         public TimePeriodListModel SeedMaturity { get; set; }
-
         [UIHint("SimpleLinkModelList")]
+        [Display(Name = "Vorkultur")]
+
         public virtual List<SimpleLinkModel> PreCultures { get; set; }
         [UIHint("SimpleLinkModelList")]
+        [Display(Name = "Nachkultur")]
         public virtual List<SimpleLinkModel> AfterCultures { get; set; }
 
         public PlantModel()
@@ -74,6 +86,7 @@ namespace MCT.Web.Models
             model.Height = plant.Height;
             model.NutrientClaim = plant.NutrientClaim;
             model.RootDepth = plant.RootDepth;
+            model.LocationType = plant.LocationType;
 
             #region Dates
 

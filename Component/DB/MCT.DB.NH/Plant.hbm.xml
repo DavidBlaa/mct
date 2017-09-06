@@ -9,6 +9,7 @@
     <property name="Height" type="Double"/>
     <property name="RootDepth" type="RootDepth"/>
     <property name="NutrientClaim" type="NutrientClaim"/>
+    <property name="LocationType" type="LocationType"/>
     <property name="SowingDepth" type="Int32"/>
 
     <!--//Vorzucht-->

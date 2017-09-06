@@ -13,6 +13,7 @@ namespace MCT.DB.Entities
         public virtual double Height { get; set; }
         public virtual RootDepth RootDepth { get; set; }
         public virtual NutrientClaim NutrientClaim { get; set; }
+        public virtual LocationType LocationType { get; set; }
         public virtual int SowingDepth { get; set; }
 
         #endregion
@@ -44,6 +45,7 @@ namespace MCT.DB.Entities
             AfterCultures = new List<Plant>();
             RootDepth = RootDepth.Empty;
             NutrientClaim = NutrientClaim.Empty;
+            LocationType = LocationType.Unknown;
             Width = 0;
             Height = 0;
         }
@@ -93,6 +95,14 @@ namespace MCT.DB.Entities
         }
 
 
+    }
+
+    public enum LocationType
+    {
+        Unknown,
+        Sunny,
+        Shady,
+        PartialShade
     }
 
     public enum RootDepth

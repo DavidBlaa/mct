@@ -156,6 +156,7 @@
     <Compile Include="Models\AnimalModel.cs" />
     <Compile Include="Models\ExtNetModel.cs" />
     <Compile Include="Models\FilterModel.cs" />
+    <Compile Include="Models\InteractionModels.cs" />
     <Compile Include="Models\SimpleNodeViewModel.cs" />
     <Compile Include="Models\SpeciesModel.cs" />
     <Compile Include="Models\PlantModel.cs" />
@@ -609,6 +610,7 @@
     <Content Include="Views\Interaction\InteractionElement_DELETE.cshtml" />
     <Content Include="Views\Interaction\InteractionView.cshtml" />
     <Content Include="Views\Interaction\InteractionEdit.cshtml" />
+    <Content Include="Views\Interaction\InteractionEditRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
