@@ -12,12 +12,13 @@ namespace MCT.Web.Controllers
     public class InteractionController : Controller
     {
         public static string ALL_SUBJECTS = "ALL_SUBJECTS";
-        public static string ALL_SCIENTIFIC_NAMES = "ALL_SCIENTIFIC_NAMES";
         public static string ALL_PREDICATES = "ALL_PREDICATES";
 
         // GET: Interaction
         public ActionResult ShowInteractions()
         {
+            Session[ALL_SUBJECTS] = null;
+            Session[ALL_PREDICATES] = null;
 
             return View("Interactions");
         }
@@ -163,11 +164,6 @@ namespace MCT.Web.Controllers
             return Json(getAllSubjectNames(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetAllScientificNamesResult()
-        {
-            return Json(getAllScientficNames(), JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult GetAllPredicates()
         {
             return Json(getAllPredicateNames(), JsonRequestBehavior.AllowGet);
@@ -193,24 +189,6 @@ namespace MCT.Web.Controllers
             return tmp;
         }
 
-        private List<string> getAllScientficNames()
-        {
-            if (Session[ALL_SCIENTIFIC_NAMES] == null)
-            {
-                SubjectManager subjectManager = new SubjectManager();
-
-                //ToDo change the position of load this
-                //load Viewdata
-                // load all subject for autocomplete
-                Session[ALL_SCIENTIFIC_NAMES] = subjectManager.GetAll<Species>().Select(s => s.ScientificName).ToList();
-                //Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name);
-            }
-
-            List<string> tmp = Session[ALL_SCIENTIFIC_NAMES] as List<string>;
-            tmp.Sort();
-            return tmp;
-        }
-
         private List<string> getAllPredicateNames()
         {
             if (Session[ALL_PREDICATES] == null)
@@ -220,7 +198,7 @@ namespace MCT.Web.Controllers
                 //ToDo change the position of load this
                 //load Viewdata
                 // load all subject for autocomplete
-                Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name);
+                Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name).ToList();
                 //Session[ALL_PREDICATES] = subjectManager.GetAll<Predicate>().Select(s => s.Name);
             }
 
@@ -230,17 +208,6 @@ namespace MCT.Web.Controllers
 
         }
 
-        private List<string> getAllNames()
-        {
-            List<string> tmp = getAllSubjectNames();
-            if (getAllScientficNames() != null && getAllScientficNames().Any())
-                tmp = tmp.Concat(getAllScientficNames()).ToList();
-            if (getAllPredicateNames() != null && getAllPredicateNames().Any())
-                tmp = tmp.Concat(getAllPredicateNames()).ToList();
-
-            tmp.Sort();
-            return tmp;
-        }
 
         #endregion
 
