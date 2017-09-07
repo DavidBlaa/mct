@@ -5,11 +5,26 @@
 
     if (Model.Id > 0)
     {
-        title = "Edit Interaction";
+        title = "Bearbeite Interaktion (" +@Model.Id+")";
     }
     else
     {
-        title = "Create Interaction";
+        title = "Neue Interaktion";
+    }
+
+    string message = "";
+    bool success = false;
+
+
+    if (ViewData["Status"] != null)
+    {
+
+        message = ViewData["Status"].ToString();
+
+        if (message == "gespeichert")
+        {
+            success = true;
+        }
     }
 }
 
@@ -20,6 +35,26 @@
         <div class="panel-heading">
             <h3>@title </h3>
         </div>
+        
+        @if (ViewData["Status"] != null)
+        {
+            if (success == true)
+            {
+                <div class="alert alert-success">
+                    <strong>Interaction</strong> wurde Erfolgreich gespreichert.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <strong>Fehler!</strong> @message
+                </div>
+            }
+        }
+
+        
+
+        
 
         @Html.HiddenFor(m=>m.Id)
 
@@ -91,7 +126,15 @@
         </div>
     </div>
 
-<button type="submit">save</button>
+<button type="submit" class="btn btn-primary" >save</button>
+
+<button type="button" class="btn btn-default">@Html.ActionLink("Neue Interaktion erstellen", "Edit", "Interaction")</button>
+<button type="button" class="btn btn-default">@Html.ActionLink("Alle Interaktionen", "ShowInteractions", "Interaction")</button>
+<button type="button" class="btn btn-default">@Html.ActionLink("Create Plant", "CreatePlant", "Subject")</button>
+<button type="button" class="btn btn-default">@Html.ActionLink("Create Animal", "CreateAnimal", "Subject")</button>
+
+
+
 }
 
 <script>

@@ -89,12 +89,79 @@ namespace MCT.Web.Controllers
 
         public ActionResult Save(InteractionSimpleModel model)
         {
+            SubjectManager subjectManager = new SubjectManager();
+            InteractionManager interactionManager = new InteractionManager();
 
+            IEnumerable<Subject> all = subjectManager.GetAll<Subject>();
+            IEnumerable<Predicate> allPredicates = subjectManager.GetAll<Predicate>();
 
+            Interaction targetInteraction = new Interaction();
 
+            //ToDO Check if all interactions null
+
+            if (model.Id > 0)
+            {
+                targetInteraction = interactionManager.Get(model.Id);
+            }
+
+            //check if all entities has a 0 id, then it needs to create first
+            if (!String.IsNullOrEmpty(model.Subject))
+            {
+                if (all.Where(s => s.Name.Equals(model.Subject)).Any())
+                {
+                    var obj = all.Where(s => s.Name.Equals(model.Subject)).FirstOrDefault();
+                    targetInteraction.Subject = obj;
+                }
+            }
+
+            if (!String.IsNullOrEmpty(model.Object))
+            {
+                if (all.Where(s => s.Name.Equals(model.Object)).Any())
+                {
+                    var obj = all.Where(s => s.Name.Equals(model.Object)).FirstOrDefault();
+                    targetInteraction.Object = obj;
+                }
+            }
+
+            if (!String.IsNullOrEmpty(model.Predicate))
+            {
+                if (allPredicates.Where(s => s.Name.Equals(model.Predicate)).Any())
+                {
+                    var obj = allPredicates.Where(s => s.Name.Equals(model.Predicate)).FirstOrDefault();
+                    targetInteraction.Predicate = obj;
+                }
+            }
+
+            if (!String.IsNullOrEmpty(model.ImpactSubject))
+            {
+                if (all.Where(s => s.Name.Equals(model.ImpactSubject)).Any())
+                {
+                    var obj = all.Where(s => s.Name.Equals(model.ImpactSubject)).FirstOrDefault();
+                    targetInteraction.ImpactSubject = obj;
+                }
+            }
+
+            if (model.Indicator > -1)
+            {
+                targetInteraction.Indicator = model.Indicator;
+                ViewData["Status"] = "gespeichert";
+            }
+
+            try
+            {
+                interactionManager.Update(targetInteraction);
+                model = InteractionSimpleModel.Convert(targetInteraction);
+
+            }
+            catch (Exception ex)
+            {
+                ViewData["Status"] = ex.Message;
+
+            }
 
             return View("InteractionEdit", model);
         }
+
 
         public ActionResult Delete(long Id)
         {
