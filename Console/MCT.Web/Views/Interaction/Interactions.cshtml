@@ -11,6 +11,7 @@
         <th>Object</th>
         <th>ImpactObject</th>
         <th>Indicator</th>
+        <th></th>
     </tr>
     </thead>
 
@@ -22,6 +23,7 @@
             <th>Object</th>
             <th>ImpactObject</th>
             <th>Indicator</th>
+            <th></th>
         </tr>
     </tfoot>
 </table>
@@ -29,25 +31,48 @@
 <script>
     $(document)
         .ready(function () {
-            $('#interactions-table')
+            var table = $('#interactions-table')
                 .DataTable(
                 {
                     processing: true,
                     serverSide: true,
                     ajax: {
-                        "url":"/Interaction/Load",
+                        "url": "/Interaction/Load",
                         "type": "POST"
-                    }
-                    ,
+                    },
                     columns: [
-                        { data: 'Id' },
-                        { data: 'Subject' },
-                        { data: 'Predicate' },
-                        { data: 'Object' },
-                        { data: 'ImpactSubject' },
-                        { data: 'Indicator' }
+                    { data: 'Id' },
+                    { data: 'Subject' },
+                    { data: 'Predicate' },
+                    { data: 'Object' },
+                    { data: 'ImpactSubject' },
+                    { data: 'Indicator' },
+                    {
+                        targets: [7],
+                        render: function(data, type, row) {
+                            console.log(row);
+                            return "<button class=\"mct-grid-bt btn btn-default\"><a href=Edit/" + row.Id + ">Edit</a></button> <button class=\"mct-grid-bt btn btn-default\"> <a href=Delete/" + row.Id + ">Delete</a></button>";
+                        }
+
+                    }
                     ]
                 });
+
+            //$("#interactions-table tbody").on("click", "button", function () {
+
+            //    var data = table.row($(this).parent('tr')).data();
+            //    console.log(data[0]);
+
+            //});
         });
+
+  
 </script>
+<style type="text/css">
+    .mct-grid-bt {
+        text-decoration:none;
+        padding:2p;
+        margin:2px;
+    }
+</style>
 

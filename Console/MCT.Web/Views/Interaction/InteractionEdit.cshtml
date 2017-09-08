@@ -158,6 +158,8 @@
         $.get("/Interaction/GetAllSubjects",
             function (response) {
 
+                console.log(response);
+
                 $(".mct-ac-subjects")
                     .autocomplete({
                         source: response

@@ -2,7 +2,7 @@
 
 namespace MCT.DB.Entities
 {
-    public class Node:Subject
+    public class Node : Subject
     {
         public virtual String ScientificName { get; set; }
         public virtual TaxonRank Rank { get; set; }
@@ -23,7 +23,7 @@ namespace MCT.DB.Entities
     //Art	            Species	            Wildkatze
     //Unterart	        Subspecies	        Hauskatze
     public enum TaxonRank
-    { 
+    {
         SubSpecies,
         Species,
         Genus,

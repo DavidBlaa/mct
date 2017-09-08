@@ -4,8 +4,8 @@ using MCT.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web.Mvc;
-using Node = MCT.DB.Entities.Node;
 
 namespace MCT.Web.Controllers
 {
@@ -56,11 +56,12 @@ namespace MCT.Web.Controllers
 
                 }
 
+                int filteredRows = data.ToList().Count();
 
                 //order by
-                if (!string.IsNullOrEmpty(orderByIndex) && !string.IsNullOrEmpty(direction))
+                if (!string.IsNullOrEmpty(orderBy) && !string.IsNullOrEmpty(orderByIndex) && !string.IsNullOrEmpty(direction))
                 {
-                    data = data;
+                    data = data.OrderBy(orderBy);
                 }
 
                 //paging
@@ -73,7 +74,7 @@ namespace MCT.Web.Controllers
                 sendModel.data = data.Select(InteractionSimpleModel.Convert).ToList();
                 sendModel.draw = model.draw;
                 sendModel.recordsTotal = countAll;
-                sendModel.recordsFiltered = data.Count();
+                sendModel.recordsFiltered = filteredRows;
 
                 return Json(sendModel);
             }
@@ -163,12 +164,15 @@ namespace MCT.Web.Controllers
         }
 
 
-        public ActionResult Delete(long Id)
+        public ActionResult Delete(long id)
         {
-
-
-
-            return Json(true, JsonRequestBehavior.AllowGet);
+            if (id > 0)
+            {
+                InteractionManager interactionManager = new InteractionManager();
+                Interaction interaction = interactionManager.Get(id);
+                interactionManager.Delete(interaction);
+            }
+            return RedirectToAction("ShowInteractions", "Interaction");
         }
 
         public ActionResult Edit(long id = 0)
@@ -186,7 +190,7 @@ namespace MCT.Web.Controllers
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(subject))) return Json(true, JsonRequestBehavior.AllowGet);
+            if (subjectManager.GetAll<Subject>().Any(n => n.Name.Equals(subject))) return Json(true, JsonRequestBehavior.AllowGet);
 
             return Json(false, JsonRequestBehavior.AllowGet);
         }
@@ -196,7 +200,7 @@ namespace MCT.Web.Controllers
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(Object))) return Json(true, JsonRequestBehavior.AllowGet);
+            if (subjectManager.GetAll<Subject>().Any(n => n.Name.Equals(Object))) return Json(true, JsonRequestBehavior.AllowGet);
 
             return Json(false, JsonRequestBehavior.AllowGet);
         }
@@ -206,7 +210,7 @@ namespace MCT.Web.Controllers
         {
             SubjectManager subjectManager = new SubjectManager();
 
-            if (subjectManager.GetAll<Node>().Any(n => n.Name.Equals(impactSubject))) return Json(true, JsonRequestBehavior.AllowGet);
+            if (subjectManager.GetAll<Subject>().Any(n => n.Name.Equals(impactSubject))) return Json(true, JsonRequestBehavior.AllowGet);
 
             return Json(false, JsonRequestBehavior.AllowGet);
         }
