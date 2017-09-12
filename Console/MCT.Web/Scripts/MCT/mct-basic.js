@@ -103,6 +103,7 @@ function savePlant() {
             RootDepth: $("#plant #RootDepth").val(),
             NutrientClaim: $("#plant #NutrientClaim").val(),
             SowingDepth: $("#plant #SowingDepth").val(),
+            LocationType: $("#plant #LocationType").val(),
             Bloom: getTimePeriodsJSON(bloom, $("#plant #Id").val()),
             Sowing: getTimePeriodsJSON(sowing, $("#plant #Id").val()),
             Harvest: getTimePeriodsJSON(harvest, $("#plant #Id").val()),

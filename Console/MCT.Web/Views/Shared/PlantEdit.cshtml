@@ -13,50 +13,6 @@
     {
         @Html.Partial("SpeciesEdit",Model);
 
-        @*<div class="row panel-default ">
-            <div id="DetailsHeader" class="panel-heading">
-
-                @Html.HiddenFor(m => m.Id)
-             
-                <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
-
-                <h2>
-                    @Html.Hidden("initName", Model.Name)
-                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
-                </h2>
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-
-                <h3>
-                    @Html.Hidden("initScientificName", Model.ScientificName)
-                    @Html.EditorFor(model => model.ScientificName, new {htmlAttributes = new {@class = "form-control"}})
-                </h3>
-                @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
-
-                @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
-                @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
-
-
-            </div>
-
-            <div id="DetailsContent" class="row panel-body panel-info">
-                <div id="Image" class="col-md-4">
-                    <img id="previewImage" src="@Model.ImagePath" class="speciesImage img-responsive " />
-                    <input id="previewImageInput" type="file" data-target="previewImage" class="file-input" />
-                </div>
-                <div class="col-md-8">
-                    <div id="DescriptionContainer" class="panel-default">
-                        <div class="panel-heading">
-                            <h4>Beschreibung</h4>
-                        </div>
-                        <div class="panel-body">
-                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-
-
         <div class="row panel-default panel-info">
             <div class="panel-heading">
                 <h3>Anbau Informationen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
@@ -88,15 +44,6 @@
                         @Html.ValidationMessageFor(model => model.RootDepth, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NutrientClaim, htmlAttributes: new {@class = "control-label col-md-2"})
-                    <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.NutrientClaim, new {@class = "form-control dropdown"})
-                        @Html.ValidationMessageFor(model => model.NutrientClaim, "", new {@class = "text-danger"})
-                    </div>
-                </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.LocationType, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -112,6 +59,17 @@
                         @Html.ValidationMessageFor(model => model.SowingDepth, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NutrientClaim, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.NutrientClaim, new { @class = "form-control dropdown" })
+                        @Html.ValidationMessageFor(model => model.NutrientClaim, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+
+
+                
             </div>
         </div>
 

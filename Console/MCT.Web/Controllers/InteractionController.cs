@@ -28,25 +28,18 @@ namespace MCT.Web.Controllers
         {
             try
             {
-                string searchValue = Request["search[value]"];
-                string orderByIndex = Request["order[0][column]"];
-                string direction = Request["order[0][dir]"];
-
-                //"columns[1][name]"
-                string orderBy = Request["columns[" + orderByIndex + "][name]"];
-
                 InteractionManager interactionManager = new InteractionManager();
 
-                int skip = model.start;
+                int skip = model.Start;
 
                 IQueryable<Interaction> data = null;
 
                 data = interactionManager.GetAllAsQueryable<Interaction>();
 
                 //search
-                if (!string.IsNullOrEmpty(searchValue))
+                if (!string.IsNullOrEmpty(model.Search.Value))
                 {
-                    searchValue = searchValue.ToLower();
+                    string searchValue = model.Search.Value.ToLower();
                     data = data.Where(i =>
                         (i.Subject != null && i.Subject.Name.ToLower().Contains(searchValue)) ||
                         (i.Object != null && i.Object.Name.ToLower().Contains(searchValue)) ||
@@ -59,20 +52,22 @@ namespace MCT.Web.Controllers
                 int filteredRows = data.ToList().Count();
 
                 //order by
-                if (!string.IsNullOrEmpty(orderBy) && !string.IsNullOrEmpty(orderByIndex) && !string.IsNullOrEmpty(direction))
+                var sorting = string.Join(",", model.Order.Select(o => model.Columns[o.Column].Data + " " + o.Dir));
+                if (!string.IsNullOrEmpty(sorting))
                 {
-                    data = data.OrderBy(orderBy);
+
+                    data = data.OrderBy(sorting);
                 }
 
                 //paging
-                data = data.Skip(skip).Take(model.length);
+                data = data.Skip(skip).Take(model.Length);
 
 
                 int countAll = interactionManager.GetAllAsQueryable<Interaction>().Count();
 
                 DataTableSendModel sendModel = new DataTableSendModel();
-                sendModel.data = data.Select(InteractionSimpleModel.Convert).ToList();
-                sendModel.draw = model.draw;
+                sendModel.data = data.Select(InteractionModel.Convert).ToList();
+                sendModel.draw = model.Draw;
                 sendModel.recordsTotal = countAll;
                 sendModel.recordsFiltered = filteredRows;
 

@@ -24,10 +24,7 @@ namespace MCT.Web.Controllers
             //ToDo think about setting sessions, is this the rigth place ?
             //load all names in session
 
-            getAllSubjectNames();
-            getAllPredicateNames();
-            getAllScientficNames();
-
+            getAllNames();
 
             SubjectManager subjectManager = new SubjectManager();
 

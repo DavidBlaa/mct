@@ -31,15 +31,22 @@
 
     </td>
     <td>
-        @Html.HiddenFor(modelItem => Model.ImpactSubject.Id)
-        @Html.HiddenFor(modelItem => Model.ImpactSubject.Type)
+       
         @*@Html.DisplayFor(modelItem => Model.ImpactSubject.Name, new { htmlAttributes = new { @class = "form-control" } })*@
 
         @if (Model.ImpactSubject != null)
         {
-            @Html.ActionLink(Model.ImpactSubject.Name, "Details", "Subject",
-                new {id = Model.ImpactSubject.Id, type = @Model.ImpactSubject.Type.ToString()},
-                new {htmlAttributes = new {@class = "form-control"}})
+            string name = " ";
+            if (!String.IsNullOrEmpty(Model.ImpactSubject.Name))
+            {
+                name = Model.ImpactSubject.Name;
+            }
+            @Html.HiddenFor(modelItem => Model.ImpactSubject.Id)
+            @Html.HiddenFor(modelItem => Model.ImpactSubject.Type)
+
+            @Html.ActionLink(name, "Details", "Subject",
+            new {id = Model.ImpactSubject.Id, type = @Model.ImpactSubject.Type.ToString()},
+            new {htmlAttributes = new {@class = "form-control"}})
         }
 
     </td>

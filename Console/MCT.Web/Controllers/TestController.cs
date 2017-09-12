@@ -95,6 +95,12 @@ namespace MCT.Web.Controllers
             return View();
         }
 
+        public ActionResult Svg()
+        {
+
+            return View();
+        }
+
         private void testIntractions()
         {
             //SubjectManager subjectManager = new SubjectManager();

@@ -41,12 +41,12 @@
                         "type": "POST"
                     },
                     columns: [
-                    { data: 'Id' },
-                    { data: 'Subject' },
-                    { data: 'Predicate' },
-                    { data: 'Object' },
-                    { data: 'ImpactSubject' },
-                    { data: 'Indicator' },
+                    { data: 'Id', Name: "Id" },
+                    { data: 'Subject.Name', Name: "Subject" },
+                    { data: 'Predicate.Name', Name: "Predicate" },
+                    { data: 'Object.Name', Name: "Object" },
+                    { data: 'ImpactSubject.Name', Name: "Impact Subject" },
+                    { data: 'Indicator', Name: "Indicator" },
                     {
                         targets: [7],
                         render: function(data, type, row) {

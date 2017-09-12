@@ -150,7 +150,7 @@ namespace MCT.Web.Models
                     Type = SubjectModel.GetType(subject)
                 };
 
-            return null;
+            return new InteractionElementModel();
         }
 
         public static InteractionElementModel Convert(Predicate predicate)
@@ -162,7 +162,7 @@ namespace MCT.Web.Models
                     Name = predicate.Name,
                 };
 
-            return null;
+            return new InteractionElementModel();
         }
     }
 }
