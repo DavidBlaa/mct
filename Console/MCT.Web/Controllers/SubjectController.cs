@@ -1,6 +1,7 @@
 ﻿using MCT.Cal;
 using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.IO;
 using MCT.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -330,8 +331,8 @@ namespace MCT.Web.Controllers
             try
             {
                 //Todo Select the type based on the scientific name
-                if (plant.ScientificName.Split(' ').Length > 1) plant.Rank = TaxonRank.SubSpecies;
-                else if (plant.ScientificName.Split(' ').Length == 1) plant.Rank = TaxonRank.Species;
+                if (plant.ScientificName.Split(' ').Length > 2) plant.Rank = TaxonRank.SubSpecies;
+                else if (plant.ScientificName.Split(' ').Length == 2) plant.Rank = TaxonRank.Species;
 
 
                 //TODO Generate the Parent based on the ScientificName
@@ -340,14 +341,17 @@ namespace MCT.Web.Controllers
              * - use maybe some webservices to create missing one
              *
              */
+                SubjectManager subjectManager = new SubjectManager();
+                InteractionManager interactionManager = new InteractionManager();
+
+                plant.Parent = saveParents(plant.ScientificName, typeof(Plant), subjectManager);
 
                 //ToDO check all entities that comes from the ui that has no id. they need to get from or create
                 /* all timeperiods need the have the id from the created plant
              * - need to create the plant frist??
              * - maybe task fro the udatemanager
              * */
-                SubjectManager subjectManager = new SubjectManager();
-                InteractionManager interactionManager = new InteractionManager();
+
 
                 //ToDo Store Image in folder : project/images/
                 //add a media to plant
@@ -398,22 +402,106 @@ namespace MCT.Web.Controllers
             }
         }
 
+        private Node saveParents(string scientificName, Type type, SubjectManager subjectManager)
+        {
+            string[] nameArray = scientificName.Split(' ');
+            WikipediaReader wReader = new WikipediaReader();
+
+            // scientific Name = abc dfg ghj -> subspecies 
+            if (nameArray.Count() > 1)
+            {
+                //create genius
+                string geniusScientifcName = nameArray[0];
+                Taxon genius = new Taxon();
+                if (subjectManager.GetAll<Taxon>().Any(s => s.ScientificName.Equals(geniusScientifcName)))
+                {
+                    genius = subjectManager.GetAll<Taxon>().FirstOrDefault(s => s.ScientificName.Equals(geniusScientifcName));
+                }
+                else
+                {
+                    genius.ScientificName = geniusScientifcName;
+                    genius.Name = wReader.GetName(geniusScientifcName);
+
+                    if (String.IsNullOrEmpty(genius.Name)) genius.Name = geniusScientifcName;
+
+                    genius.Rank = TaxonRank.Genus;
+
+                    subjectManager.Create(genius);
+                }
+
+
+                //is subspecies
+                if (nameArray.Count() > 2)
+                {
+                    Species species = new Species();
+
+                    if (type.Equals(typeof(Plant)))
+                    {
+                        species = new Plant();
+
+                        string speciesScientifcName = nameArray[0] + " " + nameArray[1];
+
+                        if (subjectManager.GetAll<Species>().Any(s => s.ScientificName.Equals(speciesScientifcName)))
+                        {
+                            species = subjectManager.GetAll<Plant>().FirstOrDefault(s => s.ScientificName.Equals(speciesScientifcName));
+                        }
+                        else
+                        {
+                            species.ScientificName = speciesScientifcName;
+                            species.Name = wReader.GetName(speciesScientifcName);
+                            species.Parent = genius;
+                            species.Rank = TaxonRank.Species;
+                            subjectManager.Create(species);
+                        }
+                    }
+                    else if (type.Equals(typeof(Animal)))
+                    {
+                        species = new Animal();
+                        string speciesScientifcName = nameArray[0] + " " + nameArray[1];
+
+                        if (subjectManager.GetAll<Species>().Any(s => s.ScientificName.Equals(speciesScientifcName)))
+                        {
+                            species = subjectManager.GetAll<Animal>().FirstOrDefault(s => s.ScientificName.Equals(speciesScientifcName));
+                        }
+                        else
+                        {
+                            species.ScientificName = speciesScientifcName;
+                            species.Name = wReader.GetName(speciesScientifcName);
+                            species.Parent = genius;
+                            species.Rank = TaxonRank.Species;
+                            subjectManager.Create(species);
+                        }
+                    }
+
+                    return species;
+                }
+
+
+                return genius;
+            }
+
+            return null;
+        }
+
         public ActionResult SaveAnimal(Animal animal)
         {
+            SubjectManager subjectManager = new SubjectManager();
+            InteractionManager interactionManager = new InteractionManager();
+
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
             /* - based on the scientficname create or set the parents
              * - use maybe some webservices to create missing one
              *
              */
+            animal.Parent = saveParents(animal.ScientificName, typeof(Animal), subjectManager);
 
             //ToDO check all entities that comes from the ui that has no id. they need to get from or create
             /* all timeperiods need the have the id from the created plant
              * - need to create the plant frist??
              * - maybe task fro the udatemanager
              * */
-            SubjectManager subjectManager = new SubjectManager();
-            InteractionManager interactionManager = new InteractionManager();
+
 
             //ToDo Store Image in folder : project/images/
             //add a media to plant

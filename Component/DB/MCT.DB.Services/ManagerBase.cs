@@ -52,7 +52,7 @@ namespace MCT.DB.Services
         {
             using (ITransaction transaction = CurrentNHibernateSession.BeginTransaction())
             {
-                CurrentNHibernateSession.SaveOrUpdate(t);
+                CurrentNHibernateSession.Update(t);
                 transaction.Commit();
             }
         }

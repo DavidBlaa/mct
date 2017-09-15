@@ -995,7 +995,10 @@ namespace MCT.IO
                             case "Pflanze":
                                 {
                                     plant.Name = GetFirstNameMKT(values[i]);
-                                    plant.ScientificName = GetScientificNameMKT(values[i], plant.Name); break;
+                                    plant.ScientificName = GetScientificNameMKT(values[i], plant.Name);
+                                    //plant.Parent = saveParents(plant.ScientificName, typeof(Plant));
+                                    break;
+
                                 }
                             case "1. Aussaattiefe in cm /2. Keimtemperatur(optimal/minimum) in °C /3. Keimdauer in Tagen /4. Keimfähigkeit der Samen in Jahren": { break; }
                             case "Bemerkungen":
@@ -1040,6 +1043,8 @@ namespace MCT.IO
 
 
         }
+
+
 
         /// <summary>
         /// Zweite Runde zum einlesen der Planzen aus der 
@@ -1301,6 +1306,85 @@ namespace MCT.IO
                 return wikipediaReader.GetScientificName(name);
             }
 
+        }
+
+        private Node saveParents(string scientificName, Type type)
+        {
+            string[] nameArray = scientificName.Split(' ');
+            SubjectManager subjectManager = new SubjectManager();
+            WikipediaReader wReader = new WikipediaReader();
+
+            // scientific Name = abc dfg ghj -> subspecies 
+            if (nameArray.Count() > 1)
+            {
+                //create genius
+                string geniusScientifcName = nameArray[0];
+                Species genius = new Species();
+                if (subjectManager.GetAll<Species>().Any(s => s.ScientificName.Equals(geniusScientifcName)))
+                {
+                    genius = subjectManager.GetAll<Species>().FirstOrDefault(s => s.ScientificName.Equals(geniusScientifcName));
+                }
+                else
+                {
+                    genius.ScientificName = geniusScientifcName;
+                    genius.Name = wReader.GetName(geniusScientifcName);
+                    genius.Rank = TaxonRank.Genus;
+
+                    genius = subjectManager.Create(genius);
+                }
+
+
+                //is subspecies
+                if (nameArray.Count() > 2)
+                {
+                    Species species = new Species();
+
+                    if (type.Equals(typeof(Plant)))
+                    {
+                        species = new Plant();
+
+                        string speciesScientifcName = nameArray[0] + " " + nameArray[1];
+
+                        if (subjectManager.GetAll<Species>().Any(s => s.ScientificName.Equals(speciesScientifcName)))
+                        {
+                            species = subjectManager.GetAll<Plant>().FirstOrDefault(s => s.ScientificName.Equals(speciesScientifcName));
+                        }
+                        else
+                        {
+                            species.ScientificName = speciesScientifcName;
+                            species.Name = wReader.GetName(speciesScientifcName);
+                            species.Parent = genius;
+                            species.Rank = TaxonRank.Species;
+                            species = subjectManager.Create(species);
+                        }
+                    }
+                    else if (type.Equals(typeof(Animal)))
+                    {
+                        species = new Animal();
+                        string speciesScientifcName = nameArray[0] + " " + nameArray[1];
+
+                        if (subjectManager.GetAll<Species>().Any(s => s.ScientificName.Equals(speciesScientifcName)))
+                        {
+                            species = subjectManager.GetAll<Animal>().FirstOrDefault(s => s.ScientificName.Equals(speciesScientifcName));
+                        }
+                        else
+                        {
+                            species.ScientificName = speciesScientifcName;
+                            species.Name = wReader.GetName(speciesScientifcName);
+                            species.Parent = genius;
+                            species.Rank = TaxonRank.Species;
+                            species = subjectManager.Create(species);
+                        }
+                    }
+
+                    return species;
+                }
+
+
+                return genius;
+            }
+
+            return null;
         }
 
         private Plant UpdatePlantBasedOnDescription(Plant plant, string description)
