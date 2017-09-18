@@ -33,6 +33,12 @@ namespace MCT.Web.Models
         [UIHint("TimePeriods")]
         [Display(Name = "Samen Reife")]
         public TimePeriodListModel SeedMaturity { get; set; }
+        [Display(Name = "Einpflanzen")]
+        public TimePeriodListModel Crop { get; set; }
+
+        [Display(Name = "Vorziehen")]
+        public TimePeriodListModel Draw { get; set; }
+
         [UIHint("SimpleLinkModelList")]
         [Display(Name = "Vorkultur")]
 
@@ -47,6 +53,8 @@ namespace MCT.Web.Models
             Harvest = new TimePeriodListModel(TimePeriodType.Harvest);
             Bloom = new TimePeriodListModel(TimePeriodType.Bloom);
             SeedMaturity = new TimePeriodListModel(TimePeriodType.SeedMaturity);
+            Crop = new TimePeriodListModel(TimePeriodType.Crop);
+            Draw = new TimePeriodListModel(TimePeriodType.Draw);
             PreCultures = new List<SimpleLinkModel>();
             AfterCultures = new List<SimpleLinkModel>();
             Interactions = new List<InteractionModel>();

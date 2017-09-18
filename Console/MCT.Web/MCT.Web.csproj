@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Helpers\DataModelHelper.cs" />
     <Compile Include="Helpers\SeedDataGenerator.cs" />
+    <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Models\DataTableModel.cs" />
     <Compile Include="Models\Data\DataModel.cs" />
     <Compile Include="Models\AnimalModel.cs" />

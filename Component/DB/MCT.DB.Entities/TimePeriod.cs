@@ -200,6 +200,8 @@ namespace MCT.DB.Entities
         Bloom,
         Harvest,
         Sowing,
-        SeedMaturity
+        SeedMaturity,
+        Crop,
+        Draw
     }
 }

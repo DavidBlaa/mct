@@ -100,7 +100,6 @@ namespace MCT.DB.Services
             return tmp;
         }
 
-
         public void DeleteNode(Node node)
         {
             try
