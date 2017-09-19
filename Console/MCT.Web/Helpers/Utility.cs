@@ -26,7 +26,7 @@ namespace MCT.Web.Helpers
 
             if (tmp.Length == 3) return TaxonRank.SubSpecies;
 
-            if (tmp.Length == 4) return TaxonRank.Species;
+            if (tmp.Length == 4) return TaxonRank.SubSpecies;
 
             return TaxonRank.SubSpecies;
         }
@@ -39,7 +39,7 @@ namespace MCT.Web.Helpers
             /**
              * Lactuca                      -> Genus
              * Lactuca sativa               -> Species 
-             * Lactuca sativa var. capitata -> Species 
+             * Lactuca sativa var. capitata -> Variation - Subspecies 
              * Lactuca sativa var. capitata Larissa -> SubSpecies
              * Lactuca sativa Larissa -> SubSpecies
              * */
@@ -62,16 +62,15 @@ namespace MCT.Web.Helpers
 
             if (nameArray.Count() == 4 && nameArray.Contains("var."))
             {
+                string name = nameArray[0] + " " + nameArray[1];
+                return GetOrCreateSpecies(name, type, subjectManager, genus);
 
-                return genus;
             }
 
             //Lactuca sativa var. capitata Larissa -> SubSpecies
             if (nameArray.Count() == 5 && nameArray.Contains("var."))
             {
-                int indexOfLast = scientificName.LastIndexOf(" ");
-                string name = scientificName.Substring(0, indexOfLast);
-
+                string name = nameArray[0] + " " + nameArray[1];
                 return GetOrCreateSpecies(name, type, subjectManager, genus);
             }
 
