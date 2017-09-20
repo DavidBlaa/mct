@@ -644,6 +644,10 @@
       <Project>{49edafc3-123b-4beb-8533-473d167242c6}</Project>
       <Name>MCT.DB.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Component\IO\MCT.Extern\MCT.Extern.csproj">
+      <Project>{30d22f1a-af97-4790-975a-5d63c2ee8376}</Project>
+      <Name>MCT.Extern</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Component\IO\MCT.IO\MCT.IO.csproj">
       <Project>{9b20d411-e287-41ed-aa44-c03962038e45}</Project>
       <Name>MCT.IO</Name>

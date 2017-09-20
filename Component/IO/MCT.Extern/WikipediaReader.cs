@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace MCT.IO
+namespace MCT.Extern
 {
     public class WikipediaReader : WebsiteReader
     {

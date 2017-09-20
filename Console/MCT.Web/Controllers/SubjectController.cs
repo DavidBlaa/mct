@@ -344,7 +344,7 @@ namespace MCT.Web.Controllers
                 SubjectManager subjectManager = new SubjectManager();
                 InteractionManager interactionManager = new InteractionManager();
 
-                plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
+
 
                 //ToDO check all entities that comes from the ui that has no id. they need to get from or create
                 /* all timeperiods need the have the id from the created plant
@@ -387,24 +387,36 @@ namespace MCT.Web.Controllers
 
                 #endregion
 
+
+
                 if (plant.Id == 0)
                     plant = subjectManager.CreatePlant(plant);
                 else
                 {
+
                     subjectManager.Update(plant);
+                    plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
+                    subjectManager.Update(plant);
+
                 }
 
                 return Json(plant.Id, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                
+
 
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
 
+        private Node LoadParent(Node node, SubjectManager subjectManager)
+        {
 
+            if (node.Parent != null) LoadParent(node.Parent, subjectManager);
+
+            return subjectManager.GetAll<Node>().Where(n => n.Id.Equals(node.Id)).FirstOrDefault();
+        }
 
         public ActionResult SaveAnimal(Animal animal)
         {
@@ -422,7 +434,7 @@ namespace MCT.Web.Controllers
             //Todo Select the type based on the scientific name
             animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
 
-            animal.Parent = Utility.CreateOrSetParents(animal.ScientificName, typeof(Animal), subjectManager);
+
 
             //ToDO check all entities that comes from the ui that has no id. they need to get from or create
             /* all timeperiods need the have the id from the created plant
@@ -439,6 +451,9 @@ namespace MCT.Web.Controllers
             else
             {
                 subjectManager.Update(animal);
+                animal.Parent = Utility.CreateOrSetParents(animal.ScientificName, typeof(Animal), subjectManager);
+                subjectManager.Update(animal);
+
             }
 
 

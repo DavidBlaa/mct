@@ -11,10 +11,11 @@ namespace MCT.Web.Controllers
         // GET: Test
         public ActionResult Index()
         {
-            testIntractions();
+            SetParentTest();
+
+            //testIntractions();
 
             //SubjectManager subjectManager = new SubjectManager();
-
 
             //Subject subject = new Subject();
 
@@ -132,6 +133,22 @@ namespace MCT.Web.Controllers
             //interactionManager.Create(interaction);
             //interactionManager.Delete(interaction);
 
+
+
+        }
+
+        private void SetParentTest()
+        {
+            SubjectManager subjectManager = new SubjectManager();
+
+            var a = subjectManager.GetAll<Plant>().FirstOrDefault(s => s.Id == 299);
+            var b = subjectManager.GetAll<Node>().FirstOrDefault(s => s.Id == 240);
+
+            a.Parent = b;
+
+            subjectManager.Update(a);
+            a.Parent = null;
+            subjectManager.Update(a);
 
 
         }

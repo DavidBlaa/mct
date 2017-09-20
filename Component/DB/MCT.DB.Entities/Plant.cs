@@ -59,39 +59,26 @@ namespace MCT.DB.Entities
         {
             // update subject
 
-            Description += " " + newPlant.Description;
-
-            if (Parent == null)
-                Parent = newPlant.Parent;
-
-            //update species
-            if (Sowing.Count == 0)
-                Sowing = newPlant.Sowing;
-
-            if (Bloom.Count == 0)
-                Bloom = newPlant.Bloom;
-
-            if (Harvest.Count == 0)
-                Harvest = newPlant.Harvest;
-
-            if (PreCultures.Count == 0)
-                //PreCultures = newPlant.PreCultures;
-
-                if (AfterCultures.Count == 0)
-                    //AfterCultures = newPlant.AfterCultures;
-
-                    if (RootDepth.Equals(RootDepth.Empty))
-                        RootDepth = newPlant.RootDepth;
-
-            if (NutrientClaim.Equals(NutrientClaim.Empty))
-                NutrientClaim = newPlant.NutrientClaim;
-
-            if (Width == 0)
-                Width = newPlant.Width;
-
-            if (Height == 0)
-                Height = newPlant.Height;
-
+            this.AfterCultures = newPlant.AfterCultures;
+            this.Bloom = newPlant.Bloom;
+            this.Cultivation = newPlant.Cultivation;
+            this.Description = newPlant.Description;
+            this.Harvest = newPlant.Harvest;
+            this.Height = newPlant.Height;
+            this.Id = newPlant.Id;
+            this.LocationType = newPlant.LocationType;
+            this.Medias = newPlant.Medias;
+            this.Name = newPlant.Name;
+            this.NutrientClaim = newPlant.NutrientClaim;
+            this.Parent = newPlant.Parent;
+            this.PreCultures = newPlant.PreCultures;
+            this.Rank = newPlant.Rank;
+            this.RootDepth = newPlant.RootDepth;
+            this.ScientificName = newPlant.ScientificName;
+            this.SeedMaturity = newPlant.SeedMaturity;
+            this.Sowing = newPlant.Sowing;
+            this.SowingDepth = newPlant.SowingDepth;
+            this.Width = newPlant.Width;
         }
 
 

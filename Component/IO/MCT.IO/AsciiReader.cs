@@ -1,6 +1,8 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.Extern;
 using MCT.Helpers;
+using MCT.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -376,7 +378,7 @@ namespace MCT.IO
                 }
 
                 //set rank
-                plant.Rank = TaxonRank.SubSpecies;
+                plant.Rank = Utility.GetTaxonRank(plant.ScientificName);
 
                 //     2 Species 2
                 //     3 Class 6
@@ -384,7 +386,8 @@ namespace MCT.IO
                 //     5 Family 4	
                 //     6 Genus	3
                 //ToDO check if the plant is realy a sub species
-                plant.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
+                //plant.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
+                plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
 
 
             }
@@ -455,8 +458,8 @@ namespace MCT.IO
                     }
                 }
 
-                subject.Rank = TaxonRank.SubSpecies;
-                subject.Parent = generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
+                subject.Rank = Utility.GetTaxonRank(subject.ScientificName);
+                subject.Parent = Utility.CreateOrSetParents(subject.ScientificName, typeof(Animal), subjectManager);//generateTaxonParents(values[2], values[6], values[5], values[4], values[3]);
 
             }
             catch (Exception ex)
@@ -868,35 +871,43 @@ namespace MCT.IO
 
             #region species
 
-            Taxon speciesTaxon = null;
+            if (species != "")
 
-            if (
-                subjectManager.GetAll<Taxon>()
-                    .Any(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.ToLower().Equals(species.ToLower())))
             {
-                speciesTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.ToLower().Equals(species.ToLower()));
+                Taxon speciesTaxon = null;
+
+                if (
+                    subjectManager.GetAll<Taxon>()
+                        .Any(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.ToLower().Equals(species.ToLower())))
+                {
+                    speciesTaxon = subjectManager.GetAll<Taxon>().FirstOrDefault(p => p.Rank.Equals(TaxonRank.Species) && p.ScientificName.ToLower().Equals(species.ToLower()));
+                }
+                else
+                {
+                    List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.ToLower().Equals(species.ToLower())).ToList();
+
+                    string name = species;
+
+                    if (addtionalNameHelperMatches.Any())
+                        name = addtionalNameHelperMatches.FirstOrDefault().Name;
+
+                    speciesTaxon = new Taxon()
+                    {
+                        Rank = TaxonRank.Species,
+                        Name = name,
+                        ScientificName = species,
+                        Parent = genusTaxon
+                    };
+                }
+
+                #endregion
+
+                return speciesTaxon;
             }
             else
             {
-                List<AddtionalNameHelper> addtionalNameHelperMatches = allAdditionalNameHelpers.Where(p => p.ScientificName.ToLower().Equals(species.ToLower())).ToList();
-
-                string name = species;
-
-                if (addtionalNameHelperMatches.Any())
-                    name = addtionalNameHelperMatches.FirstOrDefault().Name;
-
-                speciesTaxon = new Taxon()
-                {
-                    Rank = TaxonRank.Species,
-                    Name = name,
-                    ScientificName = species,
-                    Parent = genusTaxon
-                };
+                return genusTaxon;
             }
-
-            #endregion
-
-            return speciesTaxon;
         }
 
         #endregion
@@ -996,7 +1007,8 @@ namespace MCT.IO
                                 {
                                     plant.Name = GetFirstNameMKT(values[i]);
                                     plant.ScientificName = GetScientificNameMKT(values[i], plant.Name);
-                                    //plant.Parent = saveParents(plant.ScientificName, typeof(Plant));
+
+
                                     break;
 
                                 }
@@ -1010,15 +1022,12 @@ namespace MCT.IO
                         }
                     }
 
-                    // find parents
-                    // get genus
-                    string genusScientifcName = plant.ScientificName.Split(' ').FirstOrDefault();
 
                     //Get or create genus
-                    if (!String.IsNullOrEmpty(genusScientifcName)) plant.Parent = GetOrCreate(genusScientifcName, TaxonRank.Genus);
+                    plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
 
                     //set rank
-                    plant.Rank = TaxonRank.Species;
+                    plant.Rank = Utility.GetTaxonRank(plant.ScientificName);
 
                 }
                 catch (Exception ex)
@@ -1499,7 +1508,7 @@ namespace MCT.IO
 
         private Taxon GetOrCreate(string scientificName, TaxonRank rank)
         {
-            var p = subjectManager.GetAll<Node>().Where(n => n.ScientificName.Equals(scientificName)).FirstOrDefault();
+            var p = subjectManager.GetAll<Node>().Where(n => n.ScientificName.ToLower().Equals(scientificName.ToLower())).FirstOrDefault();
 
             if (p != null) return p as Taxon;
 
