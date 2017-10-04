@@ -74,6 +74,12 @@ namespace MCT.Web.Helpers
                 return GetOrCreateSpecies(name, type, subjectManager, genus);
             }
 
+            if (nameArray.Count() > 5)
+            {
+                string name = nameArray[0] + " " + nameArray[1];
+                return GetOrCreateSpecies(name, type, subjectManager, genus);
+            }
+
             return null;
         }
 

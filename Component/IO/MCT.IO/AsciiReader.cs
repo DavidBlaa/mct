@@ -1006,7 +1006,16 @@ namespace MCT.IO
                             case "Pflanze":
                                 {
                                     plant.Name = GetFirstNameMKT(values[i]);
-                                    plant.ScientificName = GetScientificNameMKT(values[i], plant.Name);
+                                    string scfName = GetScientificNameMKT(values[i], plant.Name);
+
+                                    if (subjectManager.GetAll<Plant>().Any(p => p.ScientificName.ToLower().Equals(scfName.ToLower())))
+                                    {
+                                        plant = subjectManager.GetAll<Plant>().FirstOrDefault(p => p.ScientificName.ToLower().Equals(scfName.ToLower()));
+                                    }
+                                    else
+                                    {
+                                        plant.ScientificName = GetScientificNameMKT(values[i], plant.Name);
+                                    }
 
 
                                     break;
@@ -1087,7 +1096,10 @@ namespace MCT.IO
             {
                 int plantNameIndex = Structure.IndexOf(Structure.Where(e => e.Equals("Pflanze")).FirstOrDefault());
 
-                Plant plant = subjectManager.GetAll<Plant>().Where(p => p.Name.Equals(GetFirstNameMKT(values.ElementAt(plantNameIndex)))).FirstOrDefault();
+                string name = GetFirstNameMKT(values.ElementAt(plantNameIndex));
+                string scfName = GetScientificNameMKT(values.ElementAt(plantNameIndex), name);
+
+                Plant plant = subjectManager.GetAll<Plant>().Where(p => p.ScientificName.ToLower().Equals(scfName.ToLower())).FirstOrDefault();
 
                 if (plant == null)
                 {

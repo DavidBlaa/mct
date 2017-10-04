@@ -1,11 +1,11 @@
 ﻿@using MCT.DB.Entities
 @using AjaxOptions = System.Web.Mvc.Ajax.AjaxOptions
-@model MCT.Web.Models.AnimalModel
+@model MCT.Web.Models.NodeModel
 @{
-    ViewBag.Title = "Animal";
+    ViewBag.Title = "Taxon";
 }
 
-<div id="animal">
+<div id="taxon">
     @using (Ajax.BeginForm("X", "Subject", new AjaxOptions
     {
 
@@ -14,14 +14,14 @@
         @Html.Partial("NodeEdit", Model)
 
         <p>
-            <button type="submit" class="fa fa-save mct-button-icon" onclick="saveAnimal(this)"></button>
+            <button type="submit" class="fa fa-save mct-button-icon" onclick="saveTaxon(this)"></button>
 
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
             @Html.ActionLink("Back to List", "Search", "Search")
         </p>
 
         <script type="text/javascript">
-            
+
             $(document)
                 .ready(function() {
 

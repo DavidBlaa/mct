@@ -163,7 +163,7 @@
     <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\InteractionModels.cs" />
     <Compile Include="Models\SimpleNodeViewModel.cs" />
-    <Compile Include="Models\SpeciesModel.cs" />
+    <Compile Include="Models\NodeModel.cs" />
     <Compile Include="Models\PlantModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
@@ -611,14 +611,17 @@
     <Content Include="Views\Shared\EditorTemplates\InteractionModel.cshtml" />
     <Content Include="Views\Tree\Index.cshtml" />
     <Content Include="Views\Shared\_navbar.cshtml" />
-    <Content Include="Views\Shared\SpeciesDetails.cshtml" />
-    <Content Include="Views\Shared\SpeciesEdit.cshtml" />
+    <Content Include="Views\Shared\NodeDetails.cshtml" />
+    <Content Include="Views\Shared\NodeEdit.cshtml" />
     <Content Include="Views\Interaction\Interactions.cshtml" />
     <Content Include="Views\Interaction\InteractionElement_DELETE.cshtml" />
     <Content Include="Views\Interaction\InteractionView.cshtml" />
     <Content Include="Views\Interaction\InteractionEdit.cshtml" />
     <Content Include="Views\Interaction\InteractionEditRow.cshtml" />
     <Content Include="Views\Test\Svg.cshtml" />
+    <Content Include="Views\Shared\TaxonDetails.cshtml" />
+    <Content Include="Views\Shared\View.cshtml" />
+    <Content Include="Views\Shared\TaxonEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

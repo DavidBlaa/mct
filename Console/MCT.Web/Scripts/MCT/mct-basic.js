@@ -163,28 +163,7 @@ function savePlant() {
 
 function saveAnimal(e) {
 
-    //$("input").validate();
-
-    //alert($("form").valid());
-
     if ($("form").valid()) {
-        // some other code
-        // maybe disabling submit button
-        // then:
-        //alert("This is a valid form!");
-
-        //get Timeperiods list
-        //string listId = type + "-list";
-
-
-        //all tr of table
-        //var interactionsFromSide = $(".interactions-table tr.interaction-row");
-
-
-        //var tmp = getSimpleLinksJSON(precultures);
-        //console.log("tmp -> preculture");
-        //console.log(tmp);
-
         var animal = {
             Id: $("#animal #Id").val(),
             Name: $("#animal #Name").val(),
@@ -193,11 +172,8 @@ function saveAnimal(e) {
             Description: $("#animal #Description").val()
         };
 
-        //var interactions = getInteractionsJSON(interactionsFromSide);
-
         var data = {
             animal: animal,
-            //interactions: interactions
         };
 
 
@@ -235,15 +211,58 @@ function saveAnimal(e) {
             }
         });
     }
+}
 
-    //$("form").validate({
-    //    submitHandler: function (form) {
-            
+function saveTaxon(e) {
 
-    //        
-    //    }
-    //});
+    if ($("form").valid()) {
+        var taxon = {
+            Id: $("#taxon #Id").val(),
+            Name: $("#taxon #Name").val(),
+            ScientificName: $("#taxon #ScientificName").val(),
+            Rank: $("#taxon #TaxonRank").val(),
+            Description: $("#taxon #Description").val()
+        };
 
+        var data = {
+            taxon: taxon,
+        };
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Subject/SaveTaxon",
+            data: data,
+            dataType: "html",
+            success: function (response) {
+
+
+                var image = getImage();
+
+                if (image) {
+                    //upload image
+                    $.ajax({
+                        type: "POST",
+                        url: '/Subject/SaveImage?id=' + response,
+                        contentType: false,
+                        processData: false,
+                        data: image,
+                        success: function (result) {
+                            console.log(result);
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                }
+
+                window.location.href = "/Subject/Details?id=" + response + "&type=Taxon";
+            }
+        });
+    }
 }
 
 function getInteractionsJSON(source)

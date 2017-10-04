@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MCT.Web.Models
 {
-    public class AnimalModel : SpeciesModel
+    public class AnimalModel : NodeModel
     {
         public static AnimalModel Convert(Animal animal)
         {

@@ -83,11 +83,6 @@ img {
    
 } 
 
-.headeranimal {
-    border-top: solid 2px darkorange;
-
-}
-
 .detailsBtnplant {
     background-color: yellowgreen;
     color: white;
@@ -97,7 +92,13 @@ img {
     background-color: #81cd66;  
     color: white;
 }  
-   
+  
+
+.headeranimal {
+    border-top: solid 2px darkorange;
+
+}
+
 .detailsBtnanimal {
     background-color: darkorange;
     color: white;
@@ -107,6 +108,21 @@ img {
     background-color: orange;  
     color: white;
 }  
+
+.headertaxon {
+    border-top: solid 2px cadetblue;
+}
+
+
+.detailsBtntaxon {
+    background-color: cadetblue;
+    color: white;
+}
+
+.detailsBtntaxon:hover {
+    background-color: #7ac5cf;
+    color: white;
+} 
 
 .speciesImage {
         

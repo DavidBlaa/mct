@@ -34,13 +34,13 @@ namespace MCT.Web.Controllers
             SearchModel Model = new SearchModel(subjects.ToList().OrderBy(s => s.Name).ToList());
 
             // load all species
-            var species = subjectManager.GetAll<Species>();
+            var species = subjectManager.GetAll<Node>();
 
             if (species != null)
             {
                 //convert all subjects to subjectModels
                 species = species.AsQueryable().OrderBy(p => p.Name).ToArray();
-                species.ToList().ForEach(s => Model.Species.Add(SpeciesModel.Convert(s)));
+                species.ToList().ForEach(s => Model.Species.Add(NodeModel.Convert(s)));
             }
 
             ResetSearchProvider();
@@ -61,7 +61,7 @@ namespace MCT.Web.Controllers
 
             Debug.WriteLine("SEARCH : " + searchValue);
 
-            List<SpeciesModel> Model = new List<SpeciesModel>();
+            List<NodeModel> Model = new List<NodeModel>();
             SubjectManager subjectManager = new SubjectManager();
 
             //Get filtered subjects
@@ -74,7 +74,7 @@ namespace MCT.Web.Controllers
             {
                 //convert all subjects to subjectModels
                 species = species.OrderBy(p => p.Name);
-                species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
+                species.ToList().ForEach(s => Model.Add(NodeModel.Convert(s)));
             }
 
             //update searchcriterias
@@ -97,7 +97,7 @@ namespace MCT.Web.Controllers
 
         public ActionResult UpdateSearch()
         {
-            List<SpeciesModel> Model = new List<SpeciesModel>();
+            List<NodeModel> Model = new List<NodeModel>();
             SearchProvider sp = GetSearchProvider();
             SearchManager searchManager = new SearchManager();
 
@@ -107,7 +107,7 @@ namespace MCT.Web.Controllers
             {
                 //convert all subjects to subjectModels
                 species = species.OrderBy(p => p.Name);
-                species.ToList().ForEach(s => Model.Add(SpeciesModel.Convert(s)));
+                species.ToList().ForEach(s => Model.Add(NodeModel.Convert(s)));
             }
 
             return PartialView("_searchResult", Model);

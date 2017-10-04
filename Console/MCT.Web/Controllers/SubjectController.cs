@@ -55,7 +55,7 @@ namespace MCT.Web.Controllers
                 case "Taxon":
                     {
                         Taxon taxon = sm.GetAll<Taxon>().Where(a => a.Id.Equals(id)).FirstOrDefault();
-                        SubjectModel Model = SubjectModel.Convert(taxon);
+                        NodeModel Model = NodeModel.Convert(taxon);
 
                         return View("TaxonDetails", Model);
                     }
@@ -246,9 +246,9 @@ namespace MCT.Web.Controllers
                 case "Taxon":
                     {
                         Taxon taxon = sm.GetAll<Taxon>().Where(a => a.Id.Equals(id)).FirstOrDefault();
-                        SubjectModel Model = SubjectModel.Convert(taxon);
+                        NodeModel Model = NodeModel.Convert(taxon);
 
-                        return View("TaxonDetails", Model);
+                        return View("TaxonEdit", Model);
                     }
                 case "Effect":
                     {
@@ -282,6 +282,14 @@ namespace MCT.Web.Controllers
             // a a a = SubSpecies, a a = Species, a = Genus
 
             return View("AnimalEdit", new AnimalModel());
+        }
+
+        public ActionResult CreateTaxon()
+        {
+            //TODO Generate the Parent based on the ScientificName
+            // a a a = SubSpecies, a a = Species, a = Genus
+
+            return View("TaxonEdit", new NodeModel());
         }
 
 
@@ -458,6 +466,25 @@ namespace MCT.Web.Controllers
 
 
             return Json(animal.Id, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SaveTaxon(Taxon taxon)
+        {
+            SubjectManager subjectManager = new SubjectManager();
+            InteractionManager interactionManager = new InteractionManager();
+
+            //ToDo Store Image in folder : project/images/
+            //add a media to plant
+
+            if (taxon.Id == 0)
+                taxon = subjectManager.CreateTaxon(taxon);
+            else
+            {
+                subjectManager.Update(taxon);
+
+            }
+
+            return Json(taxon.Id, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

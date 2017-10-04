@@ -100,6 +100,12 @@ namespace MCT.DB.Services
             return tmp;
         }
 
+        public Taxon CreateTaxon(Taxon taxon)
+        {
+            Taxon tmp = Create(taxon);
+            return tmp;
+        }
+
         public void DeleteNode(Node node)
         {
             try

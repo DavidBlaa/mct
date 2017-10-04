@@ -22,6 +22,7 @@ namespace MCT.Web.Models
         public SubjectType Type { get; set; }
 
         public SimpleNodeViewModel Parent { get; set; }
+        public List<SimpleNodeViewModel> Childrens { get; set; }
 
         [UIHint("Interactions")]
         public List<InteractionModel> Interactions { get; set; }
@@ -66,6 +67,7 @@ namespace MCT.Web.Models
             if ((subject as Plant) != null) return SubjectType.Plant;
             if ((subject as Animal) != null) return SubjectType.Animal;
             if ((subject as Effect) != null) return SubjectType.Effect;
+            if ((subject as Taxon) != null) return SubjectType.Taxon;
 
 
             return SubjectType.Unknow;
@@ -90,6 +92,7 @@ namespace MCT.Web.Models
         Animal,
         Effect,
         Plant,
+        Taxon,
         Unknow
     }
 

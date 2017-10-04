@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MCT.Web.Models
 {
-    public class SpeciesModel : SubjectModel
+    public class NodeModel : SubjectModel
     {
         public TaxonRank TaxonRank { get; set; }
         [Required]
@@ -15,48 +15,41 @@ namespace MCT.Web.Models
         public String ScientificName { get; set; }
         //public SpeciesType Type { get; set; }
 
-        public SpeciesModel()
+        public NodeModel()
         {
             ScientificName = "";
             TaxonRank = TaxonRank.Species;
             Interactions = new EquatableList<InteractionModel>();
         }
 
-        public static SpeciesModel Convert(Species species)
+        public static NodeModel Convert(Node node)
         {
-            SpeciesModel model = new SpeciesModel();
+            NodeModel model = new NodeModel();
 
-            model.Id = species.Id;
-            model.ScientificName = species.ScientificName;
-            model.TaxonRank = species.Rank;
-            if (!String.IsNullOrEmpty(species.Name))
-                model.Name = species.Name;
+            model.Id = node.Id;
+            model.ScientificName = node.ScientificName;
+            model.TaxonRank = node.Rank;
+            if (!String.IsNullOrEmpty(node.Name))
+                model.Name = node.Name;
 
-            if (!String.IsNullOrEmpty(species.Description))
-                model.Description = species.Description;
+            if (!String.IsNullOrEmpty(node.Description))
+                model.Description = node.Description;
 
-            model.Type = GetType(species);
+            model.Type = GetType(node);
 
-            if (!species.Medias.Any())
+            if (!node.Medias.Any())
             {
                 model.ImagePath = "/Images/Empty.png";
             }
             else
             {
-                model.ImagePath = species.Medias.First().ImagePath;
+                model.ImagePath = node.Medias.First().ImagePath;
             }
 
             return model;
         }
 
-        //protected static SpeciesType GetType(Species species)
-        //{
-        //    if (species is Animal) return SpeciesType.Animal;
-        //    if (species is Plant) return SpeciesType.Plant;
 
-        //    return SpeciesType.Unknow;
-
-        //}
     }
 
     public enum SpeciesType

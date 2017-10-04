@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MCT.Web.Models
 {
-    public class PlantModel : SpeciesModel
+    public class PlantModel : NodeModel
     {
         public double Width { get; set; }
         public double Height { get; set; }
