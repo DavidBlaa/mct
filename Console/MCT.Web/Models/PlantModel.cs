@@ -33,9 +33,11 @@ namespace MCT.Web.Models
         [UIHint("TimePeriods")]
         [Display(Name = "Samen Reife")]
         public TimePeriodListModel SeedMaturity { get; set; }
+        [UIHint("TimePeriods")]
         [Display(Name = "Einpflanzen")]
         public TimePeriodListModel Crop { get; set; }
 
+        [UIHint("TimePeriods")]
         [Display(Name = "Vorziehen")]
         public TimePeriodListModel Draw { get; set; }
 

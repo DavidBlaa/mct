@@ -398,7 +398,11 @@ namespace MCT.Web.Controllers
 
 
                 if (plant.Id == 0)
+                {
                     plant = subjectManager.CreatePlant(plant);
+                    plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
+                    subjectManager.Update(plant);
+                }
                 else
                 {
 

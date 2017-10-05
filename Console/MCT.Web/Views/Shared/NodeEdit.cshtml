@@ -47,6 +47,19 @@
                         <div class="panel-body">
                             @Html.TextAreaFor(model => model.Description, new {@class = "form-control"})
                         </div>
+
+                        <div id="TaxonRanks" class="panel-default">
+                            <div class="panel-heading">
+                                <h4>Taxon</h4>
+                            </div>
+                            <div class="panel-body">
+                                @if (Model.Parent != null)
+                                {
+                                    @Html.Partial("_taxonRankPartialView", Model.Parent)
+                                }
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

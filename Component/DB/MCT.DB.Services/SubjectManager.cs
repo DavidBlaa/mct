@@ -118,6 +118,14 @@ namespace MCT.DB.Services
                     interactionManager.Delete(interactons[i]);
                 }
 
+                List<Node> children = this.GetAll<Node>().Where(n => n.Parent != null && n.Parent.Id.Equals(node.Id)).ToList();
+
+                foreach (Node child in children)
+                {
+                    child.Parent = null;
+                    Update(child);
+                }
+
 
                 Delete(node);
             }
