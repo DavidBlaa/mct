@@ -524,3 +524,87 @@ function addInteraction(e) {
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+
+/*********** LOAD NAMES **************/
+    $(".nameContainer #Name").change(function () {
+
+        // if value not null activate scientifname load
+        var value = $(this).val();
+        console.log(value);
+
+        if (value != null && value != "") {
+            console.log("show");
+            $("#scientificNameIcon").show();
+        }
+        else {
+            console.log("hide");
+
+            $("#scientificNameIcon").hide();
+            $("#scientificNameIcon").removeClass("fa-spin");
+        }
+    });
+
+    $(".scientficNameContainer #ScientificName").change(function () {
+
+        // if value not null activate scientifname load
+        var value = $(this).val();
+        console.log(value);
+
+        if (value != null && value != "") {
+            $("#nameIcon").show();
+        }
+        else {
+
+            $("#nameIcon").hide();
+            $("#nameIcon").removeClass("fa-spin");
+
+        }
+    });
+
+    $("#scientificNameIcon").click(function () {
+
+        $("#scientificNameIcon").addClass("fa-spin");
+
+        value = $(".nameContainer #Name").val();
+        data = {
+            name :value
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Subject/GetScientificName",
+            data: data,
+            dataType: "json",
+            success: function (response) {
+                
+                $("#scientificNameIcon").removeClass("fa-spin");
+
+                $(".scientficNameContainer #ScientificName").val(response);
+            }
+        });
+    });
+
+    $("#nameIcon").click(function () {
+
+        $("#nameIcon").addClass("fa-spin");
+
+        value = $(".scientficNameContainer #ScientificName").val();
+        data = {
+            scientificName: value
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Subject/GetName",
+            data: data,
+            dataType: "json",
+            success: function (response) {
+
+    
+                $("#nameIcon").removeClass("fa-spin");
+
+                $(".nameContainer #Name").val(response);
+            }
+        });
+    });

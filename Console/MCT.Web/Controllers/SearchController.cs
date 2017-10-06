@@ -19,13 +19,16 @@ namespace MCT.Web.Controllers
 
         // GET: Search
         [HttpGet]
-        public ActionResult Search()
+        public ActionResult Search(bool reset = false)
         {
             //ToDo think about setting sessions, is this the rigth place ?
             //load all names in session
 
             getAllNames();
 
+            if (reset) ResetSearchProvider();
+
+            SearchProvider sp = GetSearchProvider();
             SubjectManager subjectManager = new SubjectManager();
 
             //Get all subjects
@@ -33,17 +36,18 @@ namespace MCT.Web.Controllers
 
             SearchModel Model = new SearchModel(subjects.ToList().OrderBy(s => s.Name).ToList());
 
-            // load all species
-            var species = subjectManager.GetAll<Node>();
+            SearchManager searchManager = new SearchManager();
 
+            var species = searchManager.Search(sp.SearchCriterias);
             if (species != null)
             {
                 //convert all subjects to subjectModels
-                species = species.AsQueryable().OrderBy(p => p.Name).ToArray();
+                species = species.OrderBy(p => p.Name);
                 species.ToList().ForEach(s => Model.Species.Add(NodeModel.Convert(s)));
             }
 
-            ResetSearchProvider();
+            Model.SearchCriterias = sp.SearchCriterias;
+
 
             return View("Search", Model);
         }

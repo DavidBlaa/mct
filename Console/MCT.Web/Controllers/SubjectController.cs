@@ -1,6 +1,7 @@
 ﻿using MCT.Cal;
 using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.Extern;
 using MCT.Web.Helpers;
 using MCT.Web.Models;
 using System;
@@ -566,7 +567,21 @@ namespace MCT.Web.Controllers
             return PartialView("SimpleLinkModel", new SimpleLinkModel());
         }
 
+        public JsonResult GetName(string scientificName)
+        {
+            WikipediaReader wikipediaRaeder = new WikipediaReader();
+            string name = wikipediaRaeder.GetName(scientificName);
 
+            return Json(name);
+        }
+
+        public JsonResult GetScientificName(string name)
+        {
+            WikipediaReader wikipediaRaeder = new WikipediaReader();
+            string scientificName = wikipediaRaeder.GetScientificName(name);
+
+            return Json(scientificName);
+        }
 
         /// <summary>
         /// Check if Name exist

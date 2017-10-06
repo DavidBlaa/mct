@@ -16,17 +16,32 @@
 
                 <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
 
-                <h2>
-                    @Html.Hidden("initName", Model.Name)
-                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
-                </h2>
-                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-
-                <h3>
-                    @Html.Hidden("initScientificName", Model.ScientificName)
-                    @Html.EditorFor(model => model.ScientificName, new {htmlAttributes = new {@class = "form-control"}})
-                </h3>
-                @Html.ValidationMessageFor(model => model.ScientificName, "", new {@class = "text-danger"})
+                <div class="row nameContainer">
+                    <div class="col-md-3">
+                        @Html.Hidden("initName", Model.Name)
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">
+                        <span id="nameIcon" class="fa fa-refresh " style="margin:6px 0 0 0; font-size:17px; display:none"></span>
+                    </div>
+                   <div class="col-md-3" >
+                       @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                   </div>
+                </div>
+              
+                
+                <div class="row scientficNameContainer">
+                    <div class="col-md-3">
+                        @Html.Hidden("initScientificName", Model.ScientificName)
+                        @Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">
+                        <span id="scientificNameIcon" class="fa fa-refresh" style="margin:6px 0 0 0; font-size:17px; display:none"></span>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.ValidationMessageFor(model => model.ScientificName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
                 @Html.EnumDropDownListFor(model => model.TaxonRank, new {@class = "form-control dropdown"})
                 @Html.ValidationMessageFor(model => model.TaxonRank, "", new {@class = "text-danger"})
@@ -64,19 +79,5 @@
                 </div>
             </div>
         </div>
-
-        @*Interactions*@
-        @*<div class="row panel-default">
-            <div class="panel-heading">
-                <h3>Interaktionen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
-            </div>
-            <div class="content panel-body">
-                @if (Model.Interactions != null)
-                {
-                    @Html.Partial("Interactions", Model.Interactions)
-                }
-
-            </div>
-        </div>*@
     }
 </div>
