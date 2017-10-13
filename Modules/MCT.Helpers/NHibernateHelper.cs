@@ -1,14 +1,14 @@
-﻿using System.Web;
+﻿using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
 using MCT.DB.Entities;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Search;
 using NHibernate.Search.Impl;
-using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
-using Lucene.Net.QueryParsers;
-using Lucene.Net.Search;
 using System.Diagnostics;
+using System.Web;
 
 namespace MCT.Helpers
 {
@@ -21,7 +21,7 @@ namespace MCT.Helpers
         {
 
             sessionFactory = new Configuration().Configure().BuildSessionFactory();
-            
+
         }
 
         public static ISession GetCurrentSession()
@@ -70,7 +70,7 @@ namespace MCT.Helpers
 
             tx = session.BeginTransaction();
 
-            
+
 
             foreach (object entity in session.CreateCriteria(typeof(Subject)).List())
             {
@@ -95,37 +95,37 @@ namespace MCT.Helpers
 
         public static void Search()
         {
-                HttpContext context = HttpContext.Current;
-                ISession currentSession = context.Items[CurrentSessionKey] as ISession;
+            HttpContext context = HttpContext.Current;
+            ISession currentSession = context.Items[CurrentSessionKey] as ISession;
 
-                if (currentSession == null)
-                {
-                    currentSession = sessionFactory.OpenSession();
-                    context.Items[CurrentSessionKey] = currentSession;
-                }
+            if (currentSession == null)
+            {
+                currentSession = sessionFactory.OpenSession();
+                context.Items[CurrentSessionKey] = currentSession;
+            }
 
-                IFullTextSession session = new FullTextSessionImpl(currentSession);
-                if (!currentSession.IsOpen)
-                {
-                    currentSession = sessionFactory.OpenSession();
-                    context.Items[CurrentSessionKey] = currentSession;
+            IFullTextSession session = new FullTextSessionImpl(currentSession);
+            if (!currentSession.IsOpen)
+            {
+                currentSession = sessionFactory.OpenSession();
+                context.Items[CurrentSessionKey] = currentSession;
 
-                    if (currentSession.IsOpen)
-                        Debug.WriteLine("Session open");
-                    else
-                        Debug.WriteLine("Session Closed");
-                }
+                if (currentSession.IsOpen)
+                    Debug.WriteLine("Session open");
+                else
+                    Debug.WriteLine("Session Closed");
+            }
 
-                string searchQuery = "Name:2";
-                Analyzer std = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29);
+            string searchQuery = "Name:2";
+            Analyzer std = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29);
 
-                QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "Name", std);
-                Query query = parser.Parse(searchQuery);
+            QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "Name", std);
+            Query query = parser.Parse(searchQuery);
 
-                IFullTextSession fullTextSession = NHibernate.Search.Search.CreateFullTextSession(NHibernateHelper.GetCurrentSession());
-                IFullTextQuery fullTextQuery = fullTextSession.CreateFullTextQuery(query, typeof(Species));
+            IFullTextSession fullTextSession = NHibernate.Search.Search.CreateFullTextSession(NHibernateHelper.GetCurrentSession());
+            IFullTextQuery fullTextQuery = fullTextSession.CreateFullTextQuery(query, typeof(Species));
 
-                var employeeList = fullTextQuery.List();
+            var employeeList = fullTextQuery.List();
 
         }
     }

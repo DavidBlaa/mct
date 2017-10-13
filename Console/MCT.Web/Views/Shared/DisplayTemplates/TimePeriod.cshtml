@@ -1,5 +1,6 @@
-﻿@model TimePeriod
+﻿@model TimePeriodModel
 @using MCT.DB.Entities
+@using MCT.Web.Models
 
 @{
     string id = Model.Id.ToString();
@@ -12,6 +13,6 @@
     <div class="col-md-2 start-month">@Html.DisplayFor(m => m.StartMonth)</div>
     <div class="col-md-2 end-area">@Html.DisplayFor(m => m.EndArea)</div>
     <div class="col-md-2 end-month">@Html.DisplayFor(m => m.EndMonth)</div>
-    <div class="col-md-2">@Html.DisplayFor(m => m.Type)</div>
+    @*<div class="col-md-2">@Html.DisplayFor(m => m.Type)</div>*@
 </div>
 

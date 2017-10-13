@@ -2,6 +2,5 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="MCT.DB.Entities" namespace="MCT.DB.Entities">
   <joined-subclass name="Bloom" table="Blooms"  extends="TimePeriod" dynamic-update="true">
     <key column="Id" />
-    <many-to-one class="Subject" name="AssignedTo" column="SubjectRef"></many-to-one>
   </joined-subclass>
 </hibernate-mapping>

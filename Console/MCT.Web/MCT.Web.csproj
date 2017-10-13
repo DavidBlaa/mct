@@ -167,6 +167,7 @@
     <Compile Include="Models\PlantModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
+    <Compile Include="Models\TimePeriodModel.cs" />
     <Compile Include="Models\Tree\TreeElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -68,11 +68,7 @@ function savePlant() {
         //get Timeperiods list
         //string listId = type + "-list";
 
-        var bloom = $("#bloom-list");
-        var sowing = $("#sowing-list");
-
-        var harvest = $("#harvest-list");
-        var seedMaturity = $("#seedmaturity-list");
+        var timeperiods = $("#timeperiod-list");
 
         var precultures = $(".preculture .simplelinkmodel-list");
         var aftercultures = $(".afterculture .simplelinkmodel-list");
@@ -80,10 +76,7 @@ function savePlant() {
         //all tr of table
         //var interactionsFromSide = $(".interactions-table tr.interaction-row");
 
-        console.log(bloom);
-        console.log(sowing);
-        console.log(harvest);
-        console.log(seedMaturity);
+        console.log(timeperiods);
         console.log(precultures);
         console.log(aftercultures);
         //console.log(interactionsFromSide);
@@ -91,7 +84,7 @@ function savePlant() {
         //var tmp = getSimpleLinksJSON(precultures);
         //console.log("tmp -> preculture");
         //console.log(tmp);
-
+        //alert("test");
         var plant = {
             Id: $("#plant #Id").val(),
             Name: $("#plant #Name").val(),
@@ -104,10 +97,8 @@ function savePlant() {
             NutrientClaim: $("#plant #NutrientClaim").val(),
             SowingDepth: $("#plant #SowingDepth").val(),
             LocationType: $("#plant #LocationType").val(),
-            Bloom: getTimePeriodsJSON(bloom, $("#plant #Id").val()),
-            Sowing: getTimePeriodsJSON(sowing, $("#plant #Id").val()),
-            Harvest: getTimePeriodsJSON(harvest, $("#plant #Id").val()),
-            SeedMaturity: getTimePeriodsJSON(seedMaturity, $("#plant #Id").val()),
+            TimePeriods: getTimePeriodsJSON(timeperiods, $("#plant #Id").val()),
+
             PreCultures: getSimpleLinksJSON(precultures),
             AfterCultures: getSimpleLinksJSON(aftercultures)
         };
@@ -118,7 +109,7 @@ function savePlant() {
 
 
         var data = {
-            plant: plant,
+            plantModel: plant,
             //interactions: interactions
         };
 
@@ -329,21 +320,24 @@ function getTimePeriodsJSON(source, parentid) {
     var list = $(source).find("li").each(function () {
 
         var tp = getTimePeriodJSON(this, parentid);
+        console.log(tp);
         JSONArray.push(tp);
     });
 
     return JSONArray;
 }
 
-function getTimePeriodJSON(e, parentid) {
+function getTimePeriodJSON(e, parentid, plant) {
     console.log("e: " + e);
+    console.log(e);
     var tp = {
-        Subject: parentid,
+
         StartArea: $(e).find(".start-area").find("select").val(),
         StartMonth: $(e).find(".start-month").find("select").val(),
         EndArea: $(e).find(".end-area").find("select").val(),
         EndMonth: $(e).find(".end-month").find("select").val(),
-        Type: $(e).find("#Type select").val()
+        Type: $(e).find(".type").val(),
+
     }
 
     return tp;
@@ -489,7 +483,7 @@ function addInteraction(e) {
     }
 
 
-    function removeInteraction(e) {
+function removeInteraction(e) {
 
         $(e).parents("tr")[0].remove();
     }

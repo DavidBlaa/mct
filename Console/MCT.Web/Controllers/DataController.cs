@@ -1,7 +1,7 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Helpers;
-using MCT.Extern;
+using MCT.IO;
 using MCT.Search;
 using MCT.Web.Helpers;
 using MCT.Web.Models;
@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using MCT.IO;
 
 namespace MCT.Web.Controllers
 {
@@ -65,14 +64,6 @@ namespace MCT.Web.Controllers
                 foreach (var node in nodes)
                 {
                     Plant plant = (Plant)node;
-                    if (!manager.GetAll<Plant>().Any(p => p.Name.Equals(plant.Name)))
-                    {
-                        if (plant.Cultivation != null)
-                        {
-                            manager.Create(plant.Cultivation);
-                        }
-                    }
-
                     manager.Create(plant);
 
                 }
@@ -101,11 +92,6 @@ namespace MCT.Web.Controllers
                         // pflanze noch nicht vorhanden
                         if (!manager.GetAll<Plant>().Any(p => p.Name.ToLower().Equals(plant.Name.ToLower())))
                         {
-                            if (plant.Cultivation != null)
-                            {
-                                manager.Create(plant.Cultivation);
-                            }
-
                             //ToDO Remove dublicates - check if a plant is existing
                             manager.Create(plant);
                         }

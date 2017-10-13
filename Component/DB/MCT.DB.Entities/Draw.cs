@@ -7,9 +7,9 @@
 
         }
 
-        public Draw(string startDateText, string endDateText, TimePeriodType type)
+        public Draw(string startDateText, string endDateText, TimePeriodType type, TimePeriod next)
         {
-            setParameters(startDateText, endDateText, type);
+            setParameters(startDateText, endDateText, next);
         }
     }
 }

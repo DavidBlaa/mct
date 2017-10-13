@@ -1,15 +1,15 @@
 ﻿namespace MCT.DB.Entities
 {
-    public class Harvest:TimePeriod
+    public class Harvest : TimePeriod
     {
         public Harvest()
         {
 
         }
 
-        public Harvest(string startDateText, string endDateText, TimePeriodType type)
+        public Harvest(string startDateText, string endDateText, TimePeriod next)
         {
-            setParameters(startDateText, endDateText, type);
+            setParameters(startDateText, endDateText,next);
         }
     }
 }

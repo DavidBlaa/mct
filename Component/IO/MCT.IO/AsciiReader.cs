@@ -357,13 +357,13 @@ namespace MCT.IO
                         case "RootDepth": { plant.RootDepth = PlantHelper.GetRootDepth(values[i]); break; }
                         case "SowingDepth": { plant.SowingDepth = Convert.ToInt32(values[i]); break; }
                         case "NutrientClaim": { plant.NutrientClaim = PlantHelper.GetNutrientClaimDepth(values[i]); break; }
-                        case "Sowing": { plant.Sowing = createTimePeriods<Sowing>(values[i], TimePeriodType.Sowing); break; }
-                        case "Bloom": { plant.Bloom = createTimePeriods<Bloom>(values[i], TimePeriodType.Bloom); break; }
-                        case "Harvest":
-                            {
-                                plant.Harvest = createTimePeriods<Harvest>(values[i], TimePeriodType.Harvest); break;
-                            }
-                        case "SeedMaturity": { plant.SeedMaturity = createTimePeriods<SeedMaturity>(values[i], TimePeriodType.SeedMaturity); break; }
+                        //case "Sowing": { plant.TimePeriods.ToList().AddRange(createTimePeriods<Sowing>(values[i], TimePeriodType.Sowing, plant)); break; }
+                        //case "Bloom": { plant.TimePeriods.ToList().AddRange(createTimePeriods<Bloom>(values[i], TimePeriodType.Bloom, plant)); break; }
+                        //case "Harvest":
+                        //    {
+                        //        plant.TimePeriods.ToList().AddRange(createTimePeriods<Harvest>(values[i], TimePeriodType.Harvest, plant)); break;
+                        //    }
+                        //case "SeedMaturity": { plant.TimePeriods.ToList().AddRange(createTimePeriods<SeedMaturity>(values[i], TimePeriodType.SeedMaturity, plant)); break; }
                         case "Image":
                             {
                                 if (!String.IsNullOrEmpty(values[i]))
@@ -666,72 +666,77 @@ namespace MCT.IO
         /// </summary>
         /// <param name="value">string pattern vom File</param>
         /// <returns></returns>
-        private ICollection<T> createTimePeriods<T>(string value, TimePeriodType type) where T : TimePeriod
+        private ICollection<T> createTimePeriods<T>(string value, TimePeriodType type, Subject plant) where T : TimePeriod
         {
             List<T> temp = new List<T>();
-            if (!string.IsNullOrEmpty(value))
-            {
-                string[] timePeriodStrings = value.Split('#');
+            //if (!string.IsNullOrEmpty(value))
+            //{
+            //    string[] timePeriodStrings = value.Split('#');
 
-                T tp;
+            //    T tp;
 
-                foreach (string tps in timePeriodStrings)
-                {
-                    string[] tpss = tps.Split('-');
+            //    foreach (string tps in timePeriodStrings)
+            //    {
+            //        string[] tpss = tps.Split('-');
 
-                    if (type.Equals(TimePeriodType.Bloom))
-                    {
-                        tp = new Bloom() as T;
+            //        if (type.Equals(TimePeriodType.Bloom))
+            //        {
+            //            tp = new Bloom() as T;
+            //            tp.AssignedTo = plant;
+            //            if (tpss.Count() == 1)
+            //                tp = new Bloom(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                        if (tpss.Count() == 1)
-                            tp = new Bloom(tpss[0].Trim(), tpss[0].Trim(), type) as T;
+            //            if (tpss.Count() == 2)
+            //                tp = new Bloom(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
-                        if (tpss.Count() == 2)
-                            tp = new Bloom(tpss[0].Trim(), tpss[1].Trim(), type) as T;
+            //            if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
+            //        }
 
-                        if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
-                    }
+            //        if (type.Equals(TimePeriodType.Harvest))
+            //        {
+            //            tp = new Harvest() as T;
+            //            tp.AssignedTo = plant;
 
-                    if (type.Equals(TimePeriodType.Harvest))
-                    {
-                        tp = new Harvest() as T;
-                        if (tpss.Count() == 1)
-                            tp = new Harvest(tpss[0].Trim(), tpss[0].Trim(), type) as T;
+            //            if (tpss.Count() == 1)
+            //                tp = new Harvest(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                        if (tpss.Count() == 2)
-                            tp = new Harvest(tpss[0].Trim(), tpss[1].Trim(), type) as T;
+            //            if (tpss.Count() == 2)
+            //                tp = new Harvest(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
-                        if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
-                    }
+            //            if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
+            //        }
 
-                    if (type.Equals(TimePeriodType.Sowing))
-                    {
-                        tp = new Sowing() as T;
+            //        if (type.Equals(TimePeriodType.Sowing))
+            //        {
+            //            tp = new Sowing() as T;
+            //            tp.AssignedTo = plant;
 
-                        if (tpss.Count() == 1)
-                            tp = new Sowing(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                        if (tpss.Count() == 2)
-                            tp = new Sowing(tpss[0].Trim(), tpss[1].Trim(), type) as T;
+            //            if (tpss.Count() == 1)
+            //                tp = new Sowing(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                        if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
-                    }
+            //            if (tpss.Count() == 2)
+            //                tp = new Sowing(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
-                    if (type.Equals(TimePeriodType.SeedMaturity))
-                    {
-                        tp = new SeedMaturity() as T;
+            //            if (!TimePeriod.IsEmpty(tp)) temp.Add(tp);
+            //        }
 
-                        if (tpss.Count() == 1)
-                            tp = new SeedMaturity(tpss[0].Trim(), tpss[0].Trim(), type) as T;
+            //        if (type.Equals(TimePeriodType.SeedMaturity))
+            //        {
+            //            tp = new SeedMaturity() as T;
+            //            tp.AssignedTo = plant;
 
-                        if (tpss.Count() == 2)
-                            tp = new SeedMaturity(tpss[0].Trim(), tpss[1].Trim(), type) as T;
+            //            if (tpss.Count() == 1)
+            //                tp = new SeedMaturity(tpss[0].Trim(), tpss[0].Trim(), type) as T;
 
-                        if (!TimePeriod.IsEmpty((tp))) temp.Add(tp);
-                    }
+            //            if (tpss.Count() == 2)
+            //                tp = new SeedMaturity(tpss[0].Trim(), tpss[1].Trim(), type) as T;
 
-                }
-            }
+            //            if (!TimePeriod.IsEmpty((tp))) temp.Add(tp);
+            //        }
+
+            //    }
+            //}
             return temp;
         }
 

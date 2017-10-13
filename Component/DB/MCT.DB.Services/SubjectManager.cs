@@ -20,44 +20,44 @@ namespace MCT.DB.Services
 
         public Plant CreatePlant(Plant plant)
         {
-            Plant tmp = Create(plant);
+            plant = Create(plant);
 
             // go to each timerperiod and create
             #region go to each timerperiod and create
 
-            //foreach (var tp in tmp.Bloom)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
+            foreach (var tp in plant.TimePeriods)
+            {
+                if (tp.Id == 0)
+                {
+                    //tp.AssignedTo = plant;
+                    var newtp = Create(tp);
+                    tp.Id = newtp.Id;
+                }
+            }
 
-            //foreach (var tp in tmp.Sowing)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
-
-            //foreach (var tp in tmp.Harvest)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
-
-            //foreach (var tp in tmp.SeedMaturity)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
-
-
-
+            Update(plant);
             #endregion
 
-            return tmp;
+            return plant;
+        }
+
+        public Plant UpdatePlant(Plant plant)
+        {
+
+            foreach (var tp in plant.TimePeriods)
+            {
+                if (tp.Id == 0)
+                {
+                    tp.AssignedTo = plant;
+                    var newtp = Create(tp);
+                    tp.Id = newtp.Id;
+                }
+            }
+
+
+            this.Update(plant);
+
+            return plant;
         }
 
         public Animal CreateAnimal(Animal animal)
@@ -67,33 +67,15 @@ namespace MCT.DB.Services
             // go to each timerperiod and create
             #region go to each timerperiod and create
 
-            //foreach (var tp in tmp.Bloom)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
-
-            //foreach (var tp in tmp.Sowing)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
-
-            //foreach (var tp in tmp.Harvest)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
-
-            //foreach (var tp in tmp.SeedMaturity)
-            //{
-            //    tp.Subject = tmp.Id;
-            //    var newtp = Create(tp);
-            //    tp.Id = newtp.Id;
-            //}
+            foreach (var tp in animal.TimePeriods)
+            {
+                if (tp.Id == 0)
+                {
+                    tp.AssignedTo = animal;
+                    var newtp = Create(tp);
+                    tp.Id = newtp.Id;
+                }
+            }
 
             #endregion
 

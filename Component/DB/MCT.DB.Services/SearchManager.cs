@@ -21,11 +21,11 @@ namespace MCT.DB.Services
 
         #region Search
 
-        public IQueryable<Species> Search(Dictionary<string, string> searchCriteria)
+        public IQueryable<Node> Search(Dictionary<string, string> searchCriteria)
         {
             var session = NHibernateHelper.GetCurrentSession();
 
-            IQueryable<Species> speciesQuery = null;
+            IQueryable<Node> speciesQuery = null;
             IQueryable<Plant> plantQuery = null;
 
 
@@ -44,11 +44,11 @@ namespace MCT.DB.Services
                             {
                                 if (string.IsNullOrEmpty(kvp.Value))
                                 {
-                                    speciesQuery = session.Query<Species>();
+                                    speciesQuery = session.Query<Node>();
                                 }
                                 else
                                 {
-                                    speciesQuery = session.Query<Species>().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
+                                    speciesQuery = session.Query<Node>().Where(s => s.Name.ToLower().Contains(kvp.Value.ToLower())
                                                                       ||
                                                                       s.Description.ToLower()
                                                                           .Contains(kvp.Value.ToLower())
@@ -65,7 +65,7 @@ namespace MCT.DB.Services
                             {
                                 if (string.IsNullOrEmpty(kvp.Value))
                                 {
-                                    speciesQuery = session.Query<Species>();
+                                    speciesQuery = session.Query<Node>();
                                 }
                                 else
                                 {
@@ -95,9 +95,9 @@ namespace MCT.DB.Services
                             var sowings = getMatchingTimePeriods(GetAll<Sowing>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
 
                             if (plantQuery == null)
-                                plantQuery = session.Query<Plant>().Where(p => p.Sowing.Any(s => sowings.Contains(s)));
+                                plantQuery = session.Query<Plant>().Where(p => p.TimePeriods.Any(s => sowings.Contains(s)));
                             else
-                                plantQuery = plantQuery.AsQueryable().Where(p => p.Sowing.Any(s => sowings.Contains(s)));
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.TimePeriods.Any(s => sowings.Contains(s)));
 
                             break;
                         }
@@ -107,9 +107,9 @@ namespace MCT.DB.Services
                             var harvest = getMatchingTimePeriods(GetAll<Harvest>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
 
                             if (plantQuery == null)
-                                plantQuery = session.Query<Plant>().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
+                                plantQuery = session.Query<Plant>().Where(p => p.TimePeriods.Any(s => harvest.Contains(s)));
                             else
-                                plantQuery = plantQuery.AsQueryable().Where(p => p.Harvest.Any(s => harvest.Contains(s)));
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.TimePeriods.Any(s => harvest.Contains(s)));
 
                             break;
                         }
@@ -119,9 +119,9 @@ namespace MCT.DB.Services
                             var bloom = getMatchingTimePeriods(GetAll<Bloom>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
 
                             if (plantQuery == null)
-                                plantQuery = session.Query<Plant>().Where(p => p.Bloom.Any(s => bloom.Contains(s)));
+                                plantQuery = session.Query<Plant>().Where(p => p.TimePeriods.Any(s => bloom.Contains(s)));
                             else
-                                plantQuery = plantQuery.AsQueryable().Where(p => p.Bloom.Any(s => bloom.Contains(s)));
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.TimePeriods.Any(s => bloom.Contains(s)));
 
                             break;
                         }
@@ -131,9 +131,32 @@ namespace MCT.DB.Services
                             var seedMaturity = getMatchingTimePeriods(GetAll<SeedMaturity>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
 
                             if (plantQuery == null)
-                                plantQuery = session.Query<Plant>().Where(p => p.SeedMaturity.Any(s => seedMaturity.Contains(s)));
+                                plantQuery = session.Query<Plant>().Where(p => p.TimePeriods.Any(s => seedMaturity.Contains(s)));
                             else
-                                plantQuery = plantQuery.AsQueryable().Where(p => p.SeedMaturity.Any(s => seedMaturity.Contains(s)));
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.TimePeriods.Any(s => seedMaturity.Contains(s)));
+
+                            break;
+                        }
+
+                    case "Cultivate":
+                        {
+                            var cultivates = getMatchingTimePeriods(GetAll<Cultivate>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
+
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => p.TimePeriods.Any(s => cultivates.Contains(s)));
+                            else
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.TimePeriods.Any(s => cultivates.Contains(s)));
+
+                            break;
+                        }
+                    case "Implant":
+                        {
+                            var implants = getMatchingTimePeriods(GetAll<Implant>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
+
+                            if (plantQuery == null)
+                                plantQuery = session.Query<Plant>().Where(p => p.TimePeriods.Any(s => implants.Contains(s)));
+                            else
+                                plantQuery = plantQuery.AsQueryable().Where(p => p.TimePeriods.Any(s => implants.Contains(s)));
 
                             break;
                         }
@@ -255,7 +278,7 @@ namespace MCT.DB.Services
             return this.GetAllAsQueryable<Species>().Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
         }
 
-        private IQueryable<Species> getSubjectsOfInteractionWithObject(long objectId, long predicateId, IQueryable<Species> query)
+        private IQueryable<Node> getSubjectsOfInteractionWithObject(long objectId, long predicateId, IQueryable<Node> query)
         {
             Predicate rootPredicate = this.GetAll<Predicate>().FirstOrDefault(i => i.Id.Equals(predicateId));
 
@@ -267,7 +290,7 @@ namespace MCT.DB.Services
             return query.Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
         }
 
-        private IQueryable<Species> getObjectsOfInteractionWithSubject(long subjectId, long predicateId)
+        private IQueryable<Node> getObjectsOfInteractionWithSubject(long subjectId, long predicateId)
         {
             Predicate rootPredicate =
                 this.GetAll<Predicate>().Where(i => i.Id.Equals(predicateId)).FirstOrDefault();
@@ -277,10 +300,10 @@ namespace MCT.DB.Services
                     .Where(i => i.Predicate.Parent.Equals(rootPredicate) && i.Subject.Id.Equals(subjectId))
                     .Select(i => i.Object.Id);
 
-            return this.GetAllAsQueryable<Species>().Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
+            return this.GetAllAsQueryable<Node>().Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
         }
 
-        private IQueryable<Species> getObjectsOfInteractionWithSubject(long subjectId, long predicateId, IQueryable<Species> query)
+        private IQueryable<Node> getObjectsOfInteractionWithSubject(long subjectId, long predicateId, IQueryable<Node> query)
         {
             Predicate rootPredicate = this.GetAll<Predicate>().FirstOrDefault(i => i.Id.Equals(predicateId));
 
@@ -298,7 +321,7 @@ namespace MCT.DB.Services
 
             SubjectManager _sm = new SubjectManager();
 
-            var species = _sm.GetAll<Species>();
+            var species = _sm.GetAll<Node>();
 
             foreach (var s in species)
             {

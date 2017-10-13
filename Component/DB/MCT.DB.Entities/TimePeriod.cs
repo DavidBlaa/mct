@@ -12,9 +12,6 @@ namespace MCT.DB.Entities
         public virtual long Id { get; set; }
 
         [Field(Index.Tokenized, Store = Store.Yes)]
-        public virtual long Subject { get; set; }
-
-        [Field(Index.Tokenized, Store = Store.Yes)]
         public virtual TimePeriodArea StartArea { get; set; }
 
         [Field(Index.Tokenized, Store = Store.Yes)]
@@ -26,16 +23,17 @@ namespace MCT.DB.Entities
         [Field(Index.Tokenized, Store = Store.Yes)]
         public virtual TimePeriodMonth EndMonth { get; set; }
 
-        public virtual TimePeriodType Type { get; set; }
-
         public virtual Subject AssignedTo { get; set; }
 
+        public virtual bool Start { get; set; }
+
+        public virtual TimePeriod Next { get; set; }
 
 
-        protected void setParameters(string startDateText, string endDateText, TimePeriodType type)
+
+
+        protected void setParameters(string startDateText, string endDateText, TimePeriod next)
         {
-            Type = type;
-
             string[] start = startDateText.Split(' ');
 
             if (start.Count() == 0)
@@ -68,8 +66,12 @@ namespace MCT.DB.Entities
                 EndMonth = TimePeriodHelper.GetMonth(end[1]);
             }
 
+            if (next != null)
+            {
+                Next = next;
+            }
 
-
+            Start = false;
         }
 
         public static bool IsEmpty(TimePeriod tp)
@@ -201,7 +203,7 @@ namespace MCT.DB.Entities
         Harvest,
         Sowing,
         SeedMaturity,
-        Crop,
-        Draw
+        Cultivate,
+        Implant
     }
 }

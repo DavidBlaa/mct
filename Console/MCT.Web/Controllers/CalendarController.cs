@@ -28,25 +28,25 @@ namespace MCT.Web.Controllers
             foreach (var VARIABLE in subjectmanager.GetAll<TimePeriod>())
             {
                 if (VARIABLE != null)
-                    events.Add(getEventFromTimeperiod(VARIABLE, VARIABLE.Type));
+                    events.Add(getEventFromTimeperiod(VARIABLE));
             }
 
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        private object getEventFromTimeperiod(TimePeriod tp, TimePeriodType type)
+        private object getEventFromTimeperiod(TimePeriod tp)
         {
             string color = "";
 
             Debug.WriteLine(tp);
 
-            switch (type)
-            {
-                case TimePeriodType.Sowing: { color = "green"; break; }
-                case TimePeriodType.Harvest: { color = "blue"; break; }
-                case TimePeriodType.Bloom: { color = "yellow"; break; }
-                case TimePeriodType.SeedMaturity: { color = "red"; break; }
-            }
+            if (tp is Sowing) color = "Green";
+            if (tp is Harvest) color = "Red";
+            if (tp is Bloom) color = "Blue";
+            if (tp is SeedMaturity) color = "Yellow";
+            if (tp is Cultivate) color = "Gray";
+            if (tp is LifeTime) color = "YellowGreen";
+            if (tp is Implant) color = "Purple";
 
             var json = new
             {
@@ -78,14 +78,18 @@ namespace MCT.Web.Controllers
             {
                 if (plant != null)
                 {
-                    if (plant.Bloom.Any())
+                    if (plant.TimePeriods.Any(t => t is Bloom))
                         events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Bloom));
-                    if (plant.Sowing.Any())
+                    if (plant.TimePeriods.Any(t => t is Sowing))
                         events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Sowing));
-                    if (plant.Harvest.Any())
+                    if (plant.TimePeriods.Any(t => t is Harvest))
                         events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Harvest));
-                    if (plant.SeedMaturity.Any())
+                    if (plant.TimePeriods.Any(t => t is SeedMaturity))
                         events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.SeedMaturity));
+                    if (plant.TimePeriods.Any(t => t is Cultivate))
+                        events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Cultivate));
+                    if (plant.TimePeriods.Any(t => t is Implant))
+                        events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Implant));
                 }
             }
 
@@ -96,53 +100,11 @@ namespace MCT.Web.Controllers
         {
             var tps = new List<object>();
 
-            switch (type)
+            foreach (var VARIABLE in plant.TimePeriods)
             {
-                case TimePeriodType.Bloom:
-                    {
-                        foreach (var VARIABLE in plant.Bloom)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-
-                case TimePeriodType.Harvest:
-                    {
-                        foreach (var VARIABLE in plant.Harvest)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-                case TimePeriodType.Sowing:
-                    {
-                        foreach (var VARIABLE in plant.Sowing)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-                case TimePeriodType.SeedMaturity:
-                    {
-                        foreach (var VARIABLE in plant.SeedMaturity)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-                default:
-                    break;
+                if (VARIABLE != null)
+                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE));
             }
-
 
             var json = new
             {
@@ -154,36 +116,29 @@ namespace MCT.Web.Controllers
             return json;
         }
 
-        private object getEventFromTimeperiodForGantt(TimePeriod tp, TimePeriodType type)
+        private object getEventFromTimeperiodForGantt(TimePeriod tp)
         {
-            string color = "";
+            string color = "Black";
 
             Debug.WriteLine(tp);
 
-            switch (type)
-            {
-                case TimePeriodType.Sowing: { color = "Green"; break; }
-                case TimePeriodType.Harvest: { color = "Blue"; break; }
-                case TimePeriodType.Bloom: { color = "Orange"; break; }
-                case TimePeriodType.SeedMaturity: { color = "Red"; break; }
-            }
+
+            if (tp is Sowing) color = "Green";
+            if (tp is Harvest) color = "Red";
+            if (tp is Bloom) color = "Blue";
+            if (tp is SeedMaturity) color = "Yellow";
+            if (tp is Cultivate) color = "Gray";
+            if (tp is LifeTime) color = "YellowGreen";
+            if (tp is Implant) color = "Purple";
+
+
             //ToDo datetime is not focusing on the on voll, anfang, end
             var fromDT = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
             var toDT = TimeConverter.GetEndDateTime((int)tp.EndMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
 
-            //name: "Testing",
-            //    desc: " ",
-            //    values: [{
-            //    from: today_friendly,
-            //        to: next_friendly,
-            //        label: "Test",
-            //        customClass: "ganttRed"
-            //    }]
-
-
             var tpJSON = new
             {
-                label = type.ToString(),
+                label = tp.GetType().FullName,
                 from = "/Date(" + fromDT + ")/",
                 to = "/Date(" + toDT + ")/",
                 customClass = "gantt" + color

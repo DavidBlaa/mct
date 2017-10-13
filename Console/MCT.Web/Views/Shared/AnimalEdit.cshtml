@@ -13,6 +13,18 @@
     {
         @Html.Partial("NodeEdit", Model)
 
+        <div class="row panel-default">
+            <div class="panel-heading">
+                <h3>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h3>
+            </div>
+
+            <div class="content panel-body">
+                @Html.DisplayNameFor(model => model.TimePeriods)
+                @Html.EditorFor(model => model.TimePeriods)
+
+            </div>
+        </div>
+
         <p>
             <button type="submit" class="fa fa-save mct-button-icon" onclick="saveAnimal(this)"></button>
 

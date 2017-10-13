@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using MCT.DB.Entities;
+﻿using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Helpers;
-using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
-using Lucene.Net.QueryParsers;
-using Lucene.Net.Search;
-using NHibernate.Properties;
-using NHibernate.Search;
 using NHibernate.Util;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MCT.Search
 {
@@ -105,7 +97,7 @@ namespace MCT.Search
                         if (sowingMatchesList.Any())
                         {
                             var plants = from plant in _manager.GetAllAsQueryable<Plant>()
-                                         where plant.Sowing.Any(s => sowingMatchesList.Select(e => e.Id.Equals(s.Id)).Any())
+                                         where plant.TimePeriods.Any(s => sowingMatchesList.Select(e => e.Id.Equals(s.Id) && s is Sowing).Any())
                                          select plant;
 
                             return plants.AsQueryable();

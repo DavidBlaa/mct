@@ -12,10 +12,14 @@
     <property name="StartMonth" type="TimePeriodMonth"/>
     <property name="EndArea" type="TimePeriodArea"/>
     <property name="EndMonth" type="TimePeriodMonth"/>
-    <property name="Type" type="TimePeriodType"/>
-
+    <!--<property name="Type" type="TimePeriodType"/>-->
     
-
+    <property name="Start" type="Boolean"/>
+    
+    <many-to-one name="Next" column="NextId" unique="true" cascade="none" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" />
+    
+    <many-to-one class="Subject" name="AssignedTo" column="SubjectRef"></many-to-one>
+  
     <!--<many-to-one name="Start" class="MCT.DB.Entities.Day, MCT.DB.Entities" column="Start" cascade="all" not-null="true" />-->
     <!--<many-to-one name="Ende" class="MCT.DB.Entities.Day, MCT.DB.Entities" column="Ende" cascade="all" not-null="true" />-->
     

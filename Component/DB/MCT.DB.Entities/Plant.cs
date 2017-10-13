@@ -20,15 +20,7 @@ namespace MCT.DB.Entities
 
         #region Associations
 
-        //Vorzucht
-        public virtual Cultivation Cultivation { get; set; }
-
-        //Dates
-        public virtual ICollection<Sowing> Sowing { get; set; }
-
-        public virtual ICollection<Bloom> Bloom { get; set; }
-        public virtual ICollection<Harvest> Harvest { get; set; }
-        public virtual ICollection<SeedMaturity> SeedMaturity { get; set; }
+       
 
         public virtual ICollection<Plant> PreCultures { get; set; }
         public virtual ICollection<Plant> AfterCultures { get; set; }
@@ -37,10 +29,7 @@ namespace MCT.DB.Entities
 
         public Plant()
         {
-            Sowing = new List<Sowing>();
-            Bloom = new List<Bloom>();
-            Harvest = new List<Harvest>();
-            SeedMaturity = new List<SeedMaturity>();
+            TimePeriods = new List<TimePeriod>();
             PreCultures = new List<Plant>();
             AfterCultures = new List<Plant>();
             RootDepth = RootDepth.Empty;
@@ -58,12 +47,8 @@ namespace MCT.DB.Entities
         public virtual void Update(Plant newPlant)
         {
             // update subject
-
+            this.TimePeriods = newPlant.TimePeriods;
             this.AfterCultures = newPlant.AfterCultures;
-            this.Bloom = newPlant.Bloom;
-            this.Cultivation = newPlant.Cultivation;
-            this.Description = newPlant.Description;
-            this.Harvest = newPlant.Harvest;
             this.Height = newPlant.Height;
             this.Id = newPlant.Id;
             this.LocationType = newPlant.LocationType;
@@ -75,8 +60,6 @@ namespace MCT.DB.Entities
             this.Rank = newPlant.Rank;
             this.RootDepth = newPlant.RootDepth;
             this.ScientificName = newPlant.ScientificName;
-            this.SeedMaturity = newPlant.SeedMaturity;
-            this.Sowing = newPlant.Sowing;
             this.SowingDepth = newPlant.SowingDepth;
             this.Width = newPlant.Width;
         }

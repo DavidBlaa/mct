@@ -27,6 +27,11 @@ namespace MCT.Web.Models
         [UIHint("Interactions")]
         public List<InteractionModel> Interactions { get; set; }
 
+
+        [UIHint("TimePeriods")]
+        [Display(Name = "Termine")]
+        public List<TimePeriodModel> TimePeriods { get; set; }
+
         public SubjectModel()
         {
             Name = "";
@@ -53,6 +58,17 @@ namespace MCT.Web.Models
             model.ImagePath = !subject.Medias.Any() ? "/Images/Empty.png" : subject.Medias.First().ImagePath;
 
             model.Interactions = new List<InteractionModel>();
+
+            model.TimePeriods = new List<TimePeriodModel>();
+
+            if (subject.TimePeriods != null)
+            {
+                foreach (var tp in subject.TimePeriods)
+                {
+                    model.TimePeriods.Add(new TimePeriodModel(tp));
+                }
+            }
+
 
             return model;
         }

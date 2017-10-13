@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MCT.Web.Controllers
@@ -90,111 +91,53 @@ namespace MCT.Web.Controllers
 
             if (plant != null)
             {
-                if (plant.Bloom.Any())
-                    events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Bloom));
-                if (plant.Sowing.Any())
-                    events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Sowing));
-                if (plant.Harvest.Any())
-                    events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.Harvest));
-                if (plant.SeedMaturity.Any())
-                    events.Add(createEventForEachPlantsTimeperiodType(plant, TimePeriodType.SeedMaturity));
+                events.Add(createEventForEachPlantsTimeperiodType(plant));
             }
 
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        private object createEventForEachPlantsTimeperiodType(Plant plant, TimePeriodType type)
+        private object createEventForEachPlantsTimeperiodType(Plant plant)
         {
             var tps = new List<object>();
 
-            switch (type)
+            foreach (var VARIABLE in plant.TimePeriods)
             {
-                case TimePeriodType.Bloom:
-                    {
-                        foreach (var VARIABLE in plant.Bloom)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-
-                case TimePeriodType.Harvest:
-                    {
-                        foreach (var VARIABLE in plant.Harvest)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-                case TimePeriodType.Sowing:
-                    {
-                        foreach (var VARIABLE in plant.Sowing)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-                case TimePeriodType.SeedMaturity:
-                    {
-                        foreach (var VARIABLE in plant.SeedMaturity)
-                        {
-                            if (VARIABLE != null)
-                                tps.Add(getEventFromTimeperiodForGantt(VARIABLE, VARIABLE.Type));
-                        }
-
-                        break;
-                    }
-                default:
-                    break;
+                if (VARIABLE != null)
+                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE));
             }
 
 
             var json = new
             {
                 name = plant.Name,
-                desc = type.ToString(),
                 values = tps
             };
 
             return json;
         }
 
-        private object getEventFromTimeperiodForGantt(TimePeriod tp, TimePeriodType type)
+        private object getEventFromTimeperiodForGantt(TimePeriod tp)
         {
             string color = "";
 
             Debug.WriteLine(tp);
 
-            switch (type)
-            {
-                case TimePeriodType.Sowing: { color = "Green"; break; }
-                case TimePeriodType.Harvest: { color = "Blue"; break; }
-                case TimePeriodType.Bloom: { color = "Orange"; break; }
-                case TimePeriodType.SeedMaturity: { color = "Red"; break; }
-            }
+            if (tp is Sowing) color = "Green";
+            if (tp is Harvest) color = "Red";
+            if (tp is Bloom) color = "Blue";
+            if (tp is SeedMaturity) color = "Yellow";
+            if (tp is Cultivate) color = "Gray";
+            if (tp is LifeTime) color = "YellowGreen";
+            if (tp is Implant) color = "Purple";
+
             //ToDo datetime is not focusing on the on voll, anfang, end
             var fromDT = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
             var toDT = TimeConverter.GetEndDateTime((int)tp.EndMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
 
-            //name: "Testing",
-            //    desc: " ",
-            //    values: [{
-            //    from: today_friendly,
-            //        to: next_friendly,
-            //        label: "Test",
-            //        customClass: "ganttRed"
-            //    }]
-
-
             var tpJSON = new
             {
-                label = type.ToString(),
+                label = tp.GetType().ToString(),
                 from = "/Date(" + fromDT + ")/",
                 to = "/Date(" + toDT + ")/",
                 customClass = "gantt" + color
@@ -335,70 +278,58 @@ namespace MCT.Web.Controllers
             }
         }
 
-        public ActionResult SavePlant(Plant plant)
+        public ActionResult SavePlant(PlantModel plantModel)
         {
             try
             {
-                //Todo Select the type based on the scientific name
-                plant.Rank = Utility.GetTaxonRank(plant.ScientificName);
-
-
-                //TODO Generate the Parent based on the ScientificName
-                // a a a = SubSpecies, a a = Species, a = Genus
-                // a a var. a is also a species
-                /* - based on the scientficname create or set the parents
-             * - use maybe some webservices to create missing one
-             *
-             */
                 SubjectManager subjectManager = new SubjectManager();
                 InteractionManager interactionManager = new InteractionManager();
 
+                Plant plant = new Plant();
+                if (plantModel.Id > 0) plant = subjectManager.Get(plantModel.Id) as Plant;
 
+                plant.Name = plantModel.Name;
+                plant.ScientificName = plantModel.ScientificName;
 
-                //ToDO check all entities that comes from the ui that has no id. they need to get from or create
-                /* all timeperiods need the have the id from the created plant
-             * - need to create the plant frist??
-             * - maybe task fro the udatemanager
-             * */
+                //Todo Select the type based on the scientific name
+                plant.Rank = Utility.GetTaxonRank(plantModel.ScientificName);
 
-
-                //ToDo Store Image in folder : project/images/
-                //add a media to plant
-
-                //corecction the timperiod type
-                //ToDo remove ugly preperations
-
-                #region ugly preperations
-
-                if (plant.Sowing.Any())
+                foreach (var ac in plantModel.AfterCultures)
                 {
-                    foreach (var item in plant.Sowing)
+                    plant.AfterCultures.Add(subjectManager.Get(ac.Id) as Plant);
+                }
+
+                foreach (var pc in plantModel.PreCultures)
+                {
+                    plant.AfterCultures.Add(subjectManager.Get(pc.Id) as Plant);
+                }
+
+                plant.Description = plantModel.Description;
+                plant.Height = plantModel.Height;
+                plant.LocationType = plantModel.LocationType;
+
+                if (!plant.Medias.Where(m => m.ImagePath.Equals(plantModel.ImagePath)).Any())
+                    plant.Medias.Add(new Media()
                     {
-                        item.Type = TimePeriodType.Sowing;
+                        ImagePath = plantModel.ImagePath,
+                        MIMEType = MimeMapping.GetMimeMapping(plantModel.ImagePath)
+                    });
+
+                plant.NutrientClaim = plantModel.NutrientClaim;
+                plant.RootDepth = plantModel.RootDepth;
+                plant.SowingDepth = plantModel.SowingDepth;
+                plant.Width = plantModel.Width;
+
+                foreach (var tpModel in plantModel.TimePeriods)
+                {
+                    if (tpModel.Id == 0)
+                    {
+
                     }
                 }
 
-                if (plant.Harvest.Any())
-                {
-                    foreach (var item in plant.Harvest)
-                    {
-                        item.Type = TimePeriodType.Harvest;
-                    }
-                }
 
-                if (plant.SeedMaturity.Any())
-                {
-                    foreach (var item in plant.SeedMaturity)
-                    {
-                        item.Type = TimePeriodType.SeedMaturity;
-                    }
-                }
-
-                #endregion
-
-
-
-                if (plant.Id == 0)
+                if (plantModel.Id == 0)
                 {
                     plant = subjectManager.CreatePlant(plant);
                     plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
@@ -407,11 +338,15 @@ namespace MCT.Web.Controllers
                 else
                 {
 
-                    subjectManager.Update(plant);
+                    plant = subjectManager.UpdatePlant(plant);
                     plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
                     subjectManager.Update(plant);
 
                 }
+
+
+                //*create TimePeriods
+
 
                 return Json(plant.Id, JsonRequestBehavior.AllowGet);
             }
@@ -559,7 +494,7 @@ namespace MCT.Web.Controllers
         {
             // type of the model dont matter.
             // its important that its a entity from timeperiod
-            return PartialView("TimePeriod", new Bloom());
+            return PartialView("TimePeriod", new TimePeriodModel());
         }
 
         public ActionResult GetEmptySimpleLink()
@@ -701,6 +636,12 @@ namespace MCT.Web.Controllers
             tmp.Sort();
             return tmp;
         }
+
+        #endregion
+
+        #region Helper
+
+
 
         #endregion
     }

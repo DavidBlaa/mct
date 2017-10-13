@@ -15,5 +15,13 @@
       <key column="Subject" />
       <one-to-many class="MCT.DB.Entities.Media, MCT.DB.Entities" />
     </set>
+
+    <set cascade="all" name="TimePeriods" >
+      <key>
+        <column name="SubjectRef" />
+      </key>
+      <one-to-many class="TimePeriod" />
+    </set>
+    
   </class>
 </hibernate-mapping>

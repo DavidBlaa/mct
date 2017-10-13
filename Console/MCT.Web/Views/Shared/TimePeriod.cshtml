@@ -1,8 +1,23 @@
-﻿@model TimePeriod
+﻿@model TimePeriodModel
+@using MCT.Web.Models
 @using MCT.DB.Entities
 
 @{
     string id = Model.Id.ToString();
+
+    List<string> typeList = new List<string>();
+
+
+
+    typeList.Add(typeof(Cultivate).Name);
+    typeList.Add(typeof(Implant).Name);
+    typeList.Add(typeof(Sowing).Name);
+    typeList.Add(typeof(Harvest).Name);
+    typeList.Add(typeof(SeedMaturity).Name);
+    typeList.Add(typeof(Bloom).Name);
+    typeList.Add(typeof(LifeTime).Name);
+
+
 }
 
 @Html.HiddenFor(model => model.Id)
@@ -12,10 +27,6 @@
     <div class="col-md-2 start-month">@Html.EnumDropDownListFor(m => m.StartMonth, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 end-area">@Html.EnumDropDownListFor(m => m.EndArea, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 end-month">@Html.EnumDropDownListFor(m => m.EndMonth, new { @class = "form-control dropdown" })</div>
-    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control dropdown" })</div>
+    <div class="col-md-2">@Html.DropDownList("Type", new SelectList(typeList), new { @class = "form-control dropdown type" })</div>
     <div class="col-md-1"><div class="fa fa-trash icon" onclick="removeTP(this)" /></div>
 </div>
-
-<script>
-
-</script>

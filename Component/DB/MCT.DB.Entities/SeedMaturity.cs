@@ -1,15 +1,15 @@
 ﻿namespace MCT.DB.Entities
 {
-    public class SeedMaturity:TimePeriod
+    public class SeedMaturity : TimePeriod
     {
         public SeedMaturity()
         {
 
         }
 
-        public SeedMaturity(string startDateText, string endDateText, TimePeriodType type)
+        public SeedMaturity(string startDateText, string endDateText, TimePeriod next)
         {
-            setParameters(startDateText, endDateText, type);
+            setParameters(startDateText, endDateText, next);
         }
     }
 }

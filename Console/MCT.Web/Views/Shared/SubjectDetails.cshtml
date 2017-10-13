@@ -45,6 +45,9 @@
         </div>
     </div>
 
+
+
+
     @*Interactions*@
     <div class="row panel-default">
         <div class="panel-heading">
@@ -52,10 +55,13 @@
         </div>
         <div class="content panel-body">
             @if (Model.Interactions != null)
-            {
-                @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
-                @Html.DisplayFor(model => model.Interactions)
-            }
-        </div>
+    {
+        @*@Html.Partial("_interactionsOverViewPartialView", model: Model.Interactions);*@
+        @Html.DisplayFor(model => model.Interactions)
+        }
     </div>
+
+
+
+</div>
 </div>

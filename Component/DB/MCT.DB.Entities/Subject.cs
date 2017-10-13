@@ -22,11 +22,15 @@ namespace MCT.DB.Entities
 
         public virtual ICollection<Media> Medias { get; set; }
 
+        //Dates
+        public virtual ICollection<TimePeriod> TimePeriods { get; set; }
+
         #endregion 
 
 
         public Subject()
         {
+            TimePeriods = new List<TimePeriod>();
             Medias = new List<Media>();
             Name = "";
             Description = "";

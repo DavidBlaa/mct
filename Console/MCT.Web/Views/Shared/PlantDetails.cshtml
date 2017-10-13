@@ -59,6 +59,7 @@
         </div>
     </div>
 
+    @*Dates*@
 
     <div class="row panel-default">
         <div class="panel-heading">
@@ -66,10 +67,7 @@
         </div>
 
         <div class="content panel-body">
-            @if (Model.Bloom.TimePeriods.Any() ||
-                 Model.Sowing.TimePeriods.Any() ||
-                 Model.SeedMaturity.TimePeriods.Any() ||
-                 Model.Harvest.TimePeriods.Any())
+            @if (Model.TimePeriods.Any())
             {
                 <div id="ganttTermine"></div>
             }
@@ -101,44 +99,3 @@
 
 </div>
 
-<script type="text/javascript">
-            $(document).ready(function () {
-
-
-                
-                //load gantt
-                var url = '@Url.Action("GetEventsForGantt", "Subject", new {id = @Model.Id})';
-
-                $.post(url,
-                    function (data) {
-
-                        console.log(data);
-
-                        $("#ganttTermine").gantt({
-                            source: data,
-                            scale: "weeks",
-                            minScale: "weeks",
-                            maxScale: "months",
-                            itemsPerPage: 50,
-                            navigate: "scroll",
-                            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                            onItemClick: function (data) {
-                                alert("Item clicked - show some details");
-                            },
-                            onAddClick: function (dt, rowId) {
-                                alert("Empty space clicked - add an item!");
-                            },
-                            onRender: function () {
-                                console.log("chart rendered");
-                            }
-                        });
-
-
-                        //$(".content")
-                        //    .each(function () {
-                        //        $(this).toggle();
-                        //    });
-                    });
-            })
-
-</script>

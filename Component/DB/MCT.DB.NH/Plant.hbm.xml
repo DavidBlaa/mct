@@ -12,9 +12,6 @@
     <property name="LocationType" type="LocationType"/>
     <property name="SowingDepth" type="Int32"/>
 
-    <!--//Vorzucht-->
-    <many-to-one name="Cultivation" class="MCT.DB.Entities.Cultivation, MCT.DB.Entities" column="Cultivation" cascade="all" not-null="false" />
-
     <!-- Vor/Nachklultur -->
     <set name="PreCultures" table="PreCultures_Mappping" cascade="all">
       <key column="ID" />
@@ -27,33 +24,6 @@
     </set>
 
     <!--<property name="Cultivation" type="Int64"/>-->
-
-    <set cascade="all" name="Bloom" >
-      <key>
-        <column name="SubjectRef" />
-      </key>
-      <one-to-many class="Bloom" />
-    </set>
-
-    <set cascade="all" name="Sowing" >
-      <key>
-        <column name="SubjectRef" />
-      </key>
-      <one-to-many class="Sowing" />
-    </set>
     
-    <set cascade="all" name="Harvest">
-      <key>
-        <column name="SubjectRef" />
-      </key>
-      <one-to-many class="Harvest" />
-    </set>
-    
-    <set cascade="all" name="SeedMaturity" >
-      <key>
-        <column name="SubjectRef" />
-      </key>
-      <one-to-many class="SeedMaturity" />
-    </set>
   </joined-subclass>
 </hibernate-mapping>

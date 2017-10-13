@@ -21,26 +21,6 @@ namespace MCT.Web.Models
         [Display(Name = "Sähtiefe")]
         public int SowingDepth { get; set; }
 
-        [UIHint("TimePeriods")]
-        [Display(Name = "Sähen")]
-        public TimePeriodListModel Sowing { get; set; }
-        [UIHint("TimePeriods")]
-        [Display(Name = "Ernten")]
-        public TimePeriodListModel Harvest { get; set; }
-        [UIHint("TimePeriods")]
-        [Display(Name = "Blühen")]
-        public TimePeriodListModel Bloom { get; set; }
-        [UIHint("TimePeriods")]
-        [Display(Name = "Samen Reife")]
-        public TimePeriodListModel SeedMaturity { get; set; }
-        [UIHint("TimePeriods")]
-        [Display(Name = "Einpflanzen")]
-        public TimePeriodListModel Crop { get; set; }
-
-        [UIHint("TimePeriods")]
-        [Display(Name = "Vorziehen")]
-        public TimePeriodListModel Draw { get; set; }
-
         [UIHint("SimpleLinkModelList")]
         [Display(Name = "Vorkultur")]
 
@@ -51,12 +31,9 @@ namespace MCT.Web.Models
 
         public PlantModel()
         {
-            Sowing = new TimePeriodListModel(TimePeriodType.Sowing);
-            Harvest = new TimePeriodListModel(TimePeriodType.Harvest);
-            Bloom = new TimePeriodListModel(TimePeriodType.Bloom);
-            SeedMaturity = new TimePeriodListModel(TimePeriodType.SeedMaturity);
-            Crop = new TimePeriodListModel(TimePeriodType.Crop);
-            Draw = new TimePeriodListModel(TimePeriodType.Draw);
+            TimePeriods = new List<TimePeriodModel>();
+
+
             PreCultures = new List<SimpleLinkModel>();
             AfterCultures = new List<SimpleLinkModel>();
             Interactions = new List<InteractionModel>();
@@ -100,36 +77,11 @@ namespace MCT.Web.Models
 
             #region Dates
 
-            if (plant.Sowing != null)
+
+            if (model.TimePeriods != null)
             {
-                List<TimePeriod> tmp = new List<TimePeriod>();
-                plant.Sowing.ForEach(s => tmp.Add((TimePeriod)s));
-
-                model.Sowing = new TimePeriodListModel(tmp, TimePeriodType.Sowing);
-            }
-
-            if (plant.Bloom != null)
-            {
-                List<TimePeriod> tmp = new List<TimePeriod>();
-                plant.Bloom.ForEach(s => tmp.Add((TimePeriod)s));
-
-                model.Bloom = new TimePeriodListModel(tmp, TimePeriodType.Bloom);
-            }
-
-            if (plant.Harvest != null)
-            {
-                List<TimePeriod> tmp = new List<TimePeriod>();
-                plant.Harvest.ForEach(s => tmp.Add((TimePeriod)s));
-
-                model.Harvest = new TimePeriodListModel(tmp, TimePeriodType.Harvest);
-            }
-
-            if (plant.SeedMaturity != null)
-            {
-                List<TimePeriod> tmp = new List<TimePeriod>();
-                plant.SeedMaturity.ForEach(s => tmp.Add((TimePeriod)s));
-
-                model.SeedMaturity = new TimePeriodListModel(tmp, TimePeriodType.SeedMaturity);
+                List<TimePeriodModel> tmp = new List<TimePeriodModel>();
+                plant.TimePeriods.ForEach(s => tmp.Add(new TimePeriodModel(s)));
             }
 
             #endregion
@@ -182,29 +134,4 @@ namespace MCT.Web.Models
 
 
     }
-
-    public class TimePeriodListModel
-    {
-        public TimePeriodType Type { get; set; }
-        public List<TimePeriod> TimePeriods { get; set; }
-
-        public TimePeriodListModel(List<TimePeriod> timePeriods, TimePeriodType type)
-        {
-            Type = type;
-            TimePeriods = timePeriods;
-        }
-
-        public TimePeriodListModel(TimePeriodType type)
-        {
-            Type = type;
-            TimePeriods = new List<TimePeriod>();
-        }
-
-        public TimePeriodListModel()
-        {
-            Type = TimePeriodType.Bloom;
-            TimePeriods = new List<TimePeriod>();
-        }
-    }
-
 }

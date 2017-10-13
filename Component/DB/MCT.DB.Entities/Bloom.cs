@@ -1,15 +1,15 @@
 ﻿namespace MCT.DB.Entities
 {
-    public class Bloom:TimePeriod
+    public class Bloom : TimePeriod
     {
         public Bloom()
         {
 
         }
 
-        public Bloom(string startDateText, string endDateText, TimePeriodType type)
+        public Bloom(string startDateText, string endDateText, TimePeriod next)
         {
-            setParameters(startDateText, endDateText, type);
+            setParameters(startDateText, endDateText, next);
         }
     }
 }

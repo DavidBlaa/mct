@@ -20,6 +20,7 @@ namespace MCT.Web.Models
             ScientificName = "";
             TaxonRank = TaxonRank.Species;
             Interactions = new EquatableList<InteractionModel>();
+            TimePeriods = new EquatableList<TimePeriodModel>();
         }
 
         public static NodeModel Convert(Node node)

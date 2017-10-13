@@ -3,17 +3,17 @@
 namespace MCT.DB.Entities
 {
     [Indexed]
-    public class Sowing:TimePeriod
+    public class Sowing : TimePeriod
     {
-        
+
         public Sowing()
         {
 
         }
 
-        public Sowing(string startDateText, string endDateText, TimePeriodType type)
+        public Sowing(string startDateText, string endDateText, TimePeriod next)
         {
-            setParameters(startDateText, endDateText, type);
+            setParameters(startDateText, endDateText, next);
         }
     }
 }

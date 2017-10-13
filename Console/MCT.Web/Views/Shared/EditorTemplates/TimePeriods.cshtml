@@ -1,17 +1,19 @@
-﻿@model MCT.Web.Models.TimePeriodListModel
+﻿@model List<TimePeriodModel>
 
+@using MCT.DB.Entities;
+@using MCT.Web.Models;
 @{ 
-    string type = Model.Type.ToString().ToLower();
+    string type = "timeperiod";
     string listId = type + "-list";
 }
 
 <div class="timeperiod-list-container">
     <ul id="@listId" class="dl-horizontal timeperiod-list">
 
-        @if (Model.TimePeriods != null)
+        @if (Model != null)
         {
 
-            foreach (var item in Model.TimePeriods)
+            foreach (var item in Model)
             {
                 <li class="timeperiod-li">
                     @Html.EditorFor(modelItem => item)

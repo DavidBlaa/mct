@@ -1,6 +1,7 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Extern;
+using MCT.Web.Models;
 using System;
 using System.Linq;
 
@@ -162,6 +163,33 @@ namespace MCT.Web.Helpers
             }
 
             return species;
+        }
+
+        public static TimePeriod CreateTimePeriodFromModel(TimePeriodModel model)
+        {
+            TimePeriod tp;
+
+            switch (model.Type)
+            {
+                case "Cultivate": { tp = new Cultivate(); break; }
+                case "Implant": { tp = new Implant(); break; }
+                case "Bloom": { tp = new Bloom(); break; }
+                case "Sowing": { tp = new Sowing(); break; }
+                case "Harvest": { tp = new Harvest(); break; }
+                case "SeedMaturity": { tp = new SeedMaturity(); break; }
+                case "LifeTime": { tp = new LifeTime(); break; }
+                default: tp = new LifeTime(); break;
+            }
+            tp.Id = model.Id;
+            tp.Start = model.Start;
+            tp.StartArea = model.StartArea;
+            tp.StartMonth = model.StartMonth;
+            tp.EndArea = model.EndArea;
+            tp.EndMonth = model.EndMonth;
+
+            if (model.Next != null)
+                tp.Next = CreateTimePeriodFromModel(model.Next);
+            return tp;
         }
     }
 }

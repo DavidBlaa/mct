@@ -11,81 +11,13 @@ namespace MCT.Web.Controllers
         // GET: Test
         public ActionResult Index()
         {
-            SetParentTest();
+
+            testTimperiods();
+
+            //SetParentTest();
 
             //testIntractions();
 
-            //SubjectManager subjectManager = new SubjectManager();
-
-            //Subject subject = new Subject();
-
-            //subject.Name = "ALTER FETTE SCHEIßE 3";
-            //subject.Description = "ES FUNKT 3";
-
-            //subjectManager.Create(subject);
-
-            //subject.Name = "Upadte";
-            //subjectManager.Update(subject);
-
-
-            //Node pnode = new Node();
-            //pnode.Name = "ParentNodetest";
-
-            //subjectManager.Create(pnode);
-
-            //Node node = new Node();
-            //node.Name = "Nodetest";
-            //node.Parent = pnode;
-
-            //subjectManager.Create(node);
-
-            //node.Rank = TaxonRank.Order;
-
-            //var x = subjectManager.GetAll<Subject>();
-
-            //string root = AppConfigHelper.GetRoot();
-            //string ws = AppConfigHelper.GetWorkspaceForClient();
-
-            //Media media = new Media();
-            //media.ImagePath="Images/Empty.png";
-
-            //DateManager dm = new DateManager();
-
-            //TimePeriod tp = new TimePeriod();
-
-            //tp.StartArea = TimePeriodArea.Anfang;
-            //tp.StartMonth = TimePeriodMonth.Januar;
-            //tp.EndArea = TimePeriodArea.Voll;
-            //tp.EndMonth = TimePeriodMonth.Dezember;
-
-            //dm.Create<TimePeriod>(tp);
-
-            //Plant p = new Plant();
-            //p.Name = "plant mit Blühezeit";
-            //p.Bloom.Add(tp);
-
-            //subjectManager.Create<Plant>(p);
-
-            //var x = subjectManager.GetAll<Plant>();
-
-            //Plant X = new Plant();
-            //X.Name = "test";
-
-            //TimePeriod tp = new TimePeriod();
-            //tp.StartArea = TimePeriodArea.Anfang;
-            //tp.StartMonth = TimePeriodMonth.Februar;
-            //tp.EndArea = TimePeriodArea.Anfang;
-            //tp.EndMonth = TimePeriodMonth.Februar;
-            //tp.Type = TimePeriodType.Harvest;
-
-            //X.Harvest.Add(tp);
-            //subjectManager.Create<Plant>(X);
-            //var y = subjectManager.GetAll<Plant>().Where(p=>p.Name.Equals("test")).FirstOrDefault();
-
-            //var z = subjectManager.GetAll<Plant>();
-
-            //NHibernateHelper.ReIndex();
-            //NHibernateHelper.Search();
 
 
             //WikipediaReader wReader = new WikipediaReader();
@@ -104,36 +36,78 @@ namespace MCT.Web.Controllers
 
         private void testIntractions()
         {
-            //SubjectManager subjectManager = new SubjectManager();
+            SubjectManager subjectManager = new SubjectManager();
 
 
-            //Subject subject = new Subject();
-            //subject.Name = "ALTER FETTE SCHEIßE 3";
-            //subject.Description = "ES FUNKT 3";
-            //subjectManager.Create(subject);
+            Subject subject = new Subject();
+            subject.Name = "ALTER FETTE SCHEIßE 3";
+            subject.Description = "ES FUNKT 3";
+            subjectManager.Create(subject);
 
-            //Subject Object = new Subject();
-            //Object.Name = "ALTER FETTE SCHEIßE 3";
-            //Object.Description = "ES FUNKT 3";
-            //subjectManager.Create(Object);
+            Subject Object = new Subject();
+            Object.Name = "ALTER FETTE SCHEIßE 3";
+            Object.Description = "ES FUNKT 3";
+            subjectManager.Create(Object);
 
-            //Predicate positive =
-            //    subjectManager.GetAll<Predicate>().Where(p => p.Name.ToLower().Equals("positiv")).FirstOrDefault();
+            Predicate positive =
+                subjectManager.GetAll<Predicate>().Where(p => p.Name.ToLower().Equals("positiv")).FirstOrDefault();
 
-            //Predicate predicate = new Predicate();
-            //predicate.Parent = positive;
-            //predicate.Name = "X";
+            Predicate predicate = new Predicate();
+            predicate.Parent = positive;
+            predicate.Name = "X";
 
-            //InteractionManager interactionManager = new InteractionManager();
-            //Interaction interaction = new Interaction();
-            //interaction.Subject = subject;
-            //interaction.Object = Object;
-            //interaction.Predicate = predicate;
+            InteractionManager interactionManager = new InteractionManager();
+            Interaction interaction = new Interaction();
+            interaction.Subject = subject;
+            interaction.Object = Object;
+            interaction.Predicate = predicate;
 
-            //interactionManager.Create(interaction);
-            //interactionManager.Delete(interaction);
+            interactionManager.Create(interaction);
+            interactionManager.Delete(interaction);
 
 
+
+        }
+
+        private void testTimperiods()
+        {
+            SubjectManager subjectManager = new SubjectManager();
+
+            Subject subject = new Subject();
+            subject.Name = "ALTER FETTE SCHEIßE 3";
+            subject.Description = "ES FUNKT 3";
+            subjectManager.Create(subject);
+
+            Sowing start = new Sowing();
+            start.AssignedTo = subject;
+            start.StartArea = TimePeriodArea.Anfang;
+            start.StartMonth = TimePeriodMonth.Januar;
+            start.EndArea = TimePeriodArea.Anfang;
+            start.EndMonth = TimePeriodMonth.Februar;
+            start.Start = true;
+
+
+            Harvest ende = new Harvest();
+            ende.AssignedTo = subject;
+            ende.StartArea = TimePeriodArea.Mitte;
+            ende.StartMonth = TimePeriodMonth.März;
+            ende.EndArea = TimePeriodArea.Ende;
+            ende.EndMonth = TimePeriodMonth.Juli;
+            ende.Start = false;
+
+
+            //ende = subjectManager.Create(ende);
+            start.Next = ende;
+
+            //start = subjectManager.Create(start);
+
+            subject.TimePeriods.Add(start);
+            subject.TimePeriods.Add(ende);
+
+            subjectManager.Update(subject);
+
+
+            var s = subjectManager.Get(subject.Id);
 
         }
 

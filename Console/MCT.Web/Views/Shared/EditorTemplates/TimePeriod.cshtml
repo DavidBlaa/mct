@@ -1,8 +1,21 @@
-﻿@model TimePeriod
-@using MCT.DB.Entities
+﻿@model TimePeriodModel
 
+@using MCT.Web.Models
+@using MCT.DB.Entities
 @{
     string id = Model.Id.ToString();
+
+    List<string> typeList = new List<string>();
+
+    typeList.Add(typeof(Cultivate).FullName);
+    typeList.Add(typeof(Implant).FullName);
+    typeList.Add(typeof(Sowing).FullName);
+    typeList.Add(typeof(Harvest).FullName);
+    typeList.Add(typeof(SeedMaturity).FullName);
+    typeList.Add(typeof(Bloom).FullName);
+    typeList.Add(typeof(LifeTime).FullName);
+    
+
 }
 
 @Html.HiddenFor(model => model.Id)
@@ -12,14 +25,6 @@
     <div class="col-md-2 start-month">@Html.EnumDropDownListFor(m => m.StartMonth, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 end-area">@Html.EnumDropDownListFor(m => m.EndArea, new { @class = "form-control dropdown" })</div>
     <div class="col-md-2 end-month">@Html.EnumDropDownListFor(m => m.EndMonth, new { @class = "form-control dropdown" })</div>
-    <div class="col-md-2">@Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control dropdown" })</div>
-    <div class="col-md-1"><div class="fa fa-trash icon" onclick="remove(this)" /></div>
+    <div class="col-md-2">@Html.DropDownListFor(m=>m.Type, new SelectList(typeList), new { @class = "form-control dropdown type" })</div>
+    <div class="col-md-1"><div class="fa fa-trash icon" onclick="removeTP(this)" /></div>
 </div>
-
-<script>
-    function remove(e) {
-
-        console.log(e);
-        $(e).parents(".timeperiod-li")[0].remove();
-    }
-</script>
