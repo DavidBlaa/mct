@@ -33,13 +33,20 @@ namespace MCT.Web.Models
             {
                 model.ImagePath = animal.Medias.First().ImagePath;
             }
+
+            if (model.LifeCycles != null)
+            {
+                model.LifeCycles = TimePeriodsToLifeCycles(animal.TimePeriods);
+            }
             #endregion
 
             model.ScientificName = animal.ScientificName;
 
+
+
             #region loadParentModels
-            if(animal.Parent!=null)
-            model.Parent = SimpleNodeViewModel.Convert(animal.Parent);
+            if (animal.Parent != null)
+                model.Parent = SimpleNodeViewModel.Convert(animal.Parent);
 
             #endregion
 

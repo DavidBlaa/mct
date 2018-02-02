@@ -16,13 +16,13 @@
             foreach (var item in Model)
             {
                 <li class="timeperiod-li">
-                    @Html.EditorFor(modelItem => item)
+                    @*@Html.EditorFor(modelItem => item)*@
+                    @Html.Partial("TimePeriod", item);
 
                 </li>
             }
         }
 
     </ul>
-
     <div class="fa fa-plus mct-button-icon" onclick="addTP(this)"></div>
 </div>

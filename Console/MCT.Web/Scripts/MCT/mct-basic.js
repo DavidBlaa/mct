@@ -69,6 +69,7 @@ function savePlant() {
         //string listId = type + "-list";
 
         var timeperiods = $("#timeperiod-list");
+        var lifecycles = $("#lifecycle-list")
 
         var precultures = $(".preculture .simplelinkmodel-list");
         var aftercultures = $(".afterculture .simplelinkmodel-list");
@@ -97,7 +98,7 @@ function savePlant() {
             NutrientClaim: $("#plant #NutrientClaim").val(),
             SowingDepth: $("#plant #SowingDepth").val(),
             LocationType: $("#plant #LocationType").val(),
-            TimePeriods: getTimePeriodsJSON(timeperiods, $("#plant #Id").val()),
+            LifeCycles: getLifeCycle(lifecycles, $("#plant #Id").val()),
 
             PreCultures: getSimpleLinksJSON(precultures),
             AfterCultures: getSimpleLinksJSON(aftercultures)
@@ -315,6 +316,22 @@ function getInteractionJSON(e)
     return interaction;
 }
 
+function getLifeCycle(source, parentid)
+{
+    //lifecycle-li
+
+    var JSONArray = [];
+    var list = $(source).find("li.lifecycle-li").each(function () {
+
+        var lc = getTimePeriodsJSON(this, parentid);
+        console.log(lc);
+        JSONArray.push(lc);
+        });
+
+    return JSONArray;
+
+}
+
 function getTimePeriodsJSON(source, parentid) {
     var JSONArray = [];
     var list = $(source).find("li").each(function () {
@@ -407,10 +424,36 @@ function getImage() {
 
     function removeTP(e) {
 
-        //console.log("e --->");
-        //console.log(e);
+    //console.log("e --->");
+    //console.log(e);
+        $(e).parents(".timeperiod-li")[0].remove();
+        }
+
+    function addLifeCycle(e) {
+
+        var newElement = $('<li class="lifecycle-li">');
+
+        $.get("/Subject/GetEmptyLifeCycle",
+            function(data) {
+
+                newElement.prepend($(data));
+                //console.log(newElement);
+                var list = $(e).parent().find("ul#lifecycle-list");
+                //console.log("list");
+                    //console.log(list);
+                $(list).append(newElement);
+
+                });
+    }
+
+    function removeLifeCycle(e) {
+
+    //console.log("e --->");
+    //console.log(e);
         $(e).parents(".timeperiod-li")[0].remove();
     }
+
+    
 
 /*** Simple Links ***/
 

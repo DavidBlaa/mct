@@ -28,9 +28,9 @@ namespace MCT.Web.Models
         public List<InteractionModel> Interactions { get; set; }
 
 
-        [UIHint("TimePeriods")]
-        [Display(Name = "Termine")]
-        public List<TimePeriodModel> TimePeriods { get; set; }
+        [UIHint("LifeCycles")]
+        [Display(Name = "Lebenszyklus")]
+        public List<List<TimePeriodModel>> LifeCycles { get; set; }
 
         public SubjectModel()
         {
@@ -38,6 +38,7 @@ namespace MCT.Web.Models
             Description = "";
             ImagePath = "/Images/Empty.png";
             Type = SubjectType.Unknow;
+            LifeCycles = new List<List<TimePeriodModel>>();
         }
 
         public static SubjectModel Convert(Subject subject)
@@ -59,16 +60,12 @@ namespace MCT.Web.Models
 
             model.Interactions = new List<InteractionModel>();
 
-            model.TimePeriods = new List<TimePeriodModel>();
+            model.LifeCycles = new List<List<TimePeriodModel>>();
 
             if (subject.TimePeriods != null)
             {
-                foreach (var tp in subject.TimePeriods)
-                {
-                    model.TimePeriods.Add(new TimePeriodModel(tp));
-                }
+                model.LifeCycles = TimePeriodsToLifeCycles(subject.TimePeriods);
             }
-
 
             return model;
         }
@@ -101,6 +98,37 @@ namespace MCT.Web.Models
 
             return interactionModels;
         }
+
+        public static List<List<TimePeriodModel>> TimePeriodsToLifeCycles(ICollection<TimePeriod> timeperiods)
+        {
+            List<List<TimePeriodModel>> tmp = new List<List<TimePeriodModel>>();
+
+            List<TimePeriod> startPoints = timeperiods.Where(tp => tp.Start == true).ToList();
+
+            foreach (var item in startPoints)
+            {
+
+                List<TimePeriodModel> lifeCyle = convertAndAddTimePeriodModel(item, new List<TimePeriodModel>());
+                tmp.Add(lifeCyle);
+            }
+
+            return tmp;
+        }
+
+        private static List<TimePeriodModel> convertAndAddTimePeriodModel(TimePeriod timeperiod, List<TimePeriodModel> lifeCycle)
+        {
+
+            lifeCycle.Add(new TimePeriodModel(timeperiod));
+
+            if (timeperiod.Next != null)
+            {
+                convertAndAddTimePeriodModel(timeperiod.Next, lifeCycle);
+            }
+
+            return lifeCycle;
+        }
+
+
     }
 
     public enum SubjectType

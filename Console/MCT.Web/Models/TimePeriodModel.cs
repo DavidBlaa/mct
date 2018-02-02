@@ -42,10 +42,40 @@ namespace MCT.Web.Models
             this.StartMonth = tp.StartMonth;
             this.EndArea = tp.EndArea;
             this.EndMonth = tp.EndMonth;
-            this.AssignedTo = SubjectModel.Convert(tp.AssignedTo);
+            //this.AssignedTo = SubjectModel.Convert(tp.AssignedTo);
             this.Type = tp.GetType().Name;
             if (tp.Next != null)
                 this.Next = new TimePeriodModel(tp.Next);
+        }
+
+        public TimePeriod ConvertToTimePeriod(Subject subject)
+        {
+            switch (this.Type)
+            {
+                case "Cultivate": return setTimePeriod(new Cultivate(), this, subject);
+                case "Bloom": return setTimePeriod(new Bloom(), this, subject);
+                case "Harvest": return setTimePeriod(new Harvest(), this, subject);
+                case "Implant": return setTimePeriod(new Implant(), this, subject);
+                case "LifeTime": return setTimePeriod(new LifeTime(), this, subject);
+                case "Sowing": return setTimePeriod(new Sowing(), this, subject);
+                case "SeedMaturity": return setTimePeriod(new SeedMaturity(), this, subject);
+                default: return null;
+            }
+
+            return null;
+        }
+
+        private TimePeriod setTimePeriod(TimePeriod target, TimePeriodModel source, Subject subject)
+        {
+            target.Id = source.Id;
+            target.Start = source.Start;
+            target.StartArea = source.StartArea;
+            target.StartMonth = source.StartMonth;
+            target.EndArea = source.EndArea;
+            target.EndMonth = source.EndMonth;
+            target.AssignedTo = subject;
+
+            return target;
         }
     }
 }

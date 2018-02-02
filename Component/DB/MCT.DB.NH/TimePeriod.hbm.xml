@@ -16,7 +16,7 @@
     
     <property name="Start" type="Boolean"/>
     
-    <many-to-one name="Next" column="NextId" unique="true" cascade="none" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" />
+    <many-to-one name="Next" column="NextId" unique="true" cascade="all" class="MCT.DB.Entities.TimePeriod, MCT.DB.Entities" />
     
     <many-to-one class="Subject" name="AssignedTo" column="SubjectRef"></many-to-one>
   

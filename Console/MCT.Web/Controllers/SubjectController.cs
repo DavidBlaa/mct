@@ -320,12 +320,24 @@ namespace MCT.Web.Controllers
                 plant.SowingDepth = plantModel.SowingDepth;
                 plant.Width = plantModel.Width;
 
-                foreach (var tpModel in plantModel.TimePeriods)
+                foreach (var lifeCylce in plantModel.LifeCycles)
                 {
-                    if (tpModel.Id == 0)
+                    lifeCylce.Reverse();
+                    TimePeriod last = null;
+                    foreach (var tpModel in lifeCylce)
                     {
+                        TimePeriod tp = Utility.CreateTimePeriodFromModel(tpModel);
+                        tp.AssignedTo = plant;
 
+                        if (lifeCylce.Last().Equals(tpModel)) tp.Start = true;
+                        if (last != null) tp.Next = last;
+
+                        plant.TimePeriods.Add(tp);
+
+                        last = tp;
                     }
+
+                    plant.TimePeriods.Reverse();
                 }
 
 
@@ -497,6 +509,11 @@ namespace MCT.Web.Controllers
             return PartialView("TimePeriod", new TimePeriodModel());
         }
 
+        public ActionResult GetEmptyLifeCycle()
+        {
+            return PartialView("TimePeriods", new List<TimePeriodModel>());
+        }
+
         public ActionResult GetEmptySimpleLink()
         {
             return PartialView("SimpleLinkModel", new SimpleLinkModel());
@@ -641,7 +658,14 @@ namespace MCT.Web.Controllers
 
         #region Helper
 
+        private void saveLifeCycle(List<TimePeriodModel> lifeCycle, Subject subject)
+        {
+            TimePeriod prev = null;
+            for (int i = lifeCycle.Count - 1; i > 0; i--)
+            {
 
+            }
+        }
 
         #endregion
     }

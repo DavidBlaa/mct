@@ -623,6 +623,8 @@
     <Content Include="Views\Shared\TaxonDetails.cshtml" />
     <Content Include="Views\Shared\View.cshtml" />
     <Content Include="Views\Shared\TaxonEdit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LifeCycles.cshtml" />
+    <Content Include="Views\Shared\TimePeriods.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

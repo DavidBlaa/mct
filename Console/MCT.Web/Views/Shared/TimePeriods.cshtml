@@ -1,0 +1,28 @@
+﻿@model List<TimePeriodModel>
+
+@using MCT.DB.Entities;
+@using MCT.Web.Models;
+@{ 
+    string type = "timeperiod";
+    string listId = type + "-list";
+}
+
+<div class="timeperiod-list-container">
+    <ul id="@listId" class="dl-horizontal timeperiod-list">
+
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+                <li class="timeperiod-li">
+                    @Html.Partial("TimePeriod", item);
+                </li>
+            }
+        }
+
+    </ul>
+    <div class="fa fa-plus mct-button-icon" onclick="addTP(this)"></div>
+
+    
+</div>

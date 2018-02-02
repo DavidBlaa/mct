@@ -31,7 +31,7 @@ namespace MCT.Web.Models
 
         public PlantModel()
         {
-            TimePeriods = new List<TimePeriodModel>();
+            LifeCycles = new List<List<TimePeriodModel>>();
 
 
             PreCultures = new List<SimpleLinkModel>();
@@ -78,10 +78,9 @@ namespace MCT.Web.Models
             #region Dates
 
 
-            if (model.TimePeriods != null)
+            if (model.LifeCycles != null)
             {
-                List<TimePeriodModel> tmp = new List<TimePeriodModel>();
-                plant.TimePeriods.ForEach(s => tmp.Add(new TimePeriodModel(s)));
+                model.LifeCycles = TimePeriodsToLifeCycles(plant.TimePeriods);
             }
 
             #endregion
