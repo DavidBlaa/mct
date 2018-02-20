@@ -5,11 +5,9 @@
     <ul id="lifecycle-list">
         @foreach (var item in Model)
         {
-            <li class="lifecycle-li">
-                @Html.Partial("TimePeriods", item);
-
-                <div class="col-md-1"><div class="fa fa-trash icon" onclick="removeLifeCycle(this)" /></div>
-            </li>
+        <li class="lifecycle-li">
+            @Html.Partial("TimePeriods", item)
+        </li>
 
         }
     </ul>
@@ -17,11 +15,3 @@
     <div class="fa fa-plus mct-button-icon" onclick="addLifeCycle(this)"></div>
 
 </div>
-
-<style type="text/css">
-
-    li.lifecycle-li {
-       border:solid 1px;
-    }
-
-</style>

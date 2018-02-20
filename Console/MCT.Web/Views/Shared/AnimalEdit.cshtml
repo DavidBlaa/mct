@@ -19,14 +19,12 @@
             </div>
 
             <div class="content panel-body">
-                @Html.DisplayNameFor(model => model.LifeCycles)
                 @Html.EditorFor(model => model.LifeCycles)
-
             </div>
         </div>
 
         <p>
-            <button type="submit" class="fa fa-save mct-button-icon" onclick="saveAnimal(this)"></button>
+            <button type="submit" class="fa fa-save mct-button-icon" onclick="saveAnimal()"></button>
 
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
             @Html.ActionLink("Back to List", "Search", "Search")

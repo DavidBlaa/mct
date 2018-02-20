@@ -39,6 +39,8 @@ namespace MCT.DB.Entities
             Height = 0;
         }
 
+        
+        public virtual Plant Self { get { return this; } }
 
         /// <summary>
         /// XXX merge statt replace

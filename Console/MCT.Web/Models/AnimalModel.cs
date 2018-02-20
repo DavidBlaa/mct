@@ -6,6 +6,14 @@ namespace MCT.Web.Models
 {
     public class AnimalModel : NodeModel
     {
+
+        public AnimalModel()
+        {
+
+        }
+        
+
+
         public static AnimalModel Convert(Animal animal)
         {
             AnimalModel model = new AnimalModel();

@@ -1,8 +1,12 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.Helpers;
+using MCT.Web.Models.Test;
+using System;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-
+using System.Xml;
 
 namespace MCT.Web.Controllers
 {
@@ -28,10 +32,64 @@ namespace MCT.Web.Controllers
             return View();
         }
 
+        
+
         public ActionResult Svg()
         {
 
+            
+
             return View();
+        }
+
+        public ActionResult GetSvg()
+        {
+            Tuple<string> model;
+
+            string path = Path.Combine(AppConfigHelper.GetWorkspace(), "Beetplaner", "beet1.svg");
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(path);
+
+            return this.Content(xmlDoc.InnerXml);
+        }
+
+        public ActionResult Beet()
+        {
+            BeetModel model = new BeetModel();
+
+            //test Pflanze 1
+            PflanzenModel p1 = new PflanzenModel()
+            {
+                Name = "Blumenkohl",
+                X = 5,
+                Y = 4
+            };
+
+            PflanzenModel p2 = new PflanzenModel()
+            {
+                Name = "Tomate",
+                X = 500,
+                Y = 200
+            };
+
+            model.Pflanzen.Add(p1);
+            model.Pflanzen.Add(p2);
+
+            return View(model);
+        }
+
+        public ActionResult Pflanze()
+        {
+
+            PflanzenModel model = new PflanzenModel()
+            {
+                Name = "Gurke",
+                X = 50,
+                Y = 20
+            };
+
+            return PartialView(model);
         }
 
         private void testIntractions()

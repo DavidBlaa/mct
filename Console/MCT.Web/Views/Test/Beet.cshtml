@@ -1,0 +1,86 @@
+﻿@model MCT.Web.Models.Test.BeetModel
+
+
+<h1>Beet</h1>
+<button id="loadPflanze">neue Pflanze </button>
+
+<svg id="x" width="100%" height="800" enable-background="true">
+   
+    @foreach (var p in Model.Pflanzen)
+    {
+        @Html.Partial("Pflanze", p);
+    }
+
+
+</svg>
+
+<div id="xmltest"></div>
+
+
+<style type="text/css">
+    #RectTextTest {
+        cursor: move;
+    }
+</style>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $("#loadPflanze").click(function () {
+
+            $.get("/Test/Pflanze", {  },
+                function (data, textStatus, jqXHR) {
+
+                    var s = Snap("#x");
+                    var fragement = Snap.parse(data);
+                    console.log(fragement);
+                    s.appendTo(fragement);
+                }
+            );
+        })
+
+
+        var s = Snap("#x");
+
+        var gridSize = 40;
+        var orig = { x: 0, y: 0 };
+
+        //var rect = s.rect(100, 100, 50, 50);
+
+        //var testObj = s.select("#r");
+
+        //testObj.drag(
+
+        //    function (dx, dy, x, y, e) {
+        //        var xSnap = Snap.snapTo(gridSize, orig.x + dx, 1000000000);
+        //        var ySnap = Snap.snapTo(gridSize, orig.y + dy, 1000000000);
+        //        this.attr({ x: xSnap, y: ySnap })
+        //    },
+        //    function (x, y, e) {
+        //        orig.x = e.toElement.x.baseVal.value;
+        //        orig.y = e.toElement.y.baseVal.value;
+        //    });
+
+
+        //var bigCircle = s.circle(100, 100, 50);
+        //var t1 = s.text(50, 50, "Snap");
+
+        //var x = s.group(bigCircle, t1);
+        //x.drag();
+
+
+        //$.get("/test/GETSVG", {},
+        //    function (data, textStatus, jqXHR) {
+        //        console.log(data);
+        //        var fragement = Snap.parse(data);
+        //        console.log(fragement);
+
+        //        s.appendTo(fragement);
+
+        //    }
+        //);
+
+
+
+    </script>
+}

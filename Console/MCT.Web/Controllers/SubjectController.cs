@@ -86,70 +86,17 @@ namespace MCT.Web.Controllers
             SubjectManager subjectmanager = new SubjectManager();
 
             //ToDo replace getAll with get plant by id
-            var plant = subjectmanager.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
+            var subject = subjectmanager.Get(id);
             var events = new List<object>();
 
-            if (plant != null)
+            if (subject != null)
             {
-                events.Add(createEventForEachPlantsTimeperiodType(plant));
+                events.AddRange(GantHelper.GetAllEventsFromSubject(subject));
             }
 
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
-
-        private object createEventForEachPlantsTimeperiodType(Plant plant)
-        {
-            var tps = new List<object>();
-
-            foreach (var VARIABLE in plant.TimePeriods)
-            {
-                if (VARIABLE != null)
-                    tps.Add(getEventFromTimeperiodForGantt(VARIABLE));
-            }
-
-
-            var json = new
-            {
-                name = plant.Name,
-                values = tps
-            };
-
-            return json;
-        }
-
-        private object getEventFromTimeperiodForGantt(TimePeriod tp)
-        {
-            string color = "";
-
-            Debug.WriteLine(tp);
-
-            if (tp is Sowing) color = "Green";
-            if (tp is Harvest) color = "Red";
-            if (tp is Bloom) color = "Blue";
-            if (tp is SeedMaturity) color = "Yellow";
-            if (tp is Cultivate) color = "Gray";
-            if (tp is LifeTime) color = "YellowGreen";
-            if (tp is Implant) color = "Purple";
-
-            //ToDo datetime is not focusing on the on voll, anfang, end
-            var fromDT = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
-            var toDT = TimeConverter.GetEndDateTime((int)tp.EndMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
-
-            var tpJSON = new
-            {
-                label = tp.GetType().ToString(),
-                from = "/Date(" + fromDT + ")/",
-                to = "/Date(" + toDT + ")/",
-                customClass = "gantt" + color
-            };
-
-            Debug.WriteLine(tpJSON);
-
-            if (tpJSON != null)
-                return tpJSON;
-
-            return null;
-        }
+        
 
         #endregion Gantt
 
@@ -285,8 +232,13 @@ namespace MCT.Web.Controllers
                 SubjectManager subjectManager = new SubjectManager();
                 InteractionManager interactionManager = new InteractionManager();
 
+                
                 Plant plant = new Plant();
-                if (plantModel.Id > 0) plant = subjectManager.Get(plantModel.Id) as Plant;
+                if (plantModel.Id > 0)
+                {
+                    var x = subjectManager.Get(plantModel.Id).Self;
+                    plant = x as Plant;
+                }
 
                 plant.Name = plantModel.Name;
                 plant.ScientificName = plantModel.ScientificName;
@@ -319,6 +271,9 @@ namespace MCT.Web.Controllers
                 plant.RootDepth = plantModel.RootDepth;
                 plant.SowingDepth = plantModel.SowingDepth;
                 plant.Width = plantModel.Width;
+
+
+                plant.TimePeriods = new List<TimePeriod>();
 
                 foreach (var lifeCylce in plantModel.LifeCycles)
                 {
@@ -378,10 +333,21 @@ namespace MCT.Web.Controllers
             return subjectManager.GetAll<Node>().Where(n => n.Id.Equals(node.Id)).FirstOrDefault();
         }
 
-        public ActionResult SaveAnimal(Animal animal)
+        public ActionResult SaveAnimal(AnimalModel animalModel)
         {
-            SubjectManager subjectManager = new SubjectManager();
-            InteractionManager interactionManager = new InteractionManager();
+            try
+            { 
+
+                SubjectManager subjectManager = new SubjectManager();
+                InteractionManager interactionManager = new InteractionManager();
+
+                Animal animal = new Animal();
+                if (animalModel.Id > 0)
+                {
+                    var x = subjectManager.Get(animalModel.Id).Self;
+                    animal = x as Animal;
+                }
+
 
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
@@ -392,32 +358,60 @@ namespace MCT.Web.Controllers
              */
 
             //Todo Select the type based on the scientific name
-            animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
+                animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
+
+
+                if (!animal.Medias.Where(m => m.ImagePath.Equals(animalModel.ImagePath)).Any())
+                    animal.Medias.Add(new Media()
+                    {
+                        ImagePath = animalModel.ImagePath,
+                        MIMEType = MimeMapping.GetMimeMapping(animalModel.ImagePath)
+                    });
 
 
 
-            //ToDO check all entities that comes from the ui that has no id. they need to get from or create
-            /* all timeperiods need the have the id from the created plant
-             * - need to create the plant frist??
-             * - maybe task fro the udatemanager
-             * */
+                //lifecycles
+                animal.TimePeriods = new List<TimePeriod>();
+                foreach (var lifeCylce in animalModel.LifeCycles)
+                {
+                    lifeCylce.Reverse();
+                    TimePeriod last = null;
+                    foreach (var tpModel in lifeCylce)
+                    {
+                        TimePeriod tp = Utility.CreateTimePeriodFromModel(tpModel);
+                        tp.AssignedTo = animal;
+
+                        if (lifeCylce.Last().Equals(tpModel)) tp.Start = true;
+                        if (last != null) tp.Next = last;
+
+                        animal.TimePeriods.Add(tp);
+
+                        last = tp;
+                    }
+
+                    animal.TimePeriods.Reverse();
+                }
 
 
-            //ToDo Store Image in folder : project/images/
-            //add a media to plant
+                if (animal.Id == 0)
+                    animal = subjectManager.CreateAnimal(animal);
+                else
+                {
+                    subjectManager.Update(animal);
+                    animal.Parent = Utility.CreateOrSetParents(animal.ScientificName, typeof(Animal), subjectManager);
+                    subjectManager.Update(animal);
 
-            if (animal.Id == 0)
-                animal = subjectManager.CreateAnimal(animal);
-            else
-            {
-                subjectManager.Update(animal);
-                animal.Parent = Utility.CreateOrSetParents(animal.ScientificName, typeof(Animal), subjectManager);
-                subjectManager.Update(animal);
+                }
 
+
+                return Json(animal.Id, JsonRequestBehavior.AllowGet);
             }
+            catch (Exception ex)
+            {
 
 
-            return Json(animal.Id, JsonRequestBehavior.AllowGet);
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult SaveTaxon(Taxon taxon)

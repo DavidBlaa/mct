@@ -153,19 +153,30 @@ function savePlant() {
     }
 }
 
-function saveAnimal(e) {
+function saveAnimal() {
+
 
     if ($("form").valid()) {
+
+        var lifecycles = $("#lifecycle-list");
+
+        console.log("test");
+
         var animal = {
-            Id: $("#animal #Id").val(),
-            Name: $("#animal #Name").val(),
-            ScientificName: $("#animal #ScientificName").val(),
-            Rank: $("#animal #TaxonRank").val(),
-            Description: $("#animal #Description").val()
+            Id: $($("#animal #Id")).val(),
+            Name: $($("#animal #Name")).val(),
+            ScientificName: $($("#animal #ScientificName")).val(),
+            Rank: $($("#animal #TaxonRank")).val(),
+            Description: $($("#animal #Description")).val(),
+            LifeCycles: getLifeCycle(lifecycles, $($("#animal #Id")).val()),
+
         };
 
+
+        console.log(animal);
+
         var data = {
-            animal: animal,
+            animalModel: animal,
         };
 
 
@@ -448,9 +459,9 @@ function getImage() {
 
     function removeLifeCycle(e) {
 
-    //console.log("e --->");
-    //console.log(e);
-        $(e).parents(".timeperiod-li")[0].remove();
+        console.log("e --->");
+        console.log(e);
+        $(e).parents(".lifecycle-li")[0].remove();
     }
 
     

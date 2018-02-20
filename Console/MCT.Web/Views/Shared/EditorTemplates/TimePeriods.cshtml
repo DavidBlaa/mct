@@ -2,27 +2,46 @@
 
 @using MCT.DB.Entities;
 @using MCT.Web.Models;
-@{ 
+@{
     string type = "timeperiod";
     string listId = type + "-list";
 }
+<div class="row">
 
-<div class="timeperiod-list-container">
-    <ul id="@listId" class="dl-horizontal timeperiod-list">
+    <div class="col-lg-11">
 
-        @if (Model != null)
-        {
+        <div class="timeperiod-list-container">
+            <ul id="@listId" class="dl-horizontal timeperiod-list">
 
-            foreach (var item in Model)
-            {
-                <li class="timeperiod-li">
-                    @*@Html.EditorFor(modelItem => item)*@
-                    @Html.Partial("TimePeriod", item);
+                @if (Model != null)
+                {
 
-                </li>
-            }
-        }
+                    foreach (var item in Model)
+                    {
+                        <li class="timeperiod-li">
+                            @Html.Partial("TimePeriod", item)
+                        </li>
+                    }
+                }
 
-    </ul>
-    <div class="fa fa-plus mct-button-icon" onclick="addTP(this)"></div>
+            </ul>
+            <div class="fa fa-plus mct-button-icon add-tp" onclick="addTP(this)"></div>
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <div class="fa fa-trash icon" onclick="removeLifeCycle(this)" />
+    </div>
 </div>
+
+<style type="text/css">
+
+    .timeperiod-list-container {
+        background-color: #efefef;
+        padding: 30px 5px 5px 5px;
+    }
+
+    .add-tp {
+        left: 40px;
+        position: relative;
+    }
+</style>

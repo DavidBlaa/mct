@@ -63,6 +63,7 @@
     <Compile Include="Draw.cs" />
     <Compile Include="Day.cs" />
     <Compile Include="Effect.cs" />
+    <Compile Include="gardenplan\Beet.cs" />
     <Compile Include="Harvest.cs" />
     <Compile Include="Implant.cs" />
     <Compile Include="Interaction.cs" />

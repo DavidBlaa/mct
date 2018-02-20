@@ -36,6 +36,8 @@ namespace MCT.DB.Entities
             Description = "";
         }
 
+        public virtual Subject Self { get { return this; } }
+
         public static bool IsEmtpy(Subject subject)
         {
             if (subject.Id == 0)

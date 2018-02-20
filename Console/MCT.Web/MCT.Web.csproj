@@ -23,6 +23,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -154,6 +155,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataModelHelper.cs" />
+    <Compile Include="Helpers\GantHelper.cs" />
     <Compile Include="Helpers\SeedDataGenerator.cs" />
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Models\DataTableModel.cs" />
@@ -167,6 +169,8 @@
     <Compile Include="Models\PlantModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
+    <Compile Include="Models\Test\BeetModel.cs" />
+    <Compile Include="Models\Test\PflanzenModel.cs" />
     <Compile Include="Models\TimePeriodModel.cs" />
     <Compile Include="Models\Tree\TreeElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -625,6 +629,8 @@
     <Content Include="Views\Shared\TaxonEdit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LifeCycles.cshtml" />
     <Content Include="Views\Shared\TimePeriods.cshtml" />
+    <Content Include="Views\Test\Beet.cshtml" />
+    <Content Include="Views\Test\Pflanze.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
