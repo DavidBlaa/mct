@@ -3,9 +3,11 @@
 
 <h1>Beet</h1>
 <button id="loadPflanze">neue Pflanze </button>
+<button id="plus">zoom in </button>
+<button id="minus">zoom out </button>
 
 <svg id="x" width="1000" height="600" enable-background="true" style="border:1px,solid">
-   
+
     @foreach (var p in Model.Pflanzen)
     {
         @Html.Partial("Pflanze", p);
@@ -26,15 +28,44 @@
 @section scripts{
     <script type="text/javascript">
 
+        $("#plus").click(function () {
+
+            var s = Snap("#x");
+
+            var newTransform = s.data('origTransform') + (s.data('origTransform') ? "S" : "s") + 1;
+            console.log(s.data('origTransform'));
+            console.log((s.data('origTransform') ? "S" : "s") + 1);
+            console.log("nT: "+newTransform);
+
+            s.attr({
+                transform: newTransform
+                
+                })
+        })
+
+        $("#minus").click(function () {
+
+            var s = Snap("#x");
+            s.attr({
+                transform: (1,0,0,1,0,0)//s.data('origTransform') + (s.data('origTransform') ? "S" : "s") - 1
+            })
+        
+        })
+
         $("#loadPflanze").click(function () {
 
-            $.get("/Test/Pflanze", {  },
+            $.get("/Test/Pflanze", {},
                 function (data, textStatus, jqXHR) {
 
                     var s = Snap("#x");
                     var fragement = Snap.parse(data);
                     console.log(fragement);
-                    s.appendTo(fragement);
+                    var x = s.append(fragement);
+
+                    var all = s.selectAll(".pflanze");
+                    console.log(all);
+                    var last = all[all.length - 1];
+                    setDrag(last);
                 }
             );
         })
@@ -42,80 +73,86 @@
         var s = Snap("#x");
 
         // grid size
-        var gridsize = 100;
+        var gridsize = 25;
 
         drawLines(s, 1000, 600, gridsize)
 
-        var orig = { x: 0, y: 0 };
-
-
-        var move = function (dx, dy) {
-            this.attr({
-                transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx, dy]
-            });
-        }
-
-        var start = function () {
-            this.data('origTransform', this.transform().local);
-        }
-
-        var stop = function () {
-
-            
-
-            console.log(this);
-            console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
-            
-   
-            var x = this.transform().localMatrix.e;
-            var y = this.transform().localMatrix.f;
-
-            var xSnap = Snap.snapTo(gridsize, x+50, 1000000000);
-            var ySnap = Snap.snapTo(gridsize, y+50, 1000000000);
-
-            this.attr({
-                transform: "martix(1,0,0,1," + xSnap+","+ySnap+")"
-            })
-
-            console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
-        }
 
         var testObjs = s.selectAll(".pflanze");
-        
+
         $.each(testObjs, function (index, value) {
             //alert("each");
-            value.drag(move, start, stop);
-
+            setDrag(value);
         });
 
+        function setDrag(obj) {
+            var move = function (dx, dy) {
+                this.attr({
+                    transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx, dy]
+                });
+            }
+
+            var start = function () {
+                this.data('origTransform', this.transform().local);
+            }
+
+            var stop = function () {
+
+                console.log(this);
+                console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
 
 
-        function drawLines(s,maxX,maxY,gridSize)
-        {
+                var x = this.transform().localMatrix.e;
+                var y = this.transform().localMatrix.f;
+
+                var xSnap = Snap.snapTo(gridsize, x + 50, 1000000000);
+                var ySnap = Snap.snapTo(gridsize, y + 50, 1000000000);
+
+                this.attr({
+                    transform: "martix(1,0,0,1," + xSnap + "," + ySnap + ")"
+                })
+
+                console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
+            }
+
+            obj.drag(move, start, stop);
+
+        }
+
+        function drawLines(s, maxX, maxY, gridSize) {
+            var group = s.g();
+
             // draw x
-            for (var i = 0, l = parseInt(maxX / gridSize)+1; i < l; i++) {
+            for (var i = 0, l = parseInt(maxX / gridSize) + 1; i < l; i++) {
                 var x = gridSize * i;
 
-                var line = s.line( x,0, x,maxY);
+                var line = s.line(x, 0, x, maxY);
                 line.attr({
                     stroke: "#eee",
                     strokeWidth: 1
                 })
+                group.add(line);
             }
             console.log(parseInt(maxY / gridSize));
-            for (var i = 0, l = parseInt(maxY / gridSize)+1; i < l; i++) {
+            for (var i = 0, l = parseInt(maxY / gridSize) + 1; i < l; i++) {
                 var y = gridSize * i;
-      
-                var line = s.line(0,y,maxX,y);
+
+                var line = s.line(0, y, maxX, y);
                 line.attr({
                     stroke: "#eee",
                     strokeWidth: 1
                 })
+
+                group.add(line);
+
             }
-            console.log(maxY);
-            console.log(parseInt(maxY / gridSize));
-            console.log(maxX);
-            console.log(parseInt(maxX / gridSize));
+            //console.log(maxY);
+            //console.log(parseInt(maxY / gridSize));
+            //console.log(maxX);
+            //console.log(parseInt(maxX / gridSize));
+            group.attr({ id: "raster" })
+            s.prepend(group);
+
 
         }
 

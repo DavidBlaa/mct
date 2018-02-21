@@ -62,8 +62,8 @@ namespace MCT.Web.Controllers
             PflanzenModel p1 = new PflanzenModel()
             {
                 Name = "Blumenkohl",
-                X = 5,
-                Y = 4
+                X = 0,
+                Y = 0
             };
 
             PflanzenModel p2 = new PflanzenModel()
