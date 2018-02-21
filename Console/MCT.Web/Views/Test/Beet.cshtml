@@ -113,18 +113,30 @@
 
 
 
-                var x = dx;
-                var y = dy;
+
+                // set pre rectangle
+                var x = this.transform().localMatrix.e;
+                var y = this.transform().localMatrix.f;
                 var xSnap = Snap.snapTo(gridsize, x, 100000);
                 var ySnap = Snap.snapTo(gridsize, y, 100000);
+                console.log("x:" + x + " y:" + y);
+                //console.log("dx:" + dx + " dy:" + dy);
+                console.log("SnapX:"+xSnap+" SnapY:"+ ySnap);
+
 
                 var s = getSnap();
                 var tmp = s.select("#dropzone");
+                tmp.attr({
+                    stroke: "#eee",
+                    strokeWidth: 1,
+                    fill: "#eee",
+                    })
                 tmp.transform("t" + xSnap + "," + ySnap);
+                        
 
-                //this.attr({
-                //    transform: "martix(1,0,0,1," + xSnap + "," + ySnap + ")"
-                //})
+                console.log("-----------------------------");
+                console.log(this.transform().localMatrix);
+                console.log(tmp.transform().localMatrix);
 
             }
 
@@ -152,6 +164,11 @@
 
                 console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
                 this.paper.drag();
+
+                //remove tmp rectangle
+                var tmp = getSnap().select("#dropzone");
+                tmp.remove();
+
             }
 
             obj.drag(move, start, stop);
@@ -198,8 +215,8 @@
 
         function createTmpRec(obj)
         {
-            var x = obj.transform().localMatrix.e;
-            var y = obj.transform().localMatrix.f;
+            //var x = obj.transform().localMatrix.e;
+            //var y = obj.transform().localMatrix.f;
             console.log(obj);
 
             var o = obj.select("#r");
@@ -210,10 +227,7 @@
 
             var s = getSnap();
 
-            var tmp = s.rect(x, y, width, height).attr({
-                stroke: "green",
-                strokeWidth: 1,
-                fill:"green",
+            var tmp = s.rect(0, 0, width, height).attr({
                 id:"dropzone"
             })
 
