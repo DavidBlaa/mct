@@ -27,15 +27,16 @@
     <script type="text/javascript">
 
         $("#plus").click(function () {
-
-            zoom(Snap("#x"), 0.1);
-
+            //zoom in
+            zoom(getSnap(), 0.1);
         })
 
         $("#minus").click(function () {
-            zoom(Snap("#x"), - 0.1);
+            // zoom out
+            zoom(getSnap(), -0.1);
         })
 
+        // zoom a svg object, position directionvalue = zoom in, negative = zoom out
         function zoom(svgObj, directionValue)
         {
             var s = svgObj;
@@ -70,11 +71,16 @@
             $.get("/Test/Pflanze", {},
                 function (data, textStatus, jqXHR) {
 
-                    var s = Snap("#x");
+                    var s = getSnap();
+
+                    // parse partial view to svg element
                     var fragement = Snap.parse(data);
                     console.log(fragement);
+
+                    // add svg elemengt to svg
                     var x = s.append(fragement);
 
+                    // set drag to the new last plant object
                     var all = s.selectAll(".pflanze");
                     console.log(all);
                     var last = all[all.length - 1];
@@ -83,23 +89,27 @@
             );
         })
 
-        var s = Snap("#x");
+        var s = getSnap();
        
         // grid size
         var gridsize = 20;
 
+        // draw grid
         var width = $("#x").attr("width");
         var height = $("#x").attr("height");
         drawLines(s, width, height, gridsize)
 
-
+        // get all plants
         var testObjs = s.selectAll(".pflanze");
 
+        // set drag to loaded plant objects
         $.each(testObjs, function (index, value) {
             //alert("each");
             setDrag(value);
         });
 
+
+        // set drag to plant object
         function setDrag(obj) {
 
             var move = function (dx, dy) {
@@ -114,15 +124,14 @@
 
 
 
-                // set pre rectangle
+                // set dropzone
                 var x = this.transform().localMatrix.e;
                 var y = this.transform().localMatrix.f;
                 var xSnap = Snap.snapTo(gridsize, x, 100000);
                 var ySnap = Snap.snapTo(gridsize, y, 100000);
-                console.log("x:" + x + " y:" + y);
+                //console.log("x:" + x + " y:" + y);
                 //console.log("dx:" + dx + " dy:" + dy);
-                console.log("SnapX:"+xSnap+" SnapY:"+ ySnap);
-
+                //console.log("SnapX:"+xSnap+" SnapY:"+ ySnap);
 
                 var s = getSnap();
                 var tmp = s.select("#dropzone");
@@ -130,13 +139,14 @@
                     stroke: "#eee",
                     strokeWidth: 1,
                     fill: "#eee",
-                    })
+                })
+                $(tmp).show();
                 tmp.transform("t" + xSnap + "," + ySnap);
                         
 
-                console.log("-----------------------------");
-                console.log(this.transform().localMatrix);
-                console.log(tmp.transform().localMatrix);
+                //console.log("-----------------------------");
+                //console.log(this.transform().localMatrix);
+                //console.log(tmp.transform().localMatrix);
 
             }
 
@@ -175,6 +185,7 @@
 
         }
 
+        // draw lines
         function drawLines(s, maxX, maxY, gridSize) {
             var group = s.g();
 
@@ -212,7 +223,7 @@
 
         }
 
-
+        //create dropzone Rectangle
         function createTmpRec(obj)
         {
             //var x = obj.transform().localMatrix.e;
@@ -231,11 +242,13 @@
                 id:"dropzone"
             })
 
+            $(tmp).hide();
+
             s.prepend(tmp);
 
         }
 
-
+        //get svg container With Snap functionality
         function getSnap()
         {
             return Snap("#x");
