@@ -5,8 +5,12 @@
 <button id="loadPflanze">neue Pflanze </button>
 <button id="plus">zoom in </button>
 <button id="minus">zoom out </button>
-<div id="divContainer" width="1000" height="600" style="overflow:hidden">
-    <svg id="x" width="2000" height="1200" enable-background="true" style="border:1px,solid">
+
+<button id="scrolleft">scroll left</button>
+<button id="scrollright">scrol right </button>
+
+<div id="svgContainer"  width="1000" height="600" style="overflow:auto; border:1px,solid; cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
+    <svg id="x" width="2000" height="600" enable-background="true" >
         @foreach (var p in Model.Pflanzen)
         {
             @Html.Partial("Pflanze", p);
@@ -36,6 +40,20 @@
             zoom(getSnap(), -0.1);
         })
 
+        $("#scrolleft").click(function () {
+            
+            console.log(getSvgContainer());
+            console.log($(getSvgContainer()).scrollLeft());
+            var currentPositon = $(getSvgContainer()).scrollLeft();
+
+            $(getSvgContainer()).scrollLeft(currentPositon - 10);
+        })
+
+        $("#scrollright").click(function () {
+            var currentPositon = $(getSvgContainer()).scrollLeft();
+            $(getSvgContainer()).scrollLeft(currentPositon + 10);
+        })
+
         // zoom a svg object, position directionvalue = zoom in, negative = zoom out
         function zoom(svgObj, directionValue)
         {
@@ -49,12 +67,10 @@
             var x = s.transform().localMatrix.e;
             var y = s.transform().localMatrix.f;
 
-            if (scaleX > 1 || scaleY > 1) s.drag();
+            if (scaleX > 1 || scaleY > 1) { }
             else {
-                s.undrag();
                 x = 0;
                 y = 0;
-
             }
 
             s.attr({
@@ -84,7 +100,7 @@
                     var all = s.selectAll(".pflanze");
                     console.log(all);
                     var last = all[all.length - 1];
-                    setDrag(last);
+                    setDragElements(last);
                 }
             );
         })
@@ -105,12 +121,12 @@
         // set drag to loaded plant objects
         $.each(testObjs, function (index, value) {
             //alert("each");
-            setDrag(value);
+            setDragElements(value);
         });
 
 
         // set drag to plant object
-        function setDrag(obj) {
+        function setDragElements(obj) {
 
             var move = function (dx, dy) {
 
@@ -121,12 +137,36 @@
                     transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx / paperScaleX, dy / paperScaleY]
                 });
 
-
-
-
-                // set dropzone
+                //get current coordinates
                 var x = this.transform().localMatrix.e;
                 var y = this.transform().localMatrix.f;
+
+                // check if new x or y is out of the box
+
+                var o = this.select("#r");
+                console.log(o);
+
+                var width = o.attr("width");
+                var height = o.attr("height");
+                var maxX = this.paper.attr("width");
+                var maxY = this.paper.attr("height");
+
+                if (x < 0) x = 0;
+                if (x >= (maxX - width)) x = (maxX - width);
+
+
+                if (y < 0) y = 0;
+                if (y >= (maxY - height))y = (maxY - height);
+                console.log("x:" + x + " y:" + y);
+                console.log("maxX:" + maxX + " maxY:" + maxY);
+                console.log("height:" + height + " maxYwidth:" + width);
+                //console.log("SnapX:"+xSnap+" SnapY:"+ ySnap);
+
+
+                console.log("x:" + x + " y:" + y);
+                this.transform("t" + x + "," + y);
+
+                // set dropzone
                 var xSnap = Snap.snapTo(gridsize, x, 100000);
                 var ySnap = Snap.snapTo(gridsize, y, 100000);
                 //console.log("x:" + x + " y:" + y);
@@ -173,7 +213,7 @@
                 })
 
                 console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
-                this.paper.drag();
+                //this.paper.drag();
 
                 //remove tmp rectangle
                 var tmp = getSnap().select("#dropzone");
@@ -253,5 +293,14 @@
         {
             return Snap("#x");
         }
+
+        function getSvgContainer() {
+            return $("#svgContainer")[0];
+        }
+
+
+        //*MOUSE SCROLL DRAG*//
+
+        
     </script>
 }
