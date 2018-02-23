@@ -115,6 +115,11 @@
     <EmbeddedResource Include="Implant.hbm.xml" />
     <EmbeddedResource Include="LifeTime.hbm.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PatchPlaner\Patch.hbm.xml" />
+    <EmbeddedResource Include="PatchPlaner\Placement.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
