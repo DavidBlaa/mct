@@ -1,4 +1,5 @@
 ﻿using MCT.DB.Entities;
+using MCT.DB.Entities.PatchPlaner;
 using MCT.DB.Services;
 using MCT.Helpers;
 using MCT.Web.Models.Test;
@@ -32,12 +33,12 @@ namespace MCT.Web.Controllers
             return View();
         }
 
-        
+
 
         public ActionResult Svg()
         {
 
-            
+
 
             return View();
         }
@@ -90,6 +91,104 @@ namespace MCT.Web.Controllers
             };
 
             return PartialView(model);
+        }
+
+        public ActionResult Patch()
+        {
+            try
+            {
+                SubjectManager subjectManager = new SubjectManager();
+                PatchManager patchManager = new PatchManager();
+
+                Patch patch = new Patch();
+
+                patch.Name = "test";
+                patch.Width = 800;
+                patch.Height = 800;
+
+                Plant plant = new Plant();
+                plant = subjectManager.GetAll<Plant>().FirstOrDefault();
+
+                Placement p = new Placement()
+                {
+                    Plant = plant,
+                    Transformation = "matrix(1,0,0,1,300,100)",
+                    PlantingArea = TimePeriodArea.Anfang,
+                    PlantingMonth = TimePeriodMonth.August,
+                    Patch = patch
+                };
+
+                patch.Placements.Add(p);
+
+                patchManager.Create(patch);
+
+                p = new Placement()
+                {
+                    Plant = plant,
+                    Transformation = "matrix(1,0,0,1,300,600)",
+                    PlantingArea = TimePeriodArea.Anfang,
+                    PlantingMonth = TimePeriodMonth.August,
+                    Patch = patch
+                };
+
+
+                patch.Placements.Add(p);
+
+                patchManager.Update(patch);
+
+
+                Patch patchFromDB = patchManager.GetAll<Patch>().LastOrDefault();
+                patchManager.Delete(patchFromDB);
+
+
+                p = new Placement()
+                {
+                    Plant = plant,
+                    Transformation = "matrix(1,0,0,1,300,600)",
+                    PlantingArea = TimePeriodArea.Anfang,
+                    PlantingMonth = TimePeriodMonth.August,
+                    Patch = patch
+                };
+
+                var x = patchManager.Create(p);
+
+
+                patchManager.Delete(x);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
+
+
+            BeetModel model = new BeetModel();
+
+            //test Pflanze 1
+            PflanzenModel p1 = new PflanzenModel()
+            {
+                Name = "Blumenkohl",
+                X = 0,
+                Y = 0
+            };
+
+            PflanzenModel p2 = new PflanzenModel()
+            {
+                Name = "Tomate",
+                X = 500,
+                Y = 200
+            };
+
+            model.Pflanzen.Add(p1);
+            model.Pflanzen.Add(p2);
+
+
+
+
+
+            return View("Beet", model);
         }
 
         private void testIntractions()

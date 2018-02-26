@@ -12,8 +12,6 @@
     <property name="PlantingArea" type="MCT.DB.Entities.TimePeriodArea, MCT.DB.Entities"/>
     <property name="PlantingMonth" type="MCT.DB.Entities.TimePeriodMonth, MCT.DB.Entities"/>
 
-    <many-to-one name="Plant" class="MCT.DB.Entities.Plant, MCT.DB.Entities" column="PlantRef" not-null="false" />
-
     <many-to-one class="Patch" name="Patch" column="PatchRef"></many-to-one>
   </class>
 </hibernate-mapping>

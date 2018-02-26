@@ -17,6 +17,18 @@ namespace MCT.DB.Entities.PatchPlaner
         public virtual NutrientClaim NutrientClaim { get; set; }
 
         public virtual ICollection<Placement> Placements { get; set; }
+
+
+        public Patch()
+        {
+            Name = "";
+            Description = "";
+            Placements = new List<Placement>();
+            Width = 0;
+            Height = 0;
+            LocationType = LocationType.Unknown;
+            NutrientClaim = NutrientClaim.Empty;
+        }
     }
 
 }

@@ -147,6 +147,7 @@
     <Compile Include="Controllers\ExtNetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InteractionController.cs" />
+    <Compile Include="Controllers\PatchPlanerController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -156,6 +157,7 @@
     </Compile>
     <Compile Include="Helpers\DataModelHelper.cs" />
     <Compile Include="Helpers\GantHelper.cs" />
+    <Compile Include="Helpers\PatchPlaner\PatchModelHelper.cs" />
     <Compile Include="Helpers\SeedDataGenerator.cs" />
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Models\DataTableModel.cs" />
@@ -164,6 +166,8 @@
     <Compile Include="Models\ExtNetModel.cs" />
     <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\InteractionModels.cs" />
+    <Compile Include="Models\PatchPlaner\PatchModel.cs" />
+    <Compile Include="Models\PatchPlaner\PlacementModel.cs" />
     <Compile Include="Models\SimpleNodeViewModel.cs" />
     <Compile Include="Models\NodeModel.cs" />
     <Compile Include="Models\PlantModel.cs" />
@@ -631,6 +635,7 @@
     <Content Include="Views\Shared\TimePeriods.cshtml" />
     <Content Include="Views\Test\Beet.cshtml" />
     <Content Include="Views\Test\Pflanze.cshtml" />
+    <Content Include="Views\PatchPlaner\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{DFACEB61-C3BD-41F7-81A6-DD228A2431CC}"
 EndProject
@@ -187,5 +187,8 @@ Global
 		{EDDF5223-AD79-44B5-983E-4BA2ED2B51DA} = {8941F66F-8C56-4C78-A00B-E6EDB8FBD0F2}
 		{49D8F3CE-AD18-4A91-B0B7-87D251A3FFCA} = {EDDF5223-AD79-44B5-983E-4BA2ED2B51DA}
 		{30D22F1A-AF97-4790-975A-5D63C2EE8376} = {A32619AE-54D2-4909-AEB1-0B08C4E5543E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE6A2848-CB24-4289-8913-6D604B8FDA05}
 	EndGlobalSection
 EndGlobal
