@@ -58,6 +58,17 @@ namespace MCT.DB.Services
             }
         }
 
+        public T Update<T>(T t)
+        {
+            using (ITransaction transaction = CurrentNHibernateSession.BeginTransaction())
+            {
+                CurrentNHibernateSession.SaveOrUpdate(t);
+                transaction.Commit();
+            }
+
+            return t;
+        }
+
         public void Delete(T t)
         {
             using (ITransaction transaction = CurrentNHibernateSession.BeginTransaction())

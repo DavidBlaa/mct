@@ -20,7 +20,7 @@
 
 
     <!-- list to all placements-->
-    <set cascade="all" name="PatchElements" >
+    <set name="PatchElements" cascade="all-delete-orphan" inverse="true" >
       <key>
         <column name="PatchRef" />
       </key>

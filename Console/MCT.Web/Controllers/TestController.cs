@@ -136,24 +136,14 @@ namespace MCT.Web.Controllers
 
                 patchManager.Update(patch);
 
+                patch.PatchElements.Remove(p);
+
+                patchManager.Update(patch);
+
 
                 Patch patchFromDB = patchManager.GetAll<Patch>().LastOrDefault();
                 patchManager.Delete(patchFromDB);
-
-
-                p = new Placement()
-                {
-                    Plant = plant,
-                    Transformation = "matrix(1,0,0,1,300,600)",
-                    PlantingArea = TimePeriodArea.Anfang,
-                    PlantingMonth = TimePeriodMonth.August,
-                    Patch = patch
-                };
-
-                var x = patchManager.Create<PatchElement>(p);
-
-
-                patchManager.Delete(x);
+                
 
             }
             catch (Exception ex)

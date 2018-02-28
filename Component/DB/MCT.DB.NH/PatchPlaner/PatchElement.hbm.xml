@@ -9,7 +9,7 @@
 
     <property name="Transformation" type="String"/>
 
-    <many-to-one class="Patch" name="Patch" column="PatchRef"></many-to-one>
+    <many-to-one class="Patch" name="Patch" column="PatchRef" not-null="true" cascade="none"></many-to-one>
     
   </class>
 </hibernate-mapping>
