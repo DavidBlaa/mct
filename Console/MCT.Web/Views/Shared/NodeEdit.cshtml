@@ -13,6 +13,7 @@
             <div id="DetailsHeader" class="panel-heading">
 
                 @Html.HiddenFor(m => m.Id)
+                @Html.DisplayFor(m => m.Id)
 
                 <a class="fa fa-trash mct-button-icon" onclick="deleteSubject(@Model.Id)"></a>
 

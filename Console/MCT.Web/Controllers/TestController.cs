@@ -136,14 +136,14 @@ namespace MCT.Web.Controllers
 
                 patchManager.Update(patch);
 
-                patch.PatchElements.Remove(p);
+                //patch.PatchElements.Remove(p);
 
-                patchManager.Update(patch);
+                //patchManager.Update(patch);
 
 
-                Patch patchFromDB = patchManager.GetAll<Patch>().LastOrDefault();
-                patchManager.Delete(patchFromDB);
-                
+                //Patch patchFromDB = patchManager.GetAll<Patch>().LastOrDefault();
+                //patchManager.Delete(patchFromDB);
+
 
             }
             catch (Exception ex)
@@ -151,7 +151,7 @@ namespace MCT.Web.Controllers
 
                 throw ex;
             }
-            
+
 
 
             BeetModel model = new BeetModel();

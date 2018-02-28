@@ -1,0 +1,18 @@
+﻿@model MCT.Web.Models.PatchPlaner.PlacementModel
+
+@{ 
+    var transformation = !String.IsNullOrEmpty(Model.Transformation) ? Model.Transformation : "matrix(1,0,0,1,0,0)";
+    var name = !String.IsNullOrEmpty(Model.Plant.Name) ? Model.Plant.Name : "noName";
+    var abbr = !String.IsNullOrEmpty(Model.Plant.Name) ? Model.Plant.Name.Substring(0,2) : "NaN";
+    var w = Model.Plant.Width>1?Model.Plant.Width:5;
+    var h = Model.Plant.Width > 1 ? Model.Plant.Width : 5;
+
+    var labelX = w / 2;
+    var labelY = h / 2;
+
+}
+
+<g id="name" class="pflanze" transform="@Model.Transformation" >
+    <rect id="r" width="@w" height="@h" stroke="red" stroke-width="1px" fill="#eeeeee" />
+    <text x="@labelX" y="@labelY" alignment-baseline="middle" text-anchor="middle" fill="green" font-size="12" font-weight="bolder" title="@name" >@abbr</text>
+</g>

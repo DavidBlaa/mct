@@ -536,6 +536,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MCT\dndTree.js" />
     <Content Include="Scripts\MCT\mct-basic.js" />
+    <Content Include="Scripts\MCT\mct-patch-planer.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
@@ -636,9 +637,12 @@
     <Content Include="Views\Test\Beet.cshtml" />
     <Content Include="Views\Test\Pflanze.cshtml" />
     <Content Include="Views\PatchPlaner\Index.cshtml" />
+    <Content Include="Views\PatchPlaner\Patch.cshtml" />
+    <Content Include="Views\PatchPlaner\Placement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\NewFolder1\" />
     <Folder Include="Views\Subject\" />
   </ItemGroup>
   <ItemGroup>

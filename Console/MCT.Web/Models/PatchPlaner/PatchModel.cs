@@ -1,8 +1,5 @@
 ﻿using MCT.DB.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MCT.Web.Models.PatchPlaner
 {
@@ -19,6 +16,11 @@ namespace MCT.Web.Models.PatchPlaner
         public NutrientClaim NutrientClaim { get; set; }
 
         public ICollection<PlacementModel> Placements { get; set; }
+
+        public PatchModel()
+        {
+            Placements = new List<PlacementModel>();
+        }
 
     }
 }
