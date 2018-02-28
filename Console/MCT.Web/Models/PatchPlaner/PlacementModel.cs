@@ -1,8 +1,4 @@
 ﻿using MCT.DB.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MCT.Web.Models.PatchPlaner
 {
@@ -14,5 +10,10 @@ namespace MCT.Web.Models.PatchPlaner
         public virtual TimePeriodArea PlantingArea { get; set; }
         public virtual TimePeriodMonth PlantingMonth { get; set; }
         public virtual long PatchId { get; set; }
+
+        public PlacementModel()
+        {
+            Transformation = "matrix(1,0,0,1,0,0)";
+        }
     }
 }

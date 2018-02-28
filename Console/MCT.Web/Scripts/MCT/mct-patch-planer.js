@@ -34,7 +34,13 @@ function zoom(svgObj, directionValue) {
     var x = s.transform().localMatrix.e;
     var y = s.transform().localMatrix.f;
 
-    if (scaleX > 1 || scaleY > 1) { }
+    if (scaleX > 1 || scaleY > 1) {
+
+        var d = scaleX - 1;
+        d = d * 1000;
+        x = d;
+        console.log(x);
+    }
     else {
         x = 0;
         y = 0;
@@ -49,9 +55,9 @@ function zoom(svgObj, directionValue) {
 
 }
 
-$("#loadPflanze").click(function () {
+$("#add").click(function () {
 
-    $.get("/Test/Pflanze", {},
+    $.get("/PatchPlaner/AddRandomPlant", {id :1},
         function (data, textStatus, jqXHR) {
 
             var s = getSnap();

@@ -4,11 +4,26 @@
     var transformation = !String.IsNullOrEmpty(Model.Transformation) ? Model.Transformation : "matrix(1,0,0,1,0,0)";
     var name = !String.IsNullOrEmpty(Model.Plant.Name) ? Model.Plant.Name : "noName";
     var abbr = !String.IsNullOrEmpty(Model.Plant.Name) ? Model.Plant.Name.Substring(0,2) : "NaN";
-    var w = Model.Plant.Width>1?Model.Plant.Width:5;
-    var h = Model.Plant.Width > 1 ? Model.Plant.Width : 5;
+    var w = Model.Plant.Width>1? Model.Plant.Width : 50;
+    var h = Model.Plant.Width>1? Model.Plant.Width : 50;
 
     var labelX = w / 2;
     var labelY = h / 2;
+
+
+
+    if (!String.IsNullOrEmpty(Model.Plant.Name))
+    {
+        abbr = "";
+
+        foreach (char letter in Model.Plant.Name)
+        {
+            if (Char.IsUpper(letter))
+            {
+                abbr += letter;
+            }
+        }
+    }
 
 }
 
