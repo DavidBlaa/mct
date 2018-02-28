@@ -16,14 +16,14 @@ namespace MCT.DB.Entities.PatchPlaner
         public virtual LocationType LocationType { get; set; }
         public virtual NutrientClaim NutrientClaim { get; set; }
 
-        public virtual ICollection<Placement> Placements { get; set; }
+        public virtual ICollection<PatchElement> PatchElements { get; set; }
 
 
         public Patch()
         {
             Name = "";
             Description = "";
-            Placements = new List<Placement>();
+            PatchElements = new List<PatchElement>();
             Width = 0;
             Height = 0;
             LocationType = LocationType.Unknown;

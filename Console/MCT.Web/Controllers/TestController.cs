@@ -118,7 +118,7 @@ namespace MCT.Web.Controllers
                     Patch = patch
                 };
 
-                patch.Placements.Add(p);
+                patch.PatchElements.Add(p);
 
                 patchManager.Create(patch);
 
@@ -132,7 +132,7 @@ namespace MCT.Web.Controllers
                 };
 
 
-                patch.Placements.Add(p);
+                patch.PatchElements.Add(p);
 
                 patchManager.Update(patch);
 
@@ -150,7 +150,7 @@ namespace MCT.Web.Controllers
                     Patch = patch
                 };
 
-                var x = patchManager.Create(p);
+                var x = patchManager.Create<PatchElement>(p);
 
 
                 patchManager.Delete(x);

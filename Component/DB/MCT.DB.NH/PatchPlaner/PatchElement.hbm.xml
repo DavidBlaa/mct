@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="MCT.DB.Entities" namespace="MCT.DB.Entities.PatchPlaner">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="PatchElement" table="PatchElements" dynamic-update="true">
+
+    <id name="Id" type="Int64" unsaved-value="0">
+      <column name="Id" />
+      <generator class="native" />
+    </id>
+
+    <property name="Transformation" type="String"/>
+
+    <many-to-one class="Patch" name="Patch" column="PatchRef"></many-to-one>
+    
+  </class>
+</hibernate-mapping>

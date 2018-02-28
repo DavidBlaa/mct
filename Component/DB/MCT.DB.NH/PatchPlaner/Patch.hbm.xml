@@ -20,11 +20,11 @@
 
 
     <!-- list to all placements-->
-    <set cascade="all" name="Placements" >
+    <set cascade="all" name="PatchElements" >
       <key>
         <column name="PatchRef" />
       </key>
-      <one-to-many class="Placement" />
+      <one-to-many class="PatchElement" />
     </set>
 
   </class>

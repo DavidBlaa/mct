@@ -70,6 +70,7 @@
     <Compile Include="LifeTime.cs" />
     <Compile Include="Media.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="PatchPlaner\PatchElement.cs" />
     <Compile Include="PatchPlaner\Placement.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="Predicate.cs" />

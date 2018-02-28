@@ -29,9 +29,10 @@ namespace MCT.Web.Helpers.PatchPlaner
             model.NutrientClaim = patch.NutrientClaim;
 
             //placmenets
-            foreach (var p in patch.Placements)
+            foreach (var p in patch.PatchElements)
             {
-                model.Placements.Add(ConvertTo(p));
+                if(p is Placement)
+                model.Placements.Add(ConvertTo((Placement)p));
             }
 
             return model;
