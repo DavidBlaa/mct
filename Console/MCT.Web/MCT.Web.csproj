@@ -642,7 +642,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\NewFolder1\" />
     <Folder Include="Views\Subject\" />
   </ItemGroup>
   <ItemGroup>

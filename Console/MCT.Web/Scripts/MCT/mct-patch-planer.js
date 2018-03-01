@@ -36,10 +36,9 @@ function zoom(svgObj, directionValue) {
 
     if (scaleX > 1 || scaleY > 1) {
 
-        var d = scaleX - 1;
-        d = d * 1000;
-        x = d;
-        console.log(x);
+       x = (width * (scaleX - 1)) / 2;
+       y = (height * (scaleY - 1)) / 2;
+
     }
     else {
         x = 0;

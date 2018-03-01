@@ -10,7 +10,7 @@
 <button id="scrollright">scrol right </button>
 
 <div id="svgContainer"  width="1000" height="600" style="overflow:auto; border:1px,solid; cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
-    <svg id="x" width="2000" height="600" enable-background="true" >
+    <svg id="x" width="1000" height="1000" enable-background="true" >
         @foreach (var p in Model.Pflanzen)
         {
             @Html.Partial("Pflanze", p);
@@ -57,6 +57,8 @@
         // zoom a svg object, position directionvalue = zoom in, negative = zoom out
         function zoom(svgObj, directionValue)
         {
+            console.log("zoom")
+
             var s = svgObj;
 
             var scaleX = s.transform().localMatrix.a + directionValue;
@@ -67,7 +69,25 @@
             var x = s.transform().localMatrix.e;
             var y = s.transform().localMatrix.f;
 
-            if (scaleX > 1 || scaleY > 1) { }
+            if (scaleX > 1 || scaleY > 1) {
+
+                var xChange = (width * (scaleX - 1))/2;
+                var yChange = (height * (scaleY - 1))/2;
+
+
+                x = xChange;
+                y = yChange;
+
+
+                console.log(scaleX);
+                console.log(scaleY);
+                console.log("--");
+
+
+                console.log(xChange);
+                console.log(yChange);
+
+            }
             else {
                 x = 0;
                 y = 0;
