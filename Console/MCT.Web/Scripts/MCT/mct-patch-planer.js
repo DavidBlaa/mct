@@ -191,11 +191,71 @@ function setDragElements(obj) {
         var tmp = getSnap().select("#dropzone");
         tmp.remove();
 
+        detectNeighbors(this);
     }
 
     obj.drag(move, start, stop);
 
 }
+
+
+//detect Neighbors
+function detectNeighbors(placement) {
+
+    var x = placement.transform().localMatrix.e;
+    var y = placement.transform().localMatrix.f;
+
+    var width = getWidth(placement);
+    var height = getHeight(placement);
+
+    var xmax = x + width;
+    var ymax = y + height;
+
+    var arr = new Array();
+    // select all placements in patch
+    console.log("each plants");
+    
+    var allPlacemenets = getSnap().selectAll(".pflanze");
+    console.log(allPlacemenets)
+
+    $.each(allPlacemenets, function (index, value) {
+  
+        var obj = value;
+        console.log(obj);
+        // compare x,y,xmax, ymax
+        var xTmp = obj.transform().localMatrix.e;
+        var yTmp = obj.transform().localMatrix.f;
+
+        var widthTmp = getWidth(obj);
+        var heightTmp = getHeight(obj);
+
+        var xmaxTmp = xTmp + widthTmp;
+        var ymaxTmp = yTmp + heightTmp;
+
+        // oben links
+        if ((x < xTmp && xTmp < xmax) && (y < yTmp && yTmp < ymax)) {
+            arr.push(obj);
+        }
+
+        //oben rechts
+        if ((x < xmaxTmp && xmaxTmp < xmax) && (y < yTmp && yTmp < ymax)) {
+            arr.push(obj);
+        }
+        //unten links
+        if((x < xTmp && xTmp < xmax) && (y < ymaxTmp && ymaxTmp < ymax)) {
+            arr.push(obj);
+        }
+
+        //unten rechts
+        if ((x < xmaxTmp && xmaxTmp < xmax) && (y < ymaxTmp && ymaxTmp < ymax)) {
+            arr.push(obj);
+        }
+
+
+        console.log(arr);
+    });
+}
+
 
 // draw lines
 function drawLines(s, maxX, maxY, gridSize) {
@@ -268,5 +328,20 @@ function getSvgContainer() {
     return $("#svgContainer")[0];
 }
 
+function getWidth(placement) {
+
+    var o = placement.select("#r");
+    console.log(o);
+    var width = o.attr("width");
+    return width;
+}
+
+function getHeight(placement) {
+
+    var o = placement.select("#r");
+    console.log(o);
+    var height = o.attr("height");
+    return height;
+}
 
 //*MOUSE SCROLL DRAG*//
