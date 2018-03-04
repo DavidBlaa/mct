@@ -1,8 +1,29 @@
-﻿
+﻿@model MCT.Web.Models.PatchPlaner.PatchPlanerModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Patch Planer</h2>
+<h2>@*Patch Planer: @Model.Patch.Name (@Model.Patch.Id)*@</h2>
 
+<div id="@Model.Patch.Id" class="patch-planer-container row">
+    <div id="patch-planer-search-container" class="col-lg-3">
+        @Html.Partial("Search", Model.Search)
+    </div>
+
+    <div id="patch-planer-patch-container" class="col-lg-8">
+        @Html.Partial("Patch", Model.Patch)
+    </div>
+</div>
+
+
+<style type="text/css">
+    #patch-planer-patch-container {
+        height:450px;
+    }
+
+    #patch-planer-search-container {
+        background-color:#efefef;
+    }
+
+</style>

@@ -167,7 +167,9 @@
     <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\InteractionModels.cs" />
     <Compile Include="Models\PatchPlaner\PatchModel.cs" />
+    <Compile Include="Models\PatchPlaner\PatchPlanerModel.cs" />
     <Compile Include="Models\PatchPlaner\PlacementModel.cs" />
+    <Compile Include="Models\PatchPlaner\SearchModel.cs" />
     <Compile Include="Models\SimpleNodeViewModel.cs" />
     <Compile Include="Models\NodeModel.cs" />
     <Compile Include="Models\PlantModel.cs" />
@@ -639,6 +641,9 @@
     <Content Include="Views\PatchPlaner\Index.cshtml" />
     <Content Include="Views\PatchPlaner\Patch.cshtml" />
     <Content Include="Views\PatchPlaner\Placement.cshtml" />
+    <Content Include="Views\PatchPlaner\Search.cshtml" />
+    <Content Include="Views\PatchPlaner\_plantPartialView.cshtml" />
+    <Content Include="Views\PatchPlaner\_searchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

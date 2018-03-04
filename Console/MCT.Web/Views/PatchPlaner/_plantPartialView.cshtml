@@ -1,0 +1,58 @@
+﻿@{
+
+    string headerClassName = "header";
+    string btnClass = "btn btn-lg btn-block detailsBtn";
+    string iconClass = "icon fa fa-";
+
+    if (Model.Type == MCT.Web.Models.SubjectType.Plant)
+    {
+        headerClassName += "plant";
+        btnClass += "plant";
+        iconClass += "leaf";
+
+    }
+
+    if (Model.Type == MCT.Web.Models.SubjectType.Animal)
+    {
+        headerClassName += "animal";
+        btnClass += "animal";
+        iconClass += "bug";
+    }
+
+    if (Model.Type == MCT.Web.Models.SubjectType.Taxon)
+    {
+        headerClassName += "taxon";
+        btnClass += "taxon";
+        iconClass += "sun-o";
+    }
+
+
+}
+
+@model MCT.Web.Models.PlantModel
+
+
+@{ 
+    string name = "noname";
+
+    if (!string.IsNullOrEmpty(@Model.Name))
+    {
+        name = Model.Name;
+    }
+}
+
+<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-xs-12" >
+    <div class="@headerClassName mct-species-header" >
+        <h3 class="name col-lg-8 mct-species-title">
+            @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new {target="blank"})
+        </h3>
+        <div class="mct-button-icon-container">
+            @*@Html.ActionLink(" ", "Edit", "Subject", new {id = Model.Id, type = @Model.Type.ToString()}, new {@class = "fa fa-plus mct-button-icon"})*@
+        
+            <div plantid="@Model.Id" class="add-plant-to-patch-bt fa fa-plus mct-button-icon"></div>
+        </div>
+    </div>
+    <div>
+        (@Model.Width x @Model.Height)
+    </div>
+</div>

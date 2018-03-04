@@ -74,14 +74,23 @@ img {
     height: 70px;
 }
 
+.header-small {
+    margin-top: 20px;
+    height: 40px;
+}
+
 .mct-species-header {
     margin-top: 20px;
     height: 50px;
 }
 .headerplant {
     border-top: solid 2px yellowgreen;
-   
-} 
+}
+
+.headerplant-small {
+    border: solid 2px yellowgreen;
+}
+
 
 .detailsBtnplant {
     background-color: yellowgreen;

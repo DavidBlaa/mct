@@ -54,9 +54,14 @@ function zoom(svgObj, directionValue) {
 
 }
 
-$("#add").click(function () {
+$(".add-plant-to-patch-bt").click(function (e) {
 
-    $.get("/PatchPlaner/AddRandomPlant", {id :1},
+    alert("click");
+    var id = $(e.currentTarget).attr("plantid");
+
+    console.log(id);
+
+    $.get("/PatchPlaner/AddPlant", {id :id},
         function (data, textStatus, jqXHR) {
 
             var s = getSnap();
@@ -116,7 +121,7 @@ function setDragElements(obj) {
         // check if new x or y is out of the box
 
         var o = this.select("#r");
-        console.log(o);
+        //console.log(o);
 
         var width = o.attr("width");
         var height = o.attr("height");
@@ -129,13 +134,13 @@ function setDragElements(obj) {
 
         if (y < 0) y = 0;
         if (y >= (maxY - height)) y = (maxY - height);
-        console.log("x:" + x + " y:" + y);
-        console.log("maxX:" + maxX + " maxY:" + maxY);
-        console.log("height:" + height + " maxYwidth:" + width);
+        //console.log("x:" + x + " y:" + y);
+        //console.log("maxX:" + maxX + " maxY:" + maxY);
+        //console.log("height:" + height + " maxYwidth:" + width);
         //console.log("SnapX:"+xSnap+" SnapY:"+ ySnap);
 
 
-        console.log("x:" + x + " y:" + y);
+        //console.log("x:" + x + " y:" + y);
         this.transform("t" + x + "," + y);
 
         // set dropzone
@@ -155,17 +160,17 @@ function setDragElements(obj) {
         $(tmp).show();
         tmp.transform("t" + xSnap + "," + ySnap);
 
-
         //console.log("-----------------------------");
         //console.log(this.transform().localMatrix);
         //console.log(tmp.transform().localMatrix);
-
     }
 
     var start = function () {
         console.log("start drag");
         this.paper.undrag();
         this.data('origTransform', this.transform().local);
+
+        getSnap().append(this);
 
         createTmpRec(this);
 
@@ -184,7 +189,7 @@ function setDragElements(obj) {
             transform: "martix(1,0,0,1," + xSnap + "," + ySnap + ")"
         })
 
-        console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
+        //console.log(this.transform().localMatrix.e + 'x' + this.transform().localMatrix.f);
         //this.paper.drag();
 
         //remove tmp rectangle
@@ -216,56 +221,79 @@ function detectNeighbors(placement) {
     console.log("each plants");
     
     var allPlacemenets = getSnap().selectAll(".pflanze");
-    console.log(allPlacemenets)
+    //console.log(allPlacemenets)
 
     $.each(allPlacemenets, function (index, value) {
-  
-        var obj = value;
-        console.log(obj);
-        // compare x,y,xmax, ymax
-        var xTmp = obj.transform().localMatrix.e;
-        var yTmp = obj.transform().localMatrix.f;
 
-        var widthTmp = getWidth(obj);
-        var heightTmp = getHeight(obj);
+        if (value.attr("id") !== placement.attr("id")) {
+            //console.log(value.attr("id"));
+            //console.log(placement.attr("id"));
 
-        var xmaxTmp = xTmp + widthTmp;
-        var ymaxTmp = yTmp + heightTmp;
+            var obj = value;
+            
+            // compare x,y,xmax, ymax
+            var xTmp = obj.transform().localMatrix.e;
+            var yTmp = obj.transform().localMatrix.f;
 
-        // oben links
-        if ((x < xTmp && xTmp < xmax) && (y < yTmp && yTmp < ymax)) {
-            arr.push(obj);
+            var widthTmp = getWidth(obj);
+            var heightTmp = getHeight(obj);
+            
+
+            var xmaxTmp = xTmp + widthTmp;
+            var ymaxTmp = yTmp + heightTmp;
+
+            
+
+            var isIn = false;
+            // oben links
+            if ((x <= xTmp && xTmp <= xmax) && (y <= yTmp && yTmp <= ymax)) {
+                isIn = true;
+            }
+
+            //oben rechts
+            if ((x <= xmaxTmp && xmaxTmp <= xmax) && (y <= yTmp && yTmp <= ymax)) {
+                isIn = true;
+            }
+            //unten links
+            if ((x <= xTmp && xTmp <= xmax) && (y <= ymaxTmp && ymaxTmp <= ymax)) {
+                isIn = true;
+            }
+
+            //unten rechts
+            if ((x <= xmaxTmp && xmaxTmp <= xmax) && (y <= ymaxTmp && ymaxTmp <= ymax)) {
+                isIn = true;
+            }
+
+            if (isIn) {
+
+                console.log("w:" + widthTmp + "h:" + heightTmp);
+                console.log("coord");
+                console.log("x: " + x + "xmax: " + xmax + " y: " + y + " ymax: " + ymax );
+
+                console.log("x: " + xTmp + " xmax: " + xmaxTmp + "y: " + yTmp + " ymax: " + ymaxTmp);
+
+                arr.push(obj);
+            }
+
         }
 
-        //oben rechts
-        if ((x < xmaxTmp && xmaxTmp < xmax) && (y < yTmp && yTmp < ymax)) {
-            arr.push(obj);
-        }
-        //unten links
-        if((x < xTmp && xTmp < xmax) && (y < ymaxTmp && ymaxTmp < ymax)) {
-            arr.push(obj);
-        }
-
-        //unten rechts
-        if ((x < xmaxTmp && xmaxTmp < xmax) && (y < ymaxTmp && ymaxTmp < ymax)) {
-            arr.push(obj);
-        }
-
-
-        console.log(arr);
     });
+
+    console.log("List of neighbors");
+    console.log(arr);
+
 }
 
 
 // draw lines
 function drawLines(s, maxX, maxY, gridSize) {
     var group = s.g();
-
+    var line;
     // draw x
     for (var i = 0, l = parseInt(maxX / gridSize) + 1; i < l; i++) {
         var x = gridSize * i;
 
-        var line = s.line(x, 0, x, maxY);
+        line = s.line(x, 0, x, maxY);
         line.attr({
             stroke: "#eee",
             strokeWidth: 1
@@ -273,10 +301,10 @@ function drawLines(s, maxX, maxY, gridSize) {
         group.add(line);
     }
     console.log(parseInt(maxY / gridSize));
-    for (var i = 0, l = parseInt(maxY / gridSize) + 1; i < l; i++) {
-        var y = gridSize * i;
+    for (var j = 0, le = parseInt(maxY / gridSize) + 1; j < le; j++) {
+        var y = gridSize * j;
 
-        var line = s.line(0, y, maxX, y);
+        line = s.line(0, y, maxX, y);
         line.attr({
             stroke: "#eee",
             strokeWidth: 1
@@ -299,10 +327,10 @@ function drawLines(s, maxX, maxY, gridSize) {
 function createTmpRec(obj) {
     //var x = obj.transform().localMatrix.e;
     //var y = obj.transform().localMatrix.f;
-    console.log(obj);
+    //console.log(obj);
 
     var o = obj.select("#r");
-    console.log(o);
+    //console.log(o);
 
     var width = o.attr("width");
     var height = o.attr("height");
@@ -331,17 +359,17 @@ function getSvgContainer() {
 function getWidth(placement) {
 
     var o = placement.select("#r");
-    console.log(o);
+    //console.log(o);
     var width = o.attr("width");
-    return width;
+    return parseInt(width);
 }
 
 function getHeight(placement) {
 
     var o = placement.select("#r");
-    console.log(o);
+    //console.log(o);
     var height = o.attr("height");
-    return height;
+    return parseInt(height);
 }
 
 //*MOUSE SCROLL DRAG*//

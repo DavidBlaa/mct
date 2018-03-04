@@ -18,6 +18,7 @@ namespace MCT.DB.Entities.PatchPlaner
 
         public virtual ICollection<PatchElement> PatchElements { get; set; }
 
+        public virtual Patch Self { get { return this; } }
 
         public Patch()
         {

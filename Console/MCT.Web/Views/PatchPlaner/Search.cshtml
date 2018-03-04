@@ -1,0 +1,119 @@
+﻿
+@model MCT.Web.Models.PatchPlaner.SearchModel
+@using MCT.Search
+@{
+    ViewBag.Title = "Search";
+
+    string searchvalue = "";
+
+    if (Model.SearchCriterias.ContainsKey(SearchProvider.FREETEXT_SEARCH_KEY))
+    {
+        searchvalue = Model.SearchCriterias[SearchProvider.FREETEXT_SEARCH_KEY];
+    }
+
+}
+
+
+<table id="SearchHeaderTable">
+    <tr>
+        <td>
+            <div class="input-group">
+                <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="search..." value="@searchvalue"/>
+
+                <span class="input-group-addon">
+                      <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </td>
+        @*<td>
+            @Html.ActionLink(" ", "Search", "Search", new { @class = "fa fa-trash", style="font-size:14pt" })
+        </td>*@
+    </tr>
+</table>
+
+
+<div id="searchResult">
+    @Html.Partial("_searchResult", Model.Plants.ToList())
+</div>
+
+<script type="text/javascript">
+
+    $(document)
+        .ready(function() {
+
+            //ac = autocomplete
+            $.get("/PatchPlaner/GetAllNames",
+                function(response) {
+
+                    $(".mct-ac-all")
+                        .autocomplete({
+                            source: response
+                        });
+                },
+                "json"
+            );
+
+        });
+
+    var timer = null;
+    $("#searchInput").keyup(function(e) {
+        delay(function () {
+            search();
+        }, 500);
+    }
+    );
+
+    var delay = (function () {
+        var timer = 0;
+        return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    $("#searchInput").change(function (e) {
+        //search();
+    });
+
+    function search() {
+        console.log("search starting");
+        var searchValue = $("#searchInput").val();
+        $("#searchInput").attr("disabled");
+        //alert(searchValue)
+        $.post('@Url.Action("Search", "PatchPlaner")', { searchValue: searchValue }, function (response) {
+
+            $("#searchResultContent").replaceWith(response);
+            $("#searchInput").removeAttr("disabled");
+            //UpdateBreadcrumb();
+        });
+    }
+
+    @*function UpdateSearch() {
+
+        $.post('@Url.Action("UpdateSearch", "PatchPlaner")', function(response) {
+
+            $("#searchResultContent").replaceWith(response);
+
+        });
+
+    }*@
+
+    function UpdateBreadcrumb() {
+
+        $.post('@Url.Action("UpdateBreadcrumb", "PatchPlaner")', function (response) {
+
+            $("#searchBreadcrumbContent").replaceWith(response);
+
+        });
+
+    }
+
+    function ClearSearchInput() {
+        $('#searchInput').empty();
+    }
+
+    function filterOptionsOnClick() {
+        $('#filter').toggle();
+    }
+
+</script>
