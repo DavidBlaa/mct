@@ -59,9 +59,12 @@ $(".add-plant-to-patch-bt").click(function (e) {
     alert("click");
     var id = $(e.currentTarget).attr("plantid");
 
-    console.log(id);
+    var patchid = $($(e.currentTarget).parents(".patch-planer-container")[0]).attr("id");
 
-    $.get("/PatchPlaner/AddPlant", {id :id},
+    console.log(id);
+    console.log(patchid);
+
+    $.get("/PatchPlaner/AddPlant", { id: id, patchId: patchid},
         function (data, textStatus, jqXHR) {
 
             var s = getSnap();
@@ -78,9 +81,48 @@ $(".add-plant-to-patch-bt").click(function (e) {
             console.log(all);
             var last = all[all.length - 1];
             setDragElements(last);
+            last.click(dbclick(last))
+
         }
     );
 })
+
+function dbclick (e) {
+
+
+    console.log("dbclick");
+    console.log(e);
+
+    var selectedObj = e.node;
+
+    //remove
+    var id = $(selectedObj).attr("id");
+    var patchid = $(selectedObj).attr("patchid");
+
+    data = {
+        id: id,
+        patchid:patchid
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/PatchPlaner/RemovePlacement",
+        data: data,
+        dataType: "json",
+        success: function (response) {
+            if (response == true) {
+
+                //remove g from svg
+
+            }
+            else {
+                alert(response);
+            }
+        }
+    });
+
+
+}
 
 var s = getSnap();
 
@@ -98,8 +140,22 @@ var testObjs = s.selectAll(".pflanze");
 // set drag to loaded plant objects
 $.each(testObjs, function (index, value) {
     //alert("each");
-    setDragElements(value);
+    //setDragElements(value);
+
+    //set dbclick event
+    //value.click(dbclick(value))
+    value.click(function (o) {
+
+        alert("set drag");
+
+        console.log(o.target.parentNode.id);
+        var id = o.target.parentNode.id;
+        var obj = getSnap().select("g #" + id);
+
+        setDragElements(obj);
+    });
 });
+
 
 
 // set drag to plant object

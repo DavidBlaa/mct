@@ -131,6 +131,27 @@ namespace MCT.Web.Controllers
             }
         }
 
+        public JsonResult RemovePlacement(long id, long patchId)
+        {
+
+            try
+            {
+                PatchManager patchManager = new PatchManager();
+                Patch patch = patchManager.Get(patchId);
+
+                PatchElement pe = patch.PatchElements.Where(p => p.Id.Equals(id)).FirstOrDefault();
+                patch.PatchElements.Remove(pe);
+
+                patchManager.Update(patch);
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #region search
 
         public static string ALL_SUBJECTS = "ALL_SUBJECTS";

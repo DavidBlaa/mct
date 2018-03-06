@@ -32,6 +32,7 @@ namespace MCT.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/Gantt/style.css",
+                      "~/Content/MCT/mct-patch-planer.css",
                       "~/Content/Site.css"));
         }
     }

@@ -345,6 +345,7 @@
     <Content Include="Content\img\icon_sprite.png" />
     <Content Include="Content\img\slider_handle.png" />
     <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\MCT\mct-patch-planer.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />

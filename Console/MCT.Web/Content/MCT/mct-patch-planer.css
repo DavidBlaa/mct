@@ -1,0 +1,20 @@
+﻿
+#patch-planer-patch-container {
+    overflow:auto;
+}
+
+.patch-planer-search-headerplant {
+}
+
+.patch-planer-search-result-element {
+    border: solid 1px yellowgreen;
+    margin:5px;
+}
+
+/*.add-plant-to-patch-bt {
+
+
+}
+
+#searchInput {
+}*/
