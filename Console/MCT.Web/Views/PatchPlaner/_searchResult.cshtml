@@ -8,11 +8,13 @@
     @*@foreach (var species in Model)*@
     <div id="patch-planer-search-result-content-rows" class="row">
 
-        @foreach (var item in Model)
-        {
-        @Html.Partial("_plantPartialView", item);
+        <ul class="media-list">
+            @foreach (var item in Model)
+            {
+                <li> @Html.Partial("_plantPartialView", item)</li>
 
-        }
+            }
+        </ul>
         
     </div>
 </div>
@@ -20,7 +22,8 @@
 <style type="text/css">
     #patch-planer-search-result-content-rows {
 
-        height:450px;
+        height:60vh;
+        
         overflow:auto;
     }
 </style>

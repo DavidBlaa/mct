@@ -14,23 +14,17 @@
 }
 
 
-<table id="SearchHeaderTable">
-    <tr>
-        <td>
-            <div class="input-group">
-                <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="search..." value="@searchvalue"/>
+<div class="patch-planer-search-filter" style="height:20vh; padding-top:10px">
 
-                <span class="input-group-addon">
-                      <i class="fa fa-search"></i>
-                </span>
-            </div>
-        </td>
-        @*<td>
-            @Html.ActionLink(" ", "Search", "Search", new { @class = "fa fa-trash", style="font-size:14pt" })
-        </td>*@
-    </tr>
-</table>
+<div class="input-group">
+    <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="search..." value="@searchvalue"/>
 
+    <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+    </span>
+</div>
+
+</div>
 
 <div id="searchResult">
     @Html.Partial("_searchResult", Model.Plants.ToList())

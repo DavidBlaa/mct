@@ -55,16 +55,47 @@
     }
 }
 
-<div id="@Model.Id" class="content patch-planer-search-result-element col-xs-11" >
-    <div class="@headerClassName" >
-        <h5 class="name col-lg-8">
-            @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new {target="blank"})
-        </h5>
-        
-        <div plantid="@Model.Id" class="add-plant-to-patch-bt fa fa-plus mct-button-icon"></div>
+<div id="@Model.Id" class="media content patch-planer-search-result-element col-xs-11" >
+
+    <div class="media-left media-middle">
+        <span class="media-object abbr">@abbr</span>
     </div>
-    <div>
-        (@Model.Width x @Model.Height)<br />
-        @abbr
+
+    <div class="media-body">
+        <h4 class="media-heading">
+            @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { target = "blank" })
+        </h4>
+        <span class="additional-info">(@Model.Width x @Model.Height)</span>
     </div>
+
+    <div class="media-right media-middle">
+        <div plantid="@Model.Id" class="media-object add-plant-to-patch-bt fa fa-plus mct-button-icon"></div>
+    </div>
+
 </div>
+
+<style type="text/css">
+
+    .media {
+        padding-left:0;
+    }
+
+    .media-left {
+        padding-left:10px;
+        border-right:1px solid yellowgreen;
+    }
+
+    .abbr {
+        
+        text-align:center;
+        width:30px;
+        font-weight:bolder;
+    }
+    .media-body {
+        padding:10px 0 5px 10px;
+    }
+    .additional-info {
+        font-size:10px;
+    }
+
+</style>

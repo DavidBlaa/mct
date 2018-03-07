@@ -81,8 +81,6 @@ $(".add-plant-to-patch-bt").click(function (e) {
             console.log(all);
             var last = all[all.length - 1];
             setDragElements(last);
-            last.click(dbclick(last))
-
         }
     );
 })
@@ -140,19 +138,50 @@ var testObjs = s.selectAll(".pflanze");
 // set drag to loaded plant objects
 $.each(testObjs, function (index, value) {
     //alert("each");
-    //setDragElements(value);
+    setDragElements(value);
 
     //set dbclick event
     //value.click(dbclick(value))
+
+    value.mouseover(function (o) {
+
+        console.log(this)
+        console.log(o);
+        var id = this.node.id;
+
+        $($("#" + id).find(".additional-options")).show();
+
+        console.log("mouseover");
+    });
+
+    value.mouseout(function (o) {
+
+        var id = this.node.id;
+
+        $($("#" + id).find(".additional-options")).hide();
+        console.log("mouseout");
+    });
+
+    value.mouseup(function (o) {
+
+        console.log("mouseup");
+    });
+
+    value.mousedown(function (o) {
+
+        
+        console.log("mousedown");
+    });
+
     value.click(function (o) {
 
-        alert("set drag");
+        console.log("click");
+    });
 
-        console.log(o.target.parentNode.id);
-        var id = o.target.parentNode.id;
-        var obj = getSnap().select("g #" + id);
+    value.dblclick(function (o) {
 
-        setDragElements(obj);
+       console.log("dblclick");
+       
     });
 });
 

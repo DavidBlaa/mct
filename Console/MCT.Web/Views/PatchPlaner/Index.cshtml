@@ -11,19 +11,36 @@
         @Html.Partial("Search", Model.Search)
     </div>
 
-    <div id="patch-planer-patch-container" class="col-lg-8">
+    <div class="patch-planer-middle col-lg-8">
+        <div id="patch-planer-legend">
+            legende
+        </div>
         @Html.Partial("Patch", Model.Patch)
+        <div id="patch-planer-patch-container">
+          
+        </div>
     </div>
 </div>
 
 
 <style type="text/css">
-    #patch-planer-patch-container {
-        height:450px;
+
+    .patch-planer-middle {
+        height:80vh;
+    
+    }
+    #patch-planer-legend {
+        height:23vh;
+    }
+
+    .patch-planer-patch-container {
+        /*height:450px;*/
+        height:55vh;
     }
 
     #patch-planer-search-container {
         background-color:#efefef;
+        height:80vh;
     }
 
 </style>

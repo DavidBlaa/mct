@@ -29,4 +29,7 @@
 <g id="@Model.Id" patchid="@Model.PatchId" name="@name" class="pflanze" transform="@Model.Transformation" >
     <rect id="r" width="@w" height="@h" stroke="red" stroke-width="1px" fill="#eeeeee" />
     <text x="@labelX" y="@labelY" alignment-baseline="middle" text-anchor="middle" fill="green" font-size="12" font-weight="bolder" title="@name">@abbr</text>
+    <foreignObject x="-30" y="-30"  class="additional-options" style="display:none">
+        <button class="btn btn-primary fa fa-plus"></button>
+    </foreignObject>
 </g>
