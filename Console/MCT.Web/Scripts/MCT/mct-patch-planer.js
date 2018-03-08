@@ -82,17 +82,17 @@ $(".add-plant-to-patch-bt").click(function (e) {
             var last = all[all.length - 1];
             setDragElements(last);
 
-            setEvents(last)
+            setEvents(last);
         }
     );
 })
 
-$(".add-placement-btn").click(function (e) {
+function addPlant(e) {
 
-    //alert("click");
-    var id = $(e.currentTarget).attr("plantid");
+    //;
+    var id = $(e).attr("plantid");
 
-    var patchid = $(e.currentTarget).attr("patchid");
+    var patchid = $(e).attr("patchid");
 
     console.log(id);
     console.log(patchid);
@@ -115,19 +115,19 @@ $(".add-placement-btn").click(function (e) {
             var last = all[all.length - 1];
             setDragElements(last);
 
-            setEvents(last)
+            setEvents(last);
         }
     );
-})
+}
 
-$(".delete-placement-btn").click(function (e) {
+function deletePlacementBt(e) {
 
 
     console.log(".delete-placement-btn");
     console.log(e);
-    console.log(e.currentTarget);
+    //console.log(e.currentTarget);
 
-    var selectedObj = e.currentTarget;
+    var selectedObj = e;
 
     //remove
     var id = $(selectedObj).attr("placementid");
@@ -157,7 +157,7 @@ $(".delete-placement-btn").click(function (e) {
             }
         }
     });
-});
+}
 
 var s = getSnap();
 
@@ -178,7 +178,7 @@ $.each(testObjs, function (index, value) {
     
 
     setEvents(value);
-    //setDragElements(value);
+    setDragElements(value);
 
     //set dbclick event
     //value.click(dbclick(value))
@@ -191,30 +191,52 @@ function setEvents(value) {
     value.mouseover(function (o) {
 
         $(this.node).find(".additional-options").show();
-
-        console.log("mouseover");
+        //console.log("mouseover");
     });
 
     value.mouseout(function (o) {
 
         $(this.node).find(".additional-options").hide();
-        console.log("mouseout");
+        //console.log("mouseout");
     });
 
     value.mouseup(function (o) {
 
         //this.undrag();
-        console.log("mouseup");
+        //sconsole.log("mouseup");
     });
 
     value.mousedown(function (o) {
 
+        //console.log(o);
+
         console.log("mousedown");
+
+        if (o.button == 0) {
+            console.log("left");
+            this.undrag();
+        }
+
+        if(o.button == 1) {
+            console.log("1")
+        }
+
+        if (o.button == 2) {
+            console.log("2")
+        }
+        
     });
 
     value.click(function (o) {
 
         console.log("click");
+
+        if (o.button == 0) {
+            console.log("left");
+            setDragElements(this);
+        }
+
+        
     });
 
     value.dblclick(function (o) {
@@ -275,7 +297,7 @@ function setDragElements(obj) {
         //console.log("SnapX:"+xSnap+" SnapY:"+ ySnap);
 
         var s = getSnap();
-        var tmp = s.select("#dropzone");
+        var tmp = s.select(".dropzone");
         tmp.attr({
             stroke: "#eee",
             strokeWidth: 1,
@@ -317,8 +339,10 @@ function setDragElements(obj) {
         //this.paper.drag();
 
         //remove tmp rectangle
-        var tmp = getSnap().select("#dropzone");
-        tmp.remove();
+        //var tmp = getSnap().select("#dropzone");
+        //tmp.remove();
+
+        $(".dropzone").remove();
 
         detectNeighbors(this);
     }
@@ -342,7 +366,7 @@ function detectNeighbors(placement) {
 
     var arr = new Array();
     // select all placements in patch
-    console.log("each plants");
+    //console.log("each plants");
     
     var allPlacemenets = getSnap().selectAll(".pflanze");
     //console.log(allPlacemenets)
@@ -390,11 +414,11 @@ function detectNeighbors(placement) {
 
             if (isIn) {
 
-                console.log("w:" + widthTmp + "h:" + heightTmp);
-                console.log("coord");
-                console.log("x: " + x + "xmax: " + xmax + " y: " + y + " ymax: " + ymax );
+                //console.log("w:" + widthTmp + "h:" + heightTmp);
+                //console.log("coord");
+                //console.log("x: " + x + "xmax: " + xmax + " y: " + y + " ymax: " + ymax );
 
-                console.log("x: " + xTmp + " xmax: " + xmaxTmp + "y: " + yTmp + " ymax: " + ymaxTmp);
+                //console.log("x: " + xTmp + " xmax: " + xmaxTmp + "y: " + yTmp + " ymax: " + ymaxTmp);
 
                 arr.push(obj);
             }
@@ -462,8 +486,10 @@ function createTmpRec(obj) {
     var s = getSnap();
 
     var tmp = s.rect(0, 0, width, height).attr({
-        id: "dropzone"
+        class: "dropzone"
     })
+
+
 
     $(tmp).hide();
 
