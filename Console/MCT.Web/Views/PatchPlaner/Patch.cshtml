@@ -1,11 +1,10 @@
 ﻿@model MCT.Web.Models.PatchPlaner.PatchModel
 
-<button id="add">neue Pflanze </button>
-<button id="plus">zoom in </button>
-<button id="minus">zoom out </button>
+<button id="plus" class="btn btn-default">zoom in </button>
+<button id="minus" class="btn btn-default">zoom out </button>
 
-<button id="scrolleft">scroll left</button>
-<button id="scrollright">scrol right </button>
+<button id="scrolleft" class="btn btn-default" >scroll left</button>
+<button id="scrollright" class="btn btn-default" >scrol right </button>
 
 <div id="svgContainer" class="patch-planer-patch-container" style="overflow:auto; border:1px,solid; cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
     <svg id="x" width="@Model.Width" height="@Model.Height" enable-background="true">

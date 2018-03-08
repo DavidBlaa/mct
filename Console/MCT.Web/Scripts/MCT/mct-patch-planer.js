@@ -56,7 +56,7 @@ function zoom(svgObj, directionValue) {
 
 $(".add-plant-to-patch-bt").click(function (e) {
 
-    alert("click");
+    //alert("click");
     var id = $(e.currentTarget).attr("plantid");
 
     var patchid = $($(e.currentTarget).parents(".patch-planer-container")[0]).attr("id");
@@ -81,25 +81,61 @@ $(".add-plant-to-patch-bt").click(function (e) {
             console.log(all);
             var last = all[all.length - 1];
             setDragElements(last);
+
+            setEvents(last)
         }
     );
 })
 
-function dbclick (e) {
+$(".add-placement-btn").click(function (e) {
+
+    //alert("click");
+    var id = $(e.currentTarget).attr("plantid");
+
+    var patchid = $(e.currentTarget).attr("patchid");
+
+    console.log(id);
+    console.log(patchid);
+
+    $.get("/PatchPlaner/AddPlant", { id: id, patchId: patchid },
+        function (data, textStatus, jqXHR) {
+
+            var s = getSnap();
+
+            // parse partial view to svg element
+            var fragement = Snap.parse(data);
+            console.log(fragement);
+
+            // add svg elemengt to svg
+            var x = s.append(fragement);
+
+            // set drag to the new last plant object
+            var all = s.selectAll(".pflanze");
+            console.log(all);
+            var last = all[all.length - 1];
+            setDragElements(last);
+
+            setEvents(last)
+        }
+    );
+})
+
+$(".delete-placement-btn").click(function (e) {
 
 
-    console.log("dbclick");
+    console.log(".delete-placement-btn");
     console.log(e);
+    console.log(e.currentTarget);
 
-    var selectedObj = e.node;
+    var selectedObj = e.currentTarget;
 
     //remove
-    var id = $(selectedObj).attr("id");
+    var id = $(selectedObj).attr("placementid");
     var patchid = $(selectedObj).attr("patchid");
 
     data = {
         id: id,
-        patchid:patchid
+        patchid: patchid
     }
 
     $.ajax({
@@ -111,6 +147,9 @@ function dbclick (e) {
             if (response == true) {
 
                 //remove g from svg
+                var parent = $(selectedObj).parents(".pflanze")[0];
+                $(parent).remove();
+
 
             }
             else {
@@ -118,9 +157,7 @@ function dbclick (e) {
             }
         }
     });
-
-
-}
+});
 
 var s = getSnap();
 
@@ -138,38 +175,40 @@ var testObjs = s.selectAll(".pflanze");
 // set drag to loaded plant objects
 $.each(testObjs, function (index, value) {
     //alert("each");
-    setDragElements(value);
+    
+
+    setEvents(value);
+    //setDragElements(value);
 
     //set dbclick event
     //value.click(dbclick(value))
 
+    
+});
+
+function setEvents(value) {
+
     value.mouseover(function (o) {
 
-        console.log(this)
-        console.log(o);
-        var id = this.node.id;
-
-        $($("#" + id).find(".additional-options")).show();
+        $(this.node).find(".additional-options").show();
 
         console.log("mouseover");
     });
 
     value.mouseout(function (o) {
 
-        var id = this.node.id;
-
-        $($("#" + id).find(".additional-options")).hide();
+        $(this.node).find(".additional-options").hide();
         console.log("mouseout");
     });
 
     value.mouseup(function (o) {
 
+        //this.undrag();
         console.log("mouseup");
     });
 
     value.mousedown(function (o) {
 
-        
         console.log("mousedown");
     });
 
@@ -180,11 +219,11 @@ $.each(testObjs, function (index, value) {
 
     value.dblclick(function (o) {
 
-       console.log("dblclick");
-       
-    });
-});
+        console.log("dblclick");
 
+    });
+
+}
 
 
 // set drag to plant object
