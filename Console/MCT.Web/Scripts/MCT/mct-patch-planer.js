@@ -190,6 +190,7 @@ function setEvents(value) {
 
     value.mouseover(function (o) {
 
+        getSnap().append(this);
         $(this.node).find(".additional-options").show();
         //console.log("mouseover");
     });
@@ -486,7 +487,8 @@ function createTmpRec(obj) {
     var s = getSnap();
 
     var tmp = s.rect(0, 0, width, height).attr({
-        class: "dropzone"
+        class: "dropzone",
+        fill:"white"
     })
 
 
