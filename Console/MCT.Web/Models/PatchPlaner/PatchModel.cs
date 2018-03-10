@@ -23,4 +23,12 @@ namespace MCT.Web.Models.PatchPlaner
         }
 
     }
+
+    public class PatchJsonModel
+    {
+        public int Id { get; set; }
+        List<PlacementJsonModel> Placements { get; set; }
+
+
+    }
 }

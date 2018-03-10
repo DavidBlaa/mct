@@ -147,6 +147,7 @@
     <Compile Include="Controllers\ExtNetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InteractionController.cs" />
+    <Compile Include="Controllers\PatchController.cs" />
     <Compile Include="Controllers\PatchPlanerController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
@@ -515,6 +516,7 @@
     <Content Include="Scripts\camohub\LICENSE" />
     <Content Include="Scripts\camohub\package.json" />
     <Content Include="Scripts\camohub\README.md" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\Gantt\dataDays.js" />
     <Content Include="Scripts\Gantt\dataDaysEnh.js" />
@@ -645,6 +647,8 @@
     <Content Include="Views\PatchPlaner\Search.cshtml" />
     <Content Include="Views\PatchPlaner\_plantPartialView.cshtml" />
     <Content Include="Views\PatchPlaner\_searchResult.cshtml" />
+    <Content Include="Views\Patch\Patches.cshtml" />
+    <Content Include="Views\Patch\PatchEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,8 +3,8 @@
     overflow:auto;
 }
 
-.patch-planer-search-headerplant {
-}
+/*.patch-planer-search-headerplant {
+}*/
 
 .patch-planer-search-result-element {
     border: solid 1px yellowgreen;
@@ -18,3 +18,8 @@
 
 #searchInput {
 }*/
+
+#patches {
+    padding:10px;
+
+}

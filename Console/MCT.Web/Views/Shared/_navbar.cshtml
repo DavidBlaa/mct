@@ -3,43 +3,52 @@
     <ul class="nav navbar-nav">
 
 
-    <li>@Html.ActionLink("Search", "Search", "Search",new { reset = true},null)</li>
+        <li>@Html.ActionLink("Lexikon", "Search", "Search", new { reset = true }, null)</li>
 
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
-            Create<span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>@Html.ActionLink("Create Plant", "CreatePlant", "Subject")</li>
-            <li>@Html.ActionLink("Create Animal", "CreateAnimal", "Subject")</li>
-            <li>@Html.ActionLink("Create Interaction", "Edit", "Interaction")</li>
-            
-            <li></li>
-        </ul>
-    </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
+                Erstellen<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Pflanze", "CreatePlant", "Subject")</li>
+                <li>@Html.ActionLink("Tier", "CreateAnimal", "Subject")</li>
+                <li>@Html.ActionLink("Interaktion", "Edit", "Interaction")</li>
+            </ul>
+        </li>
 
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
-            Data Overview<span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>@Html.ActionLink("Taxon Tree", "Index", "Tree")</li>
-            <li>@Html.ActionLink("Season Calendar", "Index", "Calendar")</li>
-            <li>@Html.ActionLink("Interactions", "ShowInteractions", "Interaction")</li>
-            <li></li>
-        </ul>
-    </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
+                Beet Planer<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Alle Beete", "Index", "Patch")</li>
+                <li>@Html.ActionLink("Neues Beet", "Create", "Patch")</li>
+                <li></li>
+            </ul>
+        </li>
 
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
-            Delevoper <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>@Html.ActionLink("Spielwiese", "Index", "Test")</li>
-            <li>@Html.ActionLink("Data", "Index", "Data")</li>
-            <li></li>
-        </ul>
-    </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
+                Datenübersicht<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Taxon Tree", "Index", "Tree")</li>
+                <li>@Html.ActionLink("Season Calendar", "Index", "Calendar")</li>
+                <li>@Html.ActionLink("Interaktionen", "ShowInteractions", "Interaction")</li>
+                <li></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="Button" aria-haspopup="true" aria-expand="false">
+                Entwickler <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Spielwiese", "Index", "Test")</li>
+                <li>@Html.ActionLink("Daten erzeugen", "Index", "Data")</li>
+                <li></li>
+            </ul>
+        </li>
 
     </ul>
 </div>

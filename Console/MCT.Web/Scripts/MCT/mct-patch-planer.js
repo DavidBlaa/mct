@@ -1,4 +1,31 @@
-﻿$("#plus").click(function () {
+﻿var s = getSnap();
+
+// grid size
+var gridsize = 10;
+
+// draw grid
+var width = $("#x").attr("width");
+var height = $("#x").attr("height");
+drawLines(s, width, height, gridsize)
+
+// get all plants
+var testObjs = s.selectAll(".pflanze");
+
+// set drag to loaded plant objects
+$.each(testObjs, function (index, value) {
+    //alert("each");
+    setEvents(value);
+    setDragElements(value);
+    //set dbclick event
+    //value.click(dbclick(value))
+});
+
+function dragContainer(container) {
+
+
+}
+
+$("#plus").click(function () {
     //zoom in
     zoom(getSnap(), 0.1);
 })
@@ -22,6 +49,11 @@ $("#scrollright").click(function () {
     $(getSvgContainer()).scrollLeft(currentPositon + 10);
 })
 
+$(".patch-planer-patch-container").click(function () {
+
+    console.log("click svg container")
+})
+
 // zoom a svg object, position directionvalue = zoom in, negative = zoom out
 function zoom(svgObj, directionValue) {
     var s = svgObj;
@@ -29,16 +61,12 @@ function zoom(svgObj, directionValue) {
     var scaleX = s.transform().localMatrix.a + directionValue;
     var scaleY = s.transform().localMatrix.d + directionValue;
 
-
-
     var x = s.transform().localMatrix.e;
     var y = s.transform().localMatrix.f;
 
     if (scaleX > 1 || scaleY > 1) {
-
        x = (width * (scaleX - 1)) / 2;
        y = (height * (scaleY - 1)) / 2;
-
     }
     else {
         x = 0;
@@ -51,15 +79,14 @@ function zoom(svgObj, directionValue) {
 
     var newTransform = s.transform().localMatrix;
     console.log("nT: " + newTransform);
-
 }
 
-$(".add-plant-to-patch-bt").click(function (e) {
+function addPlantToPatch(e) {
 
     //alert("click");
-    var id = $(e.currentTarget).attr("plantid");
+    var id = $(e).attr("plantid");
 
-    var patchid = $($(e.currentTarget).parents(".patch-planer-container")[0]).attr("id");
+    var patchid = $($(e).parents(".patch-planer-container")[0]).attr("id");
 
     console.log(id);
     console.log(patchid);
@@ -83,19 +110,29 @@ $(".add-plant-to-patch-bt").click(function (e) {
             setDragElements(last);
 
             setEvents(last);
+
+            activateSaveBt();
+
         }
     );
-})
+}
 
 function addPlant(e) {
 
-    //;
+    console.log("add plant")
     var id = $(e).attr("plantid");
 
     var patchid = $(e).attr("patchid");
 
     console.log(id);
     console.log(patchid);
+
+    var selectedObj = e;
+
+    var parent = $(selectedObj).parents(".pflanze")[0];
+    $(parent).attr("id", 0);
+
+   
 
     $.get("/PatchPlaner/AddPlant", { id: id, patchId: patchid },
         function (data, textStatus, jqXHR) {
@@ -116,8 +153,54 @@ function addPlant(e) {
             setDragElements(last);
 
             setEvents(last);
+            activateSaveBt();
+
         }
     );
+}
+
+function save() {
+
+    var groups = $("#svgContainer .pflanze");
+
+    var placements = new Array();
+
+    // set drag to loaded plant objects
+    $.each(groups, function (index, value) {
+
+        var placement = {
+
+            Id: $(value).attr("id"),
+            PlantId: $(value).attr("plantid"),
+            PatchId: $(value).attr("patchid"),
+            Transformation: $(value).attr("transform"),
+        }
+
+        placements.push(placement);
+
+    });
+
+    console.log(placements);
+    var data = {
+        placements: placements
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/PatchPlaner/Save",
+        data: data,
+        dataType: "json",
+        success: function (response) {
+            if (response === true) {
+                //test
+                deactivateSaveBt();
+            }
+            else {
+                alert(response);
+            }
+        }
+    });
+
 }
 
 function deletePlacementBt(e) {
@@ -129,62 +212,39 @@ function deletePlacementBt(e) {
 
     var selectedObj = e;
 
-    //remove
-    var id = $(selectedObj).attr("placementid");
-    var patchid = $(selectedObj).attr("patchid");
-
-    data = {
-        id: id,
-        patchid: patchid
-    }
-
-    $.ajax({
-        type: "POST",
-        url: "/PatchPlaner/RemovePlacement",
-        data: data,
-        dataType: "json",
-        success: function (response) {
-            if (response == true) {
-
-                //remove g from svg
-                var parent = $(selectedObj).parents(".pflanze")[0];
-                $(parent).remove();
+    var parent = $(selectedObj).parents(".pflanze")[0];
+    $(parent).remove();
 
 
-            }
-            else {
-                alert(response);
-            }
-        }
-    });
+    ////remove
+    //var id = $(selectedObj).attr("placementid");
+    //var patchid = $(selectedObj).attr("patchid");
+
+    //data = {
+    //    id: id,
+    //    patchid: patchid
+    //}
+
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/PatchPlaner/RemovePlacement",
+    //    data: data,
+    //    dataType: "json",
+    //    success: function (response) {
+    //        if (response == true) {
+
+    //            //remove g from svg
+    //            var parent = $(selectedObj).parents(".pflanze")[0];
+    //            $(parent).remove();
+
+
+    //        }
+    //        else {
+    //            alert(response);
+    //        }
+    //    }
+    //});
 }
-
-var s = getSnap();
-
-// grid size
-var gridsize = 10;
-
-// draw grid
-var width = $("#x").attr("width");
-var height = $("#x").attr("height");
-drawLines(s, width, height, gridsize)
-
-// get all plants
-var testObjs = s.selectAll(".pflanze");
-
-// set drag to loaded plant objects
-$.each(testObjs, function (index, value) {
-    //alert("each");
-    
-
-    setEvents(value);
-    setDragElements(value);
-
-    //set dbclick event
-    //value.click(dbclick(value))
-
-    
-});
 
 function setEvents(value) {
 
@@ -205,6 +265,8 @@ function setEvents(value) {
 
         //this.undrag();
         //sconsole.log("mouseup");
+
+        activateSaveBt();
     });
 
     value.mousedown(function (o) {
@@ -213,16 +275,16 @@ function setEvents(value) {
 
         console.log("mousedown");
 
-        if (o.button == 0) {
+        if (o.button === 0) {
             console.log("left");
             this.undrag();
         }
 
-        if(o.button == 1) {
+        if(o.button === 1) {
             console.log("1")
         }
 
-        if (o.button == 2) {
+        if (o.button === 2) {
             console.log("2")
         }
         
@@ -232,12 +294,10 @@ function setEvents(value) {
 
         console.log("click");
 
-        if (o.button == 0) {
+        if (o.button === 0) {
             console.log("left");
             setDragElements(this);
         }
-
-        
     });
 
     value.dblclick(function (o) {
@@ -247,7 +307,6 @@ function setEvents(value) {
     });
 
 }
-
 
 // set drag to plant object
 function setDragElements(obj) {
@@ -352,7 +411,6 @@ function setDragElements(obj) {
 
 }
 
-
 //detect Neighbors
 function detectNeighbors(placement) {
 
@@ -433,7 +491,6 @@ function detectNeighbors(placement) {
 
 }
 
-
 // draw lines
 function drawLines(s, maxX, maxY, gridSize) {
     var group = s.g();
@@ -491,12 +548,9 @@ function createTmpRec(obj) {
         fill:"white"
     })
 
-
-
     $(tmp).hide();
 
     s.prepend(tmp);
-
 }
 
 //get svg container With Snap functionality
@@ -524,4 +578,14 @@ function getHeight(placement) {
     return parseInt(height);
 }
 
-//*MOUSE SCROLL DRAG*//
+function activateSaveBt() {
+    $("#savePatchBt").addClass("btn-danger");
+    $("#savePatchBt").removeClass("btn-default");
+    $("#savePatchBt").removeAttr("disabled","disabled");
+}
+
+function deactivateSaveBt() {
+    $("#savePatchBt").addClass("btn-default");
+    $("#savePatchBt").removeClass("btn-danger");
+    $("#savePatchBt").attr("disabled", "disabled");
+}

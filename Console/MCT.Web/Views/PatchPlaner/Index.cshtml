@@ -13,15 +13,79 @@
 
     <div class="patch-planer-middle col-lg-8">
         <div id="patch-planer-legend">
-            legende
+            
+            @*//slider*@
+            <div id="slider"></div>
+
+
         </div>
         @Html.Partial("Patch", Model.Patch)
-        <div id="patch-planer-patch-container">
-          
-        </div>
+
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#slider").slider({
+
+            value: 1,
+            min: 1,
+            max: 36,
+            step: 1,
+            slide: function (e, ui) {
+                console.log(ui.value)
+            }
+        })
+        .each(function () {
+
+            //get the option from the slider
+            var opt = $(this).data().uiSlider.options;
+
+            //get the number of the possible values
+            var vals = opt.max - opt.min;
+
+            //space out values
+            for (var i = 0; i <= vals; i++) {
+
+                var elm = $('<label class="month">' + getMonthName(i + 1) + '</label>').css('left', (i / vals * 100) + '%');
+
+                var elp = $('<label class="part" >' + getPartName(i + 1) + '</label>').css('left', (i / vals * 100) +'%');
+                $("#slider").append(elm);
+                $("#slider").append(elp);
+            }
+
+        })
+
+    })
+
+    function getMonthName(i) {
+        i = i - 1;
+        switch (i) {
+            case 1: return 'Januar';
+            case 4: return 'Februar';
+            case 7: return 'März';
+            case 10: return 'April';
+            case 13: return 'Mai';
+            case 16: return 'Juni';
+            case 19: return 'Juli';
+            case 22: return 'August';
+            case 25: return 'September';
+            case 28: return 'Oktober';
+            case 31: return 'November';
+            case 34: return 'Dezember';
+            default: return '';
+        }
+
+    }
+
+    function getPartName(i) {
+
+        if (i % 3 == 0) return 'E';
+        if (i % 3 == 1) return 'A';
+        if (i % 3 == 2) return 'M';
+    }
+
+</script>
 
 <style type="text/css">
 
@@ -30,6 +94,7 @@
     
     }
     #patch-planer-legend {
+        padding:20px;
         height:23vh;
     }
 
@@ -43,4 +108,22 @@
         height:80vh;
     }
 
+    #slider label.month {
+        position:absolute;
+        width:20px;
+        margin-left:-10px;
+        text-align:center;
+        margin-top:30px;
+        font-size:10px;
+    }
+
+
+    #slider label.part {
+        position: absolute;
+        width: 20px;
+        margin-left: -10px;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 8px;
+    }
 </style>

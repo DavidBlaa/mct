@@ -1,4 +1,6 @@
-﻿using MCT.DB.Entities.PatchPlaner;
+﻿using MCT.DB.Entities;
+using MCT.DB.Entities.PatchPlaner;
+using MCT.DB.Services;
 using MCT.Web.Models;
 using MCT.Web.Models.PatchPlaner;
 using System;
@@ -78,7 +80,7 @@ namespace MCT.Web.Helpers.PatchPlaner
         /// <returns>Placement Model</returns>
         public static PlacementModel ConvertTo(Placement placement)
         {
-            if (placement.Id <= 0) return null;
+            //if (placement.Id <= 0) return null;
             if (String.IsNullOrEmpty(placement.Transformation)) return null;
 
 
@@ -95,6 +97,21 @@ namespace MCT.Web.Helpers.PatchPlaner
                 model.Plant = PlantModel.Convert(placement.Plant);
 
             return model;
+        }
+
+        public static Placement ConvertTo(PlacementJsonModel placementJsonModel)
+        {
+            Placement placement = new Placement();
+            placement.Transformation = placementJsonModel.Transformation;
+
+            SubjectManager subjectManager = new SubjectManager();
+            placement.Plant = subjectManager.GetAll<Plant>().Where(p=>p.Id.Equals(placementJsonModel.PlantId)).FirstOrDefault();
+
+            PatchManager patchManager = new PatchManager();
+            placement.Patch = patchManager.Get(placementJsonModel.PatchId);
+           
+
+            return placement;
         }
 
         

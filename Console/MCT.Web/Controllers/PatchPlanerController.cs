@@ -117,10 +117,6 @@ namespace MCT.Web.Controllers
                 placement.Plant = p;
                 placement.Patch = patch;
 
-                patch.PatchElements.Add(placement);
-
-                patchManager.Update(patch);
-
                 PlacementModel model = PatchModelHelper.ConvertTo(placement);
 
                 return PartialView("Placement", model);
@@ -131,26 +127,77 @@ namespace MCT.Web.Controllers
             }
         }
 
-        public JsonResult RemovePlacement(long id, long patchId)
+
+        /// <summary>
+        /// save patch and all placemenets
+        /// 
+        /// need by the placemenet
+        /// id, transformation, patchref, plantref,planting month, planting area
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult Save(List<PlacementJsonModel> placements)
         {
+            long patchId = placements.First().PatchId;
 
-            try
+            PatchManager patchManager = new PatchManager();
+            Patch patch = patchManager.Get(patchId);
+
+
+            //delete
+            var x = new List<PatchElement>();
+            foreach (var pe in patch.PatchElements)
             {
-                PatchManager patchManager = new PatchManager();
-                Patch patch = patchManager.Get(patchId);
-
-                PatchElement pe = patch.PatchElements.Where(p => p.Id.Equals(id)).FirstOrDefault();
-                patch.PatchElements.Remove(pe);
-
-                patchManager.Update(patch);
-
-                return Json(true);
+                if (!placements.Any(p => p.Id.Equals(pe.Id))) x.Add(pe);
             }
-            catch (Exception ex)
+
+            foreach (var e in x)
             {
-                throw ex;
+                patch.PatchElements.Remove(e);
             }
+
+
+            // add or update
+            foreach (var placementJson in placements)
+            {
+                if (placementJson.Id == 0)
+                {
+                    patch.PatchElements.Add(PatchModelHelper.ConvertTo(placementJson));
+                }
+                else
+                {
+                    var pe = patch.PatchElements.FirstOrDefault(p => p.Id.Equals(placementJson.Id));
+                    pe.Transformation = placementJson.Transformation;
+                }
+            }
+
+            patchManager.Update(patch);
+
+            //check deleted
+
+            return Json(true);
         }
+
+        //public JsonResult RemovePlacement(long id, long patchId)
+        //{
+
+        //    try
+        //    {
+        //        PatchManager patchManager = new PatchManager();
+        //        Patch patch = patchManager.Get(patchId);
+
+        //        PatchElement pe = patch.PatchElements.Where(p => p.Id.Equals(id)).FirstOrDefault();
+        //        patch.PatchElements.Remove(pe);
+
+        //        patchManager.Update(patch);
+
+        //        return Json(true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         #region search
 
