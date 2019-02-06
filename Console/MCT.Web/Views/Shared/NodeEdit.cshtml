@@ -20,7 +20,7 @@
                 <div class="row nameContainer">
                     <div class="col-md-3">
                         @Html.Hidden("initName", Model.Name)
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Name", @class = "form-control" } })
                     </div>
                     <div class="col-md-1">
                         <span id="nameIcon" class="fa fa-refresh " style="margin:6px 0 0 0; font-size:17px; display:none"></span>
@@ -34,7 +34,7 @@
                 <div class="row scientficNameContainer">
                     <div class="col-md-3">
                         @Html.Hidden("initScientificName", Model.ScientificName)
-                        @Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.ScientificName, new { htmlAttributes = new { placeholder = "Wissenschaftlicher Name", @class = "form-control" } })
                     </div>
                     <div class="col-md-1">
                         <span id="scientificNameIcon" class="fa fa-refresh" style="margin:6px 0 0 0; font-size:17px; display:none"></span>

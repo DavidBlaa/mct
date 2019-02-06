@@ -161,6 +161,7 @@
     <Compile Include="Helpers\PatchPlaner\PatchModelHelper.cs" />
     <Compile Include="Helpers\SeedDataGenerator.cs" />
     <Compile Include="Helpers\Utility.cs" />
+    <Compile Include="Models\CultureModel.cs" />
     <Compile Include="Models\DataTableModel.cs" />
     <Compile Include="Models\Data\DataModel.cs" />
     <Compile Include="Models\AnimalModel.cs" />
@@ -347,6 +348,8 @@
     <Content Include="Content\img\slider_handle.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\MCT\mct-patch-planer.css" />
+    <Content Include="Content\roadmap\jquery.roadmap.min.css" />
+    <Content Include="Content\roadmap\timeline.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -549,6 +552,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\roadmap\jquery.roadmap.min.js" />
+    <Content Include="Scripts\roadmap\timeline.min.js" />
     <Content Include="Scripts\snap\snap.svg-min.js" />
     <Content Include="Scripts\snap\snap.svg.js" />
     <Content Include="Scripts\typeahead.bundle.js" />
@@ -649,10 +654,17 @@
     <Content Include="Views\PatchPlaner\_searchResult.cshtml" />
     <Content Include="Views\Patch\Patches.cshtml" />
     <Content Include="Views\Patch\PatchEdit.cshtml" />
+    <Content Include="Views\Search\_speciesPartialView - Kopieren.cshtml" />
+    <Content Include="Views\Home\_timeline.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CultureModelList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CultureModel.cshtml" />
+    <Content Include="Views\Subject\CultureModelList.cshtml" />
+    <Content Include="Views\Subject\CultureModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CultureModelList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Subject\" />
+    <Folder Include="Scripts\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

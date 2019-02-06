@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MCT.DB.Entities
 {
@@ -7,9 +8,7 @@ namespace MCT.DB.Entities
         public virtual String ScientificName { get; set; }
         public virtual TaxonRank Rank { get; set; }
         public virtual Node Parent { get; set; }
-
     }
-
 
     //Reich         	Regnum          	Vielzellige Tiere
     //Abteilung/Stamm	Divisio/Phylum	    Chordatiere
@@ -24,11 +23,22 @@ namespace MCT.DB.Entities
     //Unterart	        Subspecies	        Hauskatze
     public enum TaxonRank
     {
+        [Display(Name = "Unterart")]
         SubSpecies,
+
+        [Display(Name = "Art")]
         Species,
+
+        [Display(Name = "Gattung")]
         Genus,
+
+        [Display(Name = "Familie")]
         Family,
+
+        [Display(Name = "Ordnung")]
         Order,
+
+        [Display(Name = "Klasse")]
         Class
     }
 }

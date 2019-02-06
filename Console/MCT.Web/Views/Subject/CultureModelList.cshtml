@@ -1,0 +1,16 @@
+﻿@model List<MCT.Web.Models.CultureModel>
+@using MCT.Web.Models
+
+<div class="culture-list-container">
+
+    <ul class="culture-list">
+        @foreach (var item in Model)
+        {
+            <li class="culture-li">
+                @Html.EditorFor(modelItem => item)
+            </li>
+        }
+    </ul>
+    @*@Html.Partial("SimpleLinkModel", new SimpleLinkModel())*@
+    <div class="fa fa-plus mct-button-icon" onclick="addCulture(this)"></div>
+</div>

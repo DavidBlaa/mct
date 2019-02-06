@@ -10,12 +10,16 @@ namespace MCT.Web.Models
         [Required]
         [Remote("CheckNameExist", "Search", ErrorMessage = "Name existiert bereits.")]
         public String Name { get; set; }
+
         [Required]
         [Remote("CheckScientificNameExist", "Search", ErrorMessage = "Scientific Name existiert bereits.")]
         public String ScientificName { get; set; }
+
         public String Description { get; set; }
+
         [Required]
-        public string TaxonRank { get; set; }
+        public TaxonRank TaxonRank { get; set; }
+
         public SimpleNodeViewModel Parent { get; set; }
 
         public static SimpleNodeViewModel Convert(Node node)
@@ -25,12 +29,11 @@ namespace MCT.Web.Models
             model.Name = node.Name;
             model.ScientificName = node.ScientificName;
             model.Description = node.Description;
-            model.TaxonRank = node.Rank.ToString();
+            model.TaxonRank = node.Rank;
 
             if (node.Parent != null)
             {
                 model.Parent = Convert(node.Parent);
-
             }
 
             return model;

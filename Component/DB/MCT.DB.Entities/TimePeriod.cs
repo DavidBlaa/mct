@@ -1,6 +1,7 @@
 ﻿using NHibernate.Search.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace MCT.DB.Entities
@@ -28,9 +29,6 @@ namespace MCT.DB.Entities
         public virtual bool Start { get; set; }
 
         public virtual TimePeriod Next { get; set; }
-
-
-
 
         protected void setParameters(string startDateText, string endDateText, TimePeriod next)
         {
@@ -83,7 +81,6 @@ namespace MCT.DB.Entities
                 return false;
 
             return true;
-
         }
 
         public virtual string GetTimePeriodAsString()
@@ -105,14 +102,10 @@ namespace MCT.DB.Entities
 
             return tpString;
         }
-
     }
-
-
 
     public class TimePeriodHelper
     {
-
         public static TimePeriodArea GetTimeArea(string value)
         {
             TimePeriodArea result;
@@ -199,11 +192,22 @@ namespace MCT.DB.Entities
 
     public enum TimePeriodType
     {
+        [Display(Name = "Blühen")]
         Bloom,
+
+        [Display(Name = "Ernte")]
         Harvest,
+
+        [Display(Name = "Sähen")]
         Sowing,
+
+        [Display(Name = "Samen")]
         SeedMaturity,
+
+        [Display(Name = "Vorziehen")]
         Cultivate,
+
+        [Display(Name = "Einpflanzen")]
         Implant
     }
 }

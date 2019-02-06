@@ -5,21 +5,76 @@
 <div class="jumbotron">
     <h2>Mixed Culture Tool</h2>
     <p class="lead">Anbau in Harmonie mit der Natur.</p>
-    
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h2>Lexikon</h2>
         <p>
-            Nachschlagewerk für Nutzplfanzen und Lebenwesen.
+            Nachschlagewerk für Nutzplfanzen und Lebenwesen. Die Filtermöglichkeiten beziehen sich neben Name auch auf Interkationen, 
+            Zeiten und Beflanzungseigenschaften.
+        </p>
+        <p>
+            @Html.ActionLink("Lexikon", "Search", "Search", null, new { @class = "btn btn-default" })
         </p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <h2>Saisonkalendar</h2>
+        <p>
+            Wann wird welches Gemüse angepflanzt oder geerntet? Hier findest du einen Überblick.
+        </p>
+        <p>
+            @Html.ActionLink("Link", "Index", "Calendar", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-3">
         <h2>Gartenplaner</h2>
         <p>
             Im Bezug auf Mischkultur hilft der Gartenplaner bei der Bepflanzung.
         </p>
+        <p>
+            @Html.ActionLink("Gartenplaner", "Index", "Patch", null, new { @class = "btn btn-default" })
+        </p>
     </div>
-    
+    <div class="col-md-3">
+        <h2>Beziehungskiste</h2>
+        <p>
+            Es gibt viele Möglichkeiten Pflanzen, bei der Positionierung auf einem Beet, zu kombinieren.
+            Manche sind gut und mansche sind schlecht. Hier findest du eine Übersicht über die hier genannten Interaktion.
+        </p>
+        <p>
+            @Html.ActionLink("Link", "ShowInteractions", "Interaction", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
 </div>
+<hr />
+<br />
+<h2>Fahrplan</h2>
+<div id="timeline"></div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var myEvents = [{
+            date: 'Q1 - 2019',
+            content: 'Lexikon fertigstellen'
+        }, {
+            date: 'Q2 - 2019',
+                content: 'Nutzerverwaltung und erste Daten einfplegen.'
+        }, {
+            date: 'Q3 - 2019',
+                content: 'Tests mit echten Nutzern.'
+        },
+        {
+            date: 'Q4 - 2019',
+                content: 'Beetplaners Version 1'
+        }
+        ];
+
+        $(function () {
+            $('#timeline').roadmap(myEvents);
+        });
+    </script>
+}

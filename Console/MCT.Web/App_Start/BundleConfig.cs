@@ -25,6 +25,10 @@ namespace MCT.Web
                       "~/Scripts/Gantt/dataDays.js"
                       ));
 
+            bundles.Add(new ScriptBundle("~/bundles/roadmap").Include(
+                     "~/Scripts/roadmap/jquery.roadmap.min.js",
+                     "~/Scripts/raodmap/timeline.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                      "~/Scripts/bootstrap.js",
                      "~/Scripts/respond.js"));
@@ -33,6 +37,8 @@ namespace MCT.Web
                       "~/Content/bootstrap.css",
                       "~/Content/Gantt/style.css",
                       "~/Content/MCT/mct-patch-planer.css",
+                      "~/Content/roadmap/jquery.roadmap.min.css",
+                      "~/Content/roadmap/timeline.min.css",
                       "~/Content/Site.css"));
         }
     }

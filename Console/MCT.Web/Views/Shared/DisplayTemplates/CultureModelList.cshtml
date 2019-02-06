@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MCT.Web.Models.CultureModel>
+
+<ul>
+    @foreach (var c in Model)
+    {
+        if (!string.IsNullOrEmpty(c.Name))
+        {
+            <li>
+                @Html.ActionLink(@c.Name, "Details", "Subject", new { id = @c.Id, type = @c.Type.ToString() }, new { })
+            </li>
+        }
+    }
+</ul>

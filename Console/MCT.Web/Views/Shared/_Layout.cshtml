@@ -9,19 +9,18 @@
     @Styles.Render("~/Content/jquery-ui.css")
     @Styles.Render("~/Content/typeahead.css")
 
-
     @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
     @Styles.Render("~/Content/css")
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/roadmap")
 
     @*<link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
         <script src='lib/jquery.min.js'></script>
         <script src='lib/moment.min.js'></script>
         <script src='fullcalendar/fullcalendar.js'></script>*@
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -58,8 +57,6 @@
     @Scripts.Render("~/Scripts/typeahead.jquery.js")
     @Scripts.Render("~/Scripts/snap/snap.svg.js")
     @Scripts.Render("~/Scripts/MCT/mct-patch-planer.js")
-
-    
 
     @RenderSection("scripts", false)
 </body>

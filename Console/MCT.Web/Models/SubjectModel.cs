@@ -16,8 +16,10 @@ namespace MCT.Web.Models
         [Required]
         [Remote("CheckNameExist", "Subject", ErrorMessage = "Name existiert bereits.", AdditionalFields = "initName")]
         public String Name { get; set; }
+
         public String Description { get; set; }
         public String ImagePath { get; set; }
+
         [Required]
         public SubjectType Type { get; set; }
 
@@ -26,7 +28,6 @@ namespace MCT.Web.Models
 
         [UIHint("Interactions")]
         public List<InteractionModel> Interactions { get; set; }
-
 
         [UIHint("LifeCycles")]
         [Display(Name = "Lebenszyklus")]
@@ -43,7 +44,6 @@ namespace MCT.Web.Models
 
         public static SubjectModel Convert(Subject subject)
         {
-
             SubjectModel model = new SubjectModel();
 
             model.Id = subject.Id;
@@ -82,9 +82,7 @@ namespace MCT.Web.Models
             if ((subject as Effect) != null) return SubjectType.Effect;
             if ((subject as Taxon) != null) return SubjectType.Taxon;
 
-
             return SubjectType.Unknow;
-
         }
 
         public static List<InteractionModel> ConverInteractionModels(List<Interaction> interactions)
@@ -107,7 +105,6 @@ namespace MCT.Web.Models
 
             foreach (var item in startPoints)
             {
-
                 List<TimePeriodModel> lifeCyle = convertAndAddTimePeriodModel(item, new List<TimePeriodModel>());
                 tmp.Add(lifeCyle);
             }
@@ -117,7 +114,6 @@ namespace MCT.Web.Models
 
         private static List<TimePeriodModel> convertAndAddTimePeriodModel(TimePeriod timeperiod, List<TimePeriodModel> lifeCycle)
         {
-
             lifeCycle.Add(new TimePeriodModel(timeperiod));
 
             if (timeperiod.Next != null)
@@ -127,19 +123,23 @@ namespace MCT.Web.Models
 
             return lifeCycle;
         }
-
-
     }
 
     public enum SubjectType
     {
+        [Display(Name = "Tier")]
         Animal,
+
+        [Display(Name = "Effekt")]
         Effect,
+
+        [Display(Name = "Pflanze")]
         Plant,
+
+        [Display(Name = "Taxon")]
         Taxon,
+
+        [Display(Name = "Unbekannt")]
         Unknow
     }
-
-
-
 }

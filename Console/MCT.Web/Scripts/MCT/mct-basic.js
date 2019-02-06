@@ -1,6 +1,4 @@
-﻿
-$(function () {
-
+﻿$(function () {
     //set file change event on images uploader
     $('.file-input')
         .on('change',
@@ -9,11 +7,9 @@ $(function () {
             });
 });
 
-
 /********** EDIT PLANT *******/
 
-function deleteSubject(e)
-{
+function deleteSubject(e) {
     data = {
         id: e
     }
@@ -24,15 +20,13 @@ function deleteSubject(e)
         data: data,
         dataType: "json",
         success: function (response) {
-            if (response == true) {
-
+            if (response === true) {
             }
             else {
                 alert(response);
             }
         }
     });
-
 }
 
 function deleteSubjectInSearch(e) {
@@ -47,7 +41,6 @@ function deleteSubjectInSearch(e) {
         dataType: "json",
         success: function (response) {
             if (response == true) {
-
                 $("#" + e).remove();
                 window.location.href = "/Search/Search";
             }
@@ -56,23 +49,21 @@ function deleteSubjectInSearch(e) {
             }
         }
     });
-
 }
 
 function savePlant() {
-
     //alert("start saving");
 
     if ($("form").valid()) {
-
         //get Timeperiods list
         //string listId = type + "-list";
 
+    
         var timeperiods = $("#timeperiod-list");
-        var lifecycles = $("#lifecycle-list")
+        var lifecycles = $("#lifecycle-list");
 
-        var precultures = $(".preculture .simplelinkmodel-list");
-        var aftercultures = $(".afterculture .simplelinkmodel-list");
+        var precultures = $(".preculture").find(".culture-list")[0];
+        var aftercultures = $(".afterculture").find(".culture-list")[0];
 
         //all tr of table
         //var interactionsFromSide = $(".interactions-table tr.interaction-row");
@@ -100,17 +91,16 @@ function savePlant() {
             LocationType: $("#plant #LocationType").val(),
             LifeCycles: getLifeCycle(lifecycles, $("#plant #Id").val()),
 
-            PreCultures: getSimpleLinksJSON(precultures),
-            AfterCultures: getSimpleLinksJSON(aftercultures)
+            PreCultures: getCulturesJSON(precultures),
+            AfterCultures: getCulturesJSON(aftercultures)
         };
 
         console.log(plant);
 
         //var interactions = getInteractionsJSON(interactionsFromSide);
 
-
         var data = {
-            plantModel: plant,
+            plantModel: plant
             //interactions: interactions
         };
 
@@ -122,9 +112,7 @@ function savePlant() {
             url: "/Subject/SavePlant",
             data: data,
             dataType: "html",
-            success: function(response) {
-
-
+            success: function (response) {
                 //alert(response);
                 var image = getImage();
 
@@ -154,10 +142,7 @@ function savePlant() {
 }
 
 function saveAnimal() {
-
-
     if ($("form").valid()) {
-
         var lifecycles = $("#lifecycle-list");
 
         console.log("test");
@@ -169,9 +154,7 @@ function saveAnimal() {
             Rank: $($("#animal #TaxonRank")).val(),
             Description: $($("#animal #Description")).val(),
             LifeCycles: getLifeCycle(lifecycles, $($("#animal #Id")).val()),
-
         };
-
 
         console.log(animal);
 
@@ -179,15 +162,12 @@ function saveAnimal() {
             animalModel: animal,
         };
 
-
         $.ajax({
             type: "POST",
             url: "/Subject/SaveAnimal",
             data: data,
             dataType: "html",
             success: function (response) {
-                
-
                 var image = getImage();
 
                 if (image) {
@@ -217,7 +197,6 @@ function saveAnimal() {
 }
 
 function saveTaxon(e) {
-
     if ($("form").valid()) {
         var taxon = {
             Id: $("#taxon #Id").val(),
@@ -231,15 +210,12 @@ function saveTaxon(e) {
             taxon: taxon,
         };
 
-
         $.ajax({
             type: "POST",
             url: "/Subject/SaveTaxon",
             data: data,
             dataType: "html",
             success: function (response) {
-
-
                 var image = getImage();
 
                 if (image) {
@@ -268,8 +244,7 @@ function saveTaxon(e) {
     }
 }
 
-function getInteractionsJSON(source)
-{
+function getInteractionsJSON(source) {
     var JSONArray = [];
     //source = list of tr
     $(source).each(function () {
@@ -280,9 +255,7 @@ function getInteractionsJSON(source)
     return JSONArray;
 }
 
-function getInteractionJSON(e)
-{
-
+function getInteractionJSON(e) {
     /**
      * $($($(".interactions-table tr.interaction-row")[0]).find("#Interactions_item_Predicate_Type")[0]).val()
         "Unknow"
@@ -292,61 +265,52 @@ function getInteractionJSON(e)
     console.log($(e)[0].id);
 
     var interaction = {
-            Id : $(e)[0].id,
-                Indicator: $(e).find("#Indicator").val(),
-                Subject: {
-                    Id: $(e).find(".mct-interaction-subject #Subject_Id").val(),
-                    Name: $(e).find(".mct-interaction-subject #Subject_Name").val(),
-                    Type: $(e).find(".mct-interaction-subject #Subject_Type").val()
-                    },
-                Predicate: {
-                    Id: $(e).find(".mct-interaction-predicate #Predicate_Id").val(),
-                    Name: $(e).find(".mct-interaction-predicate #Predicate_Name").val(),
+        Id: $(e)[0].id,
+        Indicator: $(e).find("#Indicator").val(),
+        Subject: {
+            Id: $(e).find(".mct-interaction-subject #Subject_Id").val(),
+            Name: $(e).find(".mct-interaction-subject #Subject_Name").val(),
+            Type: $(e).find(".mct-interaction-subject #Subject_Type").val()
+        },
+        Predicate: {
+            Id: $(e).find(".mct-interaction-predicate #Predicate_Id").val(),
+            Name: $(e).find(".mct-interaction-predicate #Predicate_Name").val(),
 
-                    Parent: {
-                        Name: $(e).find(".mct-interaction-predicate #Predicate_ParentName").val()
-                    }
-                    },
-                Object: {
-                    Id: $(e).find(".mct-interaction-object #Object_Id").val(),
-                    Name: $(e).find(".mct-interaction-object #Object_Name").val(),
-                    Type: $(e).find(".mct-interaction-object #Object_Type").val()
-                    },
-                ImpactSubject: {
-
-                    Id: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Id").val(),
-                    Name: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Name").val(),
-                    Type: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Type").val()
-
-                }
-
-                };
-
-   
+            Parent: {
+                Name: $(e).find(".mct-interaction-predicate #Predicate_ParentName").val()
+            }
+        },
+        Object: {
+            Id: $(e).find(".mct-interaction-object #Object_Id").val(),
+            Name: $(e).find(".mct-interaction-object #Object_Name").val(),
+            Type: $(e).find(".mct-interaction-object #Object_Type").val()
+        },
+        ImpactSubject: {
+            Id: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Id").val(),
+            Name: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Name").val(),
+            Type: $(e).find(".mct-interaction-impactsubject #ImpactSubject_Type").val()
+        }
+    };
 
     return interaction;
 }
 
-function getLifeCycle(source, parentid)
-{
+function getLifeCycle(source, parentid) {
     //lifecycle-li
 
     var JSONArray = [];
     var list = $(source).find("li.lifecycle-li").each(function () {
-
         var lc = getTimePeriodsJSON(this, parentid);
         console.log(lc);
         JSONArray.push(lc);
-        });
+    });
 
     return JSONArray;
-
 }
 
 function getTimePeriodsJSON(source, parentid) {
     var JSONArray = [];
     var list = $(source).find("li").each(function () {
-
         var tp = getTimePeriodJSON(this, parentid);
         console.log(tp);
         JSONArray.push(tp);
@@ -359,23 +323,19 @@ function getTimePeriodJSON(e, parentid, plant) {
     console.log("e: " + e);
     console.log(e);
     var tp = {
-
         StartArea: $(e).find(".start-area").find("select").val(),
         StartMonth: $(e).find(".start-month").find("select").val(),
         EndArea: $(e).find(".end-area").find("select").val(),
         EndMonth: $(e).find(".end-month").find("select").val(),
         Type: $(e).find(".type").val(),
-
     }
 
     return tp;
 }
 
 function getSimpleLinksJSON(source) {
-
     var JSONArray = [];
     var list = $(source).find("li").each(function () {
-
         var simplelink = getSimpleLinkJSON(this);
         JSONArray.push(simplelink);
     });
@@ -384,11 +344,11 @@ function getSimpleLinksJSON(source) {
 }
 
 function getSimpleLinkJSON(e) {
-
     /*     public long Id { get; set; }
     public String Name { get; set; }
     public SubjectType Type { get; set; }
 */
+    console.log("simplelink");
     console.log($(e));
 
     var simplelink = {
@@ -400,8 +360,39 @@ function getSimpleLinkJSON(e) {
     return simplelink;
 }
 
-function getImage() {
+function getCulturesJSON(source) {
+    var JSONArray = [];
+    var list = $(source).find("li").each(function () {
+        var simplelink = getCultureJSON(this);
+        JSONArray.push(simplelink);
+    });
 
+    return JSONArray;
+}
+
+function getCultureJSON(e) {
+    /*     public long Id { get; set; }
+    public String Name { get; set; }
+    public SubjectType Type { get; set; }
+*/
+    console.log("culture");
+    console.log($(e));
+    console.log($(e)[0]);
+
+    var id = $($($(e)[0]).find(".culture-id")[0]).val();
+    var name = $($($(e)[0]).find(".culture-name")[0]).val();
+    var type = $($($(e)[0]).find(".culture-type")[0]).val();
+
+    var culture = {
+        Id: id,
+        Name: name,
+        Type: type
+    };
+
+    return culture;
+}
+
+function getImage() {
     var fileName = $('#previewImageInput').val().replace(/.*(\/|\\)/, '');
     if (fileName != "") {
         var formData = new FormData();
@@ -409,97 +400,103 @@ function getImage() {
         formData.append('file', $('input[type=file]')[0].files[0]);
 
         return formData;
-
     }
 }
 
-
 /*** TIME PERIODS ***/
 
-    function addTP(e) {
+function addTP(e) {
+    var newElement = $('<li class="timeperiod-li">');
 
-        var newElement = $('<li class="timeperiod-li">');
+    $.get("/Subject/GetEmptyTimePeriod",
+        function (data) {
+            newElement.prepend($(data));
+            //console.log(newElement);
+            var list = $(e).parent().find("ul");
+            //console.log("list");
+            //console.log(list);
+            $(list).append(newElement);
+        });
+}
 
-        $.get("/Subject/GetEmptyTimePeriod",
-            function(data) {
-
-                newElement.prepend($(data));
-                //console.log(newElement);
-                var list = $(e).parent().find("ul");
-                //console.log("list");
-                //console.log(list);
-                $(list).append(newElement);
-
-            });
-    }
-
-    function removeTP(e) {
-
+function removeTP(e) {
     //console.log("e --->");
     //console.log(e);
-        $(e).parents(".timeperiod-li")[0].remove();
-        }
+    $(e).parents(".timeperiod-li")[0].remove();
+}
 
-    function addLifeCycle(e) {
+function addLifeCycle(e) {
+    var newElement = $('<li class="lifecycle-li">');
 
-        var newElement = $('<li class="lifecycle-li">');
+    $.get("/Subject/GetEmptyLifeCycle",
+        function (data) {
+            newElement.prepend($(data));
+            //console.log(newElement);
+            var list = $(e).parent().find("ul#lifecycle-list");
+            //console.log("list");
+            //console.log(list);
+            $(list).append(newElement);
+        });
+}
 
-        $.get("/Subject/GetEmptyLifeCycle",
-            function(data) {
+function removeLifeCycle(e) {
+    console.log("e --->");
+    console.log(e);
+    $(e).parents(".lifecycle-li")[0].remove();
+}
+/*** Culture Links ***/
 
-                newElement.prepend($(data));
-                //console.log(newElement);
-                var list = $(e).parent().find("ul#lifecycle-list");
-                //console.log("list");
-                    //console.log(list);
-                $(list).append(newElement);
+function addCulture(e) {
+    var newElement = $('<li class="culture-li">');
 
-                });
-    }
+    $.get("/Subject/GetEmptyCulture",
+        function (data) {
+            newElement.prepend($(data));
+            //console.log(newElement);
+            var list = $(e).parent().find("ul");
+            console.log("list");
 
-    function removeLifeCycle(e) {
+            $(list).append(newElement);
+            console.log(list);
+        });
+}
 
-        console.log("e --->");
-        console.log(e);
-        $(e).parents(".lifecycle-li")[0].remove();
-    }
-
-    
+function removeCulture(e) {
+    console.log("e --->");
+    console.log(e);
+    console.log($(e).parents(".culture-li")[0]);
+    $(e).parents(".culture-li")[0].remove();
+}
 
 /*** Simple Links ***/
 
-    function addSimpleLink(e) {
+function addSimpleLink(e) {
+    var newElement = $('<li class="timeperiod-li">');
 
-        var newElement = $('<li class="timeperiod-li">');
+    $.get("/Subject/GetEmptySimpleLink",
+        function (data) {
+            newElement.prepend($(data));
+            //console.log(newElement);
+            var list = $(e).parent().find("ul");
+            console.log("list");
 
-        $.get("/Subject/GetEmptySimpleLink",
-            function(data) {
+            $(list).append(newElement);
+            console.log(list);
+        });
+}
 
-                newElement.prepend($(data));
-                //console.log(newElement);
-                var list = $(e).parent().find("ul");
-                console.log("list");
-
-                $(list).append(newElement);
-                console.log(list);
-
-            });
-    }
-
-    function removeSimpleLink(e) {
-
-        console.log("e --->");
-        console.log(e);
-        $(e).parents(".simplelinkmodel-li")[0].remove();
-    }
+function removeSimpleLink(e) {
+    console.log("e --->");
+    console.log(e);
+    console.log($(e).parents(".simplelinkmodel-li")[0]);
+    $(e).parents(".simplelinkmodel-li")[0].remove();
+}
 
 /*** Interactions ***/
 
 function saveInteractions() {
-    
     var interactionsFromSide = $(".interactions-table tr.interaction-row");
     var interactions = getInteractionsJSON(interactionsFromSide);
-
 
     $.ajax({
         type: "POST",
@@ -507,152 +504,128 @@ function saveInteractions() {
         data: interactions,
         dataType: "html",
         success: function (response) {
-
             alert("saved");
         }
     });
-
-
 }
 
 function addInteraction(e) {
+    $.get("/Interaction/GetEmptyInteraction",
+        function (data) {
+            console.log(data);
+            var table = $(e).parent().find(".interactions-table tbody tr.interaction-row")[0];
+            $(table).prepend(data);
+        });
+    ////$($("table tbody")[0]).find("tr").last()
+    //var table = $(e).parent().find(".interactions-table tbody")[0];
+    //console.log(table);
+    //console.log($(table).find("tr").last());
 
-
-        $.get("/Interaction/GetEmptyInteraction",
-            function(data) {
-
-                console.log(data);
-                var table = $(e).parent().find(".interactions-table tbody tr.interaction-row")[0];
-                $(table).prepend(data);
-            });
-        ////$($("table tbody")[0]).find("tr").last()
-        //var table = $(e).parent().find(".interactions-table tbody")[0];
-        //console.log(table);
-        //console.log($(table).find("tr").last());
-
-        //var newChild = $($(table).find("tr").last()).clone(false, false);
-        //newChild = cleanInteraction(newChild);
-        //$(table).append(newChild); 
-        //console.log(newChild);
-    }
-
+    //var newChild = $($(table).find("tr").last()).clone(false, false);
+    //newChild = cleanInteraction(newChild);
+    //$(table).append(newChild);
+    //console.log(newChild);
+}
 
 function removeInteraction(e) {
-
-        $(e).parents("tr")[0].remove();
-    }
-
-
+    $(e).parents("tr")[0].remove();
+}
 
 /************** Plant Show ******************/
-    $(".containerSwitch").on("click",
+$(".containerSwitch").on("click",
     function () {
         console.log("click");
         $($($(this).parents(".row")[0]).find(".content")[0]).toggle(200);
         $(this).toggleClass("fa-angle-double-down", "fa-angle-double-down");
     });
 
-
 /************** IMAGES *****************/
 
+function previewImage(input) {
+    //alert("p-image");
 
-    function previewImage(input) {
+    if (input.files && input.files[[0]]) {
+        var reader = new FileReader(),
+            preview = $('#' + $(input).data('target'));
 
-        //alert("p-image");
-
-        if (input.files && input.files[[0]]) {
-
-            var reader = new FileReader(),
-                preview = $('#' + $(input).data('target'));
-
-            reader.onload = function(e) {
-                preview.attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
+        reader.onload = function (e) {
+            preview.attr('src', e.target.result);
         }
-    }
 
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
 /*********** LOAD NAMES **************/
-    $(".nameContainer #Name").change(function () {
+$(".nameContainer #Name").change(function () {
+    // if value not null activate scientifname load
+    var value = $(this).val();
+    console.log(value);
 
-        // if value not null activate scientifname load
-        var value = $(this).val();
-        console.log(value);
+    if (value != null && value != "") {
+        console.log("show");
+        $("#scientificNameIcon").show();
+    }
+    else {
+        console.log("hide");
 
-        if (value != null && value != "") {
-            console.log("show");
-            $("#scientificNameIcon").show();
-        }
-        else {
-            console.log("hide");
+        $("#scientificNameIcon").hide();
+        $("#scientificNameIcon").removeClass("fa-spin");
+    }
+});
 
-            $("#scientificNameIcon").hide();
+$(".scientficNameContainer #ScientificName").change(function () {
+    // if value not null activate scientifname load
+    var value = $(this).val();
+    console.log(value);
+
+    if (value != null && value != "") {
+        $("#nameIcon").show();
+    }
+    else {
+        $("#nameIcon").hide();
+        $("#nameIcon").removeClass("fa-spin");
+    }
+});
+
+$("#scientificNameIcon").click(function () {
+    $("#scientificNameIcon").addClass("fa-spin");
+
+    value = $(".nameContainer #Name").val();
+    data = {
+        name: value
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/Subject/GetScientificName",
+        data: data,
+        dataType: "json",
+        success: function (response) {
             $("#scientificNameIcon").removeClass("fa-spin");
+
+            $(".scientficNameContainer #ScientificName").val(response);
         }
     });
+});
 
-    $(".scientficNameContainer #ScientificName").change(function () {
+$("#nameIcon").click(function () {
+    $("#nameIcon").addClass("fa-spin");
 
-        // if value not null activate scientifname load
-        var value = $(this).val();
-        console.log(value);
+    value = $(".scientficNameContainer #ScientificName").val();
+    data = {
+        scientificName: value
+    }
 
-        if (value != null && value != "") {
-            $("#nameIcon").show();
-        }
-        else {
-
-            $("#nameIcon").hide();
+    $.ajax({
+        type: "POST",
+        url: "/Subject/GetName",
+        data: data,
+        dataType: "json",
+        success: function (response) {
             $("#nameIcon").removeClass("fa-spin");
 
+            $(".nameContainer #Name").val(response);
         }
     });
-
-    $("#scientificNameIcon").click(function () {
-
-        $("#scientificNameIcon").addClass("fa-spin");
-
-        value = $(".nameContainer #Name").val();
-        data = {
-            name :value
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/Subject/GetScientificName",
-            data: data,
-            dataType: "json",
-            success: function (response) {
-                
-                $("#scientificNameIcon").removeClass("fa-spin");
-
-                $(".scientficNameContainer #ScientificName").val(response);
-            }
-        });
-    });
-
-    $("#nameIcon").click(function () {
-
-        $("#nameIcon").addClass("fa-spin");
-
-        value = $(".scientficNameContainer #ScientificName").val();
-        data = {
-            scientificName: value
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/Subject/GetName",
-            data: data,
-            dataType: "json",
-            success: function (response) {
-
-    
-                $("#nameIcon").removeClass("fa-spin");
-
-                $(".nameContainer #Name").val(response);
-            }
-        });
-    });
+});

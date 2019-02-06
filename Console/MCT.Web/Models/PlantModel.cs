@@ -9,36 +9,40 @@ namespace MCT.Web.Models
 {
     public class PlantModel : NodeModel
     {
+        [Display(Name = "Breite")]
         public double Width { get; set; }
+
+        [Display(Name = "Tiefe")]
         public double Height { get; set; }
+
         [Display(Name = "Wurzeltiefe")]
         public RootDepth RootDepth { get; set; }
+
         [Display(Name = "Nähstoff Anspruch")]
         public NutrientClaim NutrientClaim { get; set; }
+
         [Display(Name = "Standort")]
         public LocationType LocationType { get; set; }
 
         [Display(Name = "Sähtiefe")]
         public int SowingDepth { get; set; }
 
-        [UIHint("SimpleLinkModelList")]
+        [UIHint("CultureModelList")]
         [Display(Name = "Vorkultur")]
+        public virtual List<CultureModel> PreCultures { get; set; }
 
-        public virtual List<SimpleLinkModel> PreCultures { get; set; }
-        [UIHint("SimpleLinkModelList")]
+        [UIHint("CultureModelList")]
         [Display(Name = "Nachkultur")]
-        public virtual List<SimpleLinkModel> AfterCultures { get; set; }
+        public virtual List<CultureModel> AfterCultures { get; set; }
 
         public PlantModel()
         {
             LifeCycles = new List<List<TimePeriodModel>>();
 
-
-            PreCultures = new List<SimpleLinkModel>();
-            AfterCultures = new List<SimpleLinkModel>();
+            PreCultures = new List<CultureModel>();
+            AfterCultures = new List<CultureModel>();
             Interactions = new List<InteractionModel>();
         }
-
 
         public static PlantModel Convert(Plant plant)
         {
@@ -47,6 +51,7 @@ namespace MCT.Web.Models
             model.Id = plant.Id;
 
             #region subject
+
             if (!String.IsNullOrEmpty(plant.Name))
                 model.Name = plant.Name;
 
@@ -66,7 +71,8 @@ namespace MCT.Web.Models
             {
                 model.ImagePath = plant.Medias.First().ImagePath;
             }
-            #endregion
+
+            #endregion subject
 
             model.ScientificName = plant.ScientificName;
             model.Width = plant.Width;
@@ -77,20 +83,19 @@ namespace MCT.Web.Models
 
             #region Dates
 
-
             if (model.LifeCycles != null)
             {
                 model.LifeCycles = TimePeriodsToLifeCycles(plant.TimePeriods);
             }
 
-            #endregion
+            #endregion Dates
 
             #region loadParentModels
 
             if (plant.Parent != null)
                 model.Parent = SimpleNodeViewModel.Convert(plant.Parent);
 
-            #endregion
+            #endregion loadParentModels
 
             #region load pre/after cultures
 
@@ -98,19 +103,27 @@ namespace MCT.Web.Models
             {
                 foreach (var p in plant.PreCultures)
                 {
-                    model.PreCultures.Add(new SimpleLinkModel(p.Id, p.Name, SubjectType.Plant));
+                    model.PreCultures.Add(new CultureModel(p.Id, p.Name, SubjectType.Plant));
                 }
+            }
+            else
+            {
+                model.PreCultures.Add(new CultureModel());
             }
 
             if (plant.AfterCultures.Count > 0)
             {
                 foreach (var p in plant.AfterCultures)
                 {
-                    model.AfterCultures.Add(new SimpleLinkModel(p.Id, p.Name, SubjectType.Plant));
+                    model.AfterCultures.Add(new CultureModel(p.Id, p.Name, SubjectType.Plant));
                 }
             }
+            else
+            {
+                model.AfterCultures.Add(new CultureModel());
+            }
 
-            #endregion
+            #endregion load pre/after cultures
 
             return model;
         }
@@ -129,8 +142,5 @@ namespace MCT.Web.Models
 
             return temp;
         }
-
-
-
     }
 }

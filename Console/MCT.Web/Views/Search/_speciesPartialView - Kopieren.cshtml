@@ -1,0 +1,66 @@
+﻿@{
+
+    string headerClassName = "header";
+    string btnClass = "btn btn-lg btn-block detailsBtn";
+    string iconClass = "icon fa fa-";
+
+    if (Model.Type == MCT.Web.Models.SubjectType.Plant)
+    {
+        headerClassName += "plant";
+        btnClass += "plant";
+        iconClass += "leaf";
+
+    }
+
+    if (Model.Type == MCT.Web.Models.SubjectType.Animal)
+    {
+        headerClassName += "animal";
+        btnClass += "animal";
+        iconClass += "bug";
+    }
+
+    if (Model.Type == MCT.Web.Models.SubjectType.Taxon)
+    {
+        headerClassName += "taxon";
+        btnClass += "taxon";
+        iconClass += "sun-o";
+    }
+
+}
+
+@model MCT.Web.Models.NodeModel
+
+
+@{ 
+    string name = "noname";
+
+    if (!string.IsNullOrEmpty(@Model.Name))
+    {
+        name = Model.Name;
+    }
+}
+
+<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3" >
+    <div class="@headerClassName header" >
+        <h3 class="name col-lg-8 mct-species-title">
+            @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new {})
+        </h3>
+        <div class="mct-button-icon-container">
+            @Html.ActionLink(" ", "Edit", "Subject", new {id = Model.Id, type = @Model.Type.ToString()}, new {@class = "fa fa-pencil mct-button-icon"})
+            <a class="fa fa-trash icon mct-button-icon" onclick="deleteSubjectInSearch(@Model.Id)"></a>
+            <a class="@iconClass mct-icon"></a>
+        </div>
+
+    </div>
+
+    <h5 class="type">@Model.Type</h5>
+    <h6 class="type">@Model.TaxonRank</h6>
+    <h4 class="scientificName">@Model.ScientificName</h4>
+    
+    <img class=" img-responsive  speciesImage" src="@Model.ImagePath"/>
+
+    @*<div class="details">
+        <p class="description">@Model.Description</p>
+    </div>*@
+    @Html.ActionLink("Details", "Details","Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = @btnClass })
+</div>

@@ -36,7 +36,6 @@ namespace MCT.Web.Controllers
             {
                 case "Plant":
                     {
-
                         Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
 
                         PlantModel Model = PlantModel.Convert(plant);
@@ -96,11 +95,10 @@ namespace MCT.Web.Controllers
 
             return Json(events.ToArray(), JsonRequestBehavior.AllowGet);
         }
-        
 
         #endregion Gantt
 
-        #endregion
+        #endregion Show Data
 
         #region Edit Data
 
@@ -116,7 +114,6 @@ namespace MCT.Web.Controllers
             {
                 case "Plant":
                     {
-
                         Plant plant = sm.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
 
                         PlantModel Model = PlantModel.Convert(plant);
@@ -183,7 +180,6 @@ namespace MCT.Web.Controllers
             return View("TaxonEdit", new NodeModel());
         }
 
-
         //ToDO find a way to handle a form in a other way :D
         /// <summary>
         /// only a action to return from ajax form for validation
@@ -196,7 +192,6 @@ namespace MCT.Web.Controllers
 
             return Json("x", JsonRequestBehavior.AllowGet);
         }
-
 
         public ActionResult DeleteNode(long id)
         {
@@ -217,7 +212,6 @@ namespace MCT.Web.Controllers
                 subjectManager.DeleteNode(node);
 
                 return Json(true);
-
             }
             catch (Exception ex)
             {
@@ -232,7 +226,6 @@ namespace MCT.Web.Controllers
                 SubjectManager subjectManager = new SubjectManager();
                 InteractionManager interactionManager = new InteractionManager();
 
-                
                 Plant plant = new Plant();
                 if (plantModel.Id > 0)
                 {
@@ -248,12 +241,30 @@ namespace MCT.Web.Controllers
 
                 foreach (var ac in plantModel.AfterCultures)
                 {
-                    plant.AfterCultures.Add(subjectManager.Get(ac.Id) as Plant);
+                    if (string.IsNullOrEmpty(ac.Name)) break;
+
+                    Plant afterCultureTmp = null;
+
+                    //add new culture to plant
+                    if (ac.Id == 0)
+                    {
+                        afterCultureTmp = subjectManager.GetAllAsQueryable<Plant>().Where(p => p.Name.Equals(ac.Name)).FirstOrDefault();
+                        if (afterCultureTmp != null) plant.AfterCultures.Add(subjectManager.Get(afterCultureTmp.Id) as Plant);
+                    }
                 }
 
                 foreach (var pc in plantModel.PreCultures)
                 {
-                    plant.AfterCultures.Add(subjectManager.Get(pc.Id) as Plant);
+                    if (string.IsNullOrEmpty(pc.Name)) break;
+
+                    Plant preCultureTmp = null; ;
+
+                    //add new culture to plant
+                    if (pc.Id == 0)
+                    {
+                        preCultureTmp = subjectManager.GetAllAsQueryable<Plant>().Where(p => p.Name.Equals(pc.Name)).FirstOrDefault();
+                        if (preCultureTmp != null) plant.PreCultures.Add(subjectManager.Get(preCultureTmp.Id) as Plant);
+                    }
                 }
 
                 plant.Description = plantModel.Description;
@@ -271,7 +282,6 @@ namespace MCT.Web.Controllers
                 plant.RootDepth = plantModel.RootDepth;
                 plant.SowingDepth = plantModel.SowingDepth;
                 plant.Width = plantModel.Width;
-
 
                 plant.TimePeriods = new List<TimePeriod>();
 
@@ -295,7 +305,6 @@ namespace MCT.Web.Controllers
                     plant.TimePeriods.Reverse();
                 }
 
-
                 if (plantModel.Id == 0)
                 {
                     plant = subjectManager.CreatePlant(plant);
@@ -304,30 +313,23 @@ namespace MCT.Web.Controllers
                 }
                 else
                 {
-
                     plant = subjectManager.UpdatePlant(plant);
                     plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
                     subjectManager.Update(plant);
-
                 }
 
-
                 //*create TimePeriods
-
 
                 return Json(plant.Id, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-
-
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
 
         private Node LoadParent(Node node, SubjectManager subjectManager)
         {
-
             if (node.Parent != null) LoadParent(node.Parent, subjectManager);
 
             return subjectManager.GetAll<Node>().Where(n => n.Id.Equals(node.Id)).FirstOrDefault();
@@ -336,8 +338,7 @@ namespace MCT.Web.Controllers
         public ActionResult SaveAnimal(AnimalModel animalModel)
         {
             try
-            { 
-
+            {
                 SubjectManager subjectManager = new SubjectManager();
                 InteractionManager interactionManager = new InteractionManager();
 
@@ -348,18 +349,16 @@ namespace MCT.Web.Controllers
                     animal = x as Animal;
                 }
 
+                //TODO Generate the Parent based on the ScientificName
+                // a a a = SubSpecies, a a = Species, a = Genus
+                // a a var. a is also a species
+                /* - based on the scientficname create or set the parents
+                 * - use maybe some webservices to create missing one
+                 *
+                 */
 
-            //TODO Generate the Parent based on the ScientificName
-            // a a a = SubSpecies, a a = Species, a = Genus
-            // a a var. a is also a species
-            /* - based on the scientficname create or set the parents
-             * - use maybe some webservices to create missing one
-             *
-             */
-
-            //Todo Select the type based on the scientific name
+                //Todo Select the type based on the scientific name
                 animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
-
 
                 if (!animal.Medias.Where(m => m.ImagePath.Equals(animalModel.ImagePath)).Any())
                     animal.Medias.Add(new Media()
@@ -367,8 +366,6 @@ namespace MCT.Web.Controllers
                         ImagePath = animalModel.ImagePath,
                         MIMEType = MimeMapping.GetMimeMapping(animalModel.ImagePath)
                     });
-
-
 
                 //lifecycles
                 animal.TimePeriods = new List<TimePeriod>();
@@ -392,7 +389,6 @@ namespace MCT.Web.Controllers
                     animal.TimePeriods.Reverse();
                 }
 
-
                 if (animal.Id == 0)
                     animal = subjectManager.CreateAnimal(animal);
                 else
@@ -400,16 +396,12 @@ namespace MCT.Web.Controllers
                     subjectManager.Update(animal);
                     animal.Parent = Utility.CreateOrSetParents(animal.ScientificName, typeof(Animal), subjectManager);
                     subjectManager.Update(animal);
-
                 }
-
 
                 return Json(animal.Id, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-
-
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
@@ -427,7 +419,6 @@ namespace MCT.Web.Controllers
             else
             {
                 subjectManager.Update(taxon);
-
             }
 
             return Json(taxon.Id, JsonRequestBehavior.AllowGet);
@@ -436,7 +427,6 @@ namespace MCT.Web.Controllers
         [HttpPost]
         public ActionResult SaveImage(long id)
         {
-
             try
             {
                 foreach (string file in Request.Files)
@@ -462,7 +452,6 @@ namespace MCT.Web.Controllers
                             s.Medias.Add(media);
 
                             subjectManager.Update(s);
-
                         }
                     }
                 }
@@ -513,6 +502,11 @@ namespace MCT.Web.Controllers
             return PartialView("SimpleLinkModel", new SimpleLinkModel());
         }
 
+        public ActionResult GetEmptyCulture()
+        {
+            return PartialView("CultureModel", new CultureModel());
+        }
+
         public JsonResult GetName(string scientificName)
         {
             WikipediaReader wikipediaRaeder = new WikipediaReader();
@@ -557,7 +551,6 @@ namespace MCT.Web.Controllers
             string defaultstring = "";
             if (!String.IsNullOrEmpty(initScientificName)) defaultstring = initScientificName;
 
-
             if (subjectManager.GetAll<Node>().Any(n => n.ScientificName != null && n.ScientificName.Equals(scientificName) && !n.ScientificName.Equals(defaultstring))) return Json(false, JsonRequestBehavior.AllowGet);
 
             return Json(true, JsonRequestBehavior.AllowGet);
@@ -577,7 +570,7 @@ namespace MCT.Web.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
+        #endregion Edit Data
 
         #region Session
 
@@ -633,7 +626,6 @@ namespace MCT.Web.Controllers
             List<string> tmp = Session[ALL_PREDICATES] as List<string>;
 
             return tmp;
-
         }
 
         private List<string> getAllNames()
@@ -648,7 +640,7 @@ namespace MCT.Web.Controllers
             return tmp;
         }
 
-        #endregion
+        #endregion Session
 
         #region Helper
 
@@ -657,10 +649,9 @@ namespace MCT.Web.Controllers
             TimePeriod prev = null;
             for (int i = lifeCycle.Count - 1; i > 0; i--)
             {
-
             }
         }
 
-        #endregion
+        #endregion Helper
     }
 }

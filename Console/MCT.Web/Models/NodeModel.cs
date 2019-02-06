@@ -11,9 +11,11 @@ namespace MCT.Web.Models
     public class NodeModel : SubjectModel
     {
         public TaxonRank TaxonRank { get; set; }
+
         [Required]
-        [Remote("CheckScientificNameExist", "Subject", ErrorMessage = "Scientific Name existiert bereits.", AdditionalFields = "initScientificName")]
+        [Remote("CheckScientificNameExist", "Subject", ErrorMessage = "Der wissenschaftliche Name existiert bereits.", AdditionalFields = "initScientificName")]
         public String ScientificName { get; set; }
+
         //public SpeciesType Type { get; set; }
 
         public NodeModel()
@@ -50,8 +52,6 @@ namespace MCT.Web.Models
 
             return model;
         }
-
-
     }
 
     public enum SpeciesType
