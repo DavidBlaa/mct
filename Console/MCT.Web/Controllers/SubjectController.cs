@@ -239,6 +239,8 @@ namespace MCT.Web.Controllers
                 //Todo Select the type based on the scientific name
                 plant.Rank = Utility.GetTaxonRank(plantModel.ScientificName);
 
+                #region after culture
+
                 foreach (var ac in plantModel.AfterCultures)
                 {
                     if (string.IsNullOrEmpty(ac.Name)) break;
@@ -253,6 +255,24 @@ namespace MCT.Web.Controllers
                     }
                 }
 
+                //delete cultures
+                List<string> nameOfDeleteAfterCultures = new List<string>();
+                foreach (var ac in plant.AfterCultures)
+                {
+                    if (!plantModel.AfterCultures.Any(a => a.Name.Equals(ac.Name)))
+                        nameOfDeleteAfterCultures.Add(ac.Name);
+                }
+
+                foreach (var name in nameOfDeleteAfterCultures)
+                {
+                    var tmp = plant.AfterCultures.Where(a => a.Name.Equals(name)).FirstOrDefault();
+                    if (tmp != null) plant.AfterCultures.Remove(tmp);
+                }
+
+                #endregion after culture
+
+                #region preculture
+
                 foreach (var pc in plantModel.PreCultures)
                 {
                     if (string.IsNullOrEmpty(pc.Name)) break;
@@ -266,6 +286,22 @@ namespace MCT.Web.Controllers
                         if (preCultureTmp != null) plant.PreCultures.Add(subjectManager.Get(preCultureTmp.Id) as Plant);
                     }
                 }
+
+                //delete cultures
+                List<string> nameOfDeletePreCultures = new List<string>();
+                foreach (var ac in plant.PreCultures)
+                {
+                    if (!plantModel.PreCultures.Any(a => a.Name.Equals(ac.Name)))
+                        nameOfDeletePreCultures.Add(ac.Name);
+                }
+
+                foreach (var name in nameOfDeletePreCultures)
+                {
+                    var tmp = plant.PreCultures.Where(a => a.Name.Equals(name)).FirstOrDefault();
+                    if (tmp != null) plant.PreCultures.Remove(tmp);
+                }
+
+                #endregion preculture
 
                 plant.Description = plantModel.Description;
                 plant.Height = plantModel.Height;

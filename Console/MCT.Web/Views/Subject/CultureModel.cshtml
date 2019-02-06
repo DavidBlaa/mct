@@ -1,5 +1,14 @@
 ﻿@model MCT.Web.Models.CultureModel
 
+@{ 
+    List<string> subjects = new List<string>();
+
+    if (Session["ALL_SUBJECTS"] != null)
+    {
+        subjects = (List<string>)Session["ALL_SUBJECTS"];
+    }
+}
+
 
 <div class="form-horizontal culture">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -8,28 +17,13 @@
 
     <div class="form-group">
         <div class="col-md-2">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Name", @class = "form-control mct-ac-subjects culture-name" } })
 
+            @Html.DropDownListFor(model => model.Name, new SelectList(subjects), new { @class = "form-control dropdown culture-name" })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
         </div>
         <div class="col-md-1">
             <a class="fa fa-trash mct-button-icon" onclick="removeCulture(this)"></a>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        //ac = autocomplete
-        $.get("/Subject/GetAllSubjects",
-            function (response) {
-
-                $(".mct-ac-subjects")
-                    .autocomplete({
-                        source: response
-                    });
-            },
-            "json"
-        );
-    })
-</script>
