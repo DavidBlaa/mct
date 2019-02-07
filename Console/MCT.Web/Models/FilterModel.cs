@@ -1,6 +1,7 @@
 ﻿using MCT.DB.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace MCT.Web.Models
@@ -8,10 +9,14 @@ namespace MCT.Web.Models
     public class FilterModel
     {
         public List<FilterDropdownElement> Months { get; set; }
-        public List<FilterDropdownElement> NutrientClaims { get; set; }
-        public List<FilterDropdownElement> RootDepths { get; set; }
-        public List<FilterDropdownElement> SubjectList { get; set; }
 
+        [EnumDataType(typeof(NutrientClaim))]
+        public NutrientClaim? NutrientClaim { get; set; }
+
+        [EnumDataType(typeof(RootDepth))]
+        public RootDepth? RootDepths { get; set; }
+
+        public List<FilterDropdownElement> SubjectList { get; set; }
 
         public int SelectedSowing { get; set; }
         public int SelectedHarvest { get; set; }
@@ -27,11 +32,8 @@ namespace MCT.Web.Models
         public FilterModel(List<Subject> subjects)
         {
             Months = getMonthDropdownList();
-            NutrientClaims = getNutrientClaimsDropdownList();
-            RootDepths = getRootDepthsDropdownList();
             SubjectList = getSubjectsList(subjects);
         }
-
 
         private List<FilterDropdownElement> getSubjectsList(List<Subject> subjects)
         {
@@ -59,54 +61,11 @@ namespace MCT.Web.Models
                 {
                     Id = Id,
                     Name = TimePeriodHelper.GetMonthName(Id)
-
                 });
             }
 
             return temp;
         }
-
-        private List<FilterDropdownElement> getNutrientClaimsDropdownList()
-        {
-            List<FilterDropdownElement> temp = new List<FilterDropdownElement>();
-
-            var allValues = (NutrientClaim[])Enum.GetValues(typeof(NutrientClaim));
-
-            for (int i = 0; i < allValues.Length; i++)
-            {
-                var value = allValues.ElementAt(i);
-                temp.Add(new FilterDropdownElement()
-                {
-                    Id = i,
-                    Name = value.ToString()
-                });
-
-            }
-
-            return temp;
-        }
-
-        private List<FilterDropdownElement> getRootDepthsDropdownList()
-        {
-            List<FilterDropdownElement> temp = new List<FilterDropdownElement>();
-
-            var allValues = (RootDepth[])Enum.GetValues(typeof(RootDepth));
-
-            for (int i = 0; i < allValues.Length; i++)
-            {
-                var value = allValues.ElementAt(i);
-                temp.Add(new FilterDropdownElement()
-                {
-                    Id = i,
-                    Name = value.ToString()
-                });
-
-            }
-
-
-            return temp;
-        }
-
     }
 
     public class FilterDropdownElement
