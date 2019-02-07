@@ -1,9 +1,9 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
 using MCT.Search;
+using MCT.Web.Helpers;
 using MCT.Web.Models;
 using MCT.Web.Models.Search;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -119,7 +119,14 @@ namespace MCT.Web.Controllers
 
         public ActionResult UpdateBreadcrumb()
         {
-            return PartialView("_searchBreadcrumb", GetSearchProvider().SearchCriterias);
+            List<BreadcrumbModel> model = new List<BreadcrumbModel>();
+
+            foreach (var kvp in GetSearchProvider().SearchCriterias)
+            {
+                model.Add(ModelHelper.ConvertTo(kvp));
+            }
+
+            return PartialView("_searchBreadcrumb", model);
         }
 
         public JsonResult DeleteSearchCriteria(string key)
@@ -132,32 +139,7 @@ namespace MCT.Web.Controllers
             return Json(true);
         }
 
-        private BreadcrumbModel getBreadcrumbModel(KeyValuePair<string, string> keyValuePair)
-        {
-            BreadcrumbModel model = new BreadcrumbModel();
 
-            switch (keyValuePair.Key)
-            {
-                case "NutrientClaim":
-                    {
-                        model.DisplayName = "Nährstoffanspruch";
-                        model.DisplayValue = ((NutrientClaim)Convert.ToInt32(keyValuePair.Value)).ToString();
-                        model.Key = keyValuePair.Key;
-                        model.Value = keyValuePair.Value;
-                        break;
-                    }
-                default:
-                    {
-                        model.DisplayName = keyValuePair.Key;
-                        model.DisplayValue = keyValuePair.Value;
-                        model.Key = keyValuePair.Key;
-                        model.Value = keyValuePair.Value;
-                        break;
-                    }
-            }
-
-            return model;
-        }
 
         #endregion Breadcrumb
 

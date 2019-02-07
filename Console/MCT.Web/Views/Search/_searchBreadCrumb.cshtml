@@ -1,15 +1,19 @@
 ﻿@{
     int count = 0;
 }
-@model Dictionary<string, string>
+@model List<BreadcrumbModel>
+@using MCT.Web.Models.Search;
 
 <div id="searchBreadcrumbContent">
 
-    @foreach (KeyValuePair<string, string> kvp in Model)
+    @foreach (BreadcrumbModel m in Model)
     {
         if (Model.Count > count)
         {
-            <span class="breadCrumbItem">| <b>@kvp.Key</b> : <a id="@kvp.Key" onclick="clickBreadcrumb(this)">@kvp.Value</a> </span>
+            <span class="breadCrumbItem">| <b>@m.DisplayName</b> : 
+            <button id="@m.Key" onclick="clickBreadcrumb(this)"  class="btn btn-default btn-sm" >
+                @m.DisplayValue
+            </button> </span>
         }
     }
 

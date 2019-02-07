@@ -158,6 +158,7 @@
     </Compile>
     <Compile Include="Helpers\DataModelHelper.cs" />
     <Compile Include="Helpers\GantHelper.cs" />
+    <Compile Include="Helpers\ModelHelper.cs" />
     <Compile Include="Helpers\PatchPlaner\PatchModelHelper.cs" />
     <Compile Include="Helpers\SeedDataGenerator.cs" />
     <Compile Include="Helpers\Utility.cs" />

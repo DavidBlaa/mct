@@ -3,12 +3,14 @@
     string headerClassName = "header";
     string btnClass = "btn btn-lg btn-block detailsBtn";
     string iconClass = "icon fa fa-";
+    string germanTooltip = "";
 
     if (Model.Type == MCT.Web.Models.SubjectType.Plant)
     {
         headerClassName += "plant";
         btnClass += "plant";
         iconClass += "leaf";
+        germanTooltip = "Pflanze";
 
     }
 
@@ -17,6 +19,7 @@
         headerClassName += "animal";
         btnClass += "animal";
         iconClass += "bug";
+        germanTooltip = "Tier";
     }
 
     if (Model.Type == MCT.Web.Models.SubjectType.Taxon)
@@ -24,6 +27,8 @@
         headerClassName += "taxon";
         btnClass += "taxon";
         iconClass += "sun-o";
+        germanTooltip = "Art";
+
     }
 
 }
@@ -40,15 +45,15 @@
     }
 }
 
-<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-12 col-sm-6 col-md-3">
+<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-2 col-xs-6 col-sm-5 col-md-4">
     <div class="@headerClassName header">
         <h3 class="name col-lg-8 mct-species-title">
             @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { })
         </h3>
         <div class="mct-button-icon-container">
-            @Html.ActionLink(" ", "Edit", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon" })
-            <a class="fa fa-trash icon mct-button-icon" onclick="deleteSubjectInSearch(@Model.Id)"></a>
-            <a class="@iconClass mct-icon"></a>
+            @Html.ActionLink(" ", "Edit", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon", title="Ändern" })
+            <a class="fa fa-trash icon mct-button-icon" onclick="deleteSubjectInSearch(@Model.Id)" title="Löschen"></a>
+            <a class="@iconClass mct-icon" title="@germanTooltip"></a>
         </div>
 
     </div>

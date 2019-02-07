@@ -1,6 +1,8 @@
 ﻿
 @using MCT.Search
-@model MCT.Web.Models.Search.SearchModel
+@using MCT.Web.Models.Search
+
+@model SearchModel
 @{
     ViewBag.Title = "Search";
 
@@ -20,7 +22,7 @@
     <tr>
         <td>
             <div class="input-group">
-                <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="search..." value="@searchvalue"/>
+                <input type="search" id="searchInput" class="form-control mct-ac-all" placeholder="Suche..." value="@searchvalue"/>
 
                 <span class="input-group-addon">
                       <i class="fa fa-search"></i>
@@ -48,7 +50,7 @@
 </table>
 
 <div id="searchBreadcrumb">
-    @Html.Partial("_searchBreadcrumb", new Dictionary<string, string>())
+    @Html.Partial("_searchBreadcrumb", new List<BreadcrumbModel>())
 </div>
 
 <div id="filter" style="display: none;">
