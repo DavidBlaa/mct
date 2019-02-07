@@ -31,18 +31,23 @@
 
     }
 
+    string germanTaxon = Model.TaxonRank.GetAttribute<DisplayAttribute>().Name;
+    string germanType = Model.Type.GetAttribute<DisplayAttribute>().Name;
+
 }
 
 @model MCT.Web.Models.NodeModel
+@using MCT.Utils;
+@using System.ComponentModel.DataAnnotations;
 
 
 @{
     string name = "noname";
 
-    if (!string.IsNullOrEmpty(@Model.Name))
-    {
-        name = Model.Name;
-    }
+            if (!string.IsNullOrEmpty(@Model.Name))
+            {
+                name = Model.Name;
+            }
 }
 
 <div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-2 col-xs-6 col-sm-5 col-md-4">
@@ -51,18 +56,19 @@
             @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { })
         </h3>
         <div class="mct-button-icon-container">
-            @Html.ActionLink(" ", "Edit", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon", title="Ändern" })
+            @Html.ActionLink(" ", "Edit", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { @class = "fa fa-pencil mct-button-icon", title = "Ändern" })
             <a class="fa fa-trash icon mct-button-icon" onclick="deleteSubjectInSearch(@Model.Id)" title="Löschen"></a>
             <a class="@iconClass mct-icon" title="@germanTooltip"></a>
         </div>
 
     </div>
 
-    <h5 class="type">@Model.Type</h5>
-    <h6 class="type">@Model.TaxonRank</h6>
     <h4 class="scientificName" style="min-height:40px">@Model.ScientificName</h4>
 
-    <img class="img-responsive  speciesImage" src="@Model.ImagePath" style="width:100%"/>
+    <h5 class="type">@germanType</h5>
+    <h6 class="type">@germanTaxon</h6>
+
+    <img class="img-responsive  speciesImage" src="@Model.ImagePath" style="width:100%" />
 
     @*<div class="details">
             <p class="description">@Model.Description</p>
