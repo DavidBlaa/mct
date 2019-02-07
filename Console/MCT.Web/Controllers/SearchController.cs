@@ -3,6 +3,7 @@ using MCT.DB.Services;
 using MCT.Search;
 using MCT.Web.Models;
 using MCT.Web.Models.Search;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,7 +13,6 @@ namespace MCT.Web.Controllers
 {
     public class SearchController : Controller
     {
-
         public static string ALL_SUBJECTS = "ALL_SUBJECTS";
         public static string ALL_SCIENTIFIC_NAMES = "ALL_SCIENTIFIC_NAMES";
         public static string ALL_PREDICATES = "ALL_PREDICATES";
@@ -47,7 +47,6 @@ namespace MCT.Web.Controllers
             }
 
             Model.SearchCriterias = sp.SearchCriterias;
-
 
             return View("Search", Model);
         }
@@ -84,7 +83,6 @@ namespace MCT.Web.Controllers
             //update searchcriterias
 
             return PartialView("_searchResult", Model);
-
         }
 
         public JsonResult SetFilter(string key, string value)
@@ -134,7 +132,34 @@ namespace MCT.Web.Controllers
             return Json(true);
         }
 
-        #endregion
+        private BreadcrumbModel getBreadcrumbModel(KeyValuePair<string, string> keyValuePair)
+        {
+            BreadcrumbModel model = new BreadcrumbModel();
+
+            switch (keyValuePair.Key)
+            {
+                case "NutrientClaim":
+                    {
+                        model.DisplayName = "Nährstoffanspruch";
+                        model.DisplayValue = ((NutrientClaim)Convert.ToInt32(keyValuePair.Value)).ToString();
+                        model.Key = keyValuePair.Key;
+                        model.Value = keyValuePair.Value;
+                        break;
+                    }
+                default:
+                    {
+                        model.DisplayName = keyValuePair.Key;
+                        model.DisplayValue = keyValuePair.Value;
+                        model.Key = keyValuePair.Key;
+                        model.Value = keyValuePair.Value;
+                        break;
+                    }
+            }
+
+            return model;
+        }
+
+        #endregion Breadcrumb
 
         #region Helpers
 
@@ -143,7 +168,7 @@ namespace MCT.Web.Controllers
             return Json(getAllNames(), JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
+        #endregion Helpers
 
         #region Sessions
 
@@ -152,7 +177,6 @@ namespace MCT.Web.Controllers
             if (Session[SearchProvider.SEARCH_PROVIDER_NAME] == null)
             {
                 Session[SearchProvider.SEARCH_PROVIDER_NAME] = new SearchProvider();
-
             }
 
             return Session[SearchProvider.SEARCH_PROVIDER_NAME] as SearchProvider;
@@ -216,7 +240,6 @@ namespace MCT.Web.Controllers
             List<string> tmp = Session[ALL_PREDICATES] as List<string>;
 
             return tmp;
-
         }
 
         private List<string> getAllNames()
@@ -231,7 +254,6 @@ namespace MCT.Web.Controllers
             return tmp;
         }
 
-        #endregion
-
+        #endregion Sessions
     }
 }

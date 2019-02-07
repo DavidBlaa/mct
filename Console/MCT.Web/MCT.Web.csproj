@@ -172,6 +172,7 @@
     <Compile Include="Models\PatchPlaner\PatchPlanerModel.cs" />
     <Compile Include="Models\PatchPlaner\PlacementModel.cs" />
     <Compile Include="Models\PatchPlaner\SearchModel.cs" />
+    <Compile Include="Models\Search\BreadcrumbModel.cs" />
     <Compile Include="Models\SimpleNodeViewModel.cs" />
     <Compile Include="Models\NodeModel.cs" />
     <Compile Include="Models\PlantModel.cs" />
