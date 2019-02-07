@@ -696,6 +696,10 @@
       <Project>{9b20d411-e287-41ed-aa44-c03962038e45}</Project>
       <Name>MCT.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Component\Utils\Utils\MCT.Utils\MCT.Utils.csproj">
+      <Project>{49D8F3CE-AD18-4A91-B0B7-87D251A3FFCA}</Project>
+      <Name>MCT.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\MCT.Helpers\MCT.Helpers.csproj">
       <Project>{0624e933-e3fd-4d21-a5e4-4ed52ee85016}</Project>
       <Name>MCT.Helpers</Name>

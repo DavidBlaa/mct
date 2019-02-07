@@ -1,8 +1,10 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Services;
+using MCT.Utils;
 using MCT.Web.Models.Search;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MCT.Web.Helpers
 {
@@ -26,16 +28,19 @@ namespace MCT.Web.Helpers
 
                 case "NutrientClaim":
                     {
+                        NutrientClaim nc = (NutrientClaim)Convert.ToInt32(keyValuePair.Value);
+
                         model.DisplayName = "Nährstoffanspruch";
-                        model.DisplayValue = ((NutrientClaim)Convert.ToInt32(keyValuePair.Value)).ToString();
+                        model.DisplayValue = nc.GetAttribute<DisplayAttribute>().Name;
                         model.Key = keyValuePair.Key;
                         model.Value = keyValuePair.Value;
                         break;
                     }
-                case "RootDepth":
+                case "RootDepths":
                     {
+                        RootDepth rd = (RootDepth)Convert.ToInt32(keyValuePair.Value);
                         model.DisplayName = "Wurzel-Tiefe";
-                        model.DisplayValue = ((RootDepth)Convert.ToInt32(keyValuePair.Value)).ToString();
+                        model.DisplayValue = rd.GetAttribute<DisplayAttribute>().Name;
                         model.Key = keyValuePair.Key;
                         model.Value = keyValuePair.Value;
                         break;
