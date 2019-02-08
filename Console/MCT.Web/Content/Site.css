@@ -70,8 +70,11 @@ a.mct-container-link{
 
 /*SEARCH*/
 
-#SearchHeaderTable TD
-{
+#searchInput {
+    margin:0;
+}
+
+#SearchHeaderTable TD {
     padding-right: 10px;
 }
 #searchBreadcrumb {padding: 20px 0 20px 0;}
