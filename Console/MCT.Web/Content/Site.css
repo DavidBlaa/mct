@@ -42,7 +42,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5 {
-    padding:0;
+    padding:0 0 0 0;
     margin:0;
 }
 
@@ -56,6 +56,17 @@ img {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+select, input {
+    margin: 3px 0 3px 0;
+}
+
+/*Home*/
+
+a.mct-container-link{
+   color:black
+}
+
 
 /*SEARCH*/
 

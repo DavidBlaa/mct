@@ -35,6 +35,7 @@ namespace MCT.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/callout.css",
                       "~/Content/Gantt/style.css",
                       "~/Content/MCT/mct-patch-planer.css",
                       "~/Content/roadmap/jquery.roadmap.min.css",

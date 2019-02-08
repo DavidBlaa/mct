@@ -8,48 +8,44 @@
 </div>
 
 <div class="row">
-    <div class="col-md-3">
-        <h2><span class="fa fa-book"></span>   Lexikon</h2>
-        <br />
-        <p class="text-justify">
-            Nachschlagewerk für Nutzplfanzen und Lebenwesen. Die Filtermöglichkeiten beziehen sich neben Name auch auf Interkationen, 
-            Zeiten und Beflanzungseigenschaften.
-        </p>
-        <p>
-            @Html.ActionLink("Lexikon", "Search", "Search", null, new { @class = "btn btn-default" })
-        </p>
-    </div>
-    <div class="col-md-3">
-        <h2><span class="fa fa-calendar"></span>  Saisonkalendar</h2>
-        <br />
-        <p class="text-justify">
-            Wann wird welches Gemüse angepflanzt oder geerntet? Hier findest du einen Überblick.
-        </p>
-        <p>
-            @Html.ActionLink("Link", "Index", "Calendar", null, new { @class = "btn btn-default" })
-        </p>
-    </div>
-    <div class="col-md-3">
-        <h2><span class="fa fa-cubes"></span> Gartenplaner</h2>
-        <br />
-        <p class="text-justify">
-            Im Bezug auf Mischkultur hilft der Gartenplaner bei der Bepflanzung.
-        </p>
-        <p>
-            @Html.ActionLink("Gartenplaner", "Index", "Patch", null, new { @class = "btn btn-default" })
-        </p>
-    </div>
-    <div class="col-md-3 text-justify">
-        <h2><span class="fa fa-share-alt-square"></span> Beziehungskiste</h2>
-        <br />
-        <p class="text-justify">
-            Es gibt viele Möglichkeiten Pflanzen, bei der Positionierung auf einem Beet, zu kombinieren.
-            Manche sind gut und mansche sind schlecht. Hier findest du eine Übersicht über die hier genannten Interaktion.
-        </p>
-        <p>
-            @Html.ActionLink("Link", "ShowInteractions", "Interaction", null, new { @class = "btn btn-default" })
-        </p>
-    </div>
+    <a class="mct-container-link" href="/search/search">
+        <div class="col-md-3">
+            <h2><span class="fa fa-book"></span>   Lexikon</h2>
+            <br />
+            <p class="text-justify">
+                Nachschlagewerk für Nutzplfanzen und Lebenwesen. Die Filtermöglichkeiten beziehen sich neben Name auch auf Interkationen,
+                Zeiten und Beflanzungseigenschaften.
+            </p>
+        </div>
+    </a>
+    <a class="mct-container-link" href="/Calendar/Index">
+        <div class="col-md-3">
+            <h2><span class="fa fa-calendar"></span>  Saisonkalendar</h2>
+            <br />
+            <p class="text-justify">
+                Wann wird welches Gemüse angepflanzt oder geerntet? Hier findest du einen Überblick.
+            </p>
+        </div>
+    </a>
+    <a class="mct-container-link" href="/Patch/Index">
+        <div class="col-md-3">
+            <h2><span class="fa fa-cubes"></span> Gartenplaner</h2>
+            <br />
+            <p class="text-justify">
+                Im Bezug auf Mischkultur hilft der Gartenplaner bei der Bepflanzung.
+            </p>
+        </div>
+    </a>
+    <a class="mct-container-link" href="/Interaction/ShowInteractions">
+        <div class="col-md-3 text-justify">
+            <h2><span class="fa fa-share-alt-square"></span> Beziehungskiste</h2>
+            <br />
+            <p class="text-justify">
+                Es gibt viele Möglichkeiten Pflanzen, bei der Positionierung auf einem Beet, zu kombinieren.
+                Manche sind gut und mansche sind schlecht. Hier findest du eine Übersicht über die hier genannten Interaktion.
+            </p>
+        </div>
+    </a>
 </div>
 <hr />
 <br />

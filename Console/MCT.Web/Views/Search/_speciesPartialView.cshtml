@@ -50,7 +50,7 @@
             }
 }
 
-<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-2 col-xs-6 col-sm-5 col-md-4">
+<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-lg-3 col-xs-6 col-sm-5 col-md-4">
     <div class="@headerClassName header">
         <h3 class="name col-lg-8 mct-species-title">
             @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { })
