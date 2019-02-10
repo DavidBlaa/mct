@@ -9,13 +9,12 @@
 
     @Html.Partial("NodeDetails", Model as NodeModel)
 
-    <div class="row panel-default panel-info">
-        <div class="panel-heading">
-            <h3>Anbau Informationen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
-
+    <div class="row bs-callout bs-callout-plant">
+        <div>
+            <h4>Anbau Informationen <span class="containerSwitch fa fa-angle-double-up"></span></h4>
         </div>
-
-        <div class="content col-md-8 panel-body">
+        <br />
+        <div class="content col-md-8 ">
             <div class="form-group row">
                 @Html.LabelFor(model => model.Width, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -61,12 +60,12 @@
 
     @*Dates*@
 
-    <div class="row panel-default">
-        <div class="panel-heading">
-            <h3>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h3>
+    <div class="row panel-info bs-callout bs-callout-plant">
+        <div >
+            <h4>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h4>
         </div>
 
-        <div class="content panel-body">
+        <div class="content">
             @if (Model.LifeCycles.Any())
             {
                 <div id="ganttTermine"></div>
@@ -74,29 +73,25 @@
         </div>
     </div>
 
-    <div class="row panel-default">
-        <div class="panel-heading">
-            <h3>Vorkultur <span class="containerSwitch fa fa-angle-double-up"></span></h3>
-        </div>
-        <div class="preculture content panel-body">
-            @Html.DisplayFor(model => model.PreCultures)
+    <div class="row bs-callout bs-callout-plant">
+        <div>
+            <h4>Vorkultur <span class="containerSwitch fa fa-angle-double-up"></span></h4>
+            <div class="preculture content panel-body">
+                @Html.DisplayFor(model => model.PreCultures)
+            </div>
         </div>
     </div>
-
-    <div class="row panel-default">
-        <div class="panel-heading">
-            <h3>Nachkultur<span class="containerSwitch fa fa-angle-double-up"></span></h3>
+    <div class="row  bs-callout bs-callout-plant">
+        <div>
+            <h4>Nachkultur <span class="containerSwitch fa fa-angle-double-up"></span></h4>
         </div>
         <div class="afterculture content panel-body">
             @Html.DisplayFor(model => model.AfterCultures)
         </div>
     </div>
-
     <p>
         @Html.ActionLink("Back to List", "Search", "Search")
-
     </p>
-
 </div>
 
 

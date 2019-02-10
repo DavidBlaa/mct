@@ -1,7 +1,6 @@
 ﻿@using AjaxOptions = System.Web.Mvc.Ajax.AjaxOptions
 @model MCT.Web.Models.NodeModel
 
-
 <div id="species">
     @using (Ajax.BeginForm("X", "Subject", new AjaxOptions
     {
@@ -25,12 +24,11 @@
                     <div class="col-md-1">
                         <span id="nameIcon" class="fa fa-refresh " style="margin:6px 0 0 0; font-size:17px; display:none"></span>
                     </div>
-                   <div class="col-md-3" >
-                       @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                   </div>
+                    <div class="col-md-3">
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-              
-                
+
                 <div class="row scientficNameContainer">
                     <div class="col-md-3">
                         @Html.Hidden("initScientificName", Model.ScientificName)
@@ -44,16 +42,14 @@
                     </div>
                 </div>
 
-                @Html.EnumDropDownListFor(model => model.TaxonRank, new {@class = "form-control dropdown"})
-                @Html.ValidationMessageFor(model => model.TaxonRank, "", new {@class = "text-danger"})
-
-
+                @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
+                @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
             </div>
 
             <div id="DetailsContent" class="row panel-body panel-info">
                 <div id="Image" class="col-md-4">
-                    <img id="previewImage" src="@Model.ImagePath" class="speciesImage img-responsive "/>
-                    <input id="previewImageInput" type="file" data-target="previewImage" class="file-input"/>
+                    <img id="previewImage" src="@Model.ImagePath" class="speciesImage img-responsive " />
+                    <input id="previewImageInput" type="file" data-target="previewImage" class="file-input" />
                 </div>
                 <div class="col-md-8">
                     <div id="DescriptionContainer" class="panel-default">
@@ -61,21 +57,20 @@
                             <h4>Beschreibung</h4>
                         </div>
                         <div class="panel-body">
-                            @Html.TextAreaFor(model => model.Description, new {@class = "form-control"})
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
                         </div>
 
-                        <div id="TaxonRanks" class="panel-default">
-                            <div class="panel-heading">
-                                <h4>Taxon</h4>
-                            </div>
-                            <div class="panel-body">
-                                @if (Model.Parent != null)
-                                {
-                                    @Html.Partial("_taxonRankPartialView", Model.Parent)
-                                }
-                            </div>
-                        </div>
-
+                        @*<div id="TaxonRanks" class="panel-default">
+                                <div class="panel-heading">
+                                    <h4>Taxon</h4>
+                                </div>
+                                <div class="panel-body">
+                                    @if (Model.Parent != null)
+                                    {
+                                        @Html.Partial("_taxonRankPartialView", Model.Parent)
+                                    }
+                                </div>
+                            </div>*@
                     </div>
                 </div>
             </div>

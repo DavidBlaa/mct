@@ -154,7 +154,7 @@ a.mct-container-link{
 .speciesImage {
         
     width:  260px;
-    height: 260px;
+    min-height: 260px;
     text-align: center;
 }
 

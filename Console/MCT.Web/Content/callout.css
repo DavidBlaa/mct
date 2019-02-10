@@ -1,7 +1,7 @@
 ﻿.bs-callout {
     padding: 20px;
     margin: 20px 0;
-    border: 1px solid #333333;
+    border: 1px solid #eee;
     border-left-width: 5px;
     border-radius: 3px;
 }
@@ -27,17 +27,17 @@
     border-left-color: #777;
 }
 
-    .bs-callout-default h4 {
-        color: #777;
-    }
+.bs-callout-default h4 {
+    color: #777;
+}
 
 .bs-callout-primary {
     border-left-color: #428bca;
 }
 
-    .bs-callout-primary h4 {
-        color: #428bca;
-    }
+.bs-callout-primary h4 {
+    color: #428bca;
+}
 
 .bs-callout-success {
     border-left-color: #5cb85c;
@@ -70,3 +70,27 @@
     .bs-callout-info h4 {
         color: #5bc0de;
     }
+
+.bs-callout-plant {
+    border-left-color: yellowgreen;
+}
+
+.bs-callout-plant h4 {
+    color: yellowgreen;
+}
+
+.bs-callout-animal {
+    border-left-color: yellowgreen;
+}
+
+.bs-callout-animal h4 {
+    color: yellowgreen;
+}
+
+.bs-callout-taxon {
+    border-left-color: cadetblue;
+}
+
+.bs-callout-taxon h4 {
+    color: cadetblue;
+}

@@ -50,7 +50,7 @@
             }
 }
 
-<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-xs-10 col-lg-2 col-sm-5 col-md-4">
+<div id="@Model.Id" class="content @Model.Type.ToString().ToLower() col-xs-6 col-lg-3 col-sm-6 col-md-4">
     <div class="@headerClassName header">
         <h3 class="name col-lg-8 mct-species-title">
             @Html.ActionLink(@name, "Details", "Subject", new { id = Model.Id, type = @Model.Type.ToString() }, new { })
@@ -68,7 +68,7 @@
     <h5 class="type">@germanType</h5>
     <h6 class="type">@germanTaxon</h6>
 
-    <img class="img-responsive  speciesImage" src="@Model.ImagePath" style="width:100%" />
+    <img class="img-responsive speciesImage" src="@Model.ImagePath" style="width:100%" />
 
     @*<div class="details">
             <p class="description">@Model.Description</p>
