@@ -80,11 +80,11 @@
 }
 
 .bs-callout-animal {
-    border-left-color: yellowgreen;
+    border-left-color: darkorange;
 }
 
 .bs-callout-animal h4 {
-    color: yellowgreen;
+    color: darkorange;
 }
 
 .bs-callout-taxon {

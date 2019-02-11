@@ -1,6 +1,8 @@
 ﻿@model MCT.Web.Models.CultureModel
 
 @{
+    /**/
+
     List<string> subjects = new List<string>();
 
     if (Session["ALL_SUBJECTS"] != null)
@@ -9,18 +11,10 @@
     }
 }
 
-
 <div class="form-horizontal culture">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id, new { @class = "culture-id" })
-    @Html.HiddenFor(model => model.Type, new { @class = "culture-type" })
 
     <div class="form-group">
         <div class="col-md-2">
-
-            @Html.DropDownListFor(model => model.Name, new SelectList(subjects), new { @class = "form-control dropdown culture-name" })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-
         </div>
         <div class="col-md-1">
             <a class="fa fa-trash mct-button-icon" onclick="removeCulture(this)"></a>

@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<MCT.Web.Models.CultureModel>
 
-<ul>
+<ul class="list-group">
     @foreach (var c in Model)
     {
         if (!string.IsNullOrEmpty(c.Name))
         {
-            <li>
+            <li class="list-group-item">
                 @Html.ActionLink(@c.Name, "Details", "Subject", new { id = @c.Id, type = @c.Type.ToString() }, new { })
             </li>
         }

@@ -13,9 +13,9 @@
     {
         @Html.Partial("NodeEdit", Model);
 
-        <div class="row panel-default panel-info">
-            <div class="panel-heading">
-                <h3>Anbau Informationen <span class="containerSwitch fa fa-angle-double-up"></span></h3>
+        <div class="row bs-callout bs-callout-plant">
+            <div>
+                <h4>Anbau Informationen <span class="containerSwitch fa fa-angle-double-up"></span></h4>
             </div>
 
             <div class="content col-md-8 panel-body">
@@ -68,28 +68,28 @@
             </div>
         </div>
 
-        <div class="row panel-default">
-            <div class="panel-heading">
-                <h3>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h3>
+        <div class="row bs-callout bs-callout-plant">
+            <div>
+                <h4>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h4>
             </div>
 
-            <div class="content panel-body">
+            <div class="content ">
                 @Html.EditorFor(model => model.LifeCycles)
             </div>
         </div>
 
-        <div class="row panel-default">
-            <div class="panel-heading">
-                <h3>Vorkultur <span class="containerSwitch fa fa-angle-double-up"></span></h3>
+        <div class="row bs-callout bs-callout-plant">
+            <div>
+                <h4>Vorkultur <span class="containerSwitch fa fa-angle-double-up"></span></h4>
             </div>
             <div class="preculture content panel-body">
                 @Html.EditorFor(model => Model.PreCultures)
             </div>
         </div>
 
-        <div class="row panel-default">
-            <div class="panel-heading">
-                <h3>Nachkultur<span class="containerSwitch fa fa-angle-double-up"></span></h3>
+        <div class="row bs-callout bs-callout-plant">
+            <div>
+                <h4>Nachkultur <span class="containerSwitch fa fa-angle-double-up"></span></h4>
             </div>
             <div class="afterculture content panel-body">
 

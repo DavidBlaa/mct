@@ -11,11 +11,12 @@ namespace MCT.Web.Helpers
     {
         public static TaxonRank GetTaxonRank(string scientificName)
         {
+            if (string.IsNullOrEmpty(scientificName)) return TaxonRank.SubSpecies;
 
             /**
              * Lactuca                      -> Genus
-             * Lactuca sativa               -> Species 
-             * Lactuca sativa var. capitata -> Species 
+             * Lactuca sativa               -> Species
+             * Lactuca sativa var. capitata -> Species
              * Lactuca sativa var. capitata Larissa -> SubSpecies
              * Lactuca sativa Larissa -> SubSpecies
              * */
@@ -39,8 +40,8 @@ namespace MCT.Web.Helpers
 
             /**
              * Lactuca                      -> Genus
-             * Lactuca sativa               -> Species 
-             * Lactuca sativa var. capitata -> Variation - Subspecies 
+             * Lactuca sativa               -> Species
+             * Lactuca sativa var. capitata -> Variation - Subspecies
              * Lactuca sativa var. capitata Larissa -> SubSpecies
              * Lactuca sativa Larissa -> SubSpecies
              * */
@@ -59,13 +60,12 @@ namespace MCT.Web.Helpers
                 return GetOrCreateSpecies(name, type, subjectManager, genus);
             }
 
-            //Lactuca sativa var. capitata -> Species 
+            //Lactuca sativa var. capitata -> Species
 
             if (nameArray.Count() == 4 && nameArray.Contains("var."))
             {
                 string name = nameArray[0] + " " + nameArray[1];
                 return GetOrCreateSpecies(name, type, subjectManager, genus);
-
             }
 
             //Lactuca sativa var. capitata Larissa -> SubSpecies
@@ -83,7 +83,6 @@ namespace MCT.Web.Helpers
 
             return null;
         }
-
 
         private static Taxon GetOrCreateGenus(string genusName, SubjectManager subjectManager)
         {
@@ -103,7 +102,6 @@ namespace MCT.Web.Helpers
                 {
                     genus.ScientificName = wReader.GetScientificName(genus.Name);
                 }
-
             }
             else
             {
@@ -122,7 +120,6 @@ namespace MCT.Web.Helpers
 
         private static Species GetOrCreateSpecies(string speciesName, Type type, SubjectManager subjectManager, Taxon genus)
         {
-
             WikipediaReader wReader = new WikipediaReader();
 
             Species species = new Species();

@@ -385,6 +385,9 @@ namespace MCT.Web.Controllers
                     animal = x as Animal;
                 }
 
+                animal.Name = animalModel.Name;
+                animal.ScientificName = animalModel.ScientificName;
+
                 //TODO Generate the Parent based on the ScientificName
                 // a a a = SubSpecies, a a = Species, a = Genus
                 // a a var. a is also a species

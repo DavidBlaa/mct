@@ -156,6 +156,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CustomViewEngine.cs" />
     <Compile Include="Helpers\DataModelHelper.cs" />
     <Compile Include="Helpers\GantHelper.cs" />
     <Compile Include="Helpers\ModelHelper.cs" />

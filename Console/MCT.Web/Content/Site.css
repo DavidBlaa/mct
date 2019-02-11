@@ -34,11 +34,8 @@ textarea {
 li {list-style-type: none}
 
 /*General Settings*/
-a {
+a, a:active, a:hover {
     text-decoration:none;
-}
-a:hover {
-    text-decoration: none;
 }
 
 h1, h2, h3, h4, h5 {
@@ -153,7 +150,7 @@ a.mct-container-link{
 
 .speciesImage {
         
-    width:  260px;
+    min-width:  260px;
     min-height: 260px;
     text-align: center;
 }

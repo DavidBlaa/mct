@@ -1,5 +1,9 @@
 ﻿@using MCT.DB.Entities
 @using MCT.Web.Models
+@using System.ComponentModel.DataAnnotations
+@using MCT.Utils
+
+
 @model MCT.Web.Models.PlantModel
 @{
     ViewBag.Title = Model.Type.ToString();
@@ -17,41 +21,41 @@
         <div class="content col-md-8 ">
             <div class="form-group row">
                 @Html.LabelFor(model => model.Width, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-8">
                     @Html.DisplayFor(model => model.Width, new { @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.Height, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-8">
                     @Html.DisplayFor(model => model.Height, new { @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.RootDepth, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DisplayFor(model => model.RootDepth, new { @class = "form-control" })
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => model.RootDepth.GetAttribute<DisplayAttribute>().Name, new { @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.NutrientClaim, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DisplayFor(model => model.NutrientClaim, new { @class = "form-control" })
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => model.NutrientClaim.GetAttribute<DisplayAttribute>().Name, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group row">
                 @Html.LabelFor(model => model.LocationType, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DisplayFor(model => model.LocationType, new { @class = "form-control" })
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => model.LocationType.GetAttribute<DisplayAttribute>().Name, new { @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.SowingDepth, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-8">
                     @Html.DisplayFor(model => model.SowingDepth, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
@@ -61,7 +65,7 @@
     @*Dates*@
 
     <div class="row panel-info bs-callout bs-callout-plant">
-        <div >
+        <div>
             <h4>Termine <span class="containerSwitch fa fa-angle-double-up"></span> </h4>
         </div>
 
