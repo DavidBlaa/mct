@@ -539,6 +539,13 @@ $(".containerSwitch").on("click",
         $(this).toggleClass("fa-angle-double-down", "fa-angle-double-down");
     });
 
+$(".list-group-item").on("click",
+    function () {
+
+    console.log("click");
+    $($(this).find(".simple-interactions-link")[0]).trigger("click");
+});
+
 /************** IMAGES *****************/
 
 function previewImage(input) {
