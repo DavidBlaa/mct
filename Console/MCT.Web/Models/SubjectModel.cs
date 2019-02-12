@@ -85,13 +85,13 @@ namespace MCT.Web.Models
             return SubjectType.Unknow;
         }
 
-        public static List<InteractionModel> ConverInteractionModels(List<Interaction> interactions, long sourceId)
+        public static List<InteractionModel> ConverInteractionModels(List<Interaction> interactions)
         {
             List<InteractionModel> interactionModels = new List<InteractionModel>();
 
             foreach (var i in interactions)
             {
-                interactionModels.Add(InteractionModel.Convert(i, sourceId));
+                interactionModels.Add(InteractionModel.Convert(i));
             }
 
             return interactionModels;
