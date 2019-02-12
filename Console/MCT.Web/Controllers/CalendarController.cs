@@ -52,8 +52,8 @@ namespace MCT.Web.Controllers
             var json = new
             {
                 title = tp.AssignedTo.Name,
-                start = TimeConverter.GetStartDateTime((int)tp.StartMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US")),
-                end = TimeConverter.GetEndDateTime((int)tp.EndMonth).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US")),
+                start = TimeConverter.GetStartDateTime((int)tp.StartMonth, tp.StartArea).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US")),
+                end = TimeConverter.GetEndDateTime((int)tp.EndMonth, tp.EndArea).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US")),
                 backgroundColor = color
             };
 
