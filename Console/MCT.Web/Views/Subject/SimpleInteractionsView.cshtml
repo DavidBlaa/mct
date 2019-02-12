@@ -51,14 +51,18 @@
                 }
 
                 string tooltip = s.Subject.Name + " -> " + s.Predicate.Name + " -> " + s.Object.Name;
+                string action = "/Subject/Details/" + s.Subject.Id + "?type=" + s.Subject.Type.ToString();
 
-                <li class="list-group-item">
-                    <span class="fa @iconClass left"></span>
-                    @Html.ActionLink(s.Subject.Name, "Details", "Subject", new { id = s.Subject.Id, type = s.Subject.Type.ToString() }, new { htmlAttributes = new { @class = "form-control" } })
-                    <span class="info fa fa-question right" title="@tooltip"></span>
-                </li>
+                <a href="@action" class="simple-interactions-link">
+
+                    <li class="list-group-item">
+                        <span class="fa @iconClass left"></span>
+                        @s.Subject.Name
+                        <span class="info fa fa-question right" title="@tooltip"></span>
+                    </li>
+                </a>
             }
-        </ul>
+            </ul>
     </div>
     <div class="col-md-4">
         <div class="row simple-interactions-header-container">
@@ -87,11 +91,15 @@
                     iconClass = "fa-thumbs-down negative";
                 }
 
-                <li class="list-group-item">
-                    <span class="fa @iconClass left"></span>
-                    @Html.ActionLink(o.Object.Name, "Details", "Subject", new { id = o.Object.Id, type = o.Object.Type.ToString() }, new { htmlAttributes = new { @class = "form-control simple-interactions-link" } })
-                    <span class="info  fa fa-question right" title="@tooltip"></span>
-                </li>
+                string action = "/Subject/Details/"+o.Object.Id+"?type="+o.Object.Type.ToString();
+
+                <a href="@action" class="simple-interactions-link">
+                    <li class="list-group-item">
+                        <span class="fa @iconClass left"></span>
+                        @o.Object.Name
+                        <span class="info  fa fa-question right" title="@tooltip"></span>
+                    </li>
+                 </a>
             }
         </ul>
     </div>
