@@ -1,4 +1,5 @@
 ﻿using MCT.DB.Entities;
+using MCT.DB.Entities.PatchPlaner;
 using MCT.DB.Services;
 using MCT.Utils;
 using MCT.Web.Models.Search;
@@ -130,5 +131,31 @@ namespace MCT.Web.Helpers
             return model;
         }
 
+        /// <summary>
+        /// Get a dictionary with keys and count from the system
+        /// Plants, Animals, Interactions, Beete, User
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<string, int> GetStatistics()
+        {
+            Dictionary<string, int> tmp = new Dictionary<string, int>();
+            SubjectManager subjectManager = new SubjectManager();
+            InteractionManager interactionManager = new InteractionManager();
+            PatchManager patchManager = new PatchManager();
+
+            int plantsCount = subjectManager.GetAll<Plant>().Length;
+            int animalsCount = subjectManager.GetAll<Animal>().Length;
+            int actionsCount = interactionManager.GetAll<Interaction>().Length;
+            int patchesCount = patchManager.GetAll<Patch>().Length;
+            int usersCount = 0;
+
+            tmp.Add("Pflanzen", plantsCount);
+            tmp.Add("Tiere", animalsCount);
+            tmp.Add("Interaktionen", actionsCount);
+            tmp.Add("Gärten", patchesCount);
+            tmp.Add("Nutzer", usersCount);
+
+            return tmp;
+        }
     }
 }

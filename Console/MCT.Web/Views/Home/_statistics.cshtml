@@ -1,0 +1,62 @@
+﻿@model Dictionary<string, int>
+
+<div class="row stats-container jumbotron">
+
+    <div class="col-md-1 col-xs-0"></div>
+    @foreach (var kvp in Model)
+    {
+        string iconClass = "icon fa fa-";
+
+        switch (kvp.Key)
+        {
+            case "Pflanzen": iconClass += "leaf"; break;
+            case "Tiere": iconClass += "bug"; break;
+            case "Gärten": iconClass += "cubes"; break;
+            case "Interaktionen": iconClass += "share-alt-square"; break;
+            case "Nutzer": iconClass += "user-o"; break;
+            default:
+                iconClass += "trash"; break;
+        }
+
+        <div class="col-md-2 stats-object">
+            <div class="stats-object-icon @iconClass"></div>
+            <div class="stats-object-name">
+                @kvp.Key.ToUpper()
+            </div>
+            <div class="stats-object-number">
+                @kvp.Value
+            </div>
+        </div>
+    }
+    <div class="col-md-1 col-xs-0"></div>
+</div>
+
+<style>
+    .stats-container {
+        color: white;
+        background-color: yellowgreen;
+        height: 220px;
+    }
+
+    .stats-object {
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+    }
+
+    .stats-object-icon {
+        font-size: 30px;
+        margin: 5px;
+    }
+
+    .stats-object-name {
+        font-size: 20px;
+        font-weight: lighter;
+        margin: 5px;
+    }
+
+    .stats-object-number {
+        font-size: 40px;
+        margin: 5px;
+    }
+</style>

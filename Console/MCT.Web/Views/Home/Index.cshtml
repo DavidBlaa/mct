@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model Dictionary<string, int>
+
+@{
+    ViewBag.Title = "Garten Erde";
 }
 
 <div class="jumbotron">
@@ -47,10 +49,14 @@
         </div>
     </a>
 </div>
+
 <hr />
 <br />
 <h2>Fahrplan</h2>
 <div id="timeline"></div>
+
+<br />
+@Html.Partial("_statistics", Model)
 
 
 @section scripts
@@ -62,14 +68,14 @@
             content: 'Lexikon fertigstellen'
         }, {
             date: 'Q2 - 2019',
-                content: 'Nutzerverwaltung und erste Daten einfplegen.'
+            content: 'Nutzerverwaltung und erste Daten einfplegen.'
         }, {
             date: 'Q3 - 2019',
-                content: 'Tests mit echten Nutzern.'
+            content: 'Tests mit echten Nutzern.'
         },
         {
             date: 'Q4 - 2019',
-                content: 'Beetplaners Version 1'
+            content: 'Beetplaners Version 1'
         }
         ];
 

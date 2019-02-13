@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using MCT.Web.Helpers;
+using System.Web.Mvc;
 
 namespace MCT.Web.Controllers
 {
@@ -6,7 +7,7 @@ namespace MCT.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(ModelHelper.GetStatistics());
         }
 
         public ActionResult About()

@@ -665,6 +665,7 @@
     <Content Include="Views\Subject\CultureModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CultureModelList.cshtml" />
     <Content Include="Views\Subject\SimpleInteractionsView.cshtml" />
+    <Content Include="Views\Home\_statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
