@@ -15,7 +15,6 @@ namespace MCT.DB.Services
 
         public SearchManager()
         {
-
             CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
         }
 
@@ -28,7 +27,6 @@ namespace MCT.DB.Services
             IQueryable<Node> speciesQuery = null;
             IQueryable<Plant> plantQuery = null;
 
-
             foreach (KeyValuePair<string, string> kvp in searchCriteria)
             {
                 switch (kvp.Key)
@@ -37,7 +35,6 @@ namespace MCT.DB.Services
 
                     case "FREETEXT_SEARCH_KEY":
                         {
-
                             List<long> speciesIdsForMatchingTaxas = GetSpeciesWhereParentMatchs(kvp.Value);
 
                             if (speciesQuery == null)
@@ -58,8 +55,6 @@ namespace MCT.DB.Services
                                                                       ||
                                                                       speciesIdsForMatchingTaxas.Contains(s.Id));
                                 }
-
-
                             }
                             else
                             {
@@ -80,16 +75,15 @@ namespace MCT.DB.Services
                                 }
                             }
 
-
                             break;
-
                         }
 
-                    #endregion
+                    #endregion free text
 
                     #region plants
 
                     #region Time
+
                     case "Sowing":
                         {
                             var sowings = getMatchingTimePeriods(GetAll<Sowing>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
@@ -160,9 +154,11 @@ namespace MCT.DB.Services
 
                             break;
                         }
-                    #endregion
+
+                    #endregion Time
 
                     #region Properties
+
                     case "NutrientClaim":
                         {
                             if (plantQuery == null)
@@ -183,15 +179,14 @@ namespace MCT.DB.Services
                             break;
                         }
 
-                    #endregion
+                    #endregion Properties
 
-                    #endregion
+                    #endregion plants
 
                     #region interactions
 
                     case "PositivInteractionOn":
                         {
-
                             if (speciesQuery == null)
                                 speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
                             else
@@ -212,11 +207,10 @@ namespace MCT.DB.Services
 
                     case "DoPositivInteraction":
                         {
-
                             if (speciesQuery == null)
-                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
+                                speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
                             else
-                                speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery);
+                                speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery);
 
                             break;
                         }
@@ -231,7 +225,7 @@ namespace MCT.DB.Services
                             break;
                         }
 
-                        #endregion
+                        #endregion interactions
                 }
             }
 
@@ -240,13 +234,11 @@ namespace MCT.DB.Services
                 return (speciesQuery.ToList().Intersect(plantQuery.ToList())).AsQueryable();
             }
 
-
             if (speciesQuery != null)
                 return speciesQuery;
 
             if (plantQuery != null)
                 return plantQuery;
-
 
             return session.Query<Species>();
         }
@@ -258,7 +250,6 @@ namespace MCT.DB.Services
             IQueryable<Plant> speciesQuery = null;
             IQueryable<Plant> plantQuery = null;
 
-
             foreach (KeyValuePair<string, string> kvp in searchCriteria)
             {
                 switch (kvp.Key)
@@ -267,7 +258,6 @@ namespace MCT.DB.Services
 
                     case "FREETEXT_SEARCH_KEY":
                         {
-
                             List<long> speciesIdsForMatchingTaxas = GetSpeciesWhereParentMatchs(kvp.Value);
 
                             if (speciesQuery == null)
@@ -288,8 +278,6 @@ namespace MCT.DB.Services
                                                                       ||
                                                                       speciesIdsForMatchingTaxas.Contains(s.Id));
                                 }
-
-
                             }
                             else
                             {
@@ -310,16 +298,15 @@ namespace MCT.DB.Services
                                 }
                             }
 
-
                             break;
-
                         }
 
-                    #endregion
+                    #endregion free text
 
                     #region plants
 
                     #region Time
+
                     case "Sowing":
                         {
                             var sowings = getMatchingTimePeriods(GetAll<Sowing>(), TimePeriodHelper.GetMonth(Convert.ToInt32(kvp.Value)));
@@ -390,9 +377,11 @@ namespace MCT.DB.Services
 
                             break;
                         }
-                    #endregion
+
+                    #endregion Time
 
                     #region Properties
+
                     case "NutrientClaim":
                         {
                             if (plantQuery == null)
@@ -413,55 +402,53 @@ namespace MCT.DB.Services
                             break;
                         }
 
-                    #endregion
+                        #endregion Properties
 
-                    #endregion
+                        #endregion plants
 
-                    #region interactions
+                        #region interactions
 
-                    //case "PositivInteractionOn":
-                    //    {
+                        //case "PositivInteractionOn":
+                        //    {
+                        //        if (speciesQuery == null)
+                        //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
+                        //        else
+                        //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery);
 
-                    //        if (speciesQuery == null)
-                    //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
-                    //        else
-                    //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery);
+                        //        break;
+                        //    }
 
-                    //        break;
-                    //    }
+                        //case "NegativInteractionOn":
+                        //    {
+                        //        if (speciesQuery == null)
+                        //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID);
+                        //        else
+                        //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID, speciesQuery);
 
-                    //case "NegativInteractionOn":
-                    //    {
-                    //        if (speciesQuery == null)
-                    //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID);
-                    //        else
-                    //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID, speciesQuery);
+                        //        break;
+                        //    }
 
-                    //        break;
-                    //    }
+                        //case "DoPositivInteraction":
+                        //    {
+                        //        if (speciesQuery == null)
+                        //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
+                        //        else
+                        //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery);
 
-                    //case "DoPositivInteraction":
-                    //    {
+                        //        break;
+                        //    }
 
-                    //        if (speciesQuery == null)
-                    //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID);
-                    //        else
-                    //            speciesQuery = getSubjectsOfInteractionWithObject(Convert.ToInt64(kvp.Value), POSITIV_PREDICATE_ROOT_ID, speciesQuery);
+                        //case "DoNegativInteraction":
+                        //    {
+                        //        if (speciesQuery == null)
+                        //            speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID);
+                        //        else
+                        //            speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID, speciesQuery);
 
-                    //        break;
-                    //    }
+                        //        break;
+                        //    }
 
-                    //case "DoNegativInteraction":
-                    //    {
-                    //        if (speciesQuery == null)
-                    //            speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID);
-                    //        else
-                    //            speciesQuery = getObjectsOfInteractionWithSubject(Convert.ToInt64(kvp.Value), NEGAVTIV_PREDICATE_ROOT_ID, speciesQuery);
-
-                    //        break;
-                    //    }
-
-                        #endregion
+                        #endregion interactions
                 }
             }
 
@@ -470,17 +457,14 @@ namespace MCT.DB.Services
                 return (speciesQuery.ToList().Intersect(plantQuery.ToList())).AsQueryable();
             }
 
-
             if (speciesQuery != null)
                 return speciesQuery;
 
             if (plantQuery != null)
                 return plantQuery;
 
-
             return session.Query<Plant>();
         }
-
 
         private IEnumerable<TimePeriod> getMatchingTimePeriods(IEnumerable<TimePeriod> tps, TimePeriodMonth month)
         {
@@ -516,10 +500,8 @@ namespace MCT.DB.Services
                     .Where(i => i.Predicate.Parent.Equals(rootPredicate) && i.Object.Id.Equals(objectId))
                     .Select(i => i.Subject.Id);
 
-
             return query.Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
         }
-
 
         private IQueryable<Node> getObjectsOfInteractionWithSubject(long subjectId, long predicateId)
         {
@@ -541,7 +523,6 @@ namespace MCT.DB.Services
             var matchingInteractionSubjectsIds = GetAll<Interaction>()
                     .Where(i => i.Predicate.Parent.Equals(rootPredicate) && i.Subject.Id.Equals(subjectId))
                     .Select(i => i.Object.Id);
-
 
             return query.Where(s => matchingInteractionSubjectsIds.Contains(s.Id));
         }
@@ -576,6 +557,6 @@ namespace MCT.DB.Services
             return false;
         }
 
-        #endregion
+        #endregion Search
     }
 }

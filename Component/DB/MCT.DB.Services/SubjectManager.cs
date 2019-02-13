@@ -10,7 +10,6 @@ namespace MCT.DB.Services
 {
     public class SubjectManager : ManagerBase<Subject, long>
     {
-
         public SubjectManager()
         {
             CurrentNHibernateSession = NHibernateHelper.GetCurrentSession();
@@ -23,6 +22,7 @@ namespace MCT.DB.Services
             plant = Create(plant);
 
             // go to each timerperiod and create
+
             #region go to each timerperiod and create
 
             foreach (var tp in plant.TimePeriods)
@@ -36,14 +36,14 @@ namespace MCT.DB.Services
             }
 
             Update(plant);
-            #endregion
+
+            #endregion go to each timerperiod and create
 
             return plant;
         }
 
         public Plant UpdatePlant(Plant plant)
         {
-
             foreach (var tp in plant.TimePeriods)
             {
                 if (tp.Id == 0)
@@ -53,7 +53,6 @@ namespace MCT.DB.Services
                     tp.Id = newtp.Id;
                 }
             }
-
 
             this.Update(plant);
 
@@ -65,6 +64,7 @@ namespace MCT.DB.Services
             Animal tmp = Create(animal);
 
             // go to each timerperiod and create
+
             #region go to each timerperiod and create
 
             foreach (var tp in animal.TimePeriods)
@@ -77,7 +77,7 @@ namespace MCT.DB.Services
                 }
             }
 
-            #endregion
+            #endregion go to each timerperiod and create
 
             return tmp;
         }
@@ -94,6 +94,7 @@ namespace MCT.DB.Services
             {
                 List<Interaction> interactons = GetAllDependingInteractions(node).ToList();
                 InteractionManager interactionManager = new InteractionManager();
+                SubjectManager subjectManager = new SubjectManager();
 
                 for (int i = 0; i < interactons.Count; i++)
                 {
@@ -108,20 +109,44 @@ namespace MCT.DB.Services
                     Update(child);
                 }
 
+                if (node is Plant)
+                {
+                    // this plant has pre or after cultures
+                    Plant tmp = (Plant)node;
+                    tmp.PreCultures.Clear();
+                    tmp.AfterCultures.Clear();
+
+                    node = subjectManager.Update(tmp);
+
+                    // remove this object from any pre or after culture
+                    var plantWithAfterReferneces = subjectManager.GetAllAsQueryable<Plant>().Where(p =>
+                        p.AfterCultures.Any(a => a.Id.Equals(node.Id)));
+
+                    foreach (var plant in plantWithAfterReferneces)
+                    {
+                        plant.AfterCultures.Remove(tmp);
+                        subjectManager.Update(plant);
+                    }
+
+                    var plantWithPreReferneces = subjectManager.GetAllAsQueryable<Plant>().Where(p =>
+                        p.PreCultures.Any(a => a.Id.Equals(node.Id)));
+
+                    foreach (var plant in plantWithPreReferneces)
+                    {
+                        plant.PreCultures.Remove(tmp);
+                        subjectManager.Update(plant);
+                    }
+                }
 
                 Delete(node);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
         }
 
-        #endregion
-
-
+        #endregion Create
 
         //Example zum get einträge von aus einer spalte als liste
 
@@ -160,7 +185,6 @@ namespace MCT.DB.Services
 
             List<Interaction> interactions = new List<Interaction>();
 
-
             //get parents
             if (species.Parent != null && recursive)
             {
@@ -176,8 +200,6 @@ namespace MCT.DB.Services
                     interactions.Add(interaction);
                 }
             }
-
-
 
             return interactions;
         }
