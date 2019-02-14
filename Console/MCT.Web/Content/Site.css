@@ -153,6 +153,7 @@ a.mct-container-link{
     min-width:  260px;
     min-height: 260px;
     text-align: center;
+    width:100%;
 }
 
 .details {

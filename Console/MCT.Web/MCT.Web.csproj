@@ -409,6 +409,8 @@
     <Content Include="Images\Cocktailtomate.JPG" />
     <Content Include="Images\GrosserKohlweissling.jpg" />
     <Content Include="Images\KohlrabiGigant.JPG" />
+    <Content Include="Images\page\vladstudio_leaf_wallpaper.jpg" />
+    <Content Include="Images\page\vladstudio_socotra_wallpaper.jpg" />
     <Content Include="Images\PetersilieGruenePerle.JPG" />
     <Content Include="Images\RadieschenParat.JPG" />
     <Content Include="Images\SpinatButterflay.jpg" />
@@ -666,6 +668,11 @@
     <Content Include="Views\Shared\DisplayTemplates\CultureModelList.cshtml" />
     <Content Include="Views\Subject\SimpleInteractionsView.cshtml" />
     <Content Include="Views\Home\_statistics.cshtml" />
+    <Content Include="Views\Shared\_footer.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Inprint.cshtml" />
+    <Content Include="Views\Home\DataPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

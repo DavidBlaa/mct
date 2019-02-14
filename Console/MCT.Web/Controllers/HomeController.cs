@@ -23,5 +23,19 @@ namespace MCT.Web.Controllers
 
             return View();
         }
+
+        public ActionResult Inprint()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult DataPolicy()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }
