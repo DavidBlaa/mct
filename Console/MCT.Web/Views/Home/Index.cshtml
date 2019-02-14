@@ -9,9 +9,9 @@
     <p class="lead">Anbau in Harmonie mit der Natur.</p>
 </div>
 
-<div class="row">
+<div class="row home-content">
     <a class="mct-container-link" href="/search/search">
-        <div class="col-md-3">
+        <div class="col-md-3 col-lg-3">
             <h2><span class="fa fa-book"></span>   Lexikon</h2>
             <br />
             <p class="text-justify">
@@ -21,7 +21,7 @@
         </div>
     </a>
     <a class="mct-container-link" href="/Calendar/Index">
-        <div class="col-md-3">
+        <div class="col-md-3 col-lg-3">
             <h2><span class="fa fa-calendar"></span>  Saisonkalendar</h2>
             <br />
             <p class="text-justify">
@@ -30,7 +30,7 @@
         </div>
     </a>
     <a class="mct-container-link" href="/Patch/Index">
-        <div class="col-md-3">
+        <div class="col-md-3 col-lg-3">
             <h2><span class="fa fa-cubes"></span> Gartenplaner</h2>
             <br />
             <p class="text-justify">
@@ -39,7 +39,7 @@
         </div>
     </a>
     <a class="mct-container-link" href="/Interaction/ShowInteractions">
-        <div class="col-md-3 text-justify">
+        <div class="col-md-3 col-lg-3 text-justify">
             <h2><span class="fa fa-share-alt-square"></span> Beziehungskiste</h2>
             <br />
             <p class="text-justify">
@@ -48,22 +48,36 @@
             </p>
         </div>
     </a>
+
 </div>
 
-<hr />
-<br />
-<h2>Fahrplan</h2>
-<div id="timeline"></div>
 
-<br />
+<div class="timeline-row">
+    <div id="timeline"></div>
+</div>
 @Html.Partial("_statistics", Model)
 
 <style type="text/css">
 
     .head {
         background-image: url(../../Images/page/vladstudio_socotra_wallpaper.jpg);
-        color:white;
+        color: white;
+
     }
+
+    .timeline-row {
+        background-color: #eee;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+   
+    }
+
+    .home-content {
+    
+        padding:50px;
+    }
+
 </style>
 
 @section scripts

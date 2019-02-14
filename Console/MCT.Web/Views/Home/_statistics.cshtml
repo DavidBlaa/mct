@@ -1,6 +1,6 @@
 ﻿@model Dictionary<string, int>
 
-<div class="row stats-container jumbotron">
+<div class="row stats-container">
 
     <div class="col-md-1 col-xs-0"></div>
     @foreach (var kvp in Model)
@@ -36,7 +36,10 @@
         color: white;
         background-color: yellowgreen;
         height: 220px;
-        background-image:url("../../Images/page/vladstudio_leaf_wallpaper.jpg")
+        background-image: url("../../Images/page/vladstudio_leaf_wallpaper.jpg");
+        margin: auto;
+        padding:40px;
+  
     }
 
     .stats-object {

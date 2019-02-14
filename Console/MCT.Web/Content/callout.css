@@ -27,7 +27,9 @@
     border-left-color: #777;
 }
 
-.bs-callout-default h4 {
+.bs-callout-default h4,
+.bs-callout-default h3,
+.bs-callout-default h2 {
     color: #777;
 }
 
@@ -35,7 +37,9 @@
     border-left-color: #428bca;
 }
 
-.bs-callout-primary h4 {
+.bs-callout-primary h4,
+.bs-callout-primary h3,
+.bs-callout-primary h2 {
     color: #428bca;
 }
 
@@ -43,33 +47,41 @@
     border-left-color: #5cb85c;
 }
 
-    .bs-callout-success h4 {
-        color: #5cb85c;
-    }
+.bs-callout-success h4,
+.bs-callout-success h3,
+.bs-callout-success h2 {
+    color: #5cb85c;
+}
 
 .bs-callout-danger {
     border-left-color: #d9534f;
 }
 
-    .bs-callout-danger h4 {
-        color: #d9534f;
-    }
+.bs-callout-danger h4,
+.bs-callout-danger h3,
+.bs-callout-danger h2 {
+    color: #d9534f;
+}
 
 .bs-callout-warning {
     border-left-color: #f0ad4e;
 }
 
-    .bs-callout-warning h4 {
-        color: #f0ad4e;
-    }
+.bs-callout-warning h4,
+.bs-callout-warning h3,
+.bs-callout-warning h2 {
+    color: #f0ad4e;
+}
 
 .bs-callout-info {
     border-left-color: #5bc0de;
 }
 
-    .bs-callout-info h4 {
-        color: #5bc0de;
-    }
+.bs-callout-info h4,
+.bs-callout-info h3,
+.bs-callout-info h2 {
+    color: #5bc0de;
+}
 
 .bs-callout-plant {
     border-left-color: yellowgreen;
