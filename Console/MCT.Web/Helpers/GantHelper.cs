@@ -1,7 +1,9 @@
 ﻿using MCT.Cal;
 using MCT.DB.Entities;
+using MCT.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -71,7 +73,7 @@ namespace MCT.Web.Helpers
             var json = new
             {
                 name = plantName,
-                desc = type.ToString(),
+                desc = type.GetAttribute<DisplayAttribute>().Name,
                 values = tps
             };
 
@@ -81,24 +83,53 @@ namespace MCT.Web.Helpers
         public static object GetEventFromTimeperiodForGantt(TimePeriod tp)
         {
             string color = "Black";
-
+            string name = "no name";
             Debug.WriteLine(tp);
 
-            if (tp is Sowing) color = "Green";
-            if (tp is Harvest) color = "Red";
-            if (tp is Bloom) color = "Blue";
-            if (tp is SeedMaturity) color = "Yellow";
-            if (tp is Cultivate) color = "Gray";
-            if (tp is LifeTime) color = "YellowGreen";
-            if (tp is Implant) color = "Purple";
+            if (tp is Sowing)
+            {
+                color = "Green";
+                name = TimePeriodType.Sowing.GetAttribute<DisplayAttribute>().Name;
+            }
+            if (tp is Harvest)
+            {
+                color = "Red";
+                name = TimePeriodType.Harvest.GetAttribute<DisplayAttribute>().Name;
+            }
+            if (tp is Bloom)
+            {
+                color = "Blue";
+                name = TimePeriodType.Bloom.GetAttribute<DisplayAttribute>().Name;
+            }
+            if (tp is SeedMaturity)
+            {
+                color = "Yellow";
+                name = TimePeriodType.SeedMaturity.GetAttribute<DisplayAttribute>().Name;
+            }
 
-            //ToDo datetime is not focusing on the on voll, anfang, end
+            if (tp is Cultivate)
+            {
+                color = "Gray";
+                name = TimePeriodType.Cultivate.GetAttribute<DisplayAttribute>().Name;
+            }
+
+            if (tp is LifeTime)
+            {
+                color = "YellowGreen";
+                name = TimePeriodType.LifeTime.GetAttribute<DisplayAttribute>().Name;
+            }
+            if (tp is Implant)
+            {
+                color = "Purple";
+                name = TimePeriodType.Implant.GetAttribute<DisplayAttribute>().Name;
+            }
+
             var fromDT = TimeConverter.GetStartDateTime((int)tp.StartMonth, tp.StartArea).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
             var toDT = TimeConverter.GetEndDateTime((int)tp.EndMonth, tp.EndArea).ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
 
             var tpJSON = new
             {
-                label = tp.GetType().FullName,
+                label = name,
                 from = "/Date(" + fromDT + ")/",
                 to = "/Date(" + toDT + ")/",
                 customClass = "gantt" + color

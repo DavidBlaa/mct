@@ -208,6 +208,9 @@ namespace MCT.DB.Entities
         Cultivate,
 
         [Display(Name = "Einpflanzen")]
-        Implant
+        Implant,
+
+        [Display(Name = "Lebensspanne")]
+        LifeTime
     }
 }
