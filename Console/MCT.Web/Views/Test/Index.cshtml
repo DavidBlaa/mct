@@ -593,7 +593,33 @@
 
     $(document)
         .ready(function() {
-            $('#example').DataTable();
+            $('#example').DataTable(
+                {
+                    "language": {
+                        "decimal": "",
+                        "emptyTable": "Es sind keine Daten vorhanden.",
+                        "info": "Zeige _START_ bis _END_ von _TOTAL_ Einträgen",
+                        "infoEmpty": "Zeige 0 bis 0 von 0 Einträgen",
+                        "infoFiltered": "(von insgesamt _MAX_ Einträgen gefiltert)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Zeige _MENU_ Einträge",
+                        "loadingRecords": "Wird geladen...",
+                        "processing": "Wird bearbeitet...",
+                        "search": "Suche:",
+                        "zeroRecords": "Keine passenden Ergebnisse gefunden",
+                        "paginate": {
+                            "first": "erstes",
+                            "last": "letztes",
+                            "next": "nächstes",
+                            "previous": "vorheriges"
+                        },
+                        "aria": {
+                            "sortAscending": ": Aktiv, um die Spalte aufsteigend zu sortieren",
+                            "sortDescending": ": Aktiv, um die Spalte absteigend zu sortieren"
+                        }
+                    }
+                });
         });
 
 </script>
