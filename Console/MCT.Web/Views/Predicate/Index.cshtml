@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MCT.Web.Models.PredicateModel>
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2>Übersicht aller Prädikate</h2>
+</div>
+<p>
+    @Html.ActionLink("Erstell ein neues Prädikat", "Create", null, new { @class = "mct-grid-bt btn btn-default" })
+</p>
+<table id="predicate_table" class="table dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Gehört zu
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if (item.Parent != null)
+                    {
+                        @item.Parent.Name
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Editieren", "Edit", new { id = item.Id }, new{@class="mct-grid-bt btn btn-default"}) |
+                    @Html.ActionLink("Löschen", "Delete", new { id = item.Id }, new { @class = "mct-grid-bt btn btn-default" })
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Gehört zu
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+<script type="text/javascript">
+
+    $(document)
+        .ready(function () {
+            $('#predicate_table').DataTable();
+        });
+</script>

@@ -36,26 +36,28 @@ namespace MCT.Web.Models
                 Indicator = interaction.Indicator,
             };
         }
-
     }
 
     public class InteractionSimpleModel
     {
         public long Id { get; set; }
+
         [Required]
         [Remote("CheckSubject", "Interaction", ErrorMessage = "Subject existiert nicht.")]
         public string Subject { get; set; }
+
         [Required]
         [Remote("CheckPredicate", "Interaction", ErrorMessage = "Predicate existiert nicht.")]
         public string Predicate { get; set; }
+
         [Required]
         [Remote("CheckObject", "Interaction", ErrorMessage = "Object existiert nicht.")]
         public string Object { get; set; }
 
         [Remote("CheckImpactSubject", "Interaction", ErrorMessage = "Impact Subject existiert nicht.")]
         public string ImpactSubject { get; set; }
-        public Int32 Indicator { get; set; }
 
+        public Int32 Indicator { get; set; }
 
         public InteractionSimpleModel()
         {
@@ -79,15 +81,16 @@ namespace MCT.Web.Models
                 Indicator = interaction.Indicator,
             };
         }
-
     }
 
     public class SimpleLinkModel
     {
         public long Id { get; set; }
+
         [Required]
         [Remote("CheckNameOfSimpleLink", "Interaction", ErrorMessage = "Name existiert nicht.")]
         public String Name { get; set; }
+
         [Required]
         public SubjectType Type { get; set; }
 
@@ -108,10 +111,11 @@ namespace MCT.Web.Models
 
     public class InteractionPredicateModel
     {
-
         public long Id { get; set; }
+
         [Required]
         public String Name { get; set; }
+
         [Required]
         public string ParentName { get; set; }
 
@@ -139,7 +143,6 @@ namespace MCT.Web.Models
 
     public class InteractionElementModel : SimpleLinkModel
     {
-
         public static InteractionElementModel Convert(Subject subject)
         {
             if (subject != null)

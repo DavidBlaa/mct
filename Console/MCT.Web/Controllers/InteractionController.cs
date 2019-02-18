@@ -45,8 +45,6 @@ namespace MCT.Web.Controllers
                         (i.Object != null && i.Object.Name.ToLower().Contains(searchValue)) ||
                         (i.Predicate != null && i.Predicate.Name.ToLower().Contains(searchValue)) ||
                         (i.ImpactSubject != null && i.ImpactSubject.Name.ToLower().Contains(searchValue)));
-
-
                 }
 
                 int filteredRows = data.ToList().Count();
@@ -55,13 +53,11 @@ namespace MCT.Web.Controllers
                 var sorting = string.Join(",", model.Order.Select(o => model.Columns[o.Column].Data + " " + o.Dir));
                 if (!string.IsNullOrEmpty(sorting))
                 {
-
                     data = data.OrderBy(sorting);
                 }
 
                 //paging
                 data = data.Skip(skip).Take(model.Length);
-
 
                 int countAll = interactionManager.GetAllAsQueryable<Interaction>().Count();
 
@@ -75,12 +71,10 @@ namespace MCT.Web.Controllers
             }
             catch (Exception exception)
             {
-
                 string json = "{\"error\":\"" + exception.Message + "\"}";
 
                 return Json(json);
             }
-
         }
 
         public ActionResult Save(InteractionSimpleModel model)
@@ -147,17 +141,14 @@ namespace MCT.Web.Controllers
             {
                 interactionManager.Update(targetInteraction);
                 model = InteractionSimpleModel.Convert(targetInteraction);
-
             }
             catch (Exception ex)
             {
                 ViewData["Status"] = ex.Message;
-
             }
 
             return View("InteractionEdit", model);
         }
-
 
         public ActionResult Delete(long id)
         {
@@ -176,6 +167,8 @@ namespace MCT.Web.Controllers
 
             InteractionManager interactionManager = new InteractionManager();
             Interaction interaction = interactionManager.Get(id);
+
+            getAllPredicateNames();
 
             return View("InteractionEdit", InteractionSimpleModel.Convert(interaction));
         }
@@ -271,11 +264,8 @@ namespace MCT.Web.Controllers
             List<string> tmp = Session[ALL_PREDICATES] as List<string>;
 
             return tmp;
-
         }
 
-
-        #endregion
-
+        #endregion Session
     }
 }

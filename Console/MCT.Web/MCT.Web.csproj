@@ -149,6 +149,7 @@
     <Compile Include="Controllers\InteractionController.cs" />
     <Compile Include="Controllers\PatchController.cs" />
     <Compile Include="Controllers\PatchPlanerController.cs" />
+    <Compile Include="Controllers\PredicateController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Models\PatchPlaner\PatchPlanerModel.cs" />
     <Compile Include="Models\PatchPlaner\PlacementModel.cs" />
     <Compile Include="Models\PatchPlaner\SearchModel.cs" />
+    <Compile Include="Models\PredicateModel.cs" />
     <Compile Include="Models\Search\BreadcrumbModel.cs" />
     <Compile Include="Models\SimpleNodeViewModel.cs" />
     <Compile Include="Models\NodeModel.cs" />
@@ -673,6 +675,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Inprint.cshtml" />
     <Content Include="Views\Home\DataPolicy.cshtml" />
+    <Content Include="Views\Predicate\Index.cshtml" />
+    <Content Include="Views\Predicate\Create.cshtml" />
+    <Content Include="Views\Predicate\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

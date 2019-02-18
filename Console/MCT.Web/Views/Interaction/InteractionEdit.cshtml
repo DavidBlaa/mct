@@ -5,7 +5,7 @@
 
     if (Model.Id > 0)
     {
-        title = "Bearbeite Interaktion (" +@Model.Id+")";
+        title = "Bearbeite Interaktion (" + @Model.Id + ")";
     }
     else
     {
@@ -14,7 +14,7 @@
 
     string message = "";
     bool success = false;
-
+    List<string> predicates = new List<string>();
 
     if (ViewData["Status"] != null)
     {
@@ -25,123 +25,115 @@
         {
             success = true;
         }
+
+        if (Session["ALL_PREDICATES"] != null)
+        {
+            predicates = Session["ALL_PREDICATES"] as List<string>;
+        }
     }
 }
 
+    @using (@Html.BeginForm("Save", "Interaction"))
+    {
+        <div class="row panel-default">
+            <div class="panel-heading">
+                <h3>@title </h3>
+            </div>
 
-@using (@Html.BeginForm("Save", "Interaction"))
-{
-    <div class="row panel-default">
-        <div class="panel-heading">
-            <h3>@title </h3>
-        </div>
-        
-        @if (ViewData["Status"] != null)
-        {
-            if (success == true)
+            @if (ViewData["Status"] != null)
             {
-                <div class="alert alert-success">
-                    <strong>Interaction</strong> wurde Erfolgreich gespreichert.
-                </div>
+                if (success == true)
+                {
+                    <div class="alert alert-success">
+                        <strong>Interaction</strong> wurde Erfolgreich gespreichert.
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger">
+                        <strong>Fehler!</strong> @message
+                    </div>
+                }
             }
-            else
-            {
-                <div class="alert alert-danger">
-                    <strong>Fehler!</strong> @message
+
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="content col-md-8 panel-body">
+
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            }
-        }
 
-        
-
-        
-
-        @Html.HiddenFor(m=>m.Id)
-
-        <div class="content col-md-8 panel-body">
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Predicate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.Predicate, new SelectList(predicates), new { @class = "form-control mct-ac-predicates" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(model => model.Predicate, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.Subject, new {htmlAttributes = new {@class = "form-control mct-ac-subjects"}})
+
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Object, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Object, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(model => model.Object, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.ImpactSubject, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.ImpactSubject, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(model => model.ImpactSubject, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Indicator, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Indicator, new { htmlAttributes = new { @class = "form-control " } })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(model => model.Indicator, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.Predicate, htmlAttributes: new {@class = "control-label col-md-2"})
-                </div>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.Predicate, new { htmlAttributes = new { @class = "form-control mct-ac-predicates" } })
-
-                </div>
-                <div class="col-md-4">
-                    @Html.ValidationMessageFor(model => model.Predicate, "", new {@class = "text-danger"})
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.Object, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.Object, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
-                </div>
-                <div class="col-md-4">
-                    @Html.ValidationMessageFor(model => model.Object, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.ImpactSubject, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.ImpactSubject, new { htmlAttributes = new { @class = "form-control mct-ac-subjects" } })
-                </div>
-                <div class="col-md-4">
-                    @Html.ValidationMessageFor(model => model.ImpactSubject, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.Indicator, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.Indicator, new { htmlAttributes = new { @class = "form-control " } })
-                </div>
-                <div class="col-md-4">
-                    @Html.ValidationMessageFor(model => model.Indicator, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
         </div>
-    </div>
 
-<button type="submit" class="btn btn-primary" >save</button>
+        <button type="submit" class="btn btn-primary">save</button>
 
-<button type="button" class="btn btn-default">@Html.ActionLink("Neue Interaktion erstellen", "Edit", "Interaction")</button>
-<button type="button" class="btn btn-default">@Html.ActionLink("Alle Interaktionen", "ShowInteractions", "Interaction")</button>
-<button type="button" class="btn btn-default">@Html.ActionLink("Create Plant", "CreatePlant", "Subject")</button>
-<button type="button" class="btn btn-default">@Html.ActionLink("Create Animal", "CreateAnimal", "Subject")</button>
+        <button type="button" class="btn btn-default">@Html.ActionLink("Neue Interaktion erstellen", "Edit", "Interaction")</button>
+        <button type="button" class="btn btn-default">@Html.ActionLink("Alle Interaktionen", "ShowInteractions", "Interaction")</button>
+        <button type="button" class="btn btn-default">@Html.ActionLink("Create Plant", "CreatePlant", "Subject")</button>
+        <button type="button" class="btn btn-default">@Html.ActionLink("Create Animal", "CreateAnimal", "Subject")</button>
 
+    }
 
+    <script>
+        $(document).ready(function () {
 
-}
-
-<script>
-    $(document).ready(function () {
-
-
-        $.get("/Interaction/GetAllPredicates",
+            $.get("/Interaction/GetAllPredicates",
                 function (response) {
 
                     console.log(response);
@@ -153,22 +145,19 @@
                 "json"
             );
 
+            //ac = autocomplete
+            $.get("/Interaction/GetAllSubjects",
+                function (response) {
 
-        //ac = autocomplete
-        $.get("/Interaction/GetAllSubjects",
-            function (response) {
+                    console.log(response);
 
-                console.log(response);
+                    $(".mct-ac-subjects")
+                        .autocomplete({
+                            source: response
+                        });
+                },
+                "json"
+            );
 
-                $(".mct-ac-subjects")
-                    .autocomplete({
-                        source: response
-                    });
-            },
-            "json"
-        );
-
-            
         })
-
-</script>
+    </script>

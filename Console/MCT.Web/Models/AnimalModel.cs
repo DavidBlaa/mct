@@ -6,13 +6,9 @@ namespace MCT.Web.Models
 {
     public class AnimalModel : NodeModel
     {
-
         public AnimalModel()
         {
-
         }
-        
-
 
         public static AnimalModel Convert(Animal animal)
         {
@@ -21,12 +17,12 @@ namespace MCT.Web.Models
             model.Id = animal.Id;
 
             #region subject
+
             if (!String.IsNullOrEmpty(animal.Name))
                 model.Name = animal.Name;
 
             if (!String.IsNullOrEmpty(animal.Rank.ToString()))
                 model.TaxonRank = animal.Rank;
-
 
             if (!String.IsNullOrEmpty(animal.Description))
                 model.Description = animal.Description;
@@ -46,17 +42,17 @@ namespace MCT.Web.Models
             {
                 model.LifeCycles = TimePeriodsToLifeCycles(animal.TimePeriods);
             }
-            #endregion
+
+            #endregion subject
 
             model.ScientificName = animal.ScientificName;
 
-
-
             #region loadParentModels
+
             if (animal.Parent != null)
                 model.Parent = SimpleNodeViewModel.Convert(animal.Parent);
 
-            #endregion
+            #endregion loadParentModels
 
             return model;
         }
