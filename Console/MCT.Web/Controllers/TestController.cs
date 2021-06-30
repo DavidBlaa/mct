@@ -17,8 +17,10 @@ namespace MCT.Web.Controllers
         public ActionResult Index()
         {
 
-            testTimperiods();
 
+
+            //testTimperiods();
+            
             //SetParentTest();
 
             //testIntractions();
