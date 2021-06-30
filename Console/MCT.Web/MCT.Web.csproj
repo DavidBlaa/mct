@@ -166,6 +166,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\AnimalController.cs" />
+    <Compile Include="Controllers\API\PlantController.cs" />
     <Compile Include="Controllers\API\SpeciesController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\DataController.cs" />
@@ -708,7 +710,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\NewFolder1\" />
-    <Folder Include="Views\ApiSpecies\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

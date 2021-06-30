@@ -14,34 +14,32 @@ namespace MCT.Web.Controllers.API
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
 
-    public class SpeciesController : ApiController
+    public class AnimalController : ApiController
     {
 
-        [Route("api/species")]
+        [Route("api/animal")]
         // GET api/<controller>
-        public List<NodeModel> Get()
+        public List<AnimalModel> Get()
         {
-            List<NodeModel> list = new List<NodeModel>();
+            List<AnimalModel> list = new List<AnimalModel>();
  
             SubjectManager manager = new SubjectManager();
-            var species = manager.GetAll<Species>();
+            var animals = manager.GetAll<Animal>();
 
-            species.ToList().ForEach(n => list.Add(NodeModel.Convert(n)));
+            animals.ToList().ForEach(n => list.Add(AnimalModel.Convert(n)));
 
 
             return list;
         }
-       
 
-
-        [Route("api/species/{id}")]
+        [Route("api/animal/{id}")]
         // GET api/<controller>/5
-        public SubjectModel Get(int id)
+        public AnimalModel Get(int id)
         {
             SubjectManager manager = new SubjectManager();
-            var subject = manager.Get(id);
+            var animal = manager.GetAll<Animal>().Where(p => p.Id.Equals(id)).FirstOrDefault();
 
-            return SubjectModel.Convert(subject);
+            return AnimalModel.Convert(animal);
         }
 
         // POST api/<controller>

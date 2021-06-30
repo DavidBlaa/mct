@@ -50,6 +50,7 @@ namespace MCT.Web.Models
                 model.ImagePath = node.Medias.First().ImagePath;
             }
 
+
             return model;
         }
     }
