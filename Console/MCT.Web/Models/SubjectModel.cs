@@ -1,10 +1,13 @@
 ﻿using MCT.DB.Entities;
 using MCT.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using NHibernate.Proxy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web.Mvc;
 
 namespace MCT.Web.Models
@@ -21,6 +24,7 @@ namespace MCT.Web.Models
         public String ImagePath { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public SubjectType Type { get; set; }
 
         public SimpleNodeViewModel Parent { get; set; }
@@ -125,21 +129,27 @@ namespace MCT.Web.Models
         }
     }
 
+    [DataContract]
     public enum SubjectType
     {
         [Display(Name = "Tier")]
+        [EnumMember(Value = "Tier")]
         Animal,
 
         [Display(Name = "Effekt")]
+        [EnumMember(Value = "Effekt")]
         Effect,
 
         [Display(Name = "Pflanze")]
+        [EnumMember(Value = "Pflanze")]
         Plant,
 
         [Display(Name = "Taxon")]
+        [EnumMember(Value = "Taxon")]
         Taxon,
 
         [Display(Name = "Unbekannt")]
+        [EnumMember(Value = "Unbekannt")]
         Unknow
     }
 }

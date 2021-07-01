@@ -1,5 +1,7 @@
 ﻿using Lucene.Net.Support;
 using MCT.DB.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +12,7 @@ namespace MCT.Web.Models
 {
     public class NodeModel : SubjectModel
     {
+        [JsonConverter(typeof(StringEnumConverter))]
         public TaxonRank TaxonRank { get; set; }
 
         [Required]
@@ -54,6 +57,8 @@ namespace MCT.Web.Models
             return model;
         }
     }
+
+    [JsonConverter(typeof(StringEnumConverter))]
 
     public enum SpeciesType
     {
