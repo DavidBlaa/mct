@@ -39,6 +39,10 @@ namespace MCT.Web.Controllers.API
             SubjectManager manager = new SubjectManager();
             var animal = manager.GetAll<Animal>().Where(p => p.Id.Equals(id)).FirstOrDefault();
 
+            AnimalModel model = AnimalModel.Convert(animal);
+
+            model.Interactions = AnimalModel.ConverInteractionModels(manager.GetAllDependingInteractions(animal, true).ToList());
+
             return AnimalModel.Convert(animal);
         }
 

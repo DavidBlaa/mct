@@ -39,7 +39,12 @@ namespace MCT.Web.Controllers.API
             SubjectManager manager = new SubjectManager();
             var plant = manager.GetAll<Plant>().Where(p => p.Id.Equals(id)).FirstOrDefault();
 
-            return PlantModel.Convert(plant);
+            PlantModel model = PlantModel.Convert(plant);
+
+            model.Interactions = PlantModel.ConverInteractionModels(manager.GetAllDependingInteractions(plant, true).ToList());
+
+
+            return model;
         }
 
         // POST api/<controller>
