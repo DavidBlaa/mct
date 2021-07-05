@@ -1,8 +1,11 @@
-﻿using NHibernate.Search.Attributes;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using NHibernate.Search.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace MCT.DB.Entities
 {
@@ -13,15 +16,19 @@ namespace MCT.DB.Entities
         public virtual long Id { get; set; }
 
         [Field(Index.Tokenized, Store = Store.Yes)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public virtual TimePeriodArea StartArea { get; set; }
 
         [Field(Index.Tokenized, Store = Store.Yes)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public virtual TimePeriodMonth StartMonth { get; set; }
 
         [Field(Index.Tokenized, Store = Store.Yes)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public virtual TimePeriodArea EndArea { get; set; }
 
         [Field(Index.Tokenized, Store = Store.Yes)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public virtual TimePeriodMonth EndMonth { get; set; }
 
         public virtual Subject AssignedTo { get; set; }
@@ -193,24 +200,31 @@ namespace MCT.DB.Entities
     public enum TimePeriodType
     {
         [Display(Name = "Blühen")]
+        [EnumMember(Value = "Blühen")]
         Bloom,
 
         [Display(Name = "Ernte")]
+        [EnumMember(Value = "Ernten")]
         Harvest,
 
         [Display(Name = "Sähen")]
+        [EnumMember(Value = "Sähen")]
         Sowing,
 
         [Display(Name = "Samen")]
+        [EnumMember(Value = "Samen")]
         SeedMaturity,
 
         [Display(Name = "Vorziehen")]
+        [EnumMember(Value = "Vorziehen")]
         Cultivate,
 
         [Display(Name = "Einpflanzen")]
+        [EnumMember(Value = "Einpflanzen")]
         Implant,
 
         [Display(Name = "Lebensspanne")]
+        [EnumMember(Value = "Lebensspanne")]
         LifeTime
     }
 }

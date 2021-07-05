@@ -1,4 +1,6 @@
 ﻿using MCT.DB.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using NHibernate.Util;
 using System;
 using System.Collections.Generic;
@@ -19,9 +21,13 @@ namespace MCT.Web.Models
         public RootDepth RootDepth { get; set; }
 
         [Display(Name = "Nähstoff Anspruch")]
+        [JsonConverter(typeof(StringEnumConverter))]
+
         public NutrientClaim NutrientClaim { get; set; }
 
         [Display(Name = "Standort")]
+        [JsonConverter(typeof(StringEnumConverter))]
+
         public LocationType LocationType { get; set; }
 
         [Display(Name = "Sähtiefe")]

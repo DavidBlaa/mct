@@ -1,4 +1,6 @@
 ﻿using MCT.DB.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -90,7 +92,7 @@ namespace MCT.Web.Models
         [Required]
         [Remote("CheckNameOfSimpleLink", "Interaction", ErrorMessage = "Name existiert nicht.")]
         public String Name { get; set; }
-
+        [JsonConverter(typeof(StringEnumConverter))]
         [Required]
         public SubjectType Type { get; set; }
 

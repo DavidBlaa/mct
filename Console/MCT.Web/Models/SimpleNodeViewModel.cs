@@ -1,4 +1,6 @@
 ﻿using MCT.DB.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -18,6 +20,7 @@ namespace MCT.Web.Models
         public String Description { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public TaxonRank TaxonRank { get; set; }
 
         public SimpleNodeViewModel Parent { get; set; }

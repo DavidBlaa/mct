@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,8 +18,10 @@ namespace MCT.Web.Models
         public String Name { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public SubjectType Type { get; set; }
 
+        
         public CultureModel()
         {
             Id = 0;
@@ -29,7 +33,7 @@ namespace MCT.Web.Models
         {
             Id = id;
             Name = name;
-            Type = SubjectType.Unknow;
+            Type = type;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace MCT.DB.Entities
 {
@@ -68,45 +70,57 @@ namespace MCT.DB.Entities
     public enum LocationType
     {
         [Display(Name = "Unbekannt")]
+        [EnumMember(Value = "Unbekannt")]
         Unknown,
 
         [Display(Name = "Sonnig")]
+        [EnumMember(Value = "Sonnig")]
         Sunny,
 
         [Display(Name = "Schattig")]
+        [EnumMember(Value = "Schattig")]
         Shady,
 
         [Display(Name = "Halbschattig")]
+        [EnumMember(Value = "Halbschattig")]
         PartialShade
     }
 
     public enum RootDepth
     {
         [Display(Name = "Nicht bekannt")]
+        [EnumMember(Value = "Nicht bekannt")]
         Empty,
 
         [Display(Name = "Flach")]
+        [EnumMember(Value = "Flach")]
         Flat,
 
         [Display(Name = "Mittel")]
+        [EnumMember(Value = "Mittel")]
         Medium,
 
         [Display(Name = "Tief")]
+        [EnumMember(Value = "Tief")]
         Deep
     }
 
     public enum NutrientClaim
     {
         [Display(Name = "Unbekannt")]
+        [EnumMember(Value = "Unbekannt")]
         Empty,
 
         [Display(Name = "Stark")]
+        [EnumMember(Value = "Stark")]
         Strong,
 
         [Display(Name = "Mittel")]
+        [EnumMember(Value = "Mittel")]
         Medium,
 
         [Display(Name = "Schwach")]
+        [EnumMember(Value = "Schwach")]
         Weak
     }
 

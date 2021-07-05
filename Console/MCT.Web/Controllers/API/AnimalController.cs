@@ -43,7 +43,7 @@ namespace MCT.Web.Controllers.API
 
             model.Interactions = AnimalModel.ConverInteractionModels(manager.GetAllDependingInteractions(animal, true).ToList());
 
-            return AnimalModel.Convert(animal);
+            return model;
         }
 
         // POST api/<controller>
