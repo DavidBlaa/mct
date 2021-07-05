@@ -1,17 +1,22 @@
 ﻿using MCT.DB.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MCT.Web.Models
 {
     public class TimePeriodModel
     {
         public long Id { get; set; }
-
+        [JsonConverter(typeof(StringEnumConverter))]
         public TimePeriodArea StartArea { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public TimePeriodMonth StartMonth { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public TimePeriodArea EndArea { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public TimePeriodMonth EndMonth { get; set; }
 
         public SubjectModel AssignedTo { get; set; }
