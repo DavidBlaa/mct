@@ -75,7 +75,7 @@ namespace MCT.Web.Models
             }
             else
             {
-                model.ImagePath = plant.Medias.First().ImagePath;
+                model.ImagePath = plant.Medias.Last().ImagePath;
             }
 
             #endregion subject

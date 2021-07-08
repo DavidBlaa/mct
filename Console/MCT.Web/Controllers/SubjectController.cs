@@ -169,16 +169,15 @@ namespace MCT.Web.Controllers
 
         public ActionResult CreatePlant()
         {
-            //TODO Generate the Parent based on the ScientificName
-            // a a a = SubSpecies, a a = Species, a = Genus
+
+            ViewData["Parent.Name"] = getAllNodeNames(TaxonRank.SubSpecies);
 
             return View("PlantEdit", new PlantModel());
         }
 
         public ActionResult CreateAnimal()
         {
-            //TODO Generate the Parent based on the ScientificName
-            // a a a = SubSpecies, a a = Species, a = Genus
+            ViewData["Parent.Name"] = getAllNodeNames(TaxonRank.SubSpecies);
 
             return View("AnimalEdit", new AnimalModel());
         }
@@ -712,7 +711,7 @@ namespace MCT.Web.Controllers
             SubjectManager subjectManager = new SubjectManager();
             var nodes = subjectManager.GetAll<Node>().Where(n => n.Rank.Equals(nextRank));
 
-            nodes.OrderBy(n=>n.Name).ToList().ForEach(n => list.Add(new SelectListItem() { Text = n.Name +"("+n.ScientificName+")", Value = n.Id.ToString() }));
+            nodes.OrderBy(n=>n.Name).ToList().ForEach(n => list.Add(new SelectListItem() { Text = n.Name, Value = n.Id.ToString() }));
 
             return new SelectList(list, "Value", "Text");
         }
