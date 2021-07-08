@@ -9,6 +9,9 @@
 
 /********** EDIT PLANT *******/
 
+
+
+
 function deleteSubject(e) {
     data = {
         id: e
@@ -52,7 +55,8 @@ function deleteSubjectInSearch(e) {
 }
 
 function savePlant() {
-    //alert("start saving");
+
+    console.log("savePlant");
 
     if ($("form").valid()) {
         //get Timeperiods list
@@ -73,15 +77,11 @@ function savePlant() {
         console.log(aftercultures);
         //console.log(interactionsFromSide);
 
-        //var tmp = getSimpleLinksJSON(precultures);
-        //console.log("tmp -> preculture");
-        //console.log(tmp);
-        //alert("test");
         var plant = {
             Id: $("#plant #Id").val(),
             Name: $("#plant #Name").val(),
             ScientificName: $("#plant #ScientificName").val(),
-            Rank: $("#plant #TaxonRank").val(),
+            TaxonRank: $("#plant #TaxonRank").val(),
             Description: $("#plant #Description").val(),
             Width: $("#plant #Width").val(),
             Height: $("#plant #Height").val(),
@@ -92,7 +92,10 @@ function savePlant() {
             LifeCycles: getLifeCycle(lifecycles, $("#plant #Id").val()),
 
             PreCultures: getCulturesJSON(precultures),
-            AfterCultures: getCulturesJSON(aftercultures)
+            AfterCultures: getCulturesJSON(aftercultures),
+
+            Parent: { Id: $("#plant #Parent_Name").val()}
+
         };
 
         console.log(plant);
@@ -151,9 +154,11 @@ function saveAnimal() {
             Id: $($("#animal #Id")).val(),
             Name: $($("#animal #Name")).val(),
             ScientificName: $($("#animal #ScientificName")).val(),
-            Rank: $($("#animal #TaxonRank")).val(),
+            TaxonRank: $($("#animal #TaxonRank")).val(),
             Description: $($("#animal #Description")).val(),
             LifeCycles: getLifeCycle(lifecycles, $($("#animal #Id")).val()),
+            Parent: { Id: $("#animal #Parent_Name").val() }
+
         };
 
         console.log(animal);
@@ -202,12 +207,15 @@ function saveTaxon(e) {
             Id: $("#taxon #Id").val(),
             Name: $("#taxon #Name").val(),
             ScientificName: $("#taxon #ScientificName").val(),
-            Rank: $("#taxon #TaxonRank").val(),
-            Description: $("#taxon #Description").val()
+            TaxonRank: $("#taxon #TaxonRank").val(),
+            Description: $("#taxon #Description").val(),
+            Parent: { Id: $("#taxon #Parent_Name").val() }
         };
 
+        console.log(taxon);
+
         var data = {
-            taxon: taxon,
+            taxonModel: taxon,
         };
 
         $.ajax({
@@ -243,6 +251,52 @@ function saveTaxon(e) {
         });
     }
 }
+
+/**
+ * load parents based on type
+ */
+$("#TaxonRank").on('change', function (e) {
+    var rank = $("#TaxonRank").val();
+
+    $("#Parent_Name").empty();
+
+    if (rank !== "") {
+        $.ajax({
+            type: "GET",
+            url: "/Subject/GetAllNodes",
+            data: { rank: rank },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        })
+    }
+    else {
+        $("#Parent_Name").prop("disabled", true);
+        //$("#Parent_Name").addClass("bx-disabled");
+    }
+});
+
+function successFunc(data, status) {
+    console.log(data);
+
+    if (data.length == 0) {
+        $("#Parent_Name").append("<option value='' selected disabled hidden>Kein Elternteil verfügbar</option>");
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        var option = data[i];
+
+        $("#Parent_Name").append("<option value=" + option.Value + ">" + option.Text + "</option>");
+    }
+}
+
+function errorFunc() {
+    alert('error');
+}
+/**
+ * end parent selection
+ */
 
 function getInteractionsJSON(source) {
     var JSONArray = [];

@@ -9,6 +9,8 @@ namespace MCT.Web.Models
 {
     public class SimpleNodeViewModel
     {
+        public long Id { get; set; }
+
         [Required]
         [Remote("CheckNameExist", "Search", ErrorMessage = "Name existiert bereits.")]
         public String Name { get; set; }
@@ -28,7 +30,7 @@ namespace MCT.Web.Models
         public static SimpleNodeViewModel Convert(Node node)
         {
             SimpleNodeViewModel model = new SimpleNodeViewModel();
-
+            model.Id = node.Id;
             model.Name = node.Name;
             model.ScientificName = node.ScientificName;
             model.Description = node.Description;

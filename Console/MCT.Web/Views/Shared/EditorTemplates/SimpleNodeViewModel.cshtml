@@ -1,0 +1,29 @@
+﻿@model MCT.Web.Models.SimpleNodeViewModel
+@{
+    ViewBag.Title = "SimpleNodeViewModel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null)
+{
+<p>@Model.Name</p>
+}
+else
+{
+    <p>no parent</p>
+}
+
+<div class="row parentNameContainer">
+    <div class="col-md-3">
+        @Html.Hidden("initName", Model.Name)
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Parent Name", @class = "form-control" } })
+    </div>
+    <div class="col-md-1">
+        <span id="parentNameIcon" class="fa fa-refresh" style="margin:6px 0 0 0; font-size:17px; display:none"></span>
+    </div>
+    <div class="col-md-3">
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+

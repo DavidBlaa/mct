@@ -27,7 +27,7 @@ namespace MCT.Web.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public SubjectType Type { get; set; }
 
-        public SimpleNodeViewModel Parent { get; set; }
+        
         public List<SimpleNodeViewModel> Childrens { get; set; }
 
         [UIHint("Interactions")]
@@ -66,6 +66,7 @@ namespace MCT.Web.Models
 
             model.LifeCycles = new List<List<TimePeriodModel>>();
 
+        
             if (subject.TimePeriods != null)
             {
                 model.LifeCycles = TimePeriodsToLifeCycles(subject.TimePeriods);

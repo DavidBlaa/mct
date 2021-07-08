@@ -44,6 +44,11 @@
 
                 @Html.EnumDropDownListFor(model => model.TaxonRank, new { @class = "form-control dropdown" })
                 @Html.ValidationMessageFor(model => model.TaxonRank, "", new { @class = "text-danger" })
+
+                @*@Html.EditorFor(mode => Model.Parent)*@
+                @Html.DropDownListFor(modelItem => Model.Parent.Name, null, "Elternteil", new { @class = "form-control dropdown"})
+                @Html.ValidationMessageFor(model => model.Parent.Name, "", new { @class = "text-danger" })
+
             </div>
 
             <div id="DetailsContent" class="row panel-body panel-info">

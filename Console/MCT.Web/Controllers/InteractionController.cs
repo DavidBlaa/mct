@@ -163,12 +163,13 @@ namespace MCT.Web.Controllers
 
         public ActionResult Edit(long id = 0)
         {
+            getAllPredicateNames();
+
+
             if (id == 0) return View("InteractionEdit", new InteractionSimpleModel());
 
             InteractionManager interactionManager = new InteractionManager();
             Interaction interaction = interactionManager.Get(id);
-
-            getAllPredicateNames();
 
             return View("InteractionEdit", InteractionSimpleModel.Convert(interaction));
         }

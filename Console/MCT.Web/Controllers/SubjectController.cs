@@ -110,6 +110,8 @@ namespace MCT.Web.Controllers
 
             //load by loading the page and store it in a session!!!!
 
+            
+
             switch (type)
             {
                 case "Plant":
@@ -120,6 +122,9 @@ namespace MCT.Web.Controllers
                         //load interactions
                         Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant, true).ToList());
 
+                        //load ParentList
+                        ViewData["Parent.Name"] = getAllNodeNames(Model.TaxonRank);
+
                         return View("PlantEdit", Model);
                     }
                 case "Animal":
@@ -129,12 +134,18 @@ namespace MCT.Web.Controllers
                         AnimalModel Model = AnimalModel.Convert(animal);
                         Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal, true).ToList());
 
+                        //load ParentList
+                        ViewData["Parent.Name"] = getAllNodeNames(Model.TaxonRank);
+
                         return View("AnimalEdit", Model);
                     }
                 case "Taxon":
                     {
                         Taxon taxon = sm.GetAll<Taxon>().Where(a => a.Id.Equals(id)).FirstOrDefault();
                         NodeModel Model = NodeModel.Convert(taxon);
+
+                        //load ParentList
+                        ViewData["Parent.Name"] = getAllNodeNames(Model.TaxonRank);
 
                         return View("TaxonEdit", Model);
                     }
@@ -237,7 +248,8 @@ namespace MCT.Web.Controllers
                 plant.ScientificName = plantModel.ScientificName;
 
                 //Todo Select the type based on the scientific name
-                plant.Rank = Utility.GetTaxonRank(plantModel.ScientificName);
+                //plant.Rank = Utility.GetTaxonRank(plantModel.ScientificName);
+                plant.Rank = plantModel.TaxonRank;
 
                 #region after culture
 
@@ -344,17 +356,20 @@ namespace MCT.Web.Controllers
                 if (plantModel.Id == 0)
                 {
                     plant = subjectManager.CreatePlant(plant);
-                    plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
-                    subjectManager.Update(plant);
                 }
                 else
                 {
                     plant = subjectManager.UpdatePlant(plant);
-                    plant.Parent = Utility.CreateOrSetParents(plant.ScientificName, typeof(Plant), subjectManager);
-                    subjectManager.Update(plant);
                 }
 
-                //*create TimePeriods
+                //set parent
+                if (plantModel.Parent != null && plantModel.Parent.Id > 0)
+                {
+                    var parent = subjectManager.GetAll<Node>().Where(n => n.Id.Equals(plantModel.Parent.Id)).FirstOrDefault();
+                    plant.Parent = parent;
+                }
+
+                subjectManager.Update(plant);
 
                 return Json(plant.Id, JsonRequestBehavior.AllowGet);
             }
@@ -387,7 +402,7 @@ namespace MCT.Web.Controllers
 
                 animal.Name = animalModel.Name;
                 animal.ScientificName = animalModel.ScientificName;
-
+                animal.Rank = animalModel.TaxonRank;
                 //TODO Generate the Parent based on the ScientificName
                 // a a a = SubSpecies, a a = Species, a = Genus
                 // a a var. a is also a species
@@ -397,7 +412,7 @@ namespace MCT.Web.Controllers
                  */
 
                 //Todo Select the type based on the scientific name
-                animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
+                //animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
 
                 if (!animal.Medias.Where(m => m.ImagePath.Equals(animalModel.ImagePath)).Any())
                     animal.Medias.Add(new Media()
@@ -433,9 +448,19 @@ namespace MCT.Web.Controllers
                 else
                 {
                     subjectManager.Update(animal);
-                    animal.Parent = Utility.CreateOrSetParents(animal.ScientificName, typeof(Animal), subjectManager);
-                    subjectManager.Update(animal);
+                    //animal.Parent = Utility.CreateOrSetParents(animal.ScientificName, typeof(Animal), subjectManager);
+                    //subjectManager.Update(animal);
                 }
+
+                //set parent
+                if (animalModel.Parent != null && animalModel.Parent.Id > 0)
+                {
+                    var parent = subjectManager.GetAll<Node>().Where(n => n.Id.Equals(animalModel.Parent.Id)).FirstOrDefault();
+                    animal.Parent = parent;
+
+                }
+
+                subjectManager.Update(animal);
 
                 return Json(animal.Id, JsonRequestBehavior.AllowGet);
             }
@@ -445,7 +470,7 @@ namespace MCT.Web.Controllers
             }
         }
 
-        public ActionResult SaveTaxon(Taxon taxon)
+        public ActionResult SaveTaxon(NodeModel taxonModel)
         {
             SubjectManager subjectManager = new SubjectManager();
             InteractionManager interactionManager = new InteractionManager();
@@ -453,12 +478,53 @@ namespace MCT.Web.Controllers
             //ToDo Store Image in folder : project/images/
             //add a media to plant
 
+            Taxon taxon = new Taxon();
+            if (taxonModel.Id > 0)
+            {
+                var x = subjectManager.Get(taxonModel.Id).Self;
+                taxon = x as Taxon;
+            }
+
+            taxon.Name = taxonModel.Name;
+            taxon.ScientificName = taxonModel.ScientificName;
+            taxon.Rank = taxonModel.TaxonRank;
+            //TODO Generate the Parent based on the ScientificName
+            // a a a = SubSpecies, a a = Species, a = Genus
+            // a a var. a is also a species
+            /* - based on the scientficname create or set the parents
+             * - use maybe some webservices to create missing one
+             *
+             */
+
+            //Todo Select the type based on the scientific name
+            //animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
+
+            if (!taxon.Medias.Where(m => m.ImagePath.Equals(taxonModel.ImagePath)).Any())
+                taxon.Medias.Add(new Media()
+                {
+                    ImagePath = taxonModel.ImagePath,
+                    MIMEType = MimeMapping.GetMimeMapping(taxonModel.ImagePath)
+                });
+
+
             if (taxon.Id == 0)
                 taxon = subjectManager.CreateTaxon(taxon);
             else
             {
                 subjectManager.Update(taxon);
             }
+
+            //set parent
+            if (taxonModel.Parent != null && taxonModel.Parent.Id > 0)
+            {
+                var parent = subjectManager.GetAll<Node>().Where(n=>n.Id.Equals(taxonModel.Parent.Id)).FirstOrDefault();
+                taxon.Parent = parent;
+
+            }
+
+            subjectManager.Update(taxon);
+
+
 
             return Json(taxon.Id, JsonRequestBehavior.AllowGet);
         }
@@ -609,6 +675,11 @@ namespace MCT.Web.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetAllNodes(TaxonRank rank)
+        {
+            return Json(getAllNodeNames(rank), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion Edit Data
 
         #region Session
@@ -629,6 +700,21 @@ namespace MCT.Web.Controllers
             List<string> tmp = Session[ALL_SUBJECTS] as List<string>;
             tmp.Sort();
             return tmp;
+        }
+
+        private SelectList getAllNodeNames(TaxonRank rank)
+        {
+            TaxonRank nextRank = Enum.GetValues(typeof(TaxonRank)).Cast<TaxonRank>()
+                    .SkipWhile(e => e != rank).Skip(1).First();
+
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            SubjectManager subjectManager = new SubjectManager();
+            var nodes = subjectManager.GetAll<Node>().Where(n => n.Rank.Equals(nextRank));
+
+            nodes.OrderBy(n=>n.Name).ToList().ForEach(n => list.Add(new SelectListItem() { Text = n.Name +"("+n.ScientificName+")", Value = n.Id.ToString() }));
+
+            return new SelectList(list, "Value", "Text");
         }
 
         private List<string> getAllScientficNames()

@@ -707,6 +707,7 @@
     <Content Include="Views\Predicate\Index.cshtml" />
     <Content Include="Views\Predicate\Create.cshtml" />
     <Content Include="Views\Predicate\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SimpleNodeViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -25,13 +25,15 @@
         {
             success = true;
         }
-
-        if (Session["ALL_PREDICATES"] != null)
-        {
-            predicates = Session["ALL_PREDICATES"] as List<string>;
-        }
     }
+
+    if (Session["ALL_PREDICATES"] != null)
+    {
+        predicates = Session["ALL_PREDICATES"] as List<string>;
+    }
+
 }
+
 
     @using (@Html.BeginForm("Save", "Interaction"))
     {

@@ -19,6 +19,8 @@ namespace MCT.Web.Models
         [Remote("CheckScientificNameExist", "Subject", ErrorMessage = "Der wissenschaftliche Name existiert bereits.", AdditionalFields = "initScientificName")]
         public String ScientificName { get; set; }
 
+        public SimpleNodeViewModel Parent { get; set; }
+
         //public SpeciesType Type { get; set; }
 
         public NodeModel()
@@ -53,7 +55,8 @@ namespace MCT.Web.Models
                 model.ImagePath = node.Medias.First().ImagePath;
             }
 
-
+            model.Parent = node.Parent != null ? SimpleNodeViewModel.Convert(node.Parent) : new SimpleNodeViewModel();
+    
             return model;
         }
     }
