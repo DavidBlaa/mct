@@ -1,11 +1,15 @@
 ﻿using MCT.DB.Entities;
 using MCT.DB.Entities.PatchPlaner;
 using MCT.DB.Services;
+using MCT.Helpers;
 using MCT.Utils;
+using MCT.Web.Models;
 using MCT.Web.Models.Search;
+using NHibernate.Proxy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace MCT.Web.Helpers
 {
@@ -156,6 +160,34 @@ namespace MCT.Web.Helpers
             tmp.Add("Nutzer", usersCount);
 
             return tmp;
+        }
+
+        public static List<SimpleNodeViewModel> GetChildren(long id)
+        {
+            List<SimpleNodeViewModel> tmp = new List<SimpleNodeViewModel>();
+            SubjectManager subjectManager = new SubjectManager();
+
+            var children = subjectManager.GetAllAsQueryable<Node>().Where(n => n.Parent != null && n.Parent.Id.Equals(id));
+
+            children.ToList().ForEach(c => tmp.Add(SimpleNodeViewModel.Convert(c)));
+
+            return tmp;
+
+        }
+
+        public static SubjectType GetType(Subject subject)
+        {
+            if (subject.IsProxy())
+            {
+                subject = NHibernateHelper.UnProxyObjectAs<Subject>(subject);
+            }
+
+            if ((subject as Plant) != null) return SubjectType.Plant;
+            if ((subject as Animal) != null) return SubjectType.Animal;
+            if ((subject as Effect) != null) return SubjectType.Effect;
+            if ((subject as Taxon) != null) return SubjectType.Taxon;
+
+            return SubjectType.Unknow;
         }
     }
 }

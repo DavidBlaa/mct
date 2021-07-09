@@ -1,4 +1,5 @@
 ﻿using MCT.DB.Entities;
+using MCT.Web.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -11,12 +12,8 @@ namespace MCT.Web.Models
     {
         public long Id { get; set; }
 
-        [Required]
-        [Remote("CheckNameExist", "Search", ErrorMessage = "Name existiert bereits.")]
         public String Name { get; set; }
 
-        [Required]
-        [Remote("CheckScientificNameExist", "Search", ErrorMessage = "Scientific Name existiert bereits.")]
         public String ScientificName { get; set; }
 
         public String Description { get; set; }
@@ -24,6 +21,9 @@ namespace MCT.Web.Models
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public TaxonRank TaxonRank { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SubjectType Type { get; set; }
 
         public SimpleNodeViewModel Parent { get; set; }
 
@@ -35,6 +35,8 @@ namespace MCT.Web.Models
             model.ScientificName = node.ScientificName;
             model.Description = node.Description;
             model.TaxonRank = node.Rank;
+
+            model.Type = ModelHelper.GetType(node);
 
             if (node.Parent != null)
             {

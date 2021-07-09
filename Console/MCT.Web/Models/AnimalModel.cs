@@ -1,4 +1,5 @@
 ﻿using MCT.DB.Entities;
+using MCT.Web.Helpers;
 using System;
 using System.Linq;
 
@@ -53,6 +54,9 @@ namespace MCT.Web.Models
                 model.Parent = SimpleNodeViewModel.Convert(animal.Parent);
 
             #endregion loadParentModels
+
+            //load children
+            model.Childrens = ModelHelper.GetChildren(animal.Id);
 
             return model;
         }

@@ -1,5 +1,6 @@
 ﻿using Lucene.Net.Support;
 using MCT.DB.Entities;
+using MCT.Web.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -56,17 +57,11 @@ namespace MCT.Web.Models
             }
 
             model.Parent = node.Parent != null ? SimpleNodeViewModel.Convert(node.Parent) : new SimpleNodeViewModel();
-    
+
+            model.Childrens = ModelHelper.GetChildren(node.Id);
+
             return model;
         }
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
-
-    public enum SpeciesType
-    {
-        Animal,
-        Plant,
-        Unknow
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using MCT.DB.Entities;
+using MCT.Web.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NHibernate.Util;
@@ -130,6 +131,10 @@ namespace MCT.Web.Models
             }
 
             #endregion load pre/after cultures
+
+            //load children
+            model.Childrens = ModelHelper.GetChildren(plant.Id);
+
 
             return model;
         }
