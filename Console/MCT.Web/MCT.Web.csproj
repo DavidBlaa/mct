@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AnimalController.cs" />
+    <Compile Include="Controllers\API\InteractionsController.cs" />
     <Compile Include="Controllers\API\PlantController.cs" />
     <Compile Include="Controllers\API\SpeciesController.cs" />
     <Compile Include="Controllers\API\StatisticController.cs" />
