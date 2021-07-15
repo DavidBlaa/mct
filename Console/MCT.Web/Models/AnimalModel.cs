@@ -36,7 +36,7 @@ namespace MCT.Web.Models
             }
             else
             {
-                model.ImagePath = animal.Medias.First().ImagePath;
+                model.ImagePath = animal.Medias.Last().ImagePath;
             }
 
             if (model.LifeCycles != null)

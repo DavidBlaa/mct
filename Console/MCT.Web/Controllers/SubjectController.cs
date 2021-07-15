@@ -318,7 +318,8 @@ namespace MCT.Web.Controllers
                 plant.Height = plantModel.Height;
                 plant.LocationType = plantModel.LocationType;
 
-                if (!plant.Medias.Where(m => m.ImagePath.Equals(plantModel.ImagePath)).Any())
+                if (!plantModel.ImagePath.Equals("/Images/Empty.png") && !plant.Medias.Where(m => m.ImagePath.Equals(plantModel.ImagePath)).Any())
+ 
                     plant.Medias.Add(new Media()
                     {
                         ImagePath = plantModel.ImagePath,
@@ -413,7 +414,7 @@ namespace MCT.Web.Controllers
                 //Todo Select the type based on the scientific name
                 //animal.Rank = Utility.GetTaxonRank(animal.ScientificName);
 
-                if (!animal.Medias.Where(m => m.ImagePath.Equals(animalModel.ImagePath)).Any())
+                if (!animalModel.ImagePath.Equals("/Images/Empty.png") && !animal.Medias.Where(m => m.ImagePath.Equals(animalModel.ImagePath)).Any())
                     animal.Medias.Add(new Media()
                     {
                         ImagePath = animalModel.ImagePath,
@@ -542,6 +543,12 @@ namespace MCT.Web.Controllers
                         var stream = fileContent.InputStream;
                         // and optionally write the file to disk
                         var fileName = Path.GetFileName(fileContent.FileName);
+
+                        if (fileName.Equals("Empty.png"))
+                        {
+                            return Json("no image selected", JsonRequestBehavior.AllowGet);
+                        }
+
                         var path = Path.Combine(Server.MapPath("~/Images"), fileName);
                         using (var fileStream = System.IO.File.Create(path))
                         {

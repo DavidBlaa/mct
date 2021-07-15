@@ -53,7 +53,7 @@ namespace MCT.Web.Models
             }
             else
             {
-                model.ImagePath = node.Medias.First().ImagePath;
+                model.ImagePath = node.Medias.Last().ImagePath;
             }
 
             model.Parent = node.Parent != null ? SimpleNodeViewModel.Convert(node.Parent) : new SimpleNodeViewModel();

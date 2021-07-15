@@ -437,9 +437,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Icon.png" />
+    <Content Include="Images\450px-Coccinella.7-punctata.adult.jpg" />
     <Content Include="Images\BlumenkohlErfurterZwerg.jpg" />
     <Content Include="Images\Blumenkohl.jpg" />
     <Content Include="Images\Cocktailtomate.JPG" />
+    <Content Include="Images\Desert.jpg" />
     <Content Include="Images\GrosserKohlweissling.jpg" />
     <Content Include="Images\KohlrabiGigant.JPG" />
     <Content Include="Images\page\vladstudio_leaf_wallpaper.jpg" />
