@@ -282,7 +282,7 @@ function successFunc(data, status) {
     console.log(data);
 
     if (data.length == 0) {
-        $("#Parent_Id").append("<option value='' selected disabled hidden>Kein Zugehörigkeit verfügbar</option>");
+        $("#Parent_Id").append("<option value='0' selected disabled hidden>Kein Zugehörigkeit verfügbar</option>");
     }
 
     $("#Parent_Id").append("<option value=" + 0 +">- gehört zu -</option>");

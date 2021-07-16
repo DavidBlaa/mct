@@ -10,7 +10,7 @@ namespace MCT.Web.Models
 {
     public class SimpleNodeViewModel
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         public String Name { get; set; }
 

@@ -370,6 +370,10 @@ namespace MCT.Web.Controllers
                     var parent = subjectManager.GetAll<Node>().Where(n => n.Id.Equals(plantModel.Parent.Id)).FirstOrDefault();
                     plant.Parent = parent;
                 }
+                else // delete parent from plant
+                {
+                    plant.Parent = null;
+                }
 
                 subjectManager.Update(plant);
 
@@ -461,6 +465,10 @@ namespace MCT.Web.Controllers
                     animal.Parent = parent;
 
                 }
+                else // delete parent from plant
+                {
+                    animal.Parent = null;
+                }
 
                 subjectManager.Update(animal);
 
@@ -522,6 +530,10 @@ namespace MCT.Web.Controllers
                 var parent = subjectManager.GetAll<Node>().Where(n=>n.Id.Equals(taxonModel.Parent.Id)).FirstOrDefault();
                 taxon.Parent = parent;
 
+            }
+            else // delete taxon from plant
+            {
+                taxon.Parent = null;
             }
 
             subjectManager.Update(taxon);

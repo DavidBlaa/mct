@@ -47,7 +47,7 @@
 
                 @*@Html.EditorFor(mode => Model.Parent)*@
                 @Html.DropDownListFor(modelItem => Model.Parent.Id, null, "- gehört zu -", new { @class = "form-control dropdown"})
-                @Html.ValidationMessageFor(model => model.Parent.Id, "", new { @class = "text-danger" })
+                @*@Html.ValidationMessageFor(model => model.Parent.Id, "", new { @class = "text-danger" })*@
 
             </div>
 
