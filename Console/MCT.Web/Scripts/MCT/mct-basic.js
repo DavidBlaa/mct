@@ -94,7 +94,7 @@ function savePlant() {
             PreCultures: getCulturesJSON(precultures),
             AfterCultures: getCulturesJSON(aftercultures),
 
-            Parent: { Id: $("#plant #Parent_Name").val()}
+            Parent: { Id: $("#plant #Parent_Id").val()}
 
         };
 
@@ -157,7 +157,7 @@ function saveAnimal() {
             TaxonRank: $($("#animal #TaxonRank")).val(),
             Description: $($("#animal #Description")).val(),
             LifeCycles: getLifeCycle(lifecycles, $($("#animal #Id")).val()),
-            Parent: { Id: $("#animal #Parent_Name").val() }
+            Parent: { Id: $("#animal #Parent_Id").val() }
 
         };
 
@@ -209,7 +209,7 @@ function saveTaxon(e) {
             ScientificName: $("#taxon #ScientificName").val(),
             TaxonRank: $("#taxon #TaxonRank").val(),
             Description: $("#taxon #Description").val(),
-            Parent: { Id: $("#taxon #Parent_Name").val() }
+            Parent: { Id: $("#taxon #Parent_Id").val() }
         };
 
         console.log(taxon);
@@ -258,7 +258,7 @@ function saveTaxon(e) {
 $("#TaxonRank").on('change', function (e) {
     var rank = $("#TaxonRank").val();
 
-    $("#Parent_Name").empty();
+    $("#Parent_Id").empty();
 
     if (rank !== "") {
         $.ajax({
@@ -272,22 +272,25 @@ $("#TaxonRank").on('change', function (e) {
         })
     }
     else {
-        $("#Parent_Name").prop("disabled", true);
-        //$("#Parent_Name").addClass("bx-disabled");
+        $("#Parent_Id").prop("disabled", true);
+        //$("#Parent_Id").addClass("bx-disabled");
     }
 });
 
 function successFunc(data, status) {
+    console.log("success");
     console.log(data);
 
     if (data.length == 0) {
-        $("#Parent_Name").append("<option value='' selected disabled hidden>Kein Elternteil verfügbar</option>");
+        $("#Parent_Id").append("<option value='' selected disabled hidden>Kein Zugehörigkeit verfügbar</option>");
     }
+
+    $("#Parent_Id").append("<option value=" + 0 +">- gehört zu -</option>");
 
     for (var i = 0; i < data.length; i++) {
         var option = data[i];
 
-        $("#Parent_Name").append("<option value=" + option.Value + ">" + option.Text + "</option>");
+        $("#Parent_Id").append("<option value=" + option.Value + ">" + option.Text + "</option>");
     }
 }
 

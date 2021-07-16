@@ -123,7 +123,7 @@ namespace MCT.Web.Controllers
                         Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(plant, true).ToList());
 
                         //load ParentList
-                        ViewData["Parent.Name"] = getAllNodeNames(Model.TaxonRank);
+                        ViewData["Parent.Id"] = getAllNodeNames(Model.TaxonRank);
 
                         return View("PlantEdit", Model);
                     }
@@ -135,7 +135,7 @@ namespace MCT.Web.Controllers
                         Model.Interactions = SubjectModel.ConverInteractionModels(sm.GetAllDependingInteractions(animal, true).ToList());
 
                         //load ParentList
-                        ViewData["Parent.Name"] = getAllNodeNames(Model.TaxonRank);
+                        ViewData["Parent.Id"] = getAllNodeNames(Model.TaxonRank);
 
                         return View("AnimalEdit", Model);
                     }
@@ -145,7 +145,7 @@ namespace MCT.Web.Controllers
                         NodeModel Model = NodeModel.Convert(taxon);
 
                         //load ParentList
-                        ViewData["Parent.Name"] = getAllNodeNames(Model.TaxonRank);
+                        ViewData["Parent.Id"] = getAllNodeNames(Model.TaxonRank);
 
                         return View("TaxonEdit", Model);
                     }
@@ -170,14 +170,14 @@ namespace MCT.Web.Controllers
         public ActionResult CreatePlant()
         {
 
-            ViewData["Parent.Name"] = getAllNodeNames(TaxonRank.SubSpecies);
+            ViewData["Parent.Id"] = getAllNodeNames(TaxonRank.Species);
 
             return View("PlantEdit", new PlantModel());
         }
 
         public ActionResult CreateAnimal()
         {
-            ViewData["Parent.Name"] = getAllNodeNames(TaxonRank.SubSpecies);
+            ViewData["Parent.Id"] = getAllNodeNames(TaxonRank.Species);
 
             return View("AnimalEdit", new AnimalModel());
         }
@@ -186,6 +186,8 @@ namespace MCT.Web.Controllers
         {
             //TODO Generate the Parent based on the ScientificName
             // a a a = SubSpecies, a a = Species, a = Genus
+            ViewData["Parent.Id"] = getAllNodeNames(TaxonRank.Species);
+
 
             return View("TaxonEdit", new NodeModel());
         }
@@ -710,15 +712,22 @@ namespace MCT.Web.Controllers
 
         private SelectList getAllNodeNames(TaxonRank rank)
         {
-            TaxonRank nextRank = Enum.GetValues(typeof(TaxonRank)).Cast<TaxonRank>()
-                    .SkipWhile(e => e != rank).Skip(1).First();
-
             List<SelectListItem> list = new List<SelectListItem>();
 
-            SubjectManager subjectManager = new SubjectManager();
-            var nodes = subjectManager.GetAll<Node>().Where(n => n.Rank.Equals(nextRank));
+            if (rank != TaxonRank.Class)
+            {
 
-            nodes.OrderBy(n=>n.Name).ToList().ForEach(n => list.Add(new SelectListItem() { Text = n.Name, Value = n.Id.ToString() }));
+                TaxonRank nextRank = Enum.GetValues(typeof(TaxonRank)).Cast<TaxonRank>()
+                        .SkipWhile(e => e != rank).Skip(1).First();
+
+
+                SubjectManager subjectManager = new SubjectManager();
+                var nodes = subjectManager.GetAll<Node>().Where(n => n.Rank.Equals(nextRank));
+
+                nodes.OrderBy(n => n.Name).ToList().ForEach(n => list.Add(new SelectListItem() { Text = n.Name, Value = n.Id.ToString() }));
+
+                return new SelectList(list, "Value", "Text");
+            }
 
             return new SelectList(list, "Value", "Text");
         }
