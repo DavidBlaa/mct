@@ -69,6 +69,7 @@ namespace MCT.Web.Models
                 model.Description = plant.Description;
 
             model.Type = GetType(plant);
+            model.SowingDepth = plant.SowingDepth;
 
             if (plant.Medias.Count() == 0)
             {

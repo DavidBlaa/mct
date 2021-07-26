@@ -26,7 +26,7 @@ namespace MCT.Web.Controllers.API
             SubjectManager manager = new SubjectManager();
             var species = manager.GetAll<Species>();
 
-            species.ToList().ForEach(n => list.Add(NodeModel.Convert(n)));
+            species.OrderBy(s=>s.Name).ToList().ForEach(n => list.Add(NodeModel.Convert(n)));
 
 
             return list;

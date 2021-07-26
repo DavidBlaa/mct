@@ -49,156 +49,156 @@ namespace MCT.Web.Controllers
 
             AsciiReader reader = new AsciiReader();
 
-            #region Plant
+            //#region Plant
 
-            string path = Path.Combine(AppConfigHelper.GetWorkspace(), "PlantSeedData.txt");
+            //string path = Path.Combine(AppConfigHelper.GetWorkspace(), "PlantSeedData.txt");
 
-            if (DataReader.FileExist(path))
-            {
-                Stream fileStream = reader.Open(path);
+            //if (DataReader.FileExist(path))
+            //{
+            //    Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile<Node>(fileStream, "PlantSeedData.txt", "Plant");
+            //    List<Node> nodes = reader.ReadFile<Node>(fileStream, "PlantSeedData.txt", "Plant");
 
-                SubjectManager manager = new SubjectManager();
+            //    SubjectManager manager = new SubjectManager();
 
-                foreach (var node in nodes)
-                {
-                    Plant plant = (Plant)node;
-                    manager.Create(plant);
+            //    foreach (var node in nodes)
+            //    {
+            //        Plant plant = (Plant)node;
+            //        manager.Create(plant);
 
-                }
+            //    }
 
-                Debug.WriteLine("PlantSeedData.txt  : " + nodes.Count);
-            }
+            //    Debug.WriteLine("PlantSeedData.txt  : " + nodes.Count);
+            //}
 
-            //mischkulturtabelle
+            ////mischkulturtabelle
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "MischkulturTabelle.txt");
+            //path = Path.Combine(AppConfigHelper.GetWorkspace(), "MischkulturTabelle.txt");
 
-            if (DataReader.FileExist(path))
-            {
-                Stream fileStream = reader.Open(path);
+            //if (DataReader.FileExist(path))
+            //{
+            //    Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile<Node>(fileStream, "MischkulturTabelle.txt", "Plant_MKT");
+            //    List<Node> nodes = reader.ReadFile<Node>(fileStream, "MischkulturTabelle.txt", "Plant_MKT");
 
-                SubjectManager manager = new SubjectManager();
+            //    SubjectManager manager = new SubjectManager();
 
-                foreach (var node in nodes)
-                {
-                    Plant plant = (Plant)node;
+            //    foreach (var node in nodes)
+            //    {
+            //        Plant plant = (Plant)node;
 
-                    if (!string.IsNullOrEmpty(plant.Name) && !string.IsNullOrEmpty(plant.ScientificName))
-                    {
-                        // pflanze noch nicht vorhanden
-                        if (!manager.GetAll<Plant>().Any(p => p.Name.ToLower().Equals(plant.Name.ToLower())))
-                        {
-                            //ToDO Remove dublicates - check if a plant is existing
-                            manager.Create(plant);
-                        }
-                        //else // pflanze existiert
-                        //{
-                        //    Plant plantFromDb =
-                        //        manager.GetAll<Plant>()
-                        //            .FirstOrDefault(
-                        //                p => p.ScientificName.ToLower().Equals(plant.ScientificName.ToLower()) && p.Rank == TaxonRank.Species);
+            //        if (!string.IsNullOrEmpty(plant.Name) && !string.IsNullOrEmpty(plant.ScientificName))
+            //        {
+            //            // pflanze noch nicht vorhanden
+            //            if (!manager.GetAll<Plant>().Any(p => p.Name.ToLower().Equals(plant.Name.ToLower())))
+            //            {
+            //                //ToDO Remove dublicates - check if a plant is existing
+            //                manager.Create(plant);
+            //            }
+            //            //else // pflanze existiert
+            //            //{
+            //            //    Plant plantFromDb =
+            //            //        manager.GetAll<Plant>()
+            //            //            .FirstOrDefault(
+            //            //                p => p.ScientificName.ToLower().Equals(plant.ScientificName.ToLower()) && p.Rank == TaxonRank.Species);
 
-                        //    if (plantFromDb != null && plantFromDb.Name.Equals(plantFromDb.ScientificName))
-                        //    {
-                        //        plantFromDb.Name = plant.Name;
-                        //    }
+            //            //    if (plantFromDb != null && plantFromDb.Name.Equals(plantFromDb.ScientificName))
+            //            //    {
+            //            //        plantFromDb.Name = plant.Name;
+            //            //    }
 
-                        //    manager.Update(plantFromDb);
-                        //}
+            //            //    manager.Update(plantFromDb);
+            //            //}
 
-                    }
+            //        }
 
-                }
+            //    }
 
-                Debug.WriteLine("MischkulturTabelle.txt  : " + nodes.Count);
-            }
+            //    Debug.WriteLine("MischkulturTabelle.txt  : " + nodes.Count);
+            //}
 
-            //update after creation for associations
+            ////update after creation for associations
 
-            if (DataReader.FileExist(path))
-            {
-                Stream fileStream = reader.Open(path);
+            //if (DataReader.FileExist(path))
+            //{
+            //    Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile<Node>(fileStream, "MischkulturTabelle.txt", "Plant_MKT_UPDATE");
+            //    List<Node> nodes = reader.ReadFile<Node>(fileStream, "MischkulturTabelle.txt", "Plant_MKT_UPDATE");
 
-                SubjectManager manager = new SubjectManager();
+            //    SubjectManager manager = new SubjectManager();
 
-                foreach (var node in nodes)
-                {
-                    Plant plant = (Plant)node;
-                    manager.Update(plant);
-                }
+            //    foreach (var node in nodes)
+            //    {
+            //        Plant plant = (Plant)node;
+            //        manager.Update(plant);
+            //    }
 
-                Debug.WriteLine("MischkulturTabelle.txt Update  : " + nodes.Count);
-            }
+            //    Debug.WriteLine("MischkulturTabelle.txt Update  : " + nodes.Count);
+            //}
 
 
             //loadTestPlantData();
 
-            #endregion
+            //#endregion
 
-            #region Animal
+            //#region Animal
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "AnimalSeedData.txt");
+            //path = Path.Combine(AppConfigHelper.GetWorkspace(), "AnimalSeedData.txt");
 
-            if (DataReader.FileExist(path))
-            {
-                Stream fileStream = reader.Open(path);
+            //if (DataReader.FileExist(path))
+            //{
+            //    Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile<Node>(fileStream, "AnimalSeedData.txt", "Animal");
+            //    List<Node> nodes = reader.ReadFile<Node>(fileStream, "AnimalSeedData.txt", "Animal");
 
-                SubjectManager manager = new SubjectManager();
+            //    SubjectManager manager = new SubjectManager();
 
-                foreach (var node in nodes)
-                {
-                    Animal animal = (Animal)node;
-                    if (!manager.GetAll<Animal>().Any(p => p.Name.Equals(animal.Name)))
-                    {
-                        manager.Create(animal);
-                    }
-                }
+            //    foreach (var node in nodes)
+            //    {
+            //        Animal animal = (Animal)node;
+            //        if (!manager.GetAll<Animal>().Any(p => p.Name.Equals(animal.Name)))
+            //        {
+            //            manager.Create(animal);
+            //        }
+            //    }
 
-                Debug.WriteLine("AnimalSeedData.txt  : " + nodes.Count);
-            }
+            //    Debug.WriteLine("AnimalSeedData.txt  : " + nodes.Count);
+            //}
 
-            //loadTestAnimalData();
+            ////loadTestAnimalData();
 
-            #endregion
+            //#endregion
 
-            #region Effect
+            //#region Effect
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "EffectSeedData.txt");
+            //path = Path.Combine(AppConfigHelper.GetWorkspace(), "EffectSeedData.txt");
 
-            if (DataReader.FileExist(path))
-            {
-                Stream fileStream = reader.Open(path);
+            //if (DataReader.FileExist(path))
+            //{
+            //    Stream fileStream = reader.Open(path);
 
-                List<Node> nodes = reader.ReadFile<Node>(fileStream, "EffectSeedData.txt", "Effect");
+            //    List<Node> nodes = reader.ReadFile<Node>(fileStream, "EffectSeedData.txt", "Effect");
 
-                SubjectManager manager = new SubjectManager();
+            //    SubjectManager manager = new SubjectManager();
 
-                foreach (var node in nodes)
-                {
+            //    foreach (var node in nodes)
+            //    {
 
-                    Effect effect = (Effect)node;
-                    if (!manager.GetAll<Effect>().Any(p => p.Name.Equals(effect.Name)))
-                    {
-                        manager.Create(effect);
-                    }
-                }
+            //        Effect effect = (Effect)node;
+            //        if (!manager.GetAll<Effect>().Any(p => p.Name.Equals(effect.Name)))
+            //        {
+            //            manager.Create(effect);
+            //        }
+            //    }
 
-                Debug.WriteLine("EffectSeedData.txt  : " + nodes.Count);
-            }
+            //    Debug.WriteLine("EffectSeedData.txt  : " + nodes.Count);
+            //}
 
-            #endregion
+            //#endregion
 
             #region Predicate
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "PredicateSeedData.txt");
+            string path = Path.Combine(AppConfigHelper.GetWorkspace(), "PredicateSeedData.txt");
 
             if (DataReader.FileExist(path))
             {
@@ -222,47 +222,47 @@ namespace MCT.Web.Controllers
 
             #endregion
 
-            #region Interaction
+            //#region Interaction
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "InteractionSeedData.txt");
-            if (DataReader.FileExist(path))
-            {
-                SubjectManager manager = new SubjectManager();
+            //path = Path.Combine(AppConfigHelper.GetWorkspace(), "InteractionSeedData.txt");
+            //if (DataReader.FileExist(path))
+            //{
+            //    SubjectManager manager = new SubjectManager();
 
-                Stream fileStream = reader.Open(path);
-                List<string> interactionsAsStringList = reader.ReadFile(fileStream, "InteractionSeedData.txt");
+            //    Stream fileStream = reader.Open(path);
+            //    List<string> interactionsAsStringList = reader.ReadFile(fileStream, "InteractionSeedData.txt");
 
-                List<Interaction> interactions = reader.ConvertToInteractions(interactionsAsStringList,
-                    manager.GetAll<Subject>().ToList(), manager.GetAll<Predicate>().ToList());
+            //    List<Interaction> interactions = reader.ConvertToInteractions(interactionsAsStringList,
+            //        manager.GetAll<Subject>().ToList(), manager.GetAll<Predicate>().ToList());
 
-                foreach (var node in interactions)
-                {
-                    if (!manager.GetAll<Interaction>().Any(i => i.Subject.Equals(node.Subject) && i.Object.Equals(node.Object)))
-                    {
-                        manager.Create(node);
-                    }
-                }
+            //    foreach (var node in interactions)
+            //    {
+            //        if (!manager.GetAll<Interaction>().Any(i => i.Subject.Equals(node.Subject) && i.Object.Equals(node.Object)))
+            //        {
+            //            manager.Create(node);
+            //        }
+            //    }
 
-                Debug.WriteLine("InteractionSeedData.txt  : " + interactions.Count);
-            }
+            //    Debug.WriteLine("InteractionSeedData.txt  : " + interactions.Count);
+            //}
 
 
-            path = Path.Combine(AppConfigHelper.GetWorkspace(), "MischkulturTabelle.txt");
+            //path = Path.Combine(AppConfigHelper.GetWorkspace(), "MischkulturTabelle.txt");
 
-            if (DataReader.FileExist(path))
-            {
-                SubjectManager manager = new SubjectManager();
-                Stream fileStream = reader.Open(path);
-                // hoier werden alle interactions und fehlende objecte erzeugt
-                List<Interaction> l = reader.ReadFile<Interaction>(fileStream, "MischkulturTabelle.txt", "Plant_MKT_UPDATE_INTERACTION");
-                foreach (var node in l)
-                {
-                    manager.Create(node);
-                }
+            //if (DataReader.FileExist(path))
+            //{
+            //    SubjectManager manager = new SubjectManager();
+            //    Stream fileStream = reader.Open(path);
+            //    // hoier werden alle interactions und fehlende objecte erzeugt
+            //    List<Interaction> l = reader.ReadFile<Interaction>(fileStream, "MischkulturTabelle.txt", "Plant_MKT_UPDATE_INTERACTION");
+            //    foreach (var node in l)
+            //    {
+            //        manager.Create(node);
+            //    }
 
-            }
+            //}
 
-            #endregion
+            //#endregion
 
 
             return View("Index");

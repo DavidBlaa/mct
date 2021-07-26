@@ -153,8 +153,14 @@ namespace MCT.Web.Helpers
             int patchesCount = patchManager.GetAll<Patch>().Length;
             int usersCount = 0;
 
+            int varietiesPlantCount = subjectManager.GetAll<Plant>().Where(p => p.Rank.Equals(TaxonRank.SubSpecies)).Count();
+            int animalSpeciesCount = subjectManager.GetAll<Animal>().Where(p => p.Rank.Equals(TaxonRank.Species)).Count();
+
+
             tmp.Add("Pflanzen", plantsCount);
+            tmp.Add("Sorten", varietiesPlantCount);
             tmp.Add("Tiere", animalsCount);
+            tmp.Add("TierArten", animalSpeciesCount);
             tmp.Add("Interaktionen", actionsCount);
             tmp.Add("Gärten", patchesCount);
             tmp.Add("Nutzer", usersCount);
